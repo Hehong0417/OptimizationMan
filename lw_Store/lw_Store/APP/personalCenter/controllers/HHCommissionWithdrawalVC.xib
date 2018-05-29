@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HHCommissionWithdrawalVC">
+            <connections>
+                <outlet property="desCribLabel" destination="a6v-nZ-AAM" id="3ln-La-Nbn"/>
+                <outlet property="money_tf" destination="tv9-hs-hL2" id="5Hh-6Z-S2D"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金提现申请" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIb-j9-c7R">
+                    <rect key="frame" x="20" y="0.0" width="198" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="198" id="V7X-On-ZgA"/>
+                        <constraint firstAttribute="height" constant="60" id="vgp-fe-Lb7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6v-nZ-AAM">
+                    <rect key="frame" x="20" y="61" width="335" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="wca-qB-ce9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提现金额" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9pr-TG-ZwN">
+                    <rect key="frame" x="20" y="89" width="198" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="198" id="3nk-q2-5u2"/>
+                        <constraint firstAttribute="height" constant="29" id="GRa-mr-6Q4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tv9-hs-hL2">
+                    <rect key="frame" x="20" y="126" width="335" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5u7-sO-UjU">
+                    <rect key="frame" x="34" y="185" width="306" height="35"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="anH-vq-bsa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="确认提现">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="commitWithdrawAction:" destination="-1" eventType="touchUpInside" id="zD9-II-NZv"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5u7-sO-UjU" firstAttribute="top" secondItem="tv9-hs-hL2" secondAttribute="bottom" constant="29" id="0aY-wJ-hMM"/>
+                <constraint firstItem="wIb-j9-c7R" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="1jP-Mc-nJ8"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="tv9-hs-hL2" secondAttribute="trailing" constant="20" id="EwV-V2-qE7"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="5u7-sO-UjU" secondAttribute="trailing" constant="35" id="FJN-Wu-N1j"/>
+                <constraint firstItem="9pr-TG-ZwN" firstAttribute="leading" secondItem="a6v-nZ-AAM" secondAttribute="leading" id="GAK-ro-Ibn"/>
+                <constraint firstItem="a6v-nZ-AAM" firstAttribute="top" secondItem="wIb-j9-c7R" secondAttribute="bottom" constant="1" id="QJN-M8-zfl"/>
+                <constraint firstItem="wIb-j9-c7R" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YrY-Eo-Vrz"/>
+                <constraint firstItem="tv9-hs-hL2" firstAttribute="top" secondItem="9pr-TG-ZwN" secondAttribute="bottom" constant="8" id="is6-Io-GYo"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="a6v-nZ-AAM" secondAttribute="trailing" constant="20" id="lJi-Mm-3j4"/>
+                <constraint firstItem="9pr-TG-ZwN" firstAttribute="top" secondItem="a6v-nZ-AAM" secondAttribute="bottom" constant="6" id="mzH-EW-cml"/>
+                <constraint firstItem="5u7-sO-UjU" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="34" id="qb8-h3-a78"/>
+                <constraint firstItem="a6v-nZ-AAM" firstAttribute="leading" secondItem="wIb-j9-c7R" secondAttribute="leading" id="vh6-ix-BnI"/>
+                <constraint firstItem="tv9-hs-hL2" firstAttribute="leading" secondItem="a6v-nZ-AAM" secondAttribute="leading" id="xyQ-hQ-VYf"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="35.5" y="54.5"/>
+        </view>
+    </objects>
+</document>

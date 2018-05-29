@@ -1,0 +1,27 @@
+use_frameworks!
+target 'lw_Store' do
+pod 'AFNetworking'
+pod 'BlocksKit'
+pod 'Masonry'
+pod 'CocoaLumberjack'
+pod 'Aspects'
+pod 'SDWebImage'
+pod 'MJExtension'
+pod 'MJRefresh'
+pod 'SVProgressHUD'
+pod 'MBProgressHUD'
+pod 'YYCategories', '~>0.9.0'
+pod 'SDCycleScrollView’
+pod 'JSONModel', '~> 1.1.2'
+pod 'YYCache'
+pod 'DZNEmptyDataSet'
+pod 'IQKeyboardManager'
+pod 'TZImagePickerController'
+pod 'YYText'
+pod 'SDAutoLayout'
+# U-Share SDK UI模块（分享面板，建议添加）
+pod 'UMengUShare/UI'
+# 集成微信
+pod 'UMengUShare/Social/WeChat'
+
+end

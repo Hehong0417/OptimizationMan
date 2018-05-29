@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HHOrderDetailTableHead">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_wait_default" translatesAutoresizingMaskIntoConstraints="NO" id="Aim-8j-yNf">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="lUZ-RI-fN3"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="等待付款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Myu-N9-FMM">
+                    <rect key="frame" x="41" y="0.0" width="334" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Aim-8j-yNf" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="8rH-Ek-JT4"/>
+                <constraint firstItem="Aim-8j-yNf" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="G0K-Ju-K0p"/>
+                <constraint firstItem="Myu-N9-FMM" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="GZ8-w7-VPy"/>
+                <constraint firstItem="Aim-8j-yNf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="P0i-fJ-iJQ"/>
+                <constraint firstItem="Myu-N9-FMM" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="cto-w0-h0X"/>
+                <constraint firstItem="Myu-N9-FMM" firstAttribute="leading" secondItem="Aim-8j-yNf" secondAttribute="trailing" constant="1" id="n8f-bE-IYv"/>
+                <constraint firstItem="Myu-N9-FMM" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="wHd-dj-5fG"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="35.5" y="54"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_wait_default" width="15" height="14"/>
+    </resources>
+</document>
