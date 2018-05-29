@@ -28,13 +28,13 @@
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    HJUser *user = [HJUser sharedUser];
-//    if (user.token) {
+    HJUser *user = [HJUser sharedUser];
+    if (user.token) {
         self.window.rootViewController = [[HJTabBarController alloc] init];
-//
-//    }else{
-//        self.window.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[[HHWXLoginVC alloc] init]];
-//    }
+
+    }else{
+        self.window.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[[HHWXLoginVC alloc] init]];
+    }
     
     [self.window makeKeyAndVisible];
     

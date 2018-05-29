@@ -55,7 +55,7 @@
 // mine
 #import "LHUtils.h"
 #import "UIaddition.h"
-//#import "Encryption.h"
+#import "Encryption.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 
@@ -93,7 +93,7 @@
 #import "UIViewController+XWTransition.h"
 
 //vc
-//#import "HHWXLoginVC.h"
+#import "HHWXLoginVC.h"
 
 
 
