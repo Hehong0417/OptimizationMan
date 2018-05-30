@@ -109,10 +109,6 @@
 		CE52D43E20996A7000C7BAF6 /* HHPostEvaluationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D43D20996A7000C7BAF6 /* HHPostEvaluationVC.m */; };
 		CE52D44120999E6300C7BAF6 /* HHEvaluteStarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D44020999E6300C7BAF6 /* HHEvaluteStarCell.m */; };
 		CE52D4452099A02400C7BAF6 /* CDPStarEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D4432099A02400C7BAF6 /* CDPStarEvaluation.m */; };
-		CE52D44D2099A06F00C7BAF6 /* 评价1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D4472099A06E00C7BAF6 /* 评价1@2x.png */; };
-		CE52D44F2099A06F00C7BAF6 /* 评价1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D4492099A06E00C7BAF6 /* 评价1@3x.png */; };
-		CE52D4512099A06F00C7BAF6 /* 评价2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D44B2099A06E00C7BAF6 /* 评价2@3x.png */; };
-		CE52D4522099A06F00C7BAF6 /* 评价2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D44C2099A06E00C7BAF6 /* 评价2@2x.png */; };
 		CE52D4552099ACD600C7BAF6 /* HHSelectPhotosCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D4542099ACD600C7BAF6 /* HHSelectPhotosCell.m */; };
 		CE52D45C2099ADA900C7BAF6 /* photo_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D4592099ADA800C7BAF6 /* photo_delete@2x.png */; };
 		CE52D45D2099ADA900C7BAF6 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D45A2099ADA800C7BAF6 /* AlbumAddBtn@2x.png */; };
@@ -525,10 +521,6 @@
 		CE52D44020999E6300C7BAF6 /* HHEvaluteStarCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHEvaluteStarCell.m; sourceTree = "<group>"; };
 		CE52D4432099A02400C7BAF6 /* CDPStarEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPStarEvaluation.m; sourceTree = "<group>"; };
 		CE52D4442099A02400C7BAF6 /* CDPStarEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPStarEvaluation.h; sourceTree = "<group>"; };
-		CE52D4472099A06E00C7BAF6 /* 评价1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "评价1@2x.png"; sourceTree = "<group>"; };
-		CE52D4492099A06E00C7BAF6 /* 评价1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "评价1@3x.png"; sourceTree = "<group>"; };
-		CE52D44B2099A06E00C7BAF6 /* 评价2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "评价2@3x.png"; sourceTree = "<group>"; };
-		CE52D44C2099A06E00C7BAF6 /* 评价2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "评价2@2x.png"; sourceTree = "<group>"; };
 		CE52D4532099ACD600C7BAF6 /* HHSelectPhotosCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSelectPhotosCell.h; sourceTree = "<group>"; };
 		CE52D4542099ACD600C7BAF6 /* HHSelectPhotosCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSelectPhotosCell.m; sourceTree = "<group>"; };
 		CE52D4582099ADA800C7BAF6 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
@@ -1068,17 +1060,6 @@
 			path = CDPStarEvaluation;
 			sourceTree = "<group>";
 		};
-		CE52D4462099A06E00C7BAF6 /* image */ = {
-			isa = PBXGroup;
-			children = (
-				CE52D4472099A06E00C7BAF6 /* 评价1@2x.png */,
-				CE52D4492099A06E00C7BAF6 /* 评价1@3x.png */,
-				CE52D44C2099A06E00C7BAF6 /* 评价2@2x.png */,
-				CE52D44B2099A06E00C7BAF6 /* 评价2@3x.png */,
-			);
-			path = image;
-			sourceTree = "<group>";
-		};
 		CE52D4572099ADA800C7BAF6 /* selectPhotosCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1425,7 +1406,6 @@
 		CE999B47208DE33B00B9307D /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				CE52D4462099A06E00C7BAF6 /* image */,
 				CE52D4422099A02400C7BAF6 /* CDPStarEvaluation */,
 				CE999B48208DE33B00B9307D /* LHVerifyCodeButton */,
 				CE999B4B208DE33B00B9307D /* tableHead */,
@@ -2434,11 +2414,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEE2A0CF209333D400843DBD /* HHGoodDealRecordInfoDetailCell.xib in Resources */,
-				CE52D4512099A06F00C7BAF6 /* 评价2@3x.png in Resources */,
 				CE21912B208EDA0A005351B4 /* SearchView.xib in Resources */,
 				CE219374208EE853005351B4 /* HHShippingAddressCell.xib in Resources */,
 				CE457D4120A06130004DB819 /* HHBroughtGiftResultCell.xib in Resources */,
-				CE52D44D2099A06F00C7BAF6 /* 评价1@2x.png in Resources */,
 				CEE2A03D2093247B00843DBD /* HJOrderCell.xib in Resources */,
 				CE52D45C2099ADA900C7BAF6 /* photo_delete@2x.png in Resources */,
 				CEE2A0D2209333D400843DBD /* HHGoodSpecificationsCell.xib in Resources */,
@@ -2458,7 +2436,6 @@
 				CE999BC2208DE33B00B9307D /* mengyaProject.ipa in Resources */,
 				CE219315208EE6B8005351B4 /* HHCartCell.xib in Resources */,
 				CE219129208EDA0A005351B4 /* SearchResultTableViewCell.xib in Resources */,
-				CE52D44F2099A06F00C7BAF6 /* 评价1@3x.png in Resources */,
 				CE2F1A8320AFC19C007ACE58 /* HHApplyDelegateVC.xib in Resources */,
 				CE21911E208EDA0A005351B4 /* ClassifyTitles.plist in Resources */,
 				CE21911C208EDA0A005351B4 /* ClassiftyGoods01.plist in Resources */,
@@ -2480,7 +2457,6 @@
 				CE2F1A8820AFCC28007ACE58 /* HHApplyDelegateCell.xib in Resources */,
 				CE999AA2208DDDDA00B9307D /* Main.storyboard in Resources */,
 				CE21912C208EDA0A005351B4 /* SearchDetailViewController.xib in Resources */,
-				CE52D4522099A06F00C7BAF6 /* 评价2@2x.png in Resources */,
 				CE219126208EDA0A005351B4 /* SearchDetailView.xib in Resources */,
 				CE219382208F032A005351B4 /* HXHomeCollectionCell.xib in Resources */,
 				CEBFE259209D6854005E09CD /* HHsearchBarView.xib in Resources */,

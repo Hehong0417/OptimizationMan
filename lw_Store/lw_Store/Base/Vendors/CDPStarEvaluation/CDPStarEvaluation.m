@@ -14,7 +14,7 @@
     if (self=[super init]) {
         _commentText=@"无";
         //空星级imageView
-        UIImage *starEmptyImag = [UIImage imageNamed:@"评价1"];
+        UIImage *starEmptyImag = [UIImage imageNamed:@"stoke_star"];
         _starEmptyImageView=[[UIImageView alloc] initWithImage:starEmptyImag];
         _starEmptyImageView.frame = CGRectMake(frame.origin.x, frame.origin.y,starEmptyImag.size.width, frame.size.height);
         _starEmptyImageView.contentMode=UIViewContentModeLeft;
@@ -22,7 +22,7 @@
         
         [view addSubview:_starEmptyImageView];
         //满星级imageView(之前等比例适配出现问题，因为赶时间，采用了以下解决方法适配...)
-        _starImageView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"评价2"]];
+        _starImageView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"solid_start"]];
         _starImageView.frame=CGRectMake(frame.origin.x,frame.origin.y,0,frame.size.height);
         _starImageView.contentMode=UIViewContentModeLeft;
         _starImageView.clipsToBounds=YES;

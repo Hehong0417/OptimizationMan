@@ -21,6 +21,9 @@
 #import "HHSetVC.h"
 
 @interface LwPersonalCenter ()
+{
+    UIButton *rightBtn;
+}
 @property(nonatomic,strong) HXMineHeadView *mineHeadView;
 @property(nonatomic,strong) HHMineModel  *mineModel;
 @property(nonatomic,strong) NSString  *usableComm;
@@ -43,11 +46,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     self.tableV.tableHeaderView = self.mineHeadView;
     
-    UIButton *rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@""]];
-    [rightBtn setTitle:@"消息" forState:UIControlStateNormal];
+    rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     
     [self getDatas];
@@ -90,7 +91,9 @@
                 self.isAgent = api.Data[@"isAgent"];
                 self.isJoinAgent = api.Data[@"isJoinAgent"];
                 HJSettingItem *item = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-                item.title = [NSString stringWithFormat:@"您是由【%@】推荐的",self.mineModel.ReferralUserName];
+                if (self.mineModel.ReferralUserName) {
+                    item.title = [NSString stringWithFormat:@"您是由【%@】推荐的",self.mineModel.ReferralUserName];
+                }
                 self.isJoinAgent = api.Data[@"isJoinAgent"];
                 if ([self.isAgent isEqual:@0]) {
                     HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
@@ -208,26 +211,49 @@
     
     if ([self.isAgent isEqual:@0]) {
         
-        return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+        if (self.mineModel.ReferralUserName) {
+                return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+            }else{
+                return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+            }
     }
-    return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+    if (self.mineModel.ReferralUserName) {
+
+       return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+    }else{
+        return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+    }
 
 }
 - (NSArray *)groupIcons {
     
     if ([self.isAgent isEqual:@0]) {
-        
+        if (self.mineModel.ReferralUserName) {
         return @[@[@"",@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+        }else{
+            return @[@[@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+        }
     }
-    return @[@[@"",@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-
+    if (self.mineModel.ReferralUserName) {
+       return @[@[@"",@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+    }else{
+        return @[@[@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+    }
 }
 - (NSArray *)groupDetials{
     if ([self.isAgent isEqual:@0]) {
+        if (self.mineModel.ReferralUserName) {
         return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+        }else{
+            return @[@[@"推广二维码",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+        }
+    }else{
+        if (self.mineModel.ReferralUserName) {
+            return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+        }else{
+            return @[@[@"推广二维码",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+        }
     }
-    return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-
 }
 - (NSArray *)indicatorIndexPaths{
     NSArray *indexPaths = @[[NSIndexPath indexPathForRow:0 inSection:0]];

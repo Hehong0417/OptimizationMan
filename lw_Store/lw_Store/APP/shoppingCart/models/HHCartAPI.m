@@ -92,7 +92,7 @@
     return api;
 }
 
-//加入购车
+//加入购物车
 + (instancetype)postAddProductsWithsku_id:(NSString *)sku_id quantity:(NSString *)quantity{
     
     HHCartAPI *api = [self new];

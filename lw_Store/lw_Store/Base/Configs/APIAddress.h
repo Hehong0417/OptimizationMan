@@ -119,8 +119,8 @@ typedef enum : NSUInteger {
 #define API_AddQuantity API_SUB_URL2(@"ShopCart/Create")
 //3.2减少购物车数量
 #define API_minusQuantity API_SUB_URL2(@"ShopCart/Minus")
-//3.3加入购车商品
-#define API_AddProducts API_SUB_URL1(@"ShopCarWeb/JoinShopCart")
+//3.3加入购物车
+#define API_AddProducts API_SUB_URL2(@"ShopCarWeb/Create")
 //3.4删除购物车
 #define API_ShopCart_Delete API_SUB_URL2(@"ShopCart/Delete")
 //3.5获得结算订单

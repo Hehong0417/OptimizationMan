@@ -103,7 +103,7 @@
                                         kKeyWindow.rootViewController = [[HJTabBarController alloc] init];
                                       
 
-                                    }else if (api.State == 0) {
+                                    }else if (api.State == -99) {
                                         
                                         [self registerWithName:resp.name image:resp.iconurl openid:resp.openid unionId:resp.unionId];
                                     }else{
@@ -135,14 +135,12 @@
     [[[HHUserLoginAPI postRegsterWithopenId:openid name:name image:image unionId:unionId] netWorkClient] postRequestInView:nil finishedBlock:^(HHUserLoginAPI *api, NSError *error) {
 
             if (!error) {
-            if (api.State == 0) {
+            if (api.State == 1) {
                 NSString *token = api.Data;
                 HJUser *user = [HJUser sharedUser];
                 user.token = token;
                 [user write];
-
                 kKeyWindow.rootViewController = [[HJTabBarController alloc] init];
-
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
                 [hud hideAnimated:YES];

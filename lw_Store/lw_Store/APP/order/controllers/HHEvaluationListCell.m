@@ -48,16 +48,16 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     _nameLable.font = [UIFont systemFontOfSize:14];
     _nameLable.textColor = [UIColor colorWithRed:(54 / 255.0) green:(71 / 255.0) blue:(121 / 255.0) alpha:0.9];
     
-    UIImage *gradeImage = [UIImage imageNamed:@"评价1.png"];
+    UIImage *gradeImage = [UIImage imageNamed:@"stoke_star"];
     _gradeEmptyImgV = [[UIImageView alloc] init];
-    _gradeEmptyImgV.image = [UIImage imageNamed:@"评价1.png"];
-    _gradeEmptyImgV.hidden = YES;
+    _gradeEmptyImgV.image = [UIImage imageNamed:@"stoke_star"];
+    _gradeEmptyImgV.hidden = NO;
     
     _gradeImgV = [[UIImageView alloc] init];
     _gradeImgV.contentMode = UIViewContentModeLeft;
     _gradeImgV.clipsToBounds = YES;
-    _gradeImgV.image = [UIImage imageNamed:@"评价2.png"];
-    _gradeImgV.hidden = YES;
+    _gradeImgV.image = [UIImage imageNamed:@"solid_start"];
+    _gradeImgV.hidden = NO;
 
     _timeLabel = [UILabel new];
     _timeLabel.textColor = KA0LabelColor;
@@ -153,7 +153,7 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     
     NSInteger grade = model.grade.integerValue;
     CGFloat width = _gradeEmptyImgV.frame.size.width/5;
-    UIImage *gradeImage = [UIImage imageNamed:@"评价1.png"];
+    UIImage *gradeImage = [UIImage imageNamed:@"stoke_star"];
     _gradeImgV.sd_resetLayout
     .leftSpaceToView(_nameLable, 10)
     .centerYEqualToView(_nameLable)

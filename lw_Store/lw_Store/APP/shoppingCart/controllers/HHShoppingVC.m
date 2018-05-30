@@ -109,59 +109,59 @@
     [self.navigationController popVC];
     
 }
-//#pragma mark - DZNEmptyDataSetDelegate
-//
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"img_shopcar_disable"];
-//}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//  return [[NSAttributedString alloc] initWithString:@"购物车是空的" attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
-//}
-//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    return [[NSAttributedString alloc] initWithString:@"再忙也要犒劳下自己" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-//
-//}
-//
-//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-//
-//    return [[NSAttributedString alloc] initWithString:@"去逛逛" attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
-//
-//}
-//
-//- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
-//{
-//    UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
-//    UIEdgeInsets   rectInsets = UIEdgeInsetsMake(0.0, -30, 0.0, -30);
-//
-//    UIImage *image = [UIImage imageWithColor:APP_COMMON_COLOR redius:5 size:CGSizeMake(ScreenW-60, 40)];
-//
-//    return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-//}
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-//
-//    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
-//    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
-//    return -offset;
-//
-//}
-//- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    return 20;
-//
-//}
-//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
-//
-//    HHGoodListVC *vc = [HHGoodListVC new];
-//    vc.type = nil;
-//    vc.categoryId = nil;
-//    vc.name = nil;
-//    vc.orderby = nil;
-//    [self.navigationController pushVC:vc];
-//
-//}
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"img_shopcar_disable"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+
+  return [[NSAttributedString alloc] initWithString:@"购物车是空的" attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+}
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+
+    return [[NSAttributedString alloc] initWithString:@"再忙也要犒劳下自己" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+
+    return [[NSAttributedString alloc] initWithString:@"去逛逛" attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
+
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
+{
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
+    UIEdgeInsets   rectInsets = UIEdgeInsetsMake(0.0, -30, 0.0, -30);
+
+    UIImage *image = [UIImage imageWithColor:APP_COMMON_COLOR redius:5 size:CGSizeMake(ScreenW-60, 40)];
+
+    return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+
+}
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
+
+    return 20;
+
+}
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+
+    HHGoodListVC *vc = [HHGoodListVC new];
+    vc.type = nil;
+    vc.categoryId = nil;
+    vc.name = nil;
+    vc.orderby = nil;
+    [self.navigationController pushVC:vc];
+
+}
 
 - (void)isLoginOrNot{
     //

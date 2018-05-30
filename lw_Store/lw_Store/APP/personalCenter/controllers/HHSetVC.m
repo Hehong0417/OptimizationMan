@@ -40,6 +40,11 @@
 //退出登录
 - (void)exitAction:(UIButton *)btn{
     
+    HJUser *user = [HJUser sharedUser];
+    user.token = nil;
+    [user write];
+    
+    kKeyWindow.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[HHWXLoginVC new]];
     
 }
 - (NSArray *)groupIcons{

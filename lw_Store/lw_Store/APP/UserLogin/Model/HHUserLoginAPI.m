@@ -43,7 +43,7 @@
         [api.parameters setObject:unionId forKey:@"unionId"];
     }
     [api.parameters setObject:@"4" forKey:@"type"];
-    [api.parameters setObject:Cid forKey:@"type"];
+    [api.parameters setObject:Cid forKey:@"cid"];
 
     return api;
     
@@ -59,7 +59,7 @@
     if (psw) {
         [api.parameters setObject:psw forKey:@"psw"];
     }
-    [api.parameters setObject:Cid forKey:@"type"];
+    [api.parameters setObject:Cid forKey:@"cid"];
 
     return api;
 }

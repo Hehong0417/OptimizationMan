@@ -133,92 +133,92 @@
 }
 #pragma mark - DZNEmptyDataSetDelegate
 
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//            return [UIImage imageNamed:@"img_list_disable"];
-//        }else{
-//            return [UIImage imageNamed:@"img_network_disable"];
-//        }
-//    }else{
-//        //没加载过
-//        return [UIImage imageNamed:@""];
-//    }
-//}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    NSString *titleStr;
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//        titleStr = @"订单是空的";
-//        }else{
-//        titleStr = @"";
-//        }
-//    }else{
-//        //没加载过
-//        titleStr = @"";
-//    }
-//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
-//}
-//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    NSString *titleStr;
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//            titleStr = @"赶紧把你喜欢的宝贝带回家";
-//        }else{
-//            titleStr = @"网络竟然崩溃了～";
-//        }
-//     }else{
-//        //没加载过
-//        titleStr = @"";
-//    }
-//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-//}
-//
-//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-//
-//    NSString *titleStr;
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//        titleStr = @"去下单";
-//        }else{
-//        titleStr = @"刷新试试";
-//        }
-//    }else{
-//        //没加载过
-//        titleStr = @"";
-//    }
-//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
-//
-//}
-//- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
-//{
-//    UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
-//    UIEdgeInsets   rectInsets = UIEdgeInsetsMake(0.0, -30, 0.0, -30);
-//
-//    UIImage *image = [UIImage imageWithColor:APP_COMMON_COLOR redius:5 size:CGSizeMake(ScreenW-60, 40)];
-//
-//    return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-//}
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-//
-//    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
-//    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
-//    return -offset;
-//}
-//- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
-//    return 20;
-//}
-//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
-//    if (self.isWlan) {
-////     HHCategoryVC *vc = [HHCategoryVC new];
-////     [self.navigationController pushVC:vc];
-//    }else{
-//        [self.tableView.mj_header beginRefreshing];
-//    }
-//}
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    if (self.isLoading) {
+        if (self.isWlan) {
+            return [UIImage imageNamed:@"img_list_disable"];
+        }else{
+            return [UIImage imageNamed:@"img_network_disable"];
+        }
+    }else{
+        //没加载过
+        return [UIImage imageNamed:@""];
+    }
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+
+    NSString *titleStr;
+    if (self.isLoading) {
+        if (self.isWlan) {
+        titleStr = @"订单是空的";
+        }else{
+        titleStr = @"";
+        }
+    }else{
+        //没加载过
+        titleStr = @"";
+    }
+    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+}
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+
+    NSString *titleStr;
+    if (self.isLoading) {
+        if (self.isWlan) {
+            titleStr = @"赶紧把你喜欢的宝贝带回家";
+        }else{
+            titleStr = @"网络竟然崩溃了～";
+        }
+     }else{
+        //没加载过
+        titleStr = @"";
+    }
+    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+
+    NSString *titleStr;
+    if (self.isLoading) {
+        if (self.isWlan) {
+        titleStr = @"去下单";
+        }else{
+        titleStr = @"刷新试试";
+        }
+    }else{
+        //没加载过
+        titleStr = @"";
+    }
+    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
+
+}
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
+{
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
+    UIEdgeInsets   rectInsets = UIEdgeInsetsMake(0.0, -30, 0.0, -30);
+
+    UIImage *image = [UIImage imageWithColor:APP_COMMON_COLOR redius:5 size:CGSizeMake(ScreenW-60, 40)];
+
+    return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+}
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
+    return 20;
+}
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+    if (self.isWlan) {
+//     HHCategoryVC *vc = [HHCategoryVC new];
+//     [self.navigationController pushVC:vc];
+    }else{
+        [self.tableView.mj_header beginRefreshing];
+    }
+}
 
 #pragma mark - NetWork
 

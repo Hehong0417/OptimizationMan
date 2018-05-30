@@ -78,9 +78,9 @@
         _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", NULL];
         // 设置超时时间
         _manager.requestSerializer.timeoutInterval = kTimeoutInterval;
-//        NSString *token = [HJUser sharedUser].token;
-        NSString *token = @"aafeee1c8098";
+        NSString *token = [HJUser sharedUser].token;
         
+//        NSString *token = @"aafeee1c8098";
         [_manager.requestSerializer setValue:token  forHTTPHeaderField:@"Authorize"];
     }
     
