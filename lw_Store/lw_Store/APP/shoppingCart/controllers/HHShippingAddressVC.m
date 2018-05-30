@@ -76,17 +76,17 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
 {
-    return [UIImage imageNamed:@"img_address_disable"];
+    return [UIImage imageNamed:@"no_address"];
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
     
-    return [[NSAttributedString alloc] initWithString:@"地址是空的" attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+    return [[NSAttributedString alloc] initWithString:@"地址是空的" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-    
-    return [[NSAttributedString alloc] initWithString:@"别让自己的宝贝无家可归" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-    
-}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"别让自己的宝贝无家可归" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     

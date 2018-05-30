@@ -16,7 +16,6 @@
     
     [self.tagLabel lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     [self.useBtn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
-    [self.bg_view lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     
 }
 - (void)setModel:(HHMineModel *)model{

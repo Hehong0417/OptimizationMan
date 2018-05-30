@@ -65,17 +65,17 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
 {
-    return [UIImage imageNamed:@"img_address_disable"];
+    return [UIImage imageNamed:@"no_message_list"];
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
     
-    return [[NSAttributedString alloc] initWithString:@"暂无消息" attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+    return [[NSAttributedString alloc] initWithString:@"消息列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-    
-    return [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-    
-}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     

@@ -111,8 +111,8 @@
 		CE52D4452099A02400C7BAF6 /* CDPStarEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D4432099A02400C7BAF6 /* CDPStarEvaluation.m */; };
 		CE52D4552099ACD600C7BAF6 /* HHSelectPhotosCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D4542099ACD600C7BAF6 /* HHSelectPhotosCell.m */; };
 		CE52D45C2099ADA900C7BAF6 /* photo_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D4592099ADA800C7BAF6 /* photo_delete@2x.png */; };
-		CE52D45D2099ADA900C7BAF6 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D45A2099ADA800C7BAF6 /* AlbumAddBtn@2x.png */; };
 		CE52D45E2099ADA900C7BAF6 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D45B2099ADA800C7BAF6 /* CollectionViewCell.m */; };
+		CE614BDE20BE609D00105611 /* HHApplyRefundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE614BDC20BE609D00105611 /* HHApplyRefundVC.m */; };
 		CE6247E720B2B3FC001E0C56 /* HHPayTypeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6247E620B2B3FC001E0C56 /* HHPayTypeVC.m */; };
 		CE6247EA20B2B438001E0C56 /* HHPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6247E920B2B438001E0C56 /* HHPayTypeCell.m */; };
 		CE74AD1620BBDAFA00246896 /* HHSetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74AD1520BBDAFA00246896 /* HHSetVC.m */; };
@@ -525,8 +525,9 @@
 		CE52D4542099ACD600C7BAF6 /* HHSelectPhotosCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSelectPhotosCell.m; sourceTree = "<group>"; };
 		CE52D4582099ADA800C7BAF6 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
 		CE52D4592099ADA800C7BAF6 /* photo_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_delete@2x.png"; sourceTree = "<group>"; };
-		CE52D45A2099ADA800C7BAF6 /* AlbumAddBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlbumAddBtn@2x.png"; sourceTree = "<group>"; };
 		CE52D45B2099ADA800C7BAF6 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		CE614BDB20BE609D00105611 /* HHApplyRefundVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHApplyRefundVC.h; sourceTree = "<group>"; };
+		CE614BDC20BE609D00105611 /* HHApplyRefundVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHApplyRefundVC.m; sourceTree = "<group>"; };
 		CE6247E520B2B3FC001E0C56 /* HHPayTypeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPayTypeVC.h; sourceTree = "<group>"; };
 		CE6247E620B2B3FC001E0C56 /* HHPayTypeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHPayTypeVC.m; sourceTree = "<group>"; };
 		CE6247E820B2B438001E0C56 /* HHPayTypeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPayTypeCell.h; sourceTree = "<group>"; };
@@ -1066,7 +1067,6 @@
 				CE52D4582099ADA800C7BAF6 /* CollectionViewCell.h */,
 				CE52D45B2099ADA800C7BAF6 /* CollectionViewCell.m */,
 				CE52D4592099ADA800C7BAF6 /* photo_delete@2x.png */,
-				CE52D45A2099ADA800C7BAF6 /* AlbumAddBtn@2x.png */,
 			);
 			path = selectPhotosCell;
 			sourceTree = "<group>";
@@ -1811,6 +1811,8 @@
 				CEE2A0292093247A00843DBD /* HHOrderDetailTableHead.h */,
 				CEE2A0272093247A00843DBD /* HHOrderDetailTableHead.m */,
 				CEE2A0282093247A00843DBD /* HHOrderDetailTableHead.xib */,
+				CE614BDB20BE609D00105611 /* HHApplyRefundVC.h */,
+				CE614BDC20BE609D00105611 /* HHApplyRefundVC.m */,
 				CE52D43C20996A7000C7BAF6 /* HHPostEvaluationVC.h */,
 				CE52D43D20996A7000C7BAF6 /* HHPostEvaluationVC.m */,
 				CE52D4532099ACD600C7BAF6 /* HHSelectPhotosCell.h */,
@@ -2439,7 +2441,6 @@
 				CE2F1A8320AFC19C007ACE58 /* HHApplyDelegateVC.xib in Resources */,
 				CE21911E208EDA0A005351B4 /* ClassifyTitles.plist in Resources */,
 				CE21911C208EDA0A005351B4 /* ClassiftyGoods01.plist in Resources */,
-				CE52D45D2099ADA900C7BAF6 /* AlbumAddBtn@2x.png in Resources */,
 				CEBFE277209DB9D9005E09CD /* HHBargainingVC.xib in Resources */,
 				CE999BF4208DE33B00B9307D /* L_02.png in Resources */,
 				CE999BF6208DE33B00B9307D /* L_03.png in Resources */,
@@ -2662,6 +2663,7 @@
 				CEE2A0DD209333D400843DBD /* DCFeatureItemCell.m in Sources */,
 				CE999BCA208DE33B00B9307D /* NSString+NSRangeException.m in Sources */,
 				CEE2A0E2209333D400843DBD /* UIViewController+XWTransition.m in Sources */,
+				CE614BDE20BE609D00105611 /* HHApplyRefundVC.m in Sources */,
 				CEE2A0CE209333D400843DBD /* HHFinishLogVC.m in Sources */,
 				CEE2A0DA209333D400843DBD /* DCFeatureChoseTopCell.m in Sources */,
 				CEE2A0D4209333D400843DBD /* HHGoodBaseViewController.m in Sources */,

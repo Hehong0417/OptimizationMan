@@ -9,7 +9,7 @@
 #import "HHCouponUnusedVC.h"
 #import "HHCouponCell.h"
 
-@interface HHCouponUnusedVC ()
+@interface HHCouponUnusedVC ()<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong)   UITableView *tableV;
 @property (nonatomic, strong)   NSMutableArray *datas;
@@ -40,6 +40,8 @@
     self.page = 1;
     [self getDatas];
     
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
     
     [self addHeadRefresh];
     [self addFootRefresh];
@@ -61,6 +63,34 @@
     
 }];
 
+}
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"no_coupon"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return [[NSAttributedString alloc] initWithString:@"优惠券列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+    
+}
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return 20;
+    
 }
 - (void)addHeadRefresh{
     
@@ -149,7 +179,7 @@
     HHCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHCouponCell" forIndexPath:indexPath];
     cell.model = [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.row]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.bg_imagV.image = [UIImage imageNamed:@"23"];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

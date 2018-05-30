@@ -148,7 +148,8 @@
     HHCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHCouponCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.row]];
-
+    cell.bg_imagV.image = [UIImage imageNamed:@"11"];
+    cell.useBtn.hidden = YES;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

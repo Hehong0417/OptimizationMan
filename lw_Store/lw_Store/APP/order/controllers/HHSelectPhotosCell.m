@@ -124,7 +124,7 @@
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     if (indexPath.row == _photosArray.count) {
-        cell.imagev.image = [UIImage imageNamed:@"AlbumAddBtn@2x"];
+        cell.imagev.image = [UIImage imageNamed:@"add_pic"];
         //cell.imagev.backgroundColor = [UIColor redColor];
         cell.deleteButton.hidden = YES;
         

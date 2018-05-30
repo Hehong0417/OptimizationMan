@@ -31,7 +31,6 @@
     HJUser *user = [HJUser sharedUser];
     if (user.token) {
         self.window.rootViewController = [[HJTabBarController alloc] init];
-
     }else{
         self.window.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[[HHWXLoginVC alloc] init]];
     }

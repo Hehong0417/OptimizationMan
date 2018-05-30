@@ -113,24 +113,24 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
 {
-    return [UIImage imageNamed:@"img_shopcar_disable"];
+    return [UIImage imageNamed:@"no_cart"];
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
 
-  return [[NSAttributedString alloc] initWithString:@"购物车是空的" attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+  return [[NSAttributedString alloc] initWithString:@"购物车是空的" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-
-    return [[NSAttributedString alloc] initWithString:@"再忙也要犒劳下自己" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-
-}
-
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-
-    return [[NSAttributedString alloc] initWithString:@"去逛逛" attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
-
-}
-
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"再忙也要犒劳下自己" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
+//
+//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+//
+//    return [[NSAttributedString alloc] initWithString:@"去逛逛" attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
+//
+//}
+//
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
 {
     UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
@@ -152,16 +152,16 @@
     return 20;
 
 }
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
-
-    HHGoodListVC *vc = [HHGoodListVC new];
-    vc.type = nil;
-    vc.categoryId = nil;
-    vc.name = nil;
-    vc.orderby = nil;
-    [self.navigationController pushVC:vc];
-
-}
+//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+//
+//    HHGoodListVC *vc = [HHGoodListVC new];
+//    vc.type = nil;
+//    vc.categoryId = nil;
+//    vc.name = nil;
+//    vc.orderby = nil;
+//    [self.navigationController pushVC:vc];
+//
+//}
 
 - (void)isLoginOrNot{
     //
@@ -209,8 +209,10 @@
     self.datas = [data.products mutableCopy];
     if (self.datas.count ==0) {
         self.settleAccountView.hidden = YES;
+        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49-44);
     }else{
         self.settleAccountView.hidden = NO;
+        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49-50-44);
     }
     self.settleAccountView.selectBtn.selected = NO;
     //全选左边点击数据源

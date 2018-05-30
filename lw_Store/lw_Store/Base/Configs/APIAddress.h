@@ -131,7 +131,8 @@ typedef enum : NSUInteger {
 #define API_GetHotSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
 //3.8用户历史搜索
 #define API_GetUserSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
-
+// APP订单去支付
+#define API_Order_AppPay API_SUB_URL(@"Order/AppPay")
 /**
  *  我的
  */
@@ -201,7 +202,7 @@ typedef enum : NSUInteger {
 //4.45申请代理不支付
 #define API_ApplyAgent API_SUB_URL(@"UserInfo/ApplyAgent")
 //4.46申请代理并支付
-#define API_AgentApplyPay API_SUB_URL(@"UserInfo/AgentApplyPay")
+#define API_AgentApplyPay API_SUB_URL2(@"Order/AgentApplyRealAppPay")
 //4.47 粉丝列表搜索
 #define API_GetAgentList API_SUB_URL(@"UserInfo/GetAgentList")
 

@@ -20,7 +20,7 @@
 #import "HHMyOrderItem.h"
 #import "HHPostEvaluationVC.h"
 #import "HHEvaluationListVC.h"
-
+#import "HHApplyRefundVC.h"
 
 @interface LwOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -137,7 +137,7 @@
 {
     if (self.isLoading) {
         if (self.isWlan) {
-            return [UIImage imageNamed:@"img_list_disable"];
+            return [UIImage imageNamed:@"no_order"];
         }else{
             return [UIImage imageNamed:@"img_network_disable"];
         }
@@ -159,40 +159,40 @@
         //没加载过
         titleStr = @"";
     }
-    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(18),NSForegroundColorAttributeName:APP_purple_Color}];
+    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    NSString *titleStr;
+//    if (self.isLoading) {
+//        if (self.isWlan) {
+//            titleStr = @"赶紧把你喜欢的宝贝带回家";
+//        }else{
+//            titleStr = @"网络竟然崩溃了～";
+//        }
+//     }else{
+//        //没加载过
+//        titleStr = @"";
+//    }
+//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//}
 
-    NSString *titleStr;
-    if (self.isLoading) {
-        if (self.isWlan) {
-            titleStr = @"赶紧把你喜欢的宝贝带回家";
-        }else{
-            titleStr = @"网络竟然崩溃了～";
-        }
-     }else{
-        //没加载过
-        titleStr = @"";
-    }
-    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-}
-
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-
-    NSString *titleStr;
-    if (self.isLoading) {
-        if (self.isWlan) {
-        titleStr = @"去下单";
-        }else{
-        titleStr = @"刷新试试";
-        }
-    }else{
-        //没加载过
-        titleStr = @"";
-    }
-    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
-
-}
+//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+//
+//    NSString *titleStr;
+//    if (self.isLoading) {
+//        if (self.isWlan) {
+//        titleStr = @"去下单";
+//        }else{
+//        titleStr = @"刷新试试";
+//        }
+//    }else{
+//        //没加载过
+//        titleStr = @"";
+//    }
+//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
+//
+//}
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
 {
     UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
@@ -211,14 +211,14 @@
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
     return 20;
 }
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
-    if (self.isWlan) {
+//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+//    if (self.isWlan) {
 //     HHCategoryVC *vc = [HHCategoryVC new];
 //     [self.navigationController pushVC:vc];
-    }else{
-        [self.tableView.mj_header beginRefreshing];
-    }
-}
+//    }else{
+//        [self.tableView.mj_header beginRefreshing];
+//    }
+//}
 
 #pragma mark - NetWork
 
@@ -316,7 +316,24 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.productModel =  model.items[indexPath.row];
             cell.nav = self.navigationController;
+            [self setStandardLabWith:model.items[indexPath.row] cell:cell];
             grideCell = cell;
+          [cell.StandardLab setTapActionWithBlock:^{
+              
+            UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            HHApplyRefundVC *vc = [board instantiateViewControllerWithIdentifier:@"HHApplyRefundVC"];
+              vc.applyRefund_block = ^{
+                  [self.datas removeAllObjects];
+                  if (self.sg_selectIndex == 0) {
+                      [self getDatasWithIndex:nil];
+                  }else{
+                  [self getDatasWithIndex:@(self.sg_selectIndex)];
+                  }
+              };
+              vc.productModel = model.items[indexPath.row];
+              vc.order_id = model.order_id;
+            [self.navigationController pushVC:vc];
+        }];
     }
    
     grideCell.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
@@ -386,10 +403,10 @@
             // @"交易成功";
             down_y = 52;
             //oneBtn
-            oneBtn.hidden = NO;
+            oneBtn.hidden = YES;
             //twoBtn
             twoBtn.hidden = NO;
-            [self setBtnAttrWithBtn:oneBtn Title:@"删除订单" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+//            [self setBtnAttrWithBtn:oneBtn Title:@"删除订单" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
             
             //twoBtn
             [self setBtnAttrWithBtn:twoBtn Title:@"追加评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
@@ -442,6 +459,33 @@
     return footView;
     
 }
+-(void)setStandardLabWith:(HHproductsModel *)productModel cell:(HJOrderCell *)cell{
+    cell.StandardLab.hidden = NO;
+    if (productModel.item_status.integerValue == 6) {
+        //退款中
+        cell.StandardLab.text = @" 退款中 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if (productModel.item_status.integerValue == 7){
+        cell.StandardLab.text = @" 退货中 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if (productModel.item_status.integerValue == 9){
+        cell.StandardLab.text = @" 已退款 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if (productModel.item_status.integerValue == 10){
+        cell.StandardLab.text = @" 已退货 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if (productModel.item_status.integerValue == 2){
+        cell.StandardLab.text = @" 申请退款 ";
+        cell.StandardLab.userInteractionEnabled = YES;
+    }else if (productModel.item_status.integerValue == 3){
+        cell.StandardLab.text = @" 申请退货 ";
+        cell.StandardLab.userInteractionEnabled = YES;
+    }else{
+        cell.StandardLab.text = @"";
+        cell.StandardLab.hidden = YES;
+        cell.StandardLab.userInteractionEnabled = NO;
+    }
+}
 - (void)setBtnAttrWithBtn:(UIButton *)btn Title:(NSString *)title CornerRadius:(NSInteger)cornerRadius borderColor:(UIColor *)borderColor titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backgroundColor{
     
     [btn setTitle:title forState:UIControlStateNormal];
@@ -491,7 +535,7 @@
 
     }else if([status isEqualToString:@"5"]){
         //交易成功-->删除订单
-        [self handleOrderWithorderid:model.order_id status:HHhandle_type_cancel btn:btn title:@"确定删除订单吗？"];
+//        [self handleOrderWithorderid:model.order_id status:HHhandle_type_delete btn:btn title:@"确定删除订单吗？"];
 
     }
 }

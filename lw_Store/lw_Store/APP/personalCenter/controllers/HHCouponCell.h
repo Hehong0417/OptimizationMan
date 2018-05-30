@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *suitConditionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *limitLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *bg_imagV;
 
 @property(nonatomic,strong) HHMineModel *model;
 

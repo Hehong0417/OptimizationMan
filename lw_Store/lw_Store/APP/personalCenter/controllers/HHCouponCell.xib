@@ -22,9 +22,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPa-93-Yey">
                         <rect key="frame" x="15" y="10" width="345" height="130"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S9W-ma-R1H">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="23" translatesAutoresizingMaskIntoConstraints="NO" id="S9W-ma-R1H">
                                 <rect key="frame" x="0.0" y="0.0" width="345" height="130"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.68627450980392157" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="适用条件：全场直减6.00元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUy-9T-917">
                                 <rect key="frame" x="30" y="100" width="173" height="17"/>
@@ -111,7 +111,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.80000000000000004" green="0.68627450980392157" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qh1-nh-uuW" firstAttribute="centerY" secondItem="oXi-f6-8kP" secondAttribute="centerY" id="5S9-jo-jwZ"/>
                             <constraint firstAttribute="bottom" secondItem="S9W-ma-R1H" secondAttribute="bottom" id="6la-Z0-H8Q"/>
@@ -147,6 +147,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="bg_imagV" destination="S9W-ma-R1H" id="hvY-Fa-VZ7"/>
                 <outlet property="bg_view" destination="mPa-93-Yey" id="ONb-Pg-WjQ"/>
                 <outlet property="coupon_title" destination="53n-33-ZdQ" id="woG-L8-wPV"/>
                 <outlet property="dateTimeLabel" destination="HSl-zh-wqQ" id="xAq-2R-jnh"/>
@@ -159,4 +160,7 @@
             <point key="canvasLocation" x="33.5" y="54"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="23" width="340" height="130"/>
+    </resources>
 </document>

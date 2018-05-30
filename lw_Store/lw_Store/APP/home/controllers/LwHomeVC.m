@@ -63,7 +63,6 @@
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
     NSString *urlStr = navigationResponse.response.URL.absoluteString;
     HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[urlStr lh_parametersKeyValue]];
-
     //允许跳转
 
     if ([navigationResponse.response.URL.absoluteString containsString:@"ProductDetail"]) {

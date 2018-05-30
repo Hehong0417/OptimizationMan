@@ -10,7 +10,7 @@
 #import "HHFansListCell.h"
 #import "HHsearchBarView.h"
 
-@interface HHFansListVC ()<UITextFieldDelegate>
+@interface HHFansListVC ()<UITextFieldDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 {
     HHsearchBarView *search_view;
 }
@@ -44,6 +44,9 @@
     search_view.search_tf.delegate = self;
     
     [search_view.search_btn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
 }
 - (NSMutableArray *)datas{
@@ -90,6 +93,34 @@
         [self getDatas];
     }];
     self.tableView.mj_footer = refreshfooter;
+    
+}
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"no_fans"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return [[NSAttributedString alloc] initWithString:@"粉丝列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"别让自己的宝贝无家可归" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+    
+}
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return 20;
     
 }
 /**

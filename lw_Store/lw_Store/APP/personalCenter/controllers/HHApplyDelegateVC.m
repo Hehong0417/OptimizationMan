@@ -185,7 +185,6 @@
 //支付
 - (IBAction)payBtnAction:(UIButton *)sender {
     
-    
        __block  HHMineModel *model;
 
         [self.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -198,7 +197,6 @@
 
     NSString *vari_str = [self varifyDelegateName:model.AgentName phoneNum:self.phone_tf.text imageCode:self.codeImage_tf.text smsCode:self.verifyCode_tf.text];
     if (!vari_str) {
-        //
 
         //支付
         if (model.JoinMoney.floatValue<=0||model.JoinMoney.length==0) {
@@ -219,6 +217,7 @@
             }];
         }else{
             [[[HHMineAPI postAgentApplyPayWithagnetId:model.Id smsCode:self.verifyCode_tf.text mobile:self.phone_tf.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+                
                 if (!error) {
                     if (api.State == 1) {
                         

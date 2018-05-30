@@ -80,7 +80,7 @@
         _manager.requestSerializer.timeoutInterval = kTimeoutInterval;
         NSString *token = [HJUser sharedUser].token;
         
-//        NSString *token = @"aafeee1c8098";
+//        NSString *token = @"e1d100e77806";
         [_manager.requestSerializer setValue:token  forHTTPHeaderField:@"Authorize"];
     }
     
