@@ -42,7 +42,8 @@
     
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     [self addHeadRefresh];
     [self addFootRefresh];
 }

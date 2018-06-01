@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 
-@class HHproductsModel,HHordersModel,HHskuidModel;
+@class HHproductsModel,HHordersModel,HHskuidModel,HHproducts_item_Model;
 
 @interface HHCartModel : BaseModel
 //购物车
@@ -76,7 +76,7 @@
 @property(nonatomic,strong) NSString *sku_name;
 @property(nonatomic,strong) NSString *prodcut_name;
 @property(nonatomic,strong) NSString *item_status;
-
+@property(nonatomic,strong) NSArray <HHproducts_item_Model*>*product_item;
 
 //购物车
 @property(nonatomic,strong) NSString *pid;
@@ -104,4 +104,17 @@
 @property(nonatomic,strong) NSString *Price;
 @property(nonatomic,strong) NSString *Value;
 @property(nonatomic,strong) NSString *Quantity;
+@end
+
+//订单里的商品
+@interface HHproducts_item_Model : BaseModel
+
+@property(nonatomic,strong) NSString *product_item_id;
+@property(nonatomic,strong) NSString *product_item_price;
+@property(nonatomic,strong) NSString *product_item_quantity;
+@property(nonatomic,strong) NSString *product_item_sku_name;
+@property(nonatomic,strong) NSString *product_item_status;
+
+@property(nonatomic,strong) NSString *icon;
+@property(nonatomic,strong) NSString *prodcut_name;
 @end

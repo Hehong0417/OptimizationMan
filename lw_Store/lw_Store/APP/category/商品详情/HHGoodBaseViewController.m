@@ -538,7 +538,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
 //      是否存在收货地址
         [self isExitAddress];
     }
-
 }
 //是否存在收货地址
 - (void)isExitAddress{

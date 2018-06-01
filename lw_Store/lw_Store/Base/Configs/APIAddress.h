@@ -120,11 +120,11 @@ typedef enum : NSUInteger {
 //3.2减少购物车数量
 #define API_minusQuantity API_SUB_URL2(@"ShopCart/Minus")
 //3.3加入购物车
-#define API_AddProducts API_SUB_URL2(@"ShopCarWeb/Create")
+#define API_AddProducts API_SUB_URL2(@"ShopCart/Create")
 //3.4删除购物车
 #define API_ShopCart_Delete API_SUB_URL2(@"ShopCart/Delete")
 //3.5获得结算订单
-#define API_GetConfirmOrder API_SUB_URL(@"PreviewOrder/Get")
+#define API_GetConfirmOrder API_SUB_URL2(@"PreviewOrder/Get")
 //3.6去支付订单，提交订单
 #define API_CreateOrder API_SUB_URL(@"CustomerApi/ShopCart/CreateOrder")
 //3.7热门搜索
@@ -132,7 +132,7 @@ typedef enum : NSUInteger {
 //3.8用户历史搜索
 #define API_GetUserSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
 // APP订单去支付
-#define API_Order_AppPay API_SUB_URL(@"Order/AppPay")
+#define API_Order_AppPay API_SUB_URL2(@"Order/AppPay")
 /**
  *  我的
  */
@@ -217,6 +217,9 @@ typedef enum : NSUInteger {
  *  支付
  */
 
-//7.1微信支付
-#define API_GET_PAY_CHARGE  API_SUB_URL(@"app/wxtopay/wxtopay_anon")
+//微信支付通知
+#define KWX_Pay_Sucess_Notification @"KWX_Pay_Sucess_Notification" //微信支付成功通知
+#define KWX_Pay_Fail_Notification @"KWX_Pay_Fail_Notification" //微信支付失败通知
 
+//代理支付完成，刷新个人中心
+#define KPersonCter_Refresh_Notification @"KPersonCter_Refresh_Notification" //微信支付失败通知

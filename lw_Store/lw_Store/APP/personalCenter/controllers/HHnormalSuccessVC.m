@@ -23,11 +23,25 @@
 
     [self.back_btn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     
+    self.title_label.text = self.title_label_str;
+    self.discrib_label.text = [NSString stringWithFormat:@"恭喜你，正式成为%@商...",self.discrib_str];
+
+    //抓取返回按钮
+    UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
+    [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)backBtnAction{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:KPersonCter_Refresh_Notification object:nil];
+
+    
+    [self.navigationController popToRootVC];
+    
 }
 - (IBAction)backAction:(UIButton *)sender {
     
-    
-    
+    [self backBtnAction];
 }
 
 

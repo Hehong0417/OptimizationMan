@@ -33,7 +33,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="审核申请中，请你耐心等待..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhb-cU-M5l">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhb-cU-M5l">
                     <rect key="frame" x="0.0" y="215" width="375" height="27"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="375" id="bgW-iU-615"/>
@@ -83,6 +83,6 @@
         </view>
     </objects>
     <resources>
-        <image name="icon_paysuccess_default" width="64" height="64"/>
+        <image name="icon_paysuccess_default" width="50" height="50"/>
     </resources>
 </document>

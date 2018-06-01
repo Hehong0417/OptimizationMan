@@ -26,7 +26,8 @@
     
     HHBargainingHead *head_view = [[HHBargainingHead alloc] initWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(370)+100+40)];
     self.tableView.tableHeaderView = head_view;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     
     UIView *foot_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(100))];
     UIButton *foot_btn = [UIButton lh_buttonWithFrame:CGRectMake(WidthScaleSize_W(30), 0, ScreenW - 2*WidthScaleSize_W(30), WidthScaleSize_H(35)) target:self action:@selector(bargainingAction:) title:@"喊朋友一起砍" titleColor:kWhiteColor font:FONT(14) backgroundColor:kBlackColor];

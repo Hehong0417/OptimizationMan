@@ -39,6 +39,7 @@
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    self.tableView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.tableView];
     
     

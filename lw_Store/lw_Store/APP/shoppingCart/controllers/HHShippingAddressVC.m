@@ -48,6 +48,7 @@
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    self.tableView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HHShippingAddressCell" bundle:nil] forCellReuseIdentifier:@"HHShippingAddressCell"];
@@ -80,7 +81,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
     
-    return [[NSAttributedString alloc] initWithString:@"地址是空的" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+    return [[NSAttributedString alloc] initWithString:@"收货地址为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
 //- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
 //

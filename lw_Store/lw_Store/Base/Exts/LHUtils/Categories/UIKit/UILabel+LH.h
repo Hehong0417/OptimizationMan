@@ -64,4 +64,11 @@
 - (NSMutableAttributedString *)lh_addUnderlineAtContent:(NSString *)content rangeStr:(NSString *)rangeStr color:(UIColor *)color;
 
 
+/**
+ 添加中划线
+ 
+ @param content 内容
+ @param rangeStr 需要添加中划线的内容
+ */
+- (NSMutableAttributedString *)lh_addtrikethroughStyleAtContent:(NSString *)content rangeStr:(NSString *)rangeStr color:(UIColor *)color;
 @end

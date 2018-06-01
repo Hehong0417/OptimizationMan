@@ -23,7 +23,8 @@
     [self setUpFeatureAlterView];
     
     [self.tableView registerClass:[HHPayTypeCell class] forCellReuseIdentifier:@"HHPayTypeCell"];
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     UIView *header = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 50) backColor:kWhiteColor];
     UILabel *lab = [UILabel lh_labelWithFrame:CGRectMake(15, 0, ScreenW-30, 50) text:@"支付方式" textColor:kBlackColor font:BoldFONT(16) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
     [header addSubview:lab];

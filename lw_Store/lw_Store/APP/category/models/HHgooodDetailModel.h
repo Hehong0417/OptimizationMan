@@ -19,6 +19,9 @@
 @property(nonatomic,strong) NSString *Stock;
 @property(nonatomic,strong) NSString *SaleCounts;
 @property(nonatomic,strong) NSString *Description;
+@property(nonatomic,strong) NSString *StrFreightModey;
+
+
 //属性值
 @property(nonatomic,strong) NSArray <HHattributeValueModel *>*AttributeValueList;
 

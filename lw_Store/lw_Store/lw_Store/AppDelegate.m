@@ -15,7 +15,7 @@
 #import "WXApi.h"
 #import <UMSocialCore/UMSocialCore.h>
 
-@interface AppDelegate ()
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -90,9 +90,34 @@
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
     if (!result) {
         // 其他如支付等SDK的回调
+        return [WXApi handleOpenURL:url delegate:self];
     }
     return result;
 }
 
+//微信支付回调
+- (void)onResp:(BaseResp *)resp {
+    
+    if ([resp isKindOfClass:[PayResp class]]){
+        PayResp*response = (PayResp*)resp;
+        
+        switch(response.errCode){
+            case WXSuccess:{
+                //服务器端查询支付通知或查询API返回的结果再提示成功
+                [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Sucess_Notification object:@""];
+                
+                NSLog(@"支付成功");
+                
+            }
+                break;
+            default:{
+                [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Fail_Notification object:@""];
+                
+                NSLog(@"支付失败，retcode=%d",resp.errCode);
+            }
+                break;
+        }
+    }
+}
 
 @end

@@ -40,14 +40,15 @@
     search_view = [[[NSBundle mainBundle] loadNibNamed:@"HHsearchBarView" owner:nil options:nil] firstObject];
     search_view.frame = CGRectMake(0, 0, ScreenW, 90);
     self.tableView.tableHeaderView = search_view;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     search_view.search_tf.delegate = self;
     
     [search_view.search_btn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    
+
 }
 - (NSMutableArray *)datas{
     if (!_datas) {

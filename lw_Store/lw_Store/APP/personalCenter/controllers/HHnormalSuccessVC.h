@@ -11,5 +11,7 @@
 @interface HHnormalSuccessVC : UIViewController
 
 @property (strong, nonatomic) NSString *title_str;
+@property (strong, nonatomic) NSString *discrib_str;
+@property (strong, nonatomic) NSString *title_label_str;
 
 @end

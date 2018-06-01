@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface HJOrderCell : UITableViewCell
 
-@property (nonatomic, strong) HHproductsModel *productModel;
+@property (nonatomic, strong) HHproducts_item_Model *productModel;
+
 @property (weak, nonatomic) IBOutlet UILabel *sku_nameLab;
 @property (strong, nonatomic) IBOutlet UILabel *StandardLab;
 @property (nonatomic, strong) UINavigationController *nav;

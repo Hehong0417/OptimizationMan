@@ -55,6 +55,8 @@
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     [self.view addSubview:self.tableView];
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) backColor:KVCBackGroundColor];

@@ -86,6 +86,7 @@
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    self.tableView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HHCartCell" bundle:nil] forCellReuseIdentifier:@"HHCartCell"];
@@ -117,7 +118,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
 
-  return [[NSAttributedString alloc] initWithString:@"购物车是空的" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+  return [[NSAttributedString alloc] initWithString:@"购物车列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
 //- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
 //
@@ -507,6 +508,10 @@
         
         
     }
+}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
 }
 - (void)deleteGetData{
     

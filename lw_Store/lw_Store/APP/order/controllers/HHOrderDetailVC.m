@@ -167,7 +167,7 @@
         cell.textLabel.font = FONT(14);
         cell.detailTextLabel.font = FONT(14);
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"发货方式";
+            cell.textLabel.text = @"快递运费";
             NSString *detailText;
             if ([self.model.freight isEqualToString:@"0"]) {
                 detailText  = @"包邮";
@@ -178,12 +178,11 @@
             
         }else  if (indexPath.row == 1){
             cell.textLabel.text = @"订单总计";
-            cell.detailTextLabel.text = self.model.payTotal;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal];
 
         }else {
             cell.textLabel.text = @"实付";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.total];
-
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal];
         }
 
         gridCell = cell;

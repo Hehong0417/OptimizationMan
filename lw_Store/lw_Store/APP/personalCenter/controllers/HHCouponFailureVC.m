@@ -73,7 +73,8 @@
     refreshHeader.lastUpdatedTimeLabel.hidden = YES;
     refreshHeader.stateLabel.hidden = YES;
     self.tableView.mj_header = refreshHeader;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
 }
 - (void)addFootRefresh{
     

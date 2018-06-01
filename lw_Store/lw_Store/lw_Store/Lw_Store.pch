@@ -94,7 +94,8 @@
 
 //vc
 #import "HHWXLoginVC.h"
-
+#import "WXApi.h"
+#import "HHWXModel.h"
 
 
 #endif /* Lw_Store_pch */

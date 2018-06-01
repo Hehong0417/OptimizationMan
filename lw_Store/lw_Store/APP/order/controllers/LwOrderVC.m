@@ -21,6 +21,7 @@
 #import "HHPostEvaluationVC.h"
 #import "HHEvaluationListVC.h"
 #import "HHApplyRefundVC.h"
+#import "HHOrderItemModel.h"
 
 @interface LwOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -29,6 +30,7 @@
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, assign)   NSInteger page;
 @property (nonatomic, strong)   NSMutableArray *datas;
+@property (nonatomic, strong)   NSMutableArray *items_arr;
 @property (nonatomic, assign)   NSInteger sg_selectIndex;
 @property (nonatomic, assign)   BOOL isFooterRefresh;
 @property(nonatomic,assign)   BOOL  isLoading;
@@ -47,7 +49,6 @@
     self.view.backgroundColor = KVCBackGroundColor;
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.page = 1;
-    self.datas = [NSMutableArray array];
     self.title_arr = @[@"全部",@"待付款",@"待发货",@"待收货",@"交易成功"];
     //UI
     [self setUI];
@@ -56,6 +57,18 @@
     //全部
     [self getDatasWithIndex:@0];
     
+}
+- (NSMutableArray *)datas{
+    if (!_datas) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
+}
+- (NSMutableArray *)items_arr{
+    if (!_items_arr) {
+        _items_arr = [NSMutableArray array];
+    }
+    return _items_arr;
 }
 #pragma mark - UI
 - (void)setUI{
@@ -100,12 +113,11 @@
         self.page = 1;
         self.isFooterRefresh = YES;
         [self.datas removeAllObjects];
+        [self.items_arr removeAllObjects];
         if (self.sg_selectIndex == 0) {
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }else if(self.sg_selectIndex == 4){
-            
             [self getDatasWithIndex:@(self.sg_selectIndex+1)];
-
         }else{
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }
@@ -151,7 +163,7 @@
     NSString *titleStr;
     if (self.isLoading) {
         if (self.isWlan) {
-        titleStr = @"订单是空的";
+        titleStr = @"订单列表为空";
         }else{
         titleStr = @"";
         }
@@ -161,38 +173,7 @@
     }
     return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    NSString *titleStr;
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//            titleStr = @"赶紧把你喜欢的宝贝带回家";
-//        }else{
-//            titleStr = @"网络竟然崩溃了～";
-//        }
-//     }else{
-//        //没加载过
-//        titleStr = @"";
-//    }
-//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-//}
 
-//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-//
-//    NSString *titleStr;
-//    if (self.isLoading) {
-//        if (self.isWlan) {
-//        titleStr = @"去下单";
-//        }else{
-//        titleStr = @"刷新试试";
-//        }
-//    }else{
-//        //没加载过
-//        titleStr = @"";
-//    }
-//    return [[NSAttributedString alloc] initWithString:titleStr attributes:@{NSFontAttributeName:BoldFONT(18),NSForegroundColorAttributeName:kWhiteColor}];
-//
-//}
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
 {
     UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
@@ -211,14 +192,6 @@
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
     return 20;
 }
-//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
-//    if (self.isWlan) {
-//     HHCategoryVC *vc = [HHCategoryVC new];
-//     [self.navigationController pushVC:vc];
-//    }else{
-//        [self.tableView.mj_header beginRefreshing];
-//    }
-//}
 
 #pragma mark - NetWork
 
@@ -254,6 +227,28 @@
 - (void)loadDataFinish:(NSArray *)arr {
 
     [self.datas addObjectsFromArray:arr];
+    
+    //处理数据
+    [self.datas enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
+        HHCartModel *cart_m = [HHCartModel mj_objectWithKeyValues:dic];
+
+        HHOrderItemModel *orderItem_m = [HHOrderItemModel new];
+        [cart_m.items enumerateObjectsUsingBlock:^(HHproductsModel *productsM, NSUInteger idx, BOOL * _Nonnull stop) {
+
+            [productsM.product_item enumerateObjectsUsingBlock:^(HHproducts_item_Model * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                HHproducts_item_Model *products_item_m = [HHproducts_item_Model new];
+                products_item_m.prodcut_name = productsM.prodcut_name;
+                products_item_m.icon = productsM.icon;
+                products_item_m.product_item_id = obj.product_item_id;
+                products_item_m.product_item_price = obj.product_item_price;
+                products_item_m.product_item_quantity = obj.product_item_quantity;
+                products_item_m.product_item_status = obj.product_item_status;
+                products_item_m.product_item_sku_name = obj.product_item_sku_name;
+                [orderItem_m.items addObject:products_item_m];
+            }];
+        }];
+        [self.items_arr addObject:orderItem_m];
+    }];
     
     if (arr.count < 10) {
         [self endRefreshing:YES];
@@ -302,8 +297,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[indexPath.section]];
+    HHOrderItemModel *orders_m = self.items_arr[indexPath.section];
+
     UITableViewCell *grideCell;
-    if (indexPath.row == model.items.count){
+    if (indexPath.row == orders_m.items.count){
         //订单总计
         HHOrderTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHOrderTwoCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -314,18 +311,17 @@
         //商品
             HJOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HJOrderCell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.productModel =  model.items[indexPath.row];
+            cell.productModel =  orders_m.items[indexPath.row];
             cell.nav = self.navigationController;
-            [self setStandardLabWith:model.items[indexPath.row] cell:cell];
+            [self setStandardLabWith:orders_m.items[indexPath.row] cell:cell];
             grideCell = cell;
           [cell.StandardLab setTapActionWithBlock:^{
-              
             UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             HHApplyRefundVC *vc = [board instantiateViewControllerWithIdentifier:@"HHApplyRefundVC"];
               vc.applyRefund_block = ^{
                   [self.datas removeAllObjects];
                   if (self.sg_selectIndex == 0) {
-                      [self getDatasWithIndex:nil];
+                      [self getDatasWithIndex:@0];
                   }else{
                   [self getDatasWithIndex:@(self.sg_selectIndex)];
                   }
@@ -459,25 +455,26 @@
     return footView;
     
 }
--(void)setStandardLabWith:(HHproductsModel *)productModel cell:(HJOrderCell *)cell{
+-(void)setStandardLabWith:(HHproducts_item_Model *)productModel cell:(HJOrderCell *)cell{
     cell.StandardLab.hidden = NO;
-    if (productModel.item_status.integerValue == 6) {
+    NSLog(@"%@",productModel);
+    if (productModel.product_item_status.integerValue == 6) {
         //退款中
         cell.StandardLab.text = @" 退款中 ";
         cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.item_status.integerValue == 7){
+    }else if (productModel.product_item_status.integerValue == 7){
         cell.StandardLab.text = @" 退货中 ";
         cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.item_status.integerValue == 9){
+    }else if (productModel.product_item_status.integerValue == 9){
         cell.StandardLab.text = @" 已退款 ";
         cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.item_status.integerValue == 10){
+    }else if (productModel.product_item_status.integerValue == 10){
         cell.StandardLab.text = @" 已退货 ";
         cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.item_status.integerValue == 2){
+    }else if (productModel.product_item_status.integerValue == 2){
         cell.StandardLab.text = @" 申请退款 ";
         cell.StandardLab.userInteractionEnabled = YES;
-    }else if (productModel.item_status.integerValue == 3){
+    }else if (productModel.product_item_status.integerValue == 3){
         cell.StandardLab.text = @" 申请退货 ";
         cell.StandardLab.userInteractionEnabled = YES;
     }else{
@@ -524,7 +521,6 @@
         
     }else if([status isEqualToString:@"3"]){
         //待收货--->查看物流
-
                 //查看物流
 //                HHLogisticsVC *vc = [HHLogisticsVC new];
 //                vc.orderid = model.orderid;
@@ -535,7 +531,6 @@
 
     }else if([status isEqualToString:@"5"]){
         //交易成功-->删除订单
-//        [self handleOrderWithorderid:model.order_id status:HHhandle_type_delete btn:btn title:@"确定删除订单吗？"];
 
     }
 }
@@ -610,41 +605,24 @@
 
 //支付订单
 - (void)payOrderWithorderid:(NSString *)orderid btn:(UIButton *)btn{
-//
-//    HHPostEvaluationVC *vc =[HHPostEvaluationVC  new];
-//    [self.navigationController pushVC:vc];
-//    HHEvaluationListVC *vc = [HHEvaluationListVC new];
-//    [self.navigationController pushVC:vc];
 
-//    MBProgressHUD  *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.color = KA0LabelColor;
-//    hud.detailsLabelText = @"付款中...";
-//    hud.detailsLabelColor = kWhiteColor;
-//    hud.detailsLabelFont = FONT(14);
-//    hud.activityIndicatorColor = kWhiteColor;
-//    [hud showAnimated:YES];
-//    btn.enabled = NO;
+    btn.enabled = NO;
     //----->微信支付
-//    [[[HHMineAPI postPayOrderWithorderid:orderid] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-//        btn.enabled = YES;
-//        if (!error) {
-//            if (api.State == 1) {
-//                //-->支付成功
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//
-//                    HHPaySucessVC *vc = [HHPaySucessVC new];
-//                    [self.navigationController pushVC:vc];
-//                    [hud hideAnimated:YES];
-//                });
-//            }else{
-//                [hud hideAnimated:YES];
-//
-//                [SVProgressHUD showInfoWithStatus:api.Msg];
-//            }
-//        }else{
-//            [hud hideAnimated:YES];
-//        }
-//    }];
+    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        btn.enabled = YES;
+        if (!error) {
+            if (api.State == 1) {
+                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                [HHWXModel payReqWithModel:model];
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else {
+            
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+            
+        }
+    }];
 }
 
 - (void)twoAction:(UIButton *)btn{
@@ -720,17 +698,17 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
+    HHOrderItemModel *orders_m = self.items_arr[section];
 
-    return model.items.count+1;
+    return orders_m.items.count+1;
   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[indexPath.section]];
- 
-    if (indexPath.row == model.items.count) {
+    HHOrderItemModel *orders_m = self.items_arr[indexPath.section];
+
+    if (indexPath.row == orders_m.items.count) {
         return 44;
     }else{
         return 85;
@@ -747,5 +725,36 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     return 40;
+}
+#pragma mark-微信支付
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //微信支付通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
+    
+    [self.tableView.mj_header beginRefreshing];
+
+}
+- (void)wxPaySucesscount{
+    
+    HHPaySucessVC *vc = [HHPaySucessVC new];
+    [self.navigationController pushVC:vc];
+    
+}
+//88 288 1288
+- (void)wxPayFailcount {
+    
+    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
 }
 @end

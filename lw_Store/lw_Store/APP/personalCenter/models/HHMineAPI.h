@@ -108,4 +108,8 @@
 + (instancetype)postVerifyMobile:(NSString *)mobile;
 //发送短信验证码
 + (instancetype)postSms_SendCode:(NSString *)mobile code:(NSString *)code;
+//订单支付
++ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId;
+
+
 @end

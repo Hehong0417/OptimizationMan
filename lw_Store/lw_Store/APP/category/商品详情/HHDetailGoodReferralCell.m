@@ -30,7 +30,7 @@
     NSMutableAttributedString *newPrice = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",gooodDetailModel.MarketPrice]];
     [newPrice addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, newPrice.length)];
     self.product_s_intergralLabel.attributedText = newPrice;
-    self.package_lab.text = @"包邮";
+    self.package_lab.text = gooodDetailModel.StrFreightModey;
 
 }
 

@@ -65,6 +65,7 @@
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    self.tableView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HHSubmitOrderCell" bundle:nil] forCellReuseIdentifier:@"HHSubmitOrderCell"];
@@ -137,18 +138,22 @@
     //去付款
     self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = YES;
     [self.submitOrderTool.ImmediatePayLabel setTapActionWithBlock:^{
-//        MBProgressHUD  *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.color = KA0LabelColor;
-//        hud.detailsLabelText = @"付款中...";
-//        hud.detailsLabelColor = kWhiteColor;
-//        hud.detailsLabelFont = FONT(14);
-//        hud.activityIndicatorColor = kWhiteColor;
-//        [hud showAnimated:YES];
-//
-//        HJUser *user = [HJUser sharedUser];
-//        NSString *ids = [self.ids_Arr componentsJoinedByString:@","];
-        HHPaySucessVC *vc = [HHPaySucessVC new];
-        [self.navigationController pushVC:vc];
+        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
+        [[[HHMineAPI postOrder_AppPayAddrId:self.address_id orderId:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
+            if (!error) {
+                if (api.State == 1) {
+                    HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                    [HHWXModel payReqWithModel:model];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else {
+                
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+                
+            }
+        }];
         
     }];
     [toolView addSubview:self.submitOrderTool];
@@ -315,7 +320,34 @@
     
         return 35;
 }
+#pragma mark-微信支付
 
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //微信支付通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
+    
+}
+- (void)wxPaySucesscount{
+    
+    HHPaySucessVC *vc = [HHPaySucessVC new];
+    [self.navigationController pushVC:vc];
+    
+}
+//88 288 1288
+- (void)wxPayFailcount {
+    
+    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+}
 
 @end

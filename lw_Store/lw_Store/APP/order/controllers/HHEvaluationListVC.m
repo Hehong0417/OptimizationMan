@@ -24,7 +24,8 @@
     self.title = @"评价";
     
     [self.tableView registerClass:[HHEvaluationListCell class] forCellReuseIdentifier:[HHEvaluationListCell className]];
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     
     [self setupDatas];
 }

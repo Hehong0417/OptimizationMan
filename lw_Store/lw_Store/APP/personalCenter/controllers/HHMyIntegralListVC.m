@@ -28,7 +28,8 @@
     [self addFootRefresh];
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     [self getDatas];
 }
 - (NSMutableArray *)datas{

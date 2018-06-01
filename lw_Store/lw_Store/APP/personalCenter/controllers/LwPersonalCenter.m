@@ -32,6 +32,8 @@
 
 @property(nonatomic,strong) NSNumber *isAgent;
 @property(nonatomic,strong) NSNumber *isJoinAgent;
+@property(nonatomic,strong) id obj;
+
 @end
 
 @implementation LwPersonalCenter
@@ -39,7 +41,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    
+  _obj =  [[NSNotificationCenter defaultCenter] addObserverForName:KPersonCter_Refresh_Notification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+      
+      [self getDatas];
+
+      [[NSNotificationCenter defaultCenter]removeObserver:_obj];
+      
+    }];
 }
 
 - (void)viewDidLoad {
@@ -81,6 +89,7 @@
         if (self.tableV.mj_header.isRefreshing) {
             [self.tableV.mj_header endRefreshing];
         }
+        
         if (!error) {
             if (api.State == 1) {
 
@@ -165,15 +174,17 @@
     }else if (indexPath.section == 2&&indexPath.row==0){
         
           if ([self.isAgent isEqual:@1]) {
-//              if ([self.isJoinAgent isEqual:@1]) {
-                  //已加入代理
-//                  HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
-//                  vc.title_str = @"申请成功";
-//                  [self.navigationController pushVC:vc];
-//              }else{
+              if ([self.isJoinAgent isEqual:@1]) {
+//                  已加入代理
+                  HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
+                  vc.title_str = @"申请成功";
+                  vc.discrib_str = @"";
+                  vc.title_label_str = @"申请成功";
+                  [self.navigationController pushVC:vc];
+              }else{
                   HHApplyDelegateVC *vc = [HHApplyDelegateVC new];
                   [self.navigationController pushVC:vc];
-//              }
+              }
          }else{
              HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
              [self.navigationController pushVC:vc];

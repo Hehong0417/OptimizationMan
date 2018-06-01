@@ -33,7 +33,8 @@
     [self addFootRefresh];
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     self.isRead = nil;
     
     [self getDatas];

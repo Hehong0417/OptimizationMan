@@ -47,7 +47,8 @@
 - (void)setUpUI
 {
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = FONT(15);
+    _titleLabel.font = FONT(14);
+//    _titleLabel.textColor =
     [self addSubview:_titleLabel];
     
     _indicatorView = [[UIView alloc] init];

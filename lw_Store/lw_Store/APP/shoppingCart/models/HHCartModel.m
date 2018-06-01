@@ -55,7 +55,7 @@
 @implementation HHproductsModel
 +(NSDictionary *)mj_objectClassInArray{
     
-    return @{@"skuid":[HHskuidModel class]};
+    return @{@"skuid":[HHskuidModel class],@"product_item":[HHproducts_item_Model class]};
 }
 
 @end
@@ -69,3 +69,7 @@
 @implementation HHskuidModel
 
 @end
+@implementation HHproducts_item_Model
+
+@end
+

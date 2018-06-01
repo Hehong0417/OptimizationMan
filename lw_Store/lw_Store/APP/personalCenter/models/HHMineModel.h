@@ -22,7 +22,6 @@
 @property(nonatomic,strong) NSString *ReferralUserName;
 
 
-
 //优惠券信息
 @property(nonatomic,strong) NSString *CouponValue;
 @property(nonatomic,strong) NSString *CouponsId;
@@ -98,5 +97,6 @@
 //@property(nonatomic,strong) NSString *ApplyMoney;
 @property(nonatomic,strong) NSString *IsApply;
 @property(nonatomic,strong) NSString *IsVerifyMobile;
+@property(nonatomic,strong) NSDictionary *ApplyName;
 
 @end

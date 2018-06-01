@@ -385,7 +385,7 @@
     HHMineAPI *api = [self new];
     api.subUrl = API_AgentApplyPay;
     if (agnetId) {
-        [api.parameters setObject:agnetId forKey:@"agnetId"];
+        [api.parameters setObject:agnetId forKey:@"applyId"];
     }
     if (smsCode) {
         [api.parameters setObject:smsCode forKey:@"smsCode"];
@@ -422,6 +422,21 @@
     
     api.parametersAddToken = NO;
     return api;
+}
+//订单支付
++ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_Order_AppPay;
+    if (addrId) {
+        [api.parameters setObject:addrId forKey:@"addrId"];
+    }
+    if (orderId) {
+        [api.parameters setObject:orderId forKey:@"orderId"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
 }
 
 @end

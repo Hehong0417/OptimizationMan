@@ -12,6 +12,7 @@
 #import "XWDrawerAnimator.h"
 #import "UIViewController+XWTransition.h"
 #import "HHApplyDelegateNoPayVC.h"
+#import "HHnormalSuccessVC.h"
 
 @interface HHApplyDelegateVC ()<UICollectionViewDataSource,payTypeDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -84,7 +85,7 @@
                 NSNumber *IsApply = api.Data[@"IsApply"];
                 if ([IsApply isEqual:@1]) {
                     HHApplyDelegateNoPayVC *vc = [HHApplyDelegateNoPayVC new];
-                    vc.model = self.model;
+                    vc.model = [HHMineModel mj_objectWithKeyValues:self.model.ApplyName];
                     [self addChildViewController:vc];
                     [self.view addSubview:vc.view];
                     [vc didMoveToParentViewController:self];
@@ -197,14 +198,13 @@
 
     NSString *vari_str = [self varifyDelegateName:model.AgentName phoneNum:self.phone_tf.text imageCode:self.codeImage_tf.text smsCode:self.verifyCode_tf.text];
     if (!vari_str) {
-
         //支付
         if (model.JoinMoney.floatValue<=0||model.JoinMoney.length==0) {
             [[[HHMineAPI postApplyAgentWithagnetId:model.Id smsCode:self.verifyCode_tf.text mobile:self.phone_tf.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
                 if (!error) {
                     if (api.State == 1) {
-
-
+                        [SVProgressHUD showSuccessWithStatus:@"提交成功，待审核～"];
+                        [self.navigationController popVC];
                     }else{
                         [SVProgressHUD showInfoWithStatus:api.Msg];
                     }
@@ -215,28 +215,11 @@
 
 
             }];
-        }else{
-            [[[HHMineAPI postAgentApplyPayWithagnetId:model.Id smsCode:self.verifyCode_tf.text mobile:self.phone_tf.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-                
-                if (!error) {
-                    if (api.State == 1) {
-                        
-                        HHPayTypeVC *vc = [HHPayTypeVC new];
-                        vc.delegate = self;
-                        [self setUpAlterViewControllerWith:vc WithDistance:ScreenH/2.2 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
-
-                    }else{
-                        [SVProgressHUD showInfoWithStatus:api.Msg];
-                    }
-                }else{
-
-                    [SVProgressHUD showInfoWithStatus:api.Msg];
-                }
-
-
-            }];
-        }
-
+         }else{
+            HHPayTypeVC *vc = [HHPayTypeVC new];
+            vc.delegate = self;
+            [self setUpAlterViewControllerWith:vc WithDistance:ScreenH/2.2 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
+         }
         }else{
             [SVProgressHUD showInfoWithStatus:vari_str];
         }
@@ -245,9 +228,56 @@
 
 - (void)commitActionWithBtn:(UIButton *)btn{
     
-    //调支付
+    __block  HHMineModel *model;
+    
+    [self.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqual:@1]) {
+            
+            model = [HHMineModel mj_objectWithKeyValues:self.datas[idx]];
+        }
+    }];
+    //获取支付信息接口
+    [[[HHMineAPI postAgentApplyPayWithagnetId:model.Id smsCode:self.verifyCode_tf.text mobile:self.phone_tf.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        
+        if (!error) {
+            if (api.State == 1) {
+                //微信支付
+                HHWXModel *wxModel = [HHWXModel mj_objectWithKeyValues:api.Data];
+                [HHWXModel payReqWithModel:wxModel];
+
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+        
+        
+    }];
+    
     
 }
+#pragma mark - 微信支付
+
+- (void)wxPaySucesscount{
+    
+    HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
+    vc.title_str = @"支付成功";
+    HHMineModel *model = [HHMineModel mj_objectWithKeyValues:self.model.ApplyName];
+    vc.discrib_str = model.AgentName;
+    vc.title_label_str = @"支付成功";
+
+    [self.navigationController pushVC:vc];
+    
+}
+//88 288 1288
+- (void)wxPayFailcount {
+    
+    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+}
+
 - (NSString *)varifyDelegateName:(NSString *)delegateName phoneNum:(NSString *)phoneNum imageCode:(NSString *)imageCode smsCode:(NSString *)smsCode{
     
     if (delegateName.length == 0) {

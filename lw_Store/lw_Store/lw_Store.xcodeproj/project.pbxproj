@@ -95,6 +95,8 @@
 		CE457D3C20A05A47004DB819 /* HHBroughtGiftResultHead.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3B20A05A47004DB819 /* HHBroughtGiftResultHead.m */; };
 		CE457D4020A06130004DB819 /* HHBroughtGiftResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3E20A06130004DB819 /* HHBroughtGiftResultCell.m */; };
 		CE457D4120A06130004DB819 /* HHBroughtGiftResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE457D3F20A06130004DB819 /* HHBroughtGiftResultCell.xib */; };
+		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
+		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
 		CE4778DC20BAC23500F5FA72 /* HHAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4778DB20BAC23500F5FA72 /* HHAboutUsVC.m */; };
 		CE4B6FB3209C5219005482B1 /* HHWithDrawVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B6FB1209C5219005482B1 /* HHWithDrawVC.m */; };
 		CE4B6FB4209C5219005482B1 /* HHWithDrawVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4B6FB2209C5219005482B1 /* HHWithDrawVC.xib */; };
@@ -495,6 +497,10 @@
 		CE457D3D20A06130004DB819 /* HHBroughtGiftResultCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBroughtGiftResultCell.h; sourceTree = "<group>"; };
 		CE457D3E20A06130004DB819 /* HHBroughtGiftResultCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBroughtGiftResultCell.m; sourceTree = "<group>"; };
 		CE457D3F20A06130004DB819 /* HHBroughtGiftResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBroughtGiftResultCell.xib; sourceTree = "<group>"; };
+		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
+		CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWXModel.m; sourceTree = "<group>"; };
+		CE45FBA220BFFB88008D62E6 /* HHOrderItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHOrderItemModel.h; sourceTree = "<group>"; };
+		CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHOrderItemModel.m; sourceTree = "<group>"; };
 		CE4778DA20BAC23500F5FA72 /* HHAboutUsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHAboutUsVC.h; sourceTree = "<group>"; };
 		CE4778DB20BAC23500F5FA72 /* HHAboutUsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHAboutUsVC.m; sourceTree = "<group>"; };
 		CE4B6FB0209C5219005482B1 /* HHWithDrawVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHWithDrawVC.h; sourceTree = "<group>"; };
@@ -1109,6 +1115,8 @@
 		CE77728F20BCFCE100D8E1AC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */,
+				CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */,
 				CE77729020BCFCE100D8E1AC /* HJSettingItem.m */,
 				CE77729120BCFCE100D8E1AC /* HJGroupItem.h */,
 				CE77729220BCFCE100D8E1AC /* HJStoryBoardItem.m */,
@@ -1794,6 +1802,8 @@
 			children = (
 				CEE2A01E2093244C00843DBD /* LwOrderVC.h */,
 				CEE2A01D2093244C00843DBD /* LwOrderVC.m */,
+				CE45FBA220BFFB88008D62E6 /* HHOrderItemModel.h */,
+				CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */,
 				CEE2A0242093247900843DBD /* HJOrderCell.h */,
 				CEE2A0302093247B00843DBD /* HJOrderCell.m */,
 				CEE2A02E2093247B00843DBD /* HJOrderCell.xib */,
@@ -2743,6 +2753,7 @@
 				CE999BC0208DE33B00B9307D /* UITextField+LH.m in Sources */,
 				CE999BEE208DE33B00B9307D /* UIView+SGExtension.m in Sources */,
 				CE6247E720B2B3FC001E0C56 /* HHPayTypeVC.m in Sources */,
+				CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */,
 				CEE2A0DB209333D400843DBD /* DCDetailOverFooterView.m in Sources */,
 				CEE2A0F5209333D400843DBD /* XWCoolAnimator+XWFold.m in Sources */,
 				CE999BCB208DE33B00B9307D /* NSMutableAttributedString+NSRangeException.m in Sources */,
@@ -2820,6 +2831,7 @@
 				CE999C03208DE33B00B9307D /* HJStaticGroupTableVC.m in Sources */,
 				CEE2A101209333D400843DBD /* HHGoodDealRecordInfoDetailCell.m in Sources */,
 				CE999BEA208DE33B00B9307D /* UIView+SGFrame.m in Sources */,
+				CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */,
 				CE21911D208EDA0A005351B4 /* LwCategoryVC.m in Sources */,
 				CE2193A2208F048C005351B4 /* HHHomeAPI.m in Sources */,
 				CEE2A0CC209333D400843DBD /* HHGoodDealRecordCell.m in Sources */,

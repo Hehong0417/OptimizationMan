@@ -105,4 +105,21 @@
 
     return attributedString;
 }
+/**
+ 添加中划线
+ 
+ @param content 内容
+ @param rangeStr 需要添加中划线的内容
+ */
+- (NSMutableAttributedString *)lh_addtrikethroughStyleAtContent:(NSString *)content rangeStr:(NSString *)rangeStr color:(UIColor *)color{
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:content];
+    NSRange contentRange = [content rangeOfString:rangeStr];
+    
+    [attributedString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:contentRange];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:contentRange];
+    
+    return attributedString;
+    
+}
 @end

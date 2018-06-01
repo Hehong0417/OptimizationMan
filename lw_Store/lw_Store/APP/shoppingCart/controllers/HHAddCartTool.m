@@ -74,7 +74,7 @@
     
     if (!_buyBtn) {
         
-        _buyBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, 50) target:self action:@selector(buyCartBtnAction) image:nil title:@"立即购买" titleColor:kWhiteColor font:FONT(15)];
+        _buyBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, 50) target:self action:@selector(buyCartBtnAction) image:nil title:@"活动" titleColor:kWhiteColor font:FONT(15)];
         [_buyBtn setBackgroundColor:APP_Deep_purple_Color];
 
     }

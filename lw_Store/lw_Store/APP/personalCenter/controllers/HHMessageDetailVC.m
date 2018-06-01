@@ -24,7 +24,8 @@
     self.title = @"消息详情";
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.tableView.backgroundColor = KVCBackGroundColor;
+
     [self.tableView registerClass:[HHMessageDeatilCell class] forCellReuseIdentifier:@"HHMessageDeatilCell"];
     
     [self getDatas];

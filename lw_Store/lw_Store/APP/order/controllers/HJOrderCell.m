@@ -27,15 +27,15 @@
 
 }
 
-- (void)setProductModel:(HHproductsModel *)productModel{
+- (void)setProductModel:(HHproducts_item_Model *)productModel{
     _productModel = productModel;
 
     [self.goodsIco sd_setImageWithURL:[NSURL URLWithString:productModel.icon]];
     self.goodsNameLab.text = productModel.prodcut_name;
-    self.priceLab.text = [NSString stringWithFormat:@"￥%.2f",productModel.price.floatValue];
+    self.priceLab.text = [NSString stringWithFormat:@"￥%.2f",productModel.product_item_price.floatValue];
     
-    self.quantityLab.text = [NSString stringWithFormat:@"X%@",productModel.quantity];
-    self.sku_nameLab.text = [NSString stringWithFormat:@"%@",productModel.sku_name?productModel.sku_name:@""];
+    self.quantityLab.text = [NSString stringWithFormat:@"X%@",productModel.product_item_quantity];
+    self.sku_nameLab.text = [NSString stringWithFormat:@"%@",productModel.product_item_sku_name?productModel.product_item_sku_name:@""];
     
 
 }
