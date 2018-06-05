@@ -38,14 +38,14 @@
     }
     return _datas;
 }
+
 - (void)getDatas{
     
-    [[[HHMineAPI GetIntegralListWithPage:@(self.page)] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-        [NSObject printPropertyWithDict:api.List[0]];
+    [[[HHMineAPI GetIntegralListWithPage:@(self.page)] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
                 
-                [self loadDataFinish:api.List];
+                [self loadDataFinish:api.Data];
                 
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];

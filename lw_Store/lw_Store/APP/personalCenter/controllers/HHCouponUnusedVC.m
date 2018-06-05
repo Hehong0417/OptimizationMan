@@ -39,10 +39,10 @@
    
     self.page = 1;
     [self getDatas];
-    
-    self.tableView.emptyDataSetDelegate = self;
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.backgroundColor = KVCBackGroundColor;
+ 
+    self.tableV.emptyDataSetDelegate = self;
+    self.tableV.emptyDataSetSource = self;
+    self.tableV.backgroundColor = KVCBackGroundColor;
 
     [self addHeadRefresh];
     [self addFootRefresh];

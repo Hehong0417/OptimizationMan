@@ -20,35 +20,35 @@
     NSInteger status_code = self.status.integerValue;
     if (status_code == 1) {
 //        @"待付款"
-        self.footHeight = 60;
+        self.footHeight = 58;
     }else if (status_code == 2){
 //        @"待发货"
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 3){
 //        @"待收货
-        self.footHeight = 60;
+        self.footHeight = 58;
     }else if (status_code == 4){
         //        @"订单关闭
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 5){
         //        @"交易完成
-        self.footHeight = 60;
+        self.footHeight = 58;
         
     }else if (status_code == 6){
         //        @"申请退款
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 7){
         //        @"申请退货
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 8){
         //        @"申请换货
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 9){
         //        @"已退款
-        self.footHeight = 8;
+        self.footHeight = 5;
     }else if (status_code == 8){
         //        @"已退货
-        self.footHeight = 10;
+        self.footHeight = 5;
     }
 }
 @end

@@ -30,7 +30,7 @@
 - (void)setProductModel:(HHproducts_item_Model *)productModel{
     _productModel = productModel;
 
-    [self.goodsIco sd_setImageWithURL:[NSURL URLWithString:productModel.icon]];
+    [self.goodsIco sd_setImageWithURL:[NSURL URLWithString:productModel.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
     self.goodsNameLab.text = productModel.prodcut_name;
     self.priceLab.text = [NSString stringWithFormat:@"￥%.2f",productModel.product_item_price.floatValue];
     

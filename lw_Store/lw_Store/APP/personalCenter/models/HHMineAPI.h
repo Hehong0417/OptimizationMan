@@ -110,6 +110,7 @@
 + (instancetype)postSms_SendCode:(NSString *)mobile code:(NSString *)code;
 //订单支付
 + (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId;
-
+//创建订单
++ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSArray *)integralTempIds message:(NSString *)message;
 
 @end

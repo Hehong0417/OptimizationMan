@@ -12,20 +12,14 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-}
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 //订单总计
 - (void)setOrderTotalModel:(HHCartModel *)orderTotalModel{
     _orderTotalModel = orderTotalModel;
     self.express_nameLabel.textColor = kRedColor;
     self.express_nameLabel.text = [NSString stringWithFormat:@"¥%@",orderTotalModel.total?orderTotalModel.total:@""];
-    self.express_orderLabel.text = @"订单总计";
+    self.express_orderLabel.text = @"订单总计:";
 }
 
 //物流单号

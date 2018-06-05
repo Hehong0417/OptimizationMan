@@ -13,6 +13,7 @@
 #import "HHShippingAddressVC.h"
 //#import "HHGoodBaseViewController.h"
 #import "HHPaySucessVC.h"
+#import "HHActivityWebVC.h"
 
 @interface HHSubmitOrdersVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,HHShippingAddressVCProtocol>
 {
@@ -20,6 +21,7 @@
     HHSubmitOrdersHead *SubmitOrdersHead;
     UISwitch *swi;
     HXCommonPickView *pickView;
+    
 }
 
 @property (nonatomic, strong)   UITableView *tableView;
@@ -34,6 +36,7 @@
 @property (nonatomic, strong)   NSNumber *pay_mode;
 @property (nonatomic, strong)   NSString *Id;
 @property (nonatomic, strong)   HHMineModel *address_model;
+@property(nonatomic,strong) NSString *order_id;
 
 @end
 
@@ -92,7 +95,7 @@
 }
 - (void)backBtnAction{
    
-    if (self.enter_type == HHaddress_type_another) {
+    if (self.enter_type == HHaddress_type_Spell_group) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (self.enter_type == HHaddress_type_add_cart){
         [self.navigationController popToRootVC];
@@ -102,6 +105,8 @@
                 [self.navigationController popToVC:vc];
             }
         }];
+    }else if(self.enter_type == HHaddress_type_another){
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 - (NSMutableArray *)datas{
@@ -139,25 +144,60 @@
     self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = YES;
     [self.submitOrderTool.ImmediatePayLabel setTapActionWithBlock:^{
         self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
-        [[[HHMineAPI postOrder_AppPayAddrId:self.address_id orderId:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-            self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
-            if (!error) {
-                if (api.State == 1) {
-                    HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
-                    [HHWXModel payReqWithModel:model];
-                }else{
-                    [SVProgressHUD showInfoWithStatus:api.Msg];
-                }
-            }else {
-                
-                [SVProgressHUD showInfoWithStatus:api.Msg];
-                
-            }
-        }];
+
+        if (self.enter_type == HHaddress_type_Spell_group) {
+            //活动拼团
+            [self createOrder];
+            
+        }else if (self.enter_type == HHaddress_type_add_cart){
+            //购物车
+            [self orderPayWithaddress_id:self.address_id orderId:nil];
+        }
         
     }];
     [toolView addSubview:self.submitOrderTool];
     [self.view addSubview:toolView];
+}
+//创建订单
+- (void)createOrder{
+    
+    [[[HHMineAPI postOrder_CreateWithAddrId:self.address_id skuId:self.ids_Str count:self.count mode:self.mode gbId:nil couponId:nil integralTempIds:nil message:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
+        if (!error) {
+            if (api.State == 1) {
+              
+                self.order_id = api.Data;
+                [self orderPayWithaddress_id:nil orderId:self.order_id];
+
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else {
+            
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+    }];
+}
+//订单支付
+-(void)orderPayWithaddress_id:(NSString *)address_id orderId:(NSString *)orderId{
+    
+    [[[HHMineAPI postOrder_AppPayAddrId:address_id orderId:orderId]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
+        if (!error) {
+            if (api.State == 1) {
+                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                [HHWXModel payReqWithModel:model];
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else {
+            
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+            
+        }
+    }];
+    
+    
 }
 //地址列表
 - (void)getAddressData{
@@ -210,7 +250,7 @@
 //获取数据
 - (void)getDatas{
     
-        [[[HHCartAPI GetConfirmOrderWithids:self.address_id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
+        [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
                 if (!error) {
             
                     if (api.State == 1) {
@@ -314,7 +354,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    return 8;
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
@@ -339,9 +379,33 @@
 }
 - (void)wxPaySucesscount{
     
-    HHPaySucessVC *vc = [HHPaySucessVC new];
-    [self.navigationController pushVC:vc];
-    
+    if (self.enter_type == HHaddress_type_Spell_group) {
+        //活动拼团----订单详情
+        [[[HHMineAPI GetOrderDetailWithorderid:self.order_id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    
+                    self.model = [HHCartModel mj_objectWithKeyValues:api.Data];
+                    HHActivityWebVC *vc = [HHActivityWebVC new];
+                    vc.gbId = self.model.gbid;
+                    [self.navigationController pushVC:vc];
+                    
+                }else{
+                    
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+                
+            }
+        }];
+        
+        
+    }else {
+        //购物车
+        HHPaySucessVC *vc = [HHPaySucessVC new];
+        [self.navigationController pushVC:vc];
+    }
 }
 //88 288 1288
 - (void)wxPayFailcount {

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HHShopIntroCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *store_logo_imgV;
 
 @end

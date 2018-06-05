@@ -125,14 +125,15 @@ typedef enum : NSUInteger {
 #define API_ShopCart_Delete API_SUB_URL2(@"ShopCart/Delete")
 //3.5获得结算订单
 #define API_GetConfirmOrder API_SUB_URL2(@"PreviewOrder/Get")
-//3.6去支付订单，提交订单
-#define API_CreateOrder API_SUB_URL(@"CustomerApi/ShopCart/CreateOrder")
 //3.7热门搜索
 #define API_GetHotSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
 //3.8用户历史搜索
 #define API_GetUserSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
 // APP订单去支付
 #define API_Order_AppPay API_SUB_URL2(@"Order/AppPay")
+//3.9创建订单
+#define API_Order_Create API_SUB_URL2(@"Order/Create")
+
 /**
  *  我的
  */
@@ -173,7 +174,7 @@ typedef enum : NSUInteger {
 //4.21佣金申请
 #define API_CommissionApply  API_SUB_URL(@"Commission/Apply")
 //4.34获取积分列表
-#define API_IntegralList API_SUB_URL1(@"Personal/IntegralList")
+#define API_IntegralList API_SUB_URL(@"UserInfo/IntegralList")
 //4.34获取消息列表
 #define API_GetUserNotice API_SUB_URL(@"Notice/GetUserNotice")
 //4.35设置消息全部已读
@@ -192,7 +193,8 @@ typedef enum : NSUInteger {
 #define API_ConfirmOrder  API_SUB_URL2(@"Order/Confirm")
 //4.40申请退款
 #define API_RefundMoney  API_SUB_URL2(@"Order/RefundMoney")
-
+//4.40猜你喜欢
+#define API_GetAlliancesProducts  API_SUB_URL3(@"GetAlliancesProducts")
 //4.41我的二维码
 #define API_Mycode API_SUB_URL(@"UserInfo/GetQRCode")
 //4.43优惠券

@@ -13,12 +13,12 @@
 #import "HHMessageVC.h"
 #import "HHFansListVC.h"
 #import "HHCouponSuperVC.h"
-#import "HHBargainingVC.h"
 #import "HHMyIntegralListVC.h"
 #import "HHMyCodeVC.h"
 #import "HHApplyDelegateVC.h"
 #import "HHnormalSuccessVC.h"
 #import "HHSetVC.h"
+#import "HHMyActivityWebVC.h"
 
 @interface LwPersonalCenter ()
 {
@@ -114,7 +114,7 @@
                 self.mineHeadView.nameLabel.text = self.mineModel.UserName;
                 self.mineHeadView.IDLabel.text = self.mineModel.Id?[NSString stringWithFormat:@"ID:%@",self.mineModel.Id]:@"";
                 self.mineHeadView.titleLabel.text = self.mineModel.BuyTotal?[NSString stringWithFormat:@"累计:¥%@",self.mineModel.BuyTotal]:@"";
-                [self.mineHeadView.teacherImageIcon sd_setImageWithURL:[NSURL URLWithString:self.mineModel.UserImage]];
+                [self.mineHeadView.teacherImageIcon sd_setImageWithURL:[NSURL URLWithString:self.mineModel.UserImage] placeholderImage:nil];
                 [self.tableV reloadData];
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
@@ -195,13 +195,11 @@
         [self.navigationController pushVC:vc];
         }
     }else if (indexPath.section == 3&&indexPath.row == 0){
-        
+        HHMyActivityWebVC *vc = [HHMyActivityWebVC new];
+        [self.navigationController pushVC:vc];
   
     }else if (indexPath.section == 3&&indexPath.row == 1){
         
-        HHBargainingVC  *vc =  [[HHBargainingVC alloc] initWithNibName:@"HHBargainingVC" bundle:nil];
-        vc.vcType = bargaining_vcType;
-        [self.navigationController pushVC:vc];
 
     }else if (indexPath.section == 3&&indexPath.row == 2){
         

@@ -76,7 +76,7 @@
     //tableView
     CGFloat tableHeight;
     tableHeight = SCREEN_HEIGHT - Status_HEIGHT-44 - 44 - 10;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,44+8, SCREEN_WIDTH,tableHeight) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,44+5, SCREEN_WIDTH,tableHeight) style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = KVCBackGroundColor;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -449,7 +449,7 @@
             
         }
     }
-    UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(0, down_y, SCREEN_WIDTH, 8) backColor:KVCBackGroundColor];
+    UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(0, down_y, SCREEN_WIDTH, 5) backColor:KVCBackGroundColor];
     [footView addSubview:downLine];
 
     return footView;
@@ -457,7 +457,6 @@
 }
 -(void)setStandardLabWith:(HHproducts_item_Model *)productModel cell:(HJOrderCell *)cell{
     cell.StandardLab.hidden = NO;
-    NSLog(@"%@",productModel);
     if (productModel.product_item_status.integerValue == 6) {
         //退款中
         cell.StandardLab.text = @" 退款中 ";
@@ -489,7 +488,6 @@
     [btn lh_setCornerRadius:cornerRadius borderWidth:1 borderColor:borderColor];
     [btn setTitleColor:titleColor forState:UIControlStateNormal];
     [btn setBackgroundColor:backgroundColor];
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -628,7 +626,9 @@
 - (void)twoAction:(UIButton *)btn{
     
     NSInteger section = btn.tag - 1000;
-    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];    NSString *status = model.status;
+    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
+
+    NSString *status = model.status;
 
     if ([status isEqualToString:@"1"]) {
         //待付款--->去支付
@@ -641,6 +641,8 @@
     }else if([status isEqualToString:@"5"]){
         //交易成功-->追加评价
         HHPostEvaluationVC *vc = [HHPostEvaluationVC new];
+        HHOrderItemModel *itemModel = self.items_arr[section];
+        vc.orderItem_m = itemModel;
         [self.navigationController pushVC:vc];
         
     }
@@ -686,8 +688,17 @@
     UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+5, 0,1, 40) backColor:KVCBackGroundColor];
     [headView addSubview:downLine];
 
-    UILabel *orderLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+20, 0,200 , 40) text:model.order_date textColor:kBlackColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+    CGSize order_date_size = [model.order_date lh_sizeWithFont:[UIFont systemFontOfSize:14]  constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
+    UILabel *orderLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+20, 0,order_date_size.width+1, 40) text:model.order_date textColor:kBlackColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
+    orderLabel.centerY = headView.centerY;
     [headView addSubview:orderLabel];
+    if (![model.order_mode isEqual:@1]) {
+      CGSize mode_size = [model.order_mode_name lh_sizeWithFont:[UIFont systemFontOfSize:14]  constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
+       
+        UILabel *activityLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(orderLabel.frame)+5, 0,mode_size.width+10, 20) text:model.order_mode_name textColor:kWhiteColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentCenter backgroundColor:[UIColor colorWithHexString:@"#F7BC4B"]];
+        activityLabel.centerY = headView.centerY;
+        [headView addSubview:activityLabel];
+    }
     return headView;
 }
 

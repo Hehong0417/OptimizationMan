@@ -39,6 +39,8 @@
 @property(nonatomic,strong) NSString *order_id;
 @property(nonatomic,strong) NSString *status_name;
 @property(nonatomic,strong) NSString *total;
+@property(nonatomic,strong) NSNumber *order_mode;
+@property(nonatomic,strong) NSString *order_mode_name;
 @property(nonatomic,strong) NSArray <HHproductsModel*>*items;
 @property(nonatomic,assign) CGFloat footHeight;
 
@@ -52,6 +54,7 @@
 @property(nonatomic,strong) NSString *payDate;
 @property(nonatomic,strong) NSString *payTotal;
 @property(nonatomic,strong) NSString *freight;
+@property(nonatomic,strong) NSString *gbid;
 
 @end
 @interface HHordersModel : BaseModel

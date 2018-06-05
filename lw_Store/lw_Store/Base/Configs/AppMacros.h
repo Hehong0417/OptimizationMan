@@ -70,9 +70,9 @@
 
 
 //UI heights
-#define STATUSBAR_HEIGHT 20.0
+#define Status_HEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
 #define NAVBAR_HEIGHT 44.0
-#define STATUS_NAV_HEIGHT 64.0
+#define STATUS_NAV_HEIGHT Status_HEIGHT+NAVBAR_HEIGHT
  
 
 // -------------------- Debug Function --------------------------

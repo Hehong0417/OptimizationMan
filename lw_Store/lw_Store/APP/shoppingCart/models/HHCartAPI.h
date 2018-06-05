@@ -16,7 +16,7 @@
 + (instancetype)GetCartProducts;
 
 //获得结算订单
-+ (instancetype)GetConfirmOrderWithids:(NSString *)ids;
++ (instancetype)GetConfirmOrderWithids:(NSString *)ids mode:(NSNumber *)mode skuId:(NSString *)skuId;
 
 //热门搜索
 + (instancetype)GetHotSearchWithtop:(NSNumber *)top;
@@ -35,9 +35,6 @@
 
 //删除购物车
 + (instancetype)postShopCartDeleteWithcart_id:(NSString *)cart_id;
-
-//去支付订单，提交订单
-+ (instancetype)postCreateOrderWithids:(NSString *)ids address_id:(NSString *)address_id shop_userid:(NSString *)shop_userid remark:(NSString *)remark pay_mode:(NSNumber *)pay_mode channe:(NSNumber *)channe;
 
 
 @end

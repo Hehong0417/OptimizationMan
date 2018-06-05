@@ -29,5 +29,8 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong)   NSString *region;
 
+@property (nonatomic, strong)   NSNumber *mode;
+@property(nonatomic,strong) NSString *ids_Str;
+
 
 @end

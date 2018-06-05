@@ -20,6 +20,7 @@
 @property(nonatomic,strong) NSString *SaleCounts;
 @property(nonatomic,strong) NSString *Description;
 @property(nonatomic,strong) NSString *StrFreightModey;
+@property(nonatomic,strong) NSDictionary *GroupBy;
 
 
 //属性值

@@ -27,7 +27,7 @@
 
 
 #define KVCBackGroundColor RGB(238, 238, 238)
-#define KTitleLabelColor [UIColor colorWithHexString:@"#232323"]
+#define KTitleLabelColor [UIColor colorWithHexString:@"#9e9e9e"]
 #define K7ELabelColor [UIColor colorWithHexString:@"#7E7E7E"]
 #define KFCLabelColor [UIColor colorWithHexString:@"#FC5F00"]
 #define KA0LabelColor [UIColor colorWithHexString:@"#A0A0A0"]
@@ -39,7 +39,7 @@
 
 #define KPartingLineColor RGB(228, 227, 239)
 
-#define KPlaceImageName  @"icon_integral_default"
+#define KPlaceImageName  @"loadImag_default"
 
 #define KPlaceHoldColor RGB(204, 204, 204)
 

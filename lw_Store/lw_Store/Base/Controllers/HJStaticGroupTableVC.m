@@ -11,7 +11,7 @@
 #import "HXRecordVideoVC.h"
 
 static const CGFloat kNormalTableSectionHeaderViewHeight = 30;
-static const CGFloat kNormalGroupSpacing = 10;
+static const CGFloat kNormalGroupSpacing = 5;
 static const CGFloat kNormalCellHeight = 44;
 
 @interface HJStaticGroupTableVC () <UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>

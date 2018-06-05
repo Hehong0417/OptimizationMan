@@ -42,7 +42,7 @@
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 2) {
-        self.reason_tv = [[YYTextView alloc] initWithFrame:CGRectMake(16, 26, 340, 150)];
+        self.reason_tv = [[YYTextView alloc] initWithFrame:CGRectMake(16, 26, ScreenW-32, 150)];
         [self.reason_tv  lh_setCornerRadius:5 borderWidth:1 borderColor:kBlackColor];
         self.reason_tv.placeholderText = @"请输入您的退款原因...";
         [cell.contentView addSubview:self.reason_tv];

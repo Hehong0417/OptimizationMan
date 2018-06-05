@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHOrderItemModel.h"
 
 @interface HHPostEvaluationVC : UIViewController
+
+@property(nonatomic,strong)   HHOrderItemModel *orderItem_m;
 
 @end

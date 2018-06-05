@@ -46,13 +46,16 @@
     
 //    [self.tableView registerNib:[UINib nibWithNibName:@"HHShippingAddressCell" bundle:nil] forCellReuseIdentifier:@"HHShippingAddressCell"];
     
-    
+    HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
+
     //headView
     UIView *head_view = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(85)) backColor:kWhiteColor];
     UIImageView *product_imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(WidthScaleSize_W(10), WidthScaleSize_H(10), WidthScaleSize_H(65), WidthScaleSize_H(65)) image:nil];
-    product_imageV.backgroundColor = kGreenColor;
+    product_imageV.backgroundColor = KVCBackGroundColor;
     [head_view addSubview:product_imageV];
-    UILabel *title_lab = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(product_imageV.frame)+WidthScaleSize_W(10), WidthScaleSize_H(10), 150, 30) text:@"liwo 美国进口 菊花茶300哥*15包 即泡即喝挂耳型茶包【盒装】" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+    [product_imageV sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
+
+    UILabel *title_lab = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(product_imageV.frame)+WidthScaleSize_W(10), WidthScaleSize_H(10), 150, 30) text:model.prodcut_name textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
     title_lab.numberOfLines=3;
     [head_view addSubview:title_lab];
     self.tableView.tableHeaderView = head_view;
@@ -97,6 +100,8 @@
     
     HHEvaluationSuccessVC *vc = [HHEvaluationSuccessVC new];
     vc.title_str = @"评论成功";
+    HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
+    vc.pid = model.product_item_id;
     [self.navigationController pushVC:vc];
     
 }

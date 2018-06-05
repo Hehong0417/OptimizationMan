@@ -51,5 +51,17 @@
     
     return api;
 }
-
+//猜你喜欢
++ (instancetype)GetAlliancesProductsWithpids:(NSString *)pids{
+    
+    HHCategoryAPI *api = [self new];
+    api.subUrl = API_GetAlliancesProducts;
+    if (pids) {
+        [api.parameters setObject:pids forKey:@"pids"];
+    }
+    
+    api.parametersAddToken = NO;
+    
+    return api;
+}
 @end

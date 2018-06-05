@@ -351,7 +351,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
 
     cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",self.product_price];
     
-    [cell.goodImageView sd_setImageWithURL:[NSURL URLWithString:_goodImageView]];
+    [cell.goodImageView sd_setImageWithURL:[NSURL URLWithString:_goodImageView] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
 
     WEAK_SELF();
     cell.crossButtonClickBlock = ^{

@@ -21,9 +21,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="apj-yA-90B">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="store_logo" translatesAutoresizingMaskIntoConstraints="NO" id="apj-yA-90B">
                         <rect key="frame" x="10" y="10" width="70" height="70"/>
-                        <color key="backgroundColor" red="0.47058823529999999" green="0.62352941179999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="0jw-Ek-qBk"/>
                             <constraint firstAttribute="height" constant="70" id="KZt-7J-1dE"/>
@@ -49,7 +48,13 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="store_logo_imgV" destination="apj-yA-90B" id="Ppv-Nl-LAs"/>
+            </connections>
             <point key="canvasLocation" x="35.5" y="54"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="store_logo" width="30" height="29"/>
+    </resources>
 </document>

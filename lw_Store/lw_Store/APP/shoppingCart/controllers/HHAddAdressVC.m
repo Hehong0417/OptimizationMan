@@ -140,7 +140,6 @@
                           [self.navigationController popVC];
                           
                       }else if(self.addressType == HHAddress_settlementType_cart){
-                          
                           //提交订单页面
                           HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
                           vc.enter_type = HHaddress_type_add_cart;
@@ -150,6 +149,8 @@
                           
                           HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
                           vc.enter_type = HHaddress_type_add_productDetail;
+                          vc.mode = self.mode;
+                          vc.ids_Str = self.ids_Str;
                           [self.navigationController pushVC:vc];
                       }
                       

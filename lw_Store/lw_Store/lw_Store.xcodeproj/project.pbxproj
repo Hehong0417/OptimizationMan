@@ -11,6 +11,8 @@
 		CE0835E820B407D3004C3781 /* HHUrlModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0835E720B407D3004C3781 /* HHUrlModel.m */; };
 		CE0C12B920901F2500195A81 /* LwPersonCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C12B720901F2500195A81 /* LwPersonCenterCell.m */; };
 		CE0C12BD209020F700195A81 /* HHPersonCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C12BC209020F700195A81 /* HHPersonCenterView.m */; };
+		CE0C1CDE20C66D94001F59F9 /* HHActivityWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C1CDD20C66D94001F59F9 /* HHActivityWebVC.m */; };
+		CE0C1CE120C6714C001F59F9 /* HHMyActivityWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C1CE020C6714C001F59F9 /* HHMyActivityWebVC.m */; };
 		CE2190EB208ED9E2005351B4 /* HHCategoryAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190E9208ED9E2005351B4 /* HHCategoryAPI.m */; };
 		CE2190EC208ED9E2005351B4 /* HHCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190EA208ED9E2005351B4 /* HHCategoryModel.m */; };
 		CE219118208EDA0A005351B4 /* DCClassCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190ED208EDA07005351B4 /* DCClassCategoryCell.m */; };
@@ -87,14 +89,6 @@
 		CE37948820A9430900A3CDC9 /* NSObject+AutoProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37948720A9430800A3CDC9 /* NSObject+AutoProperty.m */; };
 		CE37948F20A98A6300A3CDC9 /* HHMyCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37948D20A98A6300A3CDC9 /* HHMyCodeVC.m */; };
 		CE37949320A9913700A3CDC9 /* HHMessageWeb.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37949220A9913700A3CDC9 /* HHMessageWeb.m */; };
-		CE457D2C20A00520004DB819 /* HHBargainingHead.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D2B20A00520004DB819 /* HHBargainingHead.m */; };
-		CE457D2F20A00C31004DB819 /* HHBargainingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D2E20A00C31004DB819 /* HHBargainingSlider.m */; };
-		CE457D3520A05567004DB819 /* HHBroughtGiftVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3320A05567004DB819 /* HHBroughtGiftVC.m */; };
-		CE457D3620A05567004DB819 /* HHBroughtGiftVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE457D3420A05567004DB819 /* HHBroughtGiftVC.xib */; };
-		CE457D3920A05947004DB819 /* HHBroughtGiftResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3820A05947004DB819 /* HHBroughtGiftResultVC.m */; };
-		CE457D3C20A05A47004DB819 /* HHBroughtGiftResultHead.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3B20A05A47004DB819 /* HHBroughtGiftResultHead.m */; };
-		CE457D4020A06130004DB819 /* HHBroughtGiftResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE457D3E20A06130004DB819 /* HHBroughtGiftResultCell.m */; };
-		CE457D4120A06130004DB819 /* HHBroughtGiftResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE457D3F20A06130004DB819 /* HHBroughtGiftResultCell.xib */; };
 		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
 		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
 		CE4778DC20BAC23500F5FA72 /* HHAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4778DB20BAC23500F5FA72 /* HHAboutUsVC.m */; };
@@ -240,11 +234,6 @@
 		CEBFE268209D9DF9005E09CD /* HHCouponFailureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE267209D9DF9005E09CD /* HHCouponFailureVC.m */; };
 		CEBFE26C209D9F77005E09CD /* HHCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE26A209D9F77005E09CD /* HHCouponCell.m */; };
 		CEBFE26D209D9F77005E09CD /* HHCouponCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBFE26B209D9F77005E09CD /* HHCouponCell.xib */; };
-		CEBFE276209DB9D9005E09CD /* HHBargainingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE274209DB9D9005E09CD /* HHBargainingVC.m */; };
-		CEBFE277209DB9D9005E09CD /* HHBargainingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBFE275209DB9D9005E09CD /* HHBargainingVC.xib */; };
-		CEBFE27A209DC223005E09CD /* HHBargainingRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE279209DC223005E09CD /* HHBargainingRecordVC.m */; };
-		CEBFE27E209DC24E005E09CD /* HHBargainingRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE27C209DC24E005E09CD /* HHBargainingRecordCell.m */; };
-		CEBFE27F209DC24E005E09CD /* HHBargainingRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBFE27D209DC24E005E09CD /* HHBargainingRecordCell.xib */; };
 		CEE2A01F2093244C00843DBD /* HHMyOrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A01C2093244C00843DBD /* HHMyOrderItem.m */; };
 		CEE2A0202093244C00843DBD /* LwOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A01D2093244C00843DBD /* LwOrderVC.m */; };
 		CEE2A0352093247B00843DBD /* HHOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A0212093247900843DBD /* HHOrderDetailVC.m */; };
@@ -319,6 +308,9 @@
 		CEE2A102209333D400843DBD /* HHDetailGoodReferralCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A0C7209333D400843DBD /* HHDetailGoodReferralCell.m */; };
 		CEE2A1052093353E00843DBD /* HHgooodDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A1032093353E00843DBD /* HHgooodDetailModel.m */; };
 		CEE2A10B2093386600843DBD /* HHNotWlanView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE2A1092093386500843DBD /* HHNotWlanView.m */; };
+		CEF54F2A20C51D66008A8D4E /* HHActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF54F2920C51D66008A8D4E /* HHActivityModel.m */; };
+		CEF54F2F20C5290C008A8D4E /* MLMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF54F2B20C5290A008A8D4E /* MLMenuView.m */; };
+		CEF54F3020C5290C008A8D4E /* MLMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF54F2C20C5290A008A8D4E /* MLMenuCell.m */; };
 		F7C6C46AF6ECDEC9F15DECE8 /* Pods_lw_Store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CDA88CC42CDB275BB517AF /* Pods_lw_Store.framework */; };
 /* End PBXBuildFile section */
 
@@ -350,6 +342,10 @@
 		CE0C12B720901F2500195A81 /* LwPersonCenterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LwPersonCenterCell.m; sourceTree = "<group>"; };
 		CE0C12BB209020F700195A81 /* HHPersonCenterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPersonCenterView.h; sourceTree = "<group>"; };
 		CE0C12BC209020F700195A81 /* HHPersonCenterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHPersonCenterView.m; sourceTree = "<group>"; };
+		CE0C1CDC20C66D94001F59F9 /* HHActivityWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHActivityWebVC.h; sourceTree = "<group>"; };
+		CE0C1CDD20C66D94001F59F9 /* HHActivityWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHActivityWebVC.m; sourceTree = "<group>"; };
+		CE0C1CDF20C6714C001F59F9 /* HHMyActivityWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMyActivityWebVC.h; sourceTree = "<group>"; };
+		CE0C1CE020C6714C001F59F9 /* HHMyActivityWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMyActivityWebVC.m; sourceTree = "<group>"; };
 		CE2190E7208ED9E1005351B4 /* HHCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHCategoryModel.h; sourceTree = "<group>"; };
 		CE2190E8208ED9E2005351B4 /* HHCategoryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHCategoryAPI.h; sourceTree = "<group>"; };
 		CE2190E9208ED9E2005351B4 /* HHCategoryAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHCategoryAPI.m; sourceTree = "<group>"; };
@@ -483,20 +479,6 @@
 		CE37948D20A98A6300A3CDC9 /* HHMyCodeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMyCodeVC.m; sourceTree = "<group>"; };
 		CE37949120A9913700A3CDC9 /* HHMessageWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMessageWeb.h; sourceTree = "<group>"; };
 		CE37949220A9913700A3CDC9 /* HHMessageWeb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMessageWeb.m; sourceTree = "<group>"; };
-		CE457D2A20A00520004DB819 /* HHBargainingHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingHead.h; sourceTree = "<group>"; };
-		CE457D2B20A00520004DB819 /* HHBargainingHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingHead.m; sourceTree = "<group>"; };
-		CE457D2D20A00C31004DB819 /* HHBargainingSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingSlider.h; sourceTree = "<group>"; };
-		CE457D2E20A00C31004DB819 /* HHBargainingSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingSlider.m; sourceTree = "<group>"; };
-		CE457D3220A05567004DB819 /* HHBroughtGiftVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBroughtGiftVC.h; sourceTree = "<group>"; };
-		CE457D3320A05567004DB819 /* HHBroughtGiftVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBroughtGiftVC.m; sourceTree = "<group>"; };
-		CE457D3420A05567004DB819 /* HHBroughtGiftVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBroughtGiftVC.xib; sourceTree = "<group>"; };
-		CE457D3720A05947004DB819 /* HHBroughtGiftResultVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBroughtGiftResultVC.h; sourceTree = "<group>"; };
-		CE457D3820A05947004DB819 /* HHBroughtGiftResultVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBroughtGiftResultVC.m; sourceTree = "<group>"; };
-		CE457D3A20A05A47004DB819 /* HHBroughtGiftResultHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBroughtGiftResultHead.h; sourceTree = "<group>"; };
-		CE457D3B20A05A47004DB819 /* HHBroughtGiftResultHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBroughtGiftResultHead.m; sourceTree = "<group>"; };
-		CE457D3D20A06130004DB819 /* HHBroughtGiftResultCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBroughtGiftResultCell.h; sourceTree = "<group>"; };
-		CE457D3E20A06130004DB819 /* HHBroughtGiftResultCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBroughtGiftResultCell.m; sourceTree = "<group>"; };
-		CE457D3F20A06130004DB819 /* HHBroughtGiftResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBroughtGiftResultCell.xib; sourceTree = "<group>"; };
 		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
 		CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWXModel.m; sourceTree = "<group>"; };
 		CE45FBA220BFFB88008D62E6 /* HHOrderItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHOrderItemModel.h; sourceTree = "<group>"; };
@@ -784,14 +766,6 @@
 		CEBFE269209D9F77005E09CD /* HHCouponCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHCouponCell.h; sourceTree = "<group>"; };
 		CEBFE26A209D9F77005E09CD /* HHCouponCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHCouponCell.m; sourceTree = "<group>"; };
 		CEBFE26B209D9F77005E09CD /* HHCouponCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHCouponCell.xib; sourceTree = "<group>"; };
-		CEBFE273209DB9D9005E09CD /* HHBargainingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingVC.h; sourceTree = "<group>"; };
-		CEBFE274209DB9D9005E09CD /* HHBargainingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingVC.m; sourceTree = "<group>"; };
-		CEBFE275209DB9D9005E09CD /* HHBargainingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBargainingVC.xib; sourceTree = "<group>"; };
-		CEBFE278209DC223005E09CD /* HHBargainingRecordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingRecordVC.h; sourceTree = "<group>"; };
-		CEBFE279209DC223005E09CD /* HHBargainingRecordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingRecordVC.m; sourceTree = "<group>"; };
-		CEBFE27B209DC24E005E09CD /* HHBargainingRecordCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingRecordCell.h; sourceTree = "<group>"; };
-		CEBFE27C209DC24E005E09CD /* HHBargainingRecordCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingRecordCell.m; sourceTree = "<group>"; };
-		CEBFE27D209DC24E005E09CD /* HHBargainingRecordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBargainingRecordCell.xib; sourceTree = "<group>"; };
 		CEE2A01B2093244C00843DBD /* HHMyOrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHMyOrderItem.h; sourceTree = "<group>"; };
 		CEE2A01C2093244C00843DBD /* HHMyOrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHMyOrderItem.m; sourceTree = "<group>"; };
 		CEE2A01D2093244C00843DBD /* LwOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LwOrderVC.m; sourceTree = "<group>"; };
@@ -930,6 +904,12 @@
 		CEE2A1042093353E00843DBD /* HHgooodDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHgooodDetailModel.h; sourceTree = "<group>"; };
 		CEE2A1092093386500843DBD /* HHNotWlanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHNotWlanView.m; sourceTree = "<group>"; };
 		CEE2A10A2093386500843DBD /* HHNotWlanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHNotWlanView.h; sourceTree = "<group>"; };
+		CEF54F2820C51D66008A8D4E /* HHActivityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHActivityModel.h; sourceTree = "<group>"; };
+		CEF54F2920C51D66008A8D4E /* HHActivityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHActivityModel.m; sourceTree = "<group>"; };
+		CEF54F2B20C5290A008A8D4E /* MLMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLMenuView.m; sourceTree = "<group>"; };
+		CEF54F2C20C5290A008A8D4E /* MLMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLMenuCell.m; sourceTree = "<group>"; };
+		CEF54F2D20C5290B008A8D4E /* MLMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLMenuView.h; sourceTree = "<group>"; };
+		CEF54F2E20C5290B008A8D4E /* MLMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLMenuCell.h; sourceTree = "<group>"; };
 		E6BC5A63E2BF63168F3A2931 /* Pods-lw_Store.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lw_Store.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lw_Store/Pods-lw_Store.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1031,31 +1011,6 @@
 				CE319D61209B18B50009A15A /* HHAdditionalCommentView.m */,
 			);
 			path = HHCellCommentView;
-			sourceTree = "<group>";
-		};
-		CE457D3020A04F12004DB819 /* 送礼 */ = {
-			isa = PBXGroup;
-			children = (
-				CE457D3120A04F12004DB819 /* controllers */,
-			);
-			path = "送礼";
-			sourceTree = "<group>";
-		};
-		CE457D3120A04F12004DB819 /* controllers */ = {
-			isa = PBXGroup;
-			children = (
-				CE457D3220A05567004DB819 /* HHBroughtGiftVC.h */,
-				CE457D3320A05567004DB819 /* HHBroughtGiftVC.m */,
-				CE457D3420A05567004DB819 /* HHBroughtGiftVC.xib */,
-				CE457D3720A05947004DB819 /* HHBroughtGiftResultVC.h */,
-				CE457D3820A05947004DB819 /* HHBroughtGiftResultVC.m */,
-				CE457D3A20A05A47004DB819 /* HHBroughtGiftResultHead.h */,
-				CE457D3B20A05A47004DB819 /* HHBroughtGiftResultHead.m */,
-				CE457D3D20A06130004DB819 /* HHBroughtGiftResultCell.h */,
-				CE457D3E20A06130004DB819 /* HHBroughtGiftResultCell.m */,
-				CE457D3F20A06130004DB819 /* HHBroughtGiftResultCell.xib */,
-			);
-			path = controllers;
 			sourceTree = "<group>";
 		};
 		CE52D4422099A02400C7BAF6 /* CDPStarEvaluation */ = {
@@ -1206,7 +1161,6 @@
 		CE999ACC208DE33B00B9307D /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				CE7772A320BCFE4A00D8E1AC /* Encryption */,
 				CE77728F20BCFCE100D8E1AC /* Models */,
 				CE999ADF208DE33B00B9307D /* Exts */,
 				CE999B47208DE33B00B9307D /* Vendors */,
@@ -1552,6 +1506,7 @@
 		CE999B78208DE33B00B9307D /* UserNoLoginManager */ = {
 			isa = PBXGroup;
 			children = (
+				CE7772A320BCFE4A00D8E1AC /* Encryption */,
 				CE999B79208DE33B00B9307D /* UserNoLoginManager.h */,
 				CE999B7A208DE33B00B9307D /* UserNoLoginManager.m */,
 			);
@@ -1681,8 +1636,6 @@
 				CE999C12208DE59100B9307D /* order */,
 				CE999C13208DE5BD00B9307D /* shoppingCart */,
 				CE999C14208DE5FC00B9307D /* personalCenter */,
-				CEBFE270209DB92E005E09CD /* 砍价 */,
-				CE457D3020A04F12004DB819 /* 送礼 */,
 			);
 			path = APP;
 			sourceTree = "<group>";
@@ -1890,6 +1843,8 @@
 				CE219370208EE853005351B4 /* HHShippingAddressCell.xib */,
 				CE21936C208EE852005351B4 /* HHShippingAddressVC.h */,
 				CE21936B208EE851005351B4 /* HHShippingAddressVC.m */,
+				CE0C1CDC20C66D94001F59F9 /* HHActivityWebVC.h */,
+				CE0C1CDD20C66D94001F59F9 /* HHActivityWebVC.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -1982,6 +1937,8 @@
 				CE4778DB20BAC23500F5FA72 /* HHAboutUsVC.m */,
 				CE74AD1420BBDAFA00246896 /* HHSetVC.h */,
 				CE74AD1520BBDAFA00246896 /* HHSetVC.m */,
+				CE0C1CDF20C6714C001F59F9 /* HHMyActivityWebVC.h */,
+				CE0C1CE020C6714C001F59F9 /* HHMyActivityWebVC.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -1993,41 +1950,6 @@
 				CE219378208EE938005351B4 /* HHMineAPI.m */,
 				CE219377208EE938005351B4 /* HHMineModel.h */,
 				CE219375208EE938005351B4 /* HHMineModel.m */,
-			);
-			path = models;
-			sourceTree = "<group>";
-		};
-		CEBFE270209DB92E005E09CD /* 砍价 */ = {
-			isa = PBXGroup;
-			children = (
-				CEBFE271209DB95D005E09CD /* controllers */,
-				CEBFE272209DB95D005E09CD /* models */,
-			);
-			path = "砍价";
-			sourceTree = "<group>";
-		};
-		CEBFE271209DB95D005E09CD /* controllers */ = {
-			isa = PBXGroup;
-			children = (
-				CEBFE273209DB9D9005E09CD /* HHBargainingVC.h */,
-				CEBFE274209DB9D9005E09CD /* HHBargainingVC.m */,
-				CEBFE275209DB9D9005E09CD /* HHBargainingVC.xib */,
-				CEBFE278209DC223005E09CD /* HHBargainingRecordVC.h */,
-				CEBFE279209DC223005E09CD /* HHBargainingRecordVC.m */,
-				CEBFE27B209DC24E005E09CD /* HHBargainingRecordCell.h */,
-				CEBFE27C209DC24E005E09CD /* HHBargainingRecordCell.m */,
-				CEBFE27D209DC24E005E09CD /* HHBargainingRecordCell.xib */,
-				CE457D2A20A00520004DB819 /* HHBargainingHead.h */,
-				CE457D2B20A00520004DB819 /* HHBargainingHead.m */,
-				CE457D2D20A00C31004DB819 /* HHBargainingSlider.h */,
-				CE457D2E20A00C31004DB819 /* HHBargainingSlider.m */,
-			);
-			path = controllers;
-			sourceTree = "<group>";
-		};
-		CEBFE272209DB95D005E09CD /* models */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -2086,6 +2008,12 @@
 			children = (
 				CEE2A0C6209333D400843DBD /* HHselecetModel.h */,
 				CEE2A053209333D300843DBD /* HHselecetModel.m */,
+				CEF54F2820C51D66008A8D4E /* HHActivityModel.h */,
+				CEF54F2920C51D66008A8D4E /* HHActivityModel.m */,
+				CEF54F2E20C5290B008A8D4E /* MLMenuCell.h */,
+				CEF54F2C20C5290A008A8D4E /* MLMenuCell.m */,
+				CEF54F2D20C5290B008A8D4E /* MLMenuView.h */,
+				CEF54F2B20C5290A008A8D4E /* MLMenuView.m */,
 				CEE2A05B209333D300843DBD /* 属性选择 */,
 			);
 			path = Model;
@@ -2428,12 +2356,10 @@
 				CEE2A0CF209333D400843DBD /* HHGoodDealRecordInfoDetailCell.xib in Resources */,
 				CE21912B208EDA0A005351B4 /* SearchView.xib in Resources */,
 				CE219374208EE853005351B4 /* HHShippingAddressCell.xib in Resources */,
-				CE457D4120A06130004DB819 /* HHBroughtGiftResultCell.xib in Resources */,
 				CEE2A03D2093247B00843DBD /* HJOrderCell.xib in Resources */,
 				CE52D45C2099ADA900C7BAF6 /* photo_delete@2x.png in Resources */,
 				CEE2A0D2209333D400843DBD /* HHGoodSpecificationsCell.xib in Resources */,
 				CE759A7320BD02BB00C76818 /* HHWXLoginVC.xib in Resources */,
-				CEBFE27F209DC24E005E09CD /* HHBargainingRecordCell.xib in Resources */,
 				CEE2A0412093247B00843DBD /* HHOrderTwoCell.xib in Resources */,
 				CE9660CA20B021F500B61BFB /* HHnormalSuccessVC.xib in Resources */,
 				CEBFE257209D627A005E09CD /* HHFansListCell.xib in Resources */,
@@ -2451,7 +2377,6 @@
 				CE2F1A8320AFC19C007ACE58 /* HHApplyDelegateVC.xib in Resources */,
 				CE21911E208EDA0A005351B4 /* ClassifyTitles.plist in Resources */,
 				CE21911C208EDA0A005351B4 /* ClassiftyGoods01.plist in Resources */,
-				CEBFE277209DB9D9005E09CD /* HHBargainingVC.xib in Resources */,
 				CE999BF4208DE33B00B9307D /* L_02.png in Resources */,
 				CE999BF6208DE33B00B9307D /* L_03.png in Resources */,
 				CE219314208EE6B8005351B4 /* HHCartFootView.xib in Resources */,
@@ -2471,7 +2396,6 @@
 				CE219126208EDA0A005351B4 /* SearchDetailView.xib in Resources */,
 				CE219382208F032A005351B4 /* HXHomeCollectionCell.xib in Resources */,
 				CEBFE259209D6854005E09CD /* HHsearchBarView.xib in Resources */,
-				CE457D3620A05567004DB819 /* HHBroughtGiftVC.xib in Resources */,
 				CE759A7220BD02BB00C76818 /* HHPhoneLoginVC.xib in Resources */,
 				CEE2A0362093247B00843DBD /* HHOrderDetailHead.xib in Resources */,
 				CEE2A0382093247B00843DBD /* HHOrderDetailCellOne.xib in Resources */,
@@ -2614,7 +2538,6 @@
 				CE21931E208EE6B8005351B4 /* HHCartCell.m in Sources */,
 				CE999A9F208DDDDA00B9307D /* ViewController.m in Sources */,
 				CE999C00208DE33B00B9307D /* AppDelegate+AOP.m in Sources */,
-				CE457D3C20A05A47004DB819 /* HHBroughtGiftResultHead.m in Sources */,
 				CE999BEC208DE33B00B9307D /* SGPageContentView.m in Sources */,
 				CEE2A0372093247B00843DBD /* HHOrderTwoCell.m in Sources */,
 				CE77729C20BCFCE100D8E1AC /* HJSettingItem.m in Sources */,
@@ -2626,11 +2549,11 @@
 				CE37948820A9430900A3CDC9 /* NSObject+AutoProperty.m in Sources */,
 				CE999BBE208DE33B00B9307D /* UIView+LH.m in Sources */,
 				CE999BC3208DE33B00B9307D /* UIViewController+LH.m in Sources */,
+				CE0C1CDE20C66D94001F59F9 /* HHActivityWebVC.m in Sources */,
 				CE999BE2208DE33B00B9307D /* UIStoryboard+Addition.m in Sources */,
 				CE74AD1620BBDAFA00246896 /* HHSetVC.m in Sources */,
 				CEE2A0F3209333D400843DBD /* XWCoolAnimator+XWLines.m in Sources */,
 				CE999BD6208DE33B00B9307D /* CATextLayer+LH.m in Sources */,
-				CE457D3920A05947004DB819 /* HHBroughtGiftResultVC.m in Sources */,
 				CE52D44120999E6300C7BAF6 /* HHEvaluteStarCell.m in Sources */,
 				CE999BE9208DE33B00B9307D /* LHAlertView.m in Sources */,
 				CE219123208EDA0A005351B4 /* SearchTagTableViewCell.m in Sources */,
@@ -2655,13 +2578,11 @@
 				CE999C0A208DE33B00B9307D /* GFAddressPicker.m in Sources */,
 				CE759A7120BD02BB00C76818 /* HHPhoneLoginVC.m in Sources */,
 				CEE2A0EA209333D400843DBD /* XWFilterAnimator+XWFlash.m in Sources */,
-				CE457D2C20A00520004DB819 /* HHBargainingHead.m in Sources */,
 				CE21931C208EE6B8005351B4 /* HHSubmitOrdersHead.m in Sources */,
 				CE999BD9208DE33B00B9307D /* CATransition+LH.m in Sources */,
 				CE0C12B920901F2500195A81 /* LwPersonCenterCell.m in Sources */,
 				CEBFE25C209D9409005E09CD /* HHsearchBarView.m in Sources */,
 				CE999BBD208DE33B00B9307D /* UIScrollView+LH.m in Sources */,
-				CEBFE27A209DC223005E09CD /* HHBargainingRecordVC.m in Sources */,
 				CEE2A0D6209333D400843DBD /* DCFeatureItem.m in Sources */,
 				CEE2A0F4209333D400843DBD /* XWCoolAnimator+XWExplode.m in Sources */,
 				CE37948F20A98A6300A3CDC9 /* HHMyCodeVC.m in Sources */,
@@ -2703,6 +2624,7 @@
 				CE999BBA208DE33B00B9307D /* UIImage+LH.m in Sources */,
 				CE2F1A8720AFCC28007ACE58 /* HHApplyDelegateCell.m in Sources */,
 				CE999BD8208DE33B00B9307D /* CAShapeLayer+LH.m in Sources */,
+				CE0C1CE120C6714C001F59F9 /* HHMyActivityWebVC.m in Sources */,
 				CE999BFF208DE33B00B9307D /* UIViewController+AOP.m in Sources */,
 				CEE2A0392093247B00843DBD /* HHOrderDetailTableHead.m in Sources */,
 				CE7772B020BCFE4B00D8E1AC /* DES3Util.m in Sources */,
@@ -2752,6 +2674,7 @@
 				CE999BF0208DE33B00B9307D /* SGImageButton.m in Sources */,
 				CE999BC0208DE33B00B9307D /* UITextField+LH.m in Sources */,
 				CE999BEE208DE33B00B9307D /* UIView+SGExtension.m in Sources */,
+				CEF54F2A20C51D66008A8D4E /* HHActivityModel.m in Sources */,
 				CE6247E720B2B3FC001E0C56 /* HHPayTypeVC.m in Sources */,
 				CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */,
 				CEE2A0DB209333D400843DBD /* DCDetailOverFooterView.m in Sources */,
@@ -2778,7 +2701,6 @@
 				CE219372208EE853005351B4 /* HHShippingAddressVC.m in Sources */,
 				CE2193A5208F0E9B005351B4 /* LwPersonalCenter.m in Sources */,
 				CE999BDE208DE33B00B9307D /* UIImage+Extension.m in Sources */,
-				CEBFE27E209DC24E005E09CD /* HHBargainingRecordCell.m in Sources */,
 				CEE2A0DE209333D400843DBD /* PPNumberButton.m in Sources */,
 				CEE2A0FF209333D400843DBD /* DCFeatureSelectionViewController.m in Sources */,
 				CEE2A0E7209333D400843DBD /* XWFilterAnimator+XWPageCurl.m in Sources */,
@@ -2797,7 +2719,6 @@
 				CE759A6E20BD02BB00C76818 /* HHRegisterVC.m in Sources */,
 				CE7772AE20BCFE4B00D8E1AC /* MD5Encryption.m in Sources */,
 				CEE2A0D3209333D400843DBD /* HHTransactionRecordVC.m in Sources */,
-				CE457D4020A06130004DB819 /* HHBroughtGiftResultCell.m in Sources */,
 				CE219369208EE7C4005351B4 /* HHCartAPI.m in Sources */,
 				CE21911B208EDA0A005351B4 /* SearchDetailViewController.m in Sources */,
 				CE2193A1208F048C005351B4 /* HHHomeModel.m in Sources */,
@@ -2813,14 +2734,15 @@
 				CE77729D20BCFCE100D8E1AC /* HJStoryBoardItem.m in Sources */,
 				CE999A9C208DDDDA00B9307D /* AppDelegate.m in Sources */,
 				CEE2A0E5209333D400843DBD /* SDBrowserImageView.m in Sources */,
+				CEF54F2F20C5290C008A8D4E /* MLMenuView.m in Sources */,
 				CE999BFB208DE33B00B9307D /* BaseAPI.m in Sources */,
-				CEBFE276209DB9D9005E09CD /* HHBargainingVC.m in Sources */,
 				CEE2A03E2093247B00843DBD /* HHOrderDetailHead.m in Sources */,
 				CE4B6FB8209C569B005482B1 /* HHCommissionWithdrawalVC.m in Sources */,
 				CEE2A0D1209333D400843DBD /* HHGoodSpecificationsCell.m in Sources */,
 				CE374F4120ABD88F0057287C /* HHTagModel.m in Sources */,
 				CE4B6FC5209C6AC9005482B1 /* HHMessageDetailVC.m in Sources */,
 				CE999BD4208DE33B00B9307D /* NSMutableArray+LH.m in Sources */,
+				CEF54F3020C5290C008A8D4E /* MLMenuCell.m in Sources */,
 				CE999BF2208DE33B00B9307D /* HJNavigationController.m in Sources */,
 				CEE2A0ED209333D400843DBD /* XWFilterAnimator.m in Sources */,
 				CE219317208EE6B8005351B4 /* HHPaySucessVC.m in Sources */,
@@ -2847,8 +2769,6 @@
 				CEE2A0FD209333D400843DBD /* XWDrawerAnimator.m in Sources */,
 				CE999BC5208DE33B00B9307D /* UITableViewCell+LH.m in Sources */,
 				CEE2A03F2093247B00843DBD /* HJOrderCell.m in Sources */,
-				CE457D2F20A00C31004DB819 /* HHBargainingSlider.m in Sources */,
-				CE457D3520A05567004DB819 /* HHBroughtGiftVC.m in Sources */,
 				CE37948220A9271500A3CDC9 /* HHMyIntegralListVC.m in Sources */,
 				CE4B6FC9209C6B0B005482B1 /* HHMessageDeatilCell.m in Sources */,
 				CE2190EC208ED9E2005351B4 /* HHCategoryModel.m in Sources */,

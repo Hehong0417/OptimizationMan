@@ -12,7 +12,7 @@
 #import "HHUrlModel.h"
 #import "HHGoodListVC.h"
 
-@interface LwHomeVC ()<WKUIDelegate,WKNavigationDelegate>
+@interface LwHomeVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
 {
     WKWebView *_webView;
 }
@@ -30,10 +30,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    // js配置
+    WKUserContentController *userContentController = [[WKUserContentController alloc] init];
+    [userContentController addScriptMessageHandler:self name:@"closeMe"];
+
+    
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+     config.userContentController = userContentController;
+
     _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-49) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
+
     [_webView.scrollView setShowsVerticalScrollIndicator:NO];
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
@@ -61,52 +69,37 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
-    NSString *urlStr = navigationResponse.response.URL.absoluteString;
+    
+     decisionHandler(WKNavigationResponsePolicyAllow);
+}
+#pragma mark-WKScriptMessageHandler
+
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
+    
+    [self allowTurnAroundWithUsrlStr:message.body[@"url"]];
+    
+    NSLog(@"JS 调用了 %@ 方法，传回参数 %@",message.name,message.body);
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [[_webView configuration].userContentController removeScriptMessageHandlerForName:@"closeMe"];
+
+}
+//跳转
+- (void)allowTurnAroundWithUsrlStr:(NSString *)urlStr{
+    
     HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[urlStr lh_parametersKeyValue]];
     //允许跳转
-
-    if ([navigationResponse.response.URL.absoluteString containsString:@"ProductDetail"]) {
+    if ([urlStr containsString:@"detail"]) {
         
         HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
         vc.Id = model.Id;
         [self.navigationController pushVC:vc];
-        decisionHandler(WKNavigationResponsePolicyCancel);
-
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"ProductWeb/Search"]){
         
-        HHGoodListVC *vc = [HHGoodListVC new];
-        vc.enter_Type = HHenter_home_Type;
-        [self.navigationController pushVC:vc];
-        
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"CategoryList"]){
-        //商品分类
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"BrandList"]){
-        //商品品牌
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"BrandDetail?bid"]){
-        //商品品牌详细
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"ShopCarWeb/MyShopCar"]){
-        //购物车
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"PersonalCenter"]){
-        //个人中心
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"MyOrder/MyOrder"]){
-        //订单
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else if ([navigationResponse.response.URL.absoluteString containsString:@"CouponDetail?coupId"]){
-        //优惠券
-        decisionHandler(WKNavigationResponsePolicyCancel);
-    }else{
-        
-        decisionHandler(WKNavigationResponsePolicyAllow);
     }
-    // decisionHandler(WKNavigationResponsePolicyAllow);
+    
 }
-
-
 
 @end

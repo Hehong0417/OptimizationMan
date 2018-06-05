@@ -181,9 +181,8 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jQH-Sw-ngm">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refund" translatesAutoresizingMaskIntoConstraints="NO" id="jQH-Sw-ngm">
                                                     <rect key="frame" x="328" y="16" width="31" height="27"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="31" id="84j-tS-mna"/>
                                                         <constraint firstAttribute="height" constant="27" id="f25-IR-cqE"/>
@@ -245,5 +244,6 @@
     <resources>
         <image name="icon_add_default" width="20" height="19"/>
         <image name="icon_minus_selected" width="20" height="19"/>
+        <image name="refund" width="28" height="27"/>
     </resources>
 </document>

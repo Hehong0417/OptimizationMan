@@ -36,7 +36,7 @@
     
     _productModel = productModel;
     
-    [self.product_iconLabel sd_setImageWithURL:[NSURL URLWithString:productModel.icon] placeholderImage:nil];
+    [self.product_iconLabel sd_setImageWithURL:[NSURL URLWithString:productModel.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
     self.product_nameLabel.text = productModel.name;
     self.product_priceLabel.text = [NSString stringWithFormat:@"¥%.2f",productModel.price.floatValue];
     self.quantityTextField.text = productModel.quantity;
@@ -47,7 +47,7 @@
     
     _pModel = pModel;
     
-    [self.product_iconLabel sd_setImageWithURL:[NSURL URLWithString:pModel.icon] placeholderImage:nil];
+    [self.product_iconLabel sd_setImageWithURL:[NSURL URLWithString:pModel.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
     self.product_nameLabel.text = pModel.prodcut_name;
     self.product_priceLabel.text = [NSString stringWithFormat:@"¥%.2f",pModel.price.floatValue];
     self.sku_nameLabel.text = pModel.sku_name;

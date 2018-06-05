@@ -71,11 +71,11 @@
 
     CGFloat tableHeight;
     if (self.cartType == HHcartType_goodDetail) {
-        tableHeight = SCREEN_HEIGHT - Status_HEIGHT - 44;
+        tableHeight = SCREEN_HEIGHT - Status_HEIGHT;
         backBtn.hidden = NO;
 
     }else{
-        tableHeight = SCREEN_HEIGHT - Status_HEIGHT - 44 - 50 - 49;
+        tableHeight = SCREEN_HEIGHT - Status_HEIGHT - 50 - 49;
         backBtn.hidden = YES;
 
     }
@@ -210,10 +210,10 @@
     self.datas = [data.products mutableCopy];
     if (self.datas.count ==0) {
         self.settleAccountView.hidden = YES;
-        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49-44);
+        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49);
     }else{
         self.settleAccountView.hidden = NO;
-        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49-50-44);
+        self.tableView.frame = CGRectMake(0, 0, ScreenW, ScreenH-49-50);
     }
     self.settleAccountView.selectBtn.selected = NO;
     //全选左边点击数据源
@@ -287,10 +287,13 @@
             if (api.State == 1) {
                 if ([api.Data isEqual:@1]) {
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
+                    vc.enter_type = HHaddress_type_another;
+                    vc.mode = nil;
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
                     vc.addressType = HHAddress_settlementType_cart;
+                    vc.mode = nil;
                     vc.titleStr = @"新增收货地址";
                     [self.navigationController pushVC:vc];
                 }

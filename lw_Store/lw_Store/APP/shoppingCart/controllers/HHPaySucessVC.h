@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    HHenter_type_cart,
+    HHenter_type_order,
+    HHenter_type_productDetail
+} HHSucessEnter_type;
+
 @interface HHPaySucessVC : UIViewController
+
+@property(nonatomic,assign) HHSucessEnter_type enter_type;
 
 @end

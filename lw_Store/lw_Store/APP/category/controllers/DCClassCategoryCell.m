@@ -48,13 +48,13 @@
 {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = FONT(14);
-//    _titleLabel.textColor =
+    _titleLabel.textColor = KTitleLabelColor;
     [self addSubview:_titleLabel];
     
     _indicatorView = [[UIView alloc] init];
     _indicatorView.hidden = NO;
     _indicatorView.backgroundColor = APP_COMMON_COLOR;
-    [self addSubview:_indicatorView];
+//    [self addSubview:_indicatorView];
 }
 
 #pragma mark - 布局
@@ -65,12 +65,12 @@
         make.center.mas_equalTo(self);
     }];
     
-    [_indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self);
-        make.top.mas_equalTo(self);
-        make.height.mas_equalTo(self);
-        make.width.mas_equalTo(4);
-    }];
+//    [_indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self);
+//        make.top.mas_equalTo(self);
+//        make.height.mas_equalTo(self);
+//        make.width.mas_equalTo(4);
+//    }];
 }
 
 #pragma mark - cell点击
@@ -78,11 +78,13 @@
     [super setSelected:selected animated:animated];
     if (selected) {
         _indicatorView.hidden = NO;
-        _titleLabel.textColor = APP_COMMON_COLOR;
+        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.font = BoldFONT(14);
         self.backgroundColor = [UIColor whiteColor];
     }else{
         _indicatorView.hidden = YES;
-        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.font = FONT(14);
+        _titleLabel.textColor = KTitleLabelColor;
         self.backgroundColor = [UIColor clearColor];
     }
 }

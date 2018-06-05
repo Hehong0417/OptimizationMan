@@ -35,7 +35,7 @@
     
     //商品列表
     self.page = 1;
-    self.pageSize = 15;
+    self.pageSize = 10;
     
     //头部
     
@@ -47,118 +47,106 @@
     [self.collectionView registerClass:[HHEvaluationHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HHEvaluationHeadView"];
     
     //获取数据
-//    [self getDatas];
-//    [self addHeadRefresh];
-//    [self addFootRefresh];
+    [self getDatas];
+    [self addFootRefresh];
     
 }
 
 #pragma mark - DZNEmptyDataSetDelegate
 
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"img_list_disable"];
-//}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    return [[NSAttributedString alloc] initWithString:@"还没有相关的宝贝，先看看其他的吧～" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
-//}
-//
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-//
-//    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
-//    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
-//    return -offset;
-//
-//}
-//- (void)getDatas{
-//
-//    [[[HHCategoryAPI GetProductListWithType:@1 categoryId:@"" name:nil orderby:@1 page:@(self.page) pageSize:@(self.pageSize)] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
-//
-//        if (!error) {
-//            if (api.code == 0) {
-//
-//                [self loadDataFinish:api.data[@"list"]];
-//            }else{
-//                [SVProgressHUD showInfoWithStatus:api.msg];
-//            }
-//
-//        }else{
-//
-//            [SVProgressHUD showInfoWithStatus:api.msg];
-//        }
-//
-//    }];
-//
-//}
-//- (void)addHeadRefresh{
-//
-//    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        self.page = 1;
-//        [self.datas removeAllObjects];
-//        [self getDatas];
-//    }];
-//    refreshHeader.lastUpdatedTimeLabel.hidden = YES;
-//    refreshHeader.stateLabel.hidden = YES;
-//    self.collectionView.mj_header = refreshHeader;
-//
-//}
-//- (void)addFootRefresh{
-//
-//    MJRefreshAutoNormalFooter *refreshfooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        self.page++;
-//
-//        [self getDatas];
-//    }];
-//    self.collectionView.mj_footer = refreshfooter;
-//
-//}
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"img_list_disable"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+
+    return [[NSAttributedString alloc] initWithString:@"还没有相关的宝贝，先看看其他的吧～" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+
+}
+- (void)getDatas{
+    
+    [[[HHCategoryAPI GetAlliancesProductsWithpids:self.pid] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
+
+        if (!error) {
+            if (api.State == 1) {
+
+                [self loadDataFinish:api.Data];
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+
+        }else{
+
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+
+    }];
+
+}
+
+- (void)addFootRefresh{
+
+    MJRefreshAutoNormalFooter *refreshfooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+
+        [self getDatas];
+    }];
+    self.collectionView.mj_footer = refreshfooter;
+
+}
 ///**
 // *  加载数据完成
 // */
-//- (void)loadDataFinish:(NSArray *)arr {
-//
-//    [self.datas addObjectsFromArray:arr];
-//
-//    if (arr.count < self.pageSize) {
-//
-//        [self endRefreshing:YES];
-//
-//    }else{
-//        [self endRefreshing:NO];
-//    }
-//
-//}
-//
-///**
-// *  结束刷新
-// */
-//- (void)endRefreshing:(BOOL)noMoreData {
-//    // 取消刷新
-//
-//    if (noMoreData) {
-//        if (self.datas.count == 0) {
-//            self.collectionView.mj_footer.hidden = YES;
-//        }else {
-//            [self.collectionView.mj_footer setState:MJRefreshStateNoMoreData];
-//        }
-//    }else{
-//
-//        [self.collectionView.mj_footer setState:MJRefreshStateIdle];
-//
-//    }
-//
-//    if (self.collectionView.mj_header.isRefreshing) {
-//        [self.collectionView.mj_header endRefreshing];
-//    }
-//
-//    if (self.collectionView.mj_footer.isRefreshing) {
-//        [self.collectionView.mj_footer endRefreshing];
-//    }
-//    //刷新界面
-//    [self.collectionView reloadData];
-//
-//}
+- (void)loadDataFinish:(NSArray *)arr {
+
+    [self.datas addObjectsFromArray:arr];
+
+    if (arr.count < self.pageSize) {
+
+        [self endRefreshing:YES];
+
+    }else{
+        [self endRefreshing:NO];
+    }
+
+}
+
+/**
+ *  结束刷新
+ */
+- (void)endRefreshing:(BOOL)noMoreData {
+    // 取消刷新
+
+    if (noMoreData) {
+        if (self.datas.count == 0) {
+            self.collectionView.mj_footer.hidden = YES;
+        }else {
+            [self.collectionView.mj_footer setState:MJRefreshStateNoMoreData];
+        }
+    }else{
+
+        [self.collectionView.mj_footer setState:MJRefreshStateIdle];
+
+    }
+
+    if (self.collectionView.mj_header.isRefreshing) {
+        [self.collectionView.mj_header endRefreshing];
+    }
+
+    if (self.collectionView.mj_footer.isRefreshing) {
+        [self.collectionView.mj_footer endRefreshing];
+    }
+    //刷新界面
+    [self.collectionView reloadData];
+
+}
 
 #pragma  mark - collectionView Delegate
 
@@ -173,8 +161,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-//    return self.datas.count;
-    return 6;
+    return self.datas.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{

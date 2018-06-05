@@ -52,8 +52,30 @@
     //    [self addHeadRefresh];
     //    [self addFootRefresh];
     
+    //抓取返回按钮
+    UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
+    [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    
 }
-
+- (void)backBtnAction{
+    
+    if (self.enter_type == HHenter_type_cart||self.enter_type == HHenter_type_order) {
+        
+        [self.navigationController popToRootVC];
+        
+    }else  if (self.enter_type == HHenter_type_productDetail) {
+        
+        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *vc, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == 2) {
+                [self.navigationController popToVC:vc];
+            }
+        }];
+    }else{
+        [self.navigationController popToRootVC];
+    }
+    
+}
 #pragma mark - DZNEmptyDataSetDelegate
 
 //- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView

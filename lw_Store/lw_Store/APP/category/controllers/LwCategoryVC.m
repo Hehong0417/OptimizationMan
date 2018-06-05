@@ -160,7 +160,7 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
 {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _tableView.frame = CGRectMake(0, 50, tableViewH, SCREEN_HEIGHT - Status_HEIGHT-44);
+        _tableView.frame = CGRectMake(0, 50, tableViewH, SCREEN_HEIGHT - Status_HEIGHT-44-49-50);
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
@@ -252,10 +252,12 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
 #pragma mark - item宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    return CGSizeMake((SCREEN_WIDTH - tableViewH - DCMargin*3)/2, 115);
-
+    return CGSizeMake((SCREEN_WIDTH - tableViewH - DCMargin*4)/3, 115);
 }
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
 
+    return UIEdgeInsetsMake(DCMargin, DCMargin, DCMargin, 0);
+}
 #pragma mark - head宽高
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     

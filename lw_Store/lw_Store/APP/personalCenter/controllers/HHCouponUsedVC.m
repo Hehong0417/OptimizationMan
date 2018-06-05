@@ -9,7 +9,7 @@
 #import "HHCouponUsedVC.h"
 #import "HHCouponCell.h"
 
-@interface HHCouponUsedVC ()
+@interface HHCouponUsedVC ()<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong)   UITableView *tableV;
 @property (nonatomic, strong)   NSMutableArray *datas;
@@ -37,7 +37,9 @@
     
     [self.tableV registerNib:[UINib nibWithNibName:@"HHCouponCell" bundle:nil] forCellReuseIdentifier:@"HHCouponCell"];
     self.tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    self.tableV.emptyDataSetDelegate = self;
+    self.tableV.emptyDataSetSource = self;
+    self.tableV.backgroundColor = KVCBackGroundColor;
     self.page = 1;
     [self getDatas];
     
@@ -61,6 +63,34 @@
         }
         
     }];
+    
+}
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"no_coupon"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return [[NSAttributedString alloc] initWithString:@"优惠券列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
+}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
+//
+//    return [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
+//
+//}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    return -offset;
+    
+}
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
+    
+    return 20;
     
 }
 - (void)addHeadRefresh{

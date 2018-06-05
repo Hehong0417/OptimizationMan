@@ -438,5 +438,25 @@
     return api;
     
 }
+//创建订单
++ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSArray *)integralTempIds message:(NSString *)message{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_Order_Create;
+    if (addr_id) {
+        [api.parameters setObject:addr_id forKey:@"addr_id"];
+    }
+    if (skuId) {
+        [api.parameters setObject:skuId forKey:@"skuId"];
+    }
+    if (count) {
+        [api.parameters setObject:count forKey:@"count"];
+    }
+    if (mode) {
+        [api.parameters setObject:mode forKey:@"mode"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
 
 @end
