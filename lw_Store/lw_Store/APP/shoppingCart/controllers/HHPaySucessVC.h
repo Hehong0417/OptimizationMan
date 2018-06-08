@@ -11,11 +11,14 @@
 typedef enum : NSUInteger {
     HHenter_type_cart,
     HHenter_type_order,
-    HHenter_type_productDetail
+    HHenter_type_productDetail,
+    HHenter_type_activity
 } HHSucessEnter_type;
 
 @interface HHPaySucessVC : UIViewController
 
 @property(nonatomic,assign) HHSucessEnter_type enter_type;
+
+@property(nonatomic,copy) voidBlock backBlock;
 
 @end

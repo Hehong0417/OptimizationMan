@@ -14,6 +14,6 @@ typedef enum : NSUInteger {
     HHhandle_type_Confirm,
 } HHhandle_type;
 
-@interface LwOrderVC : UIViewController
+@interface HHOrderVC : UIViewController
 
 @end

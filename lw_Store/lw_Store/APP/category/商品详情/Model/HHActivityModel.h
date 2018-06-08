@@ -12,4 +12,6 @@
 @property(nonatomic,strong) NSString *Count;
 @property(nonatomic,strong) NSNumber *IsJoin;
 @property(nonatomic,strong) NSNumber *Price;
+@property(nonatomic,strong) NSNumber *Mode;
+
 @end

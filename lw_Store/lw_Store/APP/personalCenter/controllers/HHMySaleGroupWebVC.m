@@ -6,13 +6,13 @@
 //  Copyright © 2018年 User. All rights reserved.
 //
 
-#import "HHMyActivityWebVC.h"
+#import "HHMySaleGroupWebVC.h"
 #import <WebKit/WebKit.h>
 #import "HHSubmitOrdersVC.h"
 #import "HHOrderVC.h"
-#import "HHGoodBaseViewController.h"
+#import "HHPaySucessVC.h"
 
-@interface HHMyActivityWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
+@interface HHMySaleGroupWebVC ()<WKUIDelegate,WKNavigationDelegate>
 {
     WKWebView *_webView;
     UIButton *rightBtn;
@@ -23,17 +23,13 @@
 }
 @end
 
-@implementation HHMyActivityWebVC
+@implementation HHMySaleGroupWebVC
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"拼团";
+    self.title = @"降价团";
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
@@ -46,34 +42,36 @@
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
     
-    HJUser *user = [HJUser sharedUser];
-    url = [NSString stringWithFormat:@"%@/SpellGroup/SpellGroupList?token=%@",API_HOST1,user.token];
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [_webView loadRequest:req];
-    
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
     [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
     [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
     
+    [self loadData];
     
     rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(shareAction) image:[UIImage imageNamed:@"icon-share"]];
     rightBtn.hidden = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     
 }
+- (void)loadData{
+    
+    HJUser *user = [HJUser sharedUser];
+    url = [NSString stringWithFormat:@"%@/Personal/CutGroup?token=%@",API_HOST1,user.token];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [_webView loadRequest:req];
+}
 - (void)backBtnAction{
     
-    if ([responseUrl containsString:@"SpellGroup/SpellGroupList"]) {
-        
+    if ([responseUrl containsString:@"Personal/CutGroup"]) {
         [self.view resignFirstResponder];
         [self.navigationController popViewControllerAnimated:YES];
     }else if ([_webView canGoBack]) {
-        if ([responseUrl containsString:@"SpellGroup/Index"]) {
+        if([responseUrl containsString:@"ActivityWeb/CutGroupBuy"]){
             rightBtn.hidden = YES;
         }
         [_webView goBack];
-    } else{
+    }else{
         [self.view resignFirstResponder];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -93,7 +91,7 @@
 {
     
     //创建分享消息对象
-    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+   UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建Webpage内容对象
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"邀请好友参团" descr:@"" thumImage:nil];
@@ -125,7 +123,8 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Finish:%@",navigation);
-    //获取当前页面的title
+   //获取当前页面的title
+
     [_webView evaluateJavaScript: @"document.title" completionHandler:^(id data, NSError * _Nullable error) {
         self.title = data;
     }];
@@ -135,78 +134,84 @@
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{
     
     NSLog(@"Redirect:%@",navigation);
-    
+   
 }
 // 在收到响应后，决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
     responseUrl = navigationResponse.response.URL.absoluteString;
-    if ([navigationResponse.response.URL.absoluteString containsString:@"SpellGroup/Index"]) {
+    if ([navigationResponse.response.URL.absoluteString containsString:@"Personal/CutGroup"]) {
+        rightBtn.hidden = YES;
+        decisionHandler(WKNavigationResponsePolicyAllow);
+
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"ActivityWeb/CutGroupBuy"]){
+        
         rightBtn.hidden = NO;
         webpageUrl = navigationResponse.response.URL.absoluteString;
-        
         decisionHandler(WKNavigationResponsePolicyAllow);
-        
-    }else if([navigationResponse.response.URL.absoluteString containsString:@"MyOrder/MyOrder"]){
-        rightBtn.hidden = YES;
-        HHOrderVC *vc = [HHOrderVC new];
-        [self.navigationController pushVC:vc];
-        decisionHandler(WKNavigationResponsePolicyCancel);
-        
-    }else if([navigationResponse.response.URL.absoluteString containsString:@"SpellGroup/SpellGroupList"]){
-        
-        rightBtn.hidden = YES;
-        decisionHandler(WKNavigationResponsePolicyAllow);
-        
-    }else if([navigationResponse.response.URL.absoluteString containsString:@"ShopCarWeb/PreviewOrder"]){
-        rightBtn.hidden = YES;
+       
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"WeiXin/Pay"]){
+        //微信支付
         HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
-        HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-        vc.enter_type = HHaddress_type_Spell_group;
-        vc.ids_Str = model.skuId;
-        vc.count = @"1";
-        vc.mode = @2;
-        [self.navigationController pushVC:vc];
-        decisionHandler(WKNavigationResponsePolicyCancel);
-        
-    }else if([navigationResponse.response.URL.absoluteString containsString:@"ProductWeb/ProductDetail"]){
-        rightBtn.hidden = YES;
-        HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
-        HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
-        vc.Id = model.Id;
-        [self.navigationController pushVC:vc];
+
+        [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:model.order_id]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                    [HHWXModel payReqWithModel:model];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else {
+                
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+                
+            }
+        }];
         decisionHandler(WKNavigationResponsePolicyCancel);
         
     }else if ([navigationResponse.response.URL.absoluteString containsString:@"HttpError"]){
         
         [SVProgressHUD showInfoWithStatus:@"服务器出现错误"];
         decisionHandler(WKNavigationResponsePolicyCancel);
-        
-    }  else{
+
+    }else{
         decisionHandler(WKNavigationResponsePolicyAllow);
     }
 }
-#pragma mark-WKScriptMessageHandler
+#pragma mark-微信支付
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    
-    [self allowTurnAroundWithUsrlStr:message.body[@"url"]];
-    
-    NSLog(@"JS 调用了 %@ 方法，传回参数 %@",message.name,message.body);
-}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[_webView configuration].userContentController removeScriptMessageHandlerForName:@"closeMe"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
     
 }
-//跳转
-- (void)allowTurnAroundWithUsrlStr:(NSString *)urlStr{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    //微信支付通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
     
 }
-
+- (void)wxPaySucesscount{
+    
+    HHPaySucessVC *vc = [HHPaySucessVC new];
+    vc.enter_type = HHenter_type_activity;
+    vc.backBlock = ^{
+        [self loadData];
+    };
+    [self.navigationController pushVC:vc];
+    
+}
+//88 288 1288
+- (void)wxPayFailcount {
+    
+    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+}
 @end
-
 

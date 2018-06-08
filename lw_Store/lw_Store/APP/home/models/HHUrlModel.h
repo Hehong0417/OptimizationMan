@@ -13,5 +13,8 @@
 @property (nonatomic, strong)   NSString *Id;
 @property (nonatomic, strong)   NSString *cid;
 @property (nonatomic, strong)   NSString *coupId;
+@property (nonatomic, strong)   NSString *skuId;
+@property (nonatomic, strong)   NSNumber *mode;
+@property (nonatomic, strong)   NSString *order_id;
 
 @end

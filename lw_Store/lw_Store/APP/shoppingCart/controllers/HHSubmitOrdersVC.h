@@ -21,5 +21,6 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign) HHenter_type enter_type;
 @property(nonatomic,strong) NSNumber *mode;
 @property(nonatomic,strong) NSString *count;
+@property(nonatomic,strong) NSNumber *sendGift;
 
 @end

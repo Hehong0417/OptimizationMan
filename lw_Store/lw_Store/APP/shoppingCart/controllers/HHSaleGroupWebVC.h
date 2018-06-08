@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HHMyActivityWebVC : UIViewController
+@interface HHSaleGroupWebVC : UIViewController
+@property (nonatomic, strong) NSString *gbId;
 
 @end

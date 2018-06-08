@@ -6,35 +6,37 @@
 //  Copyright © 2018年 User. All rights reserved.
 //
 
-#import "HHActivityWebVC.h"
+#import "HHMySendGiftWebVC.h"
 #import <WebKit/WebKit.h>
+#import "HHSubmitOrdersVC.h"
+#import "HHOrderVC.h"
 
-@interface HHActivityWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
+@interface HHMySendGiftWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
 {
     WKWebView *_webView;
     UIButton *rightBtn;
+    NSString *url;
     NSString *webpageUrl;
+    NSString *responseUrl;
 }
 @end
 
-@implementation HHActivityWebVC
+@implementation HHMySendGiftWebVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // js配置
-    
+    self.title = @"送礼";
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-//    config.userContentController = userContentController;
+    //    config.userContentController = userContentController;
     
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-64) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     
@@ -43,9 +45,8 @@
     [self.view addSubview:_webView];
     
     HJUser *user = [HJUser sharedUser];
-    webpageUrl = [NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token];
-    
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token]]];
+    url = [NSString stringWithFormat:@"%@/Personal/SendGift?token=%@",API_HOST1,user.token];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     [_webView loadRequest:req];
     
     //抓取返回按钮
@@ -55,11 +56,23 @@
     
     
     rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(shareAction) image:[UIImage imageNamed:@"icon-share"]];
+    rightBtn.hidden = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 }
 - (void)backBtnAction{
     
-    [self.navigationController popToRootVC];
+    if ([responseUrl containsString:@"Personal/SendGift"]||[responseUrl containsString:@"Personal/GetGift"]) {
+        [self.view resignFirstResponder];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else if ([_webView canGoBack]) {
+        if([responseUrl containsString:@"Personal/SendGift"]){
+            rightBtn.hidden = YES;
+        }
+        [_webView goBack];
+    } else{
+        [self.view resignFirstResponder];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 -(void)shareAction{
     
@@ -69,6 +82,7 @@
         [self shareVedioToPlatformType:platformType];
         
     }];
+    
 }
 //分享到不同平台
 - (void)shareVedioToPlatformType:(UMSocialPlatformType)platformType
@@ -98,6 +112,7 @@
         }
     }];
 }
+
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Start:%@",navigation);
@@ -109,7 +124,13 @@
     //获取当前页面的title
     [_webView evaluateJavaScript: @"document.title" completionHandler:^(id data, NSError * _Nullable error) {
         self.title = data;
+        if ([self.title isEqualToString:@"送礼物"]) {
+            rightBtn.hidden = NO;
+        }else{
+            rightBtn.hidden = YES;
+        }
     }];
+    
 }
 // 接收到服务器跳转请求之后调用
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{
@@ -121,11 +142,38 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
-    
-    decisionHandler(WKNavigationResponsePolicyAllow);
+    responseUrl =navigationResponse.response.URL.absoluteString;
+    if ([navigationResponse.response.URL.absoluteString containsString:@"ActivityWeb/SendGiftList"]) {
+        
+        webpageUrl = navigationResponse.response.URL.absoluteString;
+        decisionHandler(WKNavigationResponsePolicyAllow);
+        
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"MyOrder/MyOrder"]){
+        HHOrderVC *vc = [HHOrderVC new];
+        [self.navigationController pushVC:vc];
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"ShopCarWeb/PreviewOrder"]){
+        
+        HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
+        HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
+        vc.enter_type = HHaddress_type_Spell_group;
+        vc.ids_Str = model.skuId;
+        vc.count = @"1";
+        vc.mode = @2;
+        [self.navigationController pushVC:vc];
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }else if ([navigationResponse.response.URL.absoluteString containsString:@"HttpError"]){
+        
+        [SVProgressHUD showInfoWithStatus:@"服务器出现错误"];
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }  else{
+        decisionHandler(WKNavigationResponsePolicyAllow);
+    }
 }
 #pragma mark-WKScriptMessageHandler
-
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
     
@@ -146,3 +194,6 @@
 }
 
 @end
+
+
+

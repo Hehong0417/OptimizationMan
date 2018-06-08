@@ -142,7 +142,14 @@
                       }else if(self.addressType == HHAddress_settlementType_cart){
                           //提交订单页面
                           HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-                          vc.enter_type = HHaddress_type_add_cart;
+                          if ([self.sendGift isEqual:@1]) {
+                              vc.enter_type = HHaddress_type_Spell_group;
+                              vc.mode = @8;
+                          }else{
+                              vc.enter_type = HHaddress_type_add_cart;
+                              vc.mode = nil;
+                          }
+                          vc.sendGift = self.sendGift;
                           [self.navigationController pushVC:vc];
                           
                       }else if (self.addressType == HHAddress_settlementType_productDetail){

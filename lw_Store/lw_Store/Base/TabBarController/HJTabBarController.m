@@ -11,7 +11,7 @@
 #import "HXTabBar.h"
 #import "LwHomeVC.h"
 #import "LwCategoryVC.h"
-#import "LwOrderVC.h"
+#import "HHOrderVC.h"
 #import "HHShoppingVC.h"
 #import "LwPersonalCenter.h"
 
@@ -203,7 +203,7 @@
         HJStoryBoardItem *item1 = [HJStoryBoardItem itemWithStroyBoardName:@"home" identifier:@"LwHomeVC" viewControllerNonExist:YES];
         HJStoryBoardItem *item2 = [HJStoryBoardItem itemWithStroyBoardName:@"category" identifier:@"LwCategoryVC" viewControllerNonExist:YES];
         
-         HJStoryBoardItem *item3 = [HJStoryBoardItem itemWithStroyBoardName:@"order" identifier:@"LwOrderVC" viewControllerNonExist:YES];
+         HJStoryBoardItem *item3 = [HJStoryBoardItem itemWithStroyBoardName:@"order" identifier:@"HHOrderVC" viewControllerNonExist:YES];
         HJStoryBoardItem *item4 = [HJStoryBoardItem itemWithStroyBoardName:@"shoppingCart" identifier:@"HHShoppingVC" viewControllerNonExist:YES];
         HJStoryBoardItem *item5 = [HJStoryBoardItem itemWithStroyBoardName:@"personalCenter" identifier:@"LwPersonalCenter" viewControllerNonExist:YES];
 

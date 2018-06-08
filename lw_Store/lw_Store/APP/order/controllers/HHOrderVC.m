@@ -6,7 +6,7 @@
 //  Copyright © 2017年 User. All rights reserved.
 //
 
-#import "LwOrderVC.h"
+#import "HHOrderVC.h"
 #import "SGSegmentedControl.h"
 #import "HJOrderCell.h"
 #import "HHOrderTwoCell.h"
@@ -23,7 +23,7 @@
 #import "HHApplyRefundVC.h"
 #import "HHOrderItemModel.h"
 
-@interface LwOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property(nonatomic,strong)   SGSegmentedControl *SG;
 @property (nonatomic, strong)   NSArray *title_arr;
@@ -38,7 +38,7 @@
 
 @end
 
-@implementation LwOrderVC
+@implementation HHOrderVC
 
 #pragma mark - LifeCycle
 
@@ -316,7 +316,7 @@
             [self setStandardLabWith:orders_m.items[indexPath.row] cell:cell];
             grideCell = cell;
           [cell.StandardLab setTapActionWithBlock:^{
-            UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIStoryboard *board = [UIStoryboard storyboardWithName:@"PersonCenter" bundle:nil];
             HHApplyRefundVC *vc = [board instantiateViewControllerWithIdentifier:@"HHApplyRefundVC"];
               vc.applyRefund_block = ^{
                   [self.datas removeAllObjects];

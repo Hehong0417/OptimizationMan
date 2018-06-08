@@ -189,7 +189,13 @@
             if (api.State == 1) {
 
                 self.model  =  [HHCartModel mj_objectWithKeyValues:api.Data];
-                
+                if ([self.model.sendGift isEqual:@1]) {
+                    self.settleAccountView.sendGift_label.hidden = NO;
+                    self.settleAccountView.sendGift_widthConstant.constant = 80;
+                }else{
+                    self.settleAccountView.sendGift_label.hidden = YES;
+                    self.settleAccountView.sendGift_widthConstant.constant = 0;
+                }
                 self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%@",self.model.total?self.model.total:@"0.00"];
 
                 [self getShopCartListFinsih:self.model];
@@ -228,6 +234,8 @@
 - (void)addSettleAccountView{
     
     self.settleAccountView  = [[[NSBundle mainBundle] loadNibNamed:@"HHCartFootView" owner:self options:nil] lastObject];
+    self.settleAccountView.sendGift_label.hidden = YES;
+    self.settleAccountView.sendGift_widthConstant.constant = 0;
     CGFloat settleView_y;
     if (self.cartType == HHcartType_goodDetail) {
         settleView_y = SCREEN_HEIGHT-Status_HEIGHT - 44-50;
@@ -248,6 +256,14 @@
 //        [weakSelf caculateSettleGoodsListBaseLeftSelectArrIsAllSelected:allSelected.boolValue];
 //    };
 //
+    //送礼
+    self.settleAccountView.sendGift_label.userInteractionEnabled = YES;
+    [self.settleAccountView.sendGift_label setTapActionWithBlock:^{
+       
+        [self isExitAddress];
+
+    }];
+    
     //提交订单
     [self.settleAccountView.settleBtn setTapActionWithBlock:^{
         
@@ -273,7 +289,6 @@
 //        }
 
         [self isExitAddress];
-
         
     }];
     
@@ -286,14 +301,26 @@
         if (!error) {
             if (api.State == 1) {
                 if ([api.Data isEqual:@1]) {
+                    
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-                    vc.enter_type = HHaddress_type_another;
-                    vc.mode = nil;
+                    if (self.model.sendGift) {
+                        vc.enter_type = HHaddress_type_Spell_group;
+                        vc.mode = @8;
+                    }else{
+                        vc.mode = nil;
+                        vc.enter_type = HHaddress_type_add_cart;
+                    }
+                    vc.sendGift = self.model.sendGift;
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
                     vc.addressType = HHAddress_settlementType_cart;
-                    vc.mode = nil;
+                    if (self.model.sendGift) {
+                        vc.mode = @8;
+                    }else{
+                        vc.mode = nil;
+                    }
+                    vc.sendGift = self.model.sendGift;
                     vc.titleStr = @"新增收货地址";
                     [self.navigationController pushVC:vc];
                 }

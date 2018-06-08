@@ -45,8 +45,8 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) NSString *headTitle;
 @property (nonatomic, strong) NSString *count;
-@property (nonatomic, strong) HHActivityModel *activity_m;
 @property (nonatomic, strong) NSMutableArray *alert_Arr;
+@property (nonatomic, strong) NSNumber *Mode;
 
 
 /* 通知 */
@@ -182,17 +182,17 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     [self.webView loadHTMLString:content baseURL:nil];
     
 }
+
 #pragma mark - 接受通知
 - (void)acceptanceNote
 {
-    WEAK_SELF();
-    
-   //删除通知
+    //删除通知
     _deleteDcObj = [[NSNotificationCenter defaultCenter] addObserverForName:DELETE_SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-
+        
         [[NSNotificationCenter defaultCenter]removeObserver:_dcObj];
- 
+        
     }];
+    WEAK_SELF();
     //选择Item通知
     _dcObj = [[NSNotificationCenter defaultCenter]addObserverForName:SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         
@@ -284,16 +284,32 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                 
                 
 //                self.addCartTool
-                //评团
-                self.activity_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBy];
-                if ([self.activity_m.IsJoin isEqual:@1]) {
+                //拼团
+               HHActivityModel *GroupBy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuy];
+                //降价团
+                HHActivityModel *CutGroupBuy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.CutGroupBuy];
+                //送礼
+                HHActivityModel *SendGift_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.SendGift];
+
+                if ([GroupBy_m.IsJoin isEqual:@1]) {
+                    
+                    [self.alert_Arr addObject:GroupBy_m];
+                }
+                if ([CutGroupBuy_m.IsJoin isEqual:@1]) {
+                    [self.alert_Arr addObject:CutGroupBuy_m];
+                }
+                if ([SendGift_m.IsJoin isEqual:@1]) {
+                    [self.alert_Arr addObject:SendGift_m];
+                }
+                
+                if (self.alert_Arr.count >0) {
                     self.addCartTool.buyBtn.hidden = NO;
                     self.addCartTool.addCartBtn.mj_w = ScreenW/3;
-                    [self.alert_Arr addObject:self.activity_m];
                 }else{
                     self.addCartTool.buyBtn.hidden = YES;
                     self.addCartTool.addCartBtn.mj_w = ScreenW/3*2;
                 }
+                
 //                //评价
 //                [self  getFinishLogData];
                 
@@ -402,7 +418,8 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         MLMenuView *menuView = [[MLMenuView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3*2, SCREEN_HEIGHT-Status_HEIGHT-49-weakSelf.alert_Arr.count*50, SCREEN_WIDTH/3, weakSelf.alert_Arr.count*50) WithmodelsArr:weakSelf.alert_Arr WithMenuViewOffsetTop:Status_HEIGHT WithTriangleOffsetLeft:80];
         
         menuView.isHasTriangle = NO;
-        menuView.didSelectBlock = ^(NSInteger index) {
+        
+        menuView.didSelectBlock = ^(NSInteger index, HHActivityModel *model) {
 
             //属性选择
             DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
@@ -412,7 +429,17 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
             dcNewFeaVc.product_sku_arr = weakSelf.gooodDetailModel.SKUList;
             dcNewFeaVc.product_id = weakSelf.gooodDetailModel.Id;
-            dcNewFeaVc.button_Title = @"参加拼团";
+            
+            weakSelf.Mode = model.Mode;
+            if ([model.Mode isEqual:@2]) {
+                dcNewFeaVc.button_Title = @"参加拼团";
+            }else if ([model.Mode isEqual:@8]){
+                dcNewFeaVc.button_Title = @"送礼";
+            }else if ([model.Mode isEqual:@32]){
+                dcNewFeaVc.button_Title = @"参加降价团";
+            }else{
+                dcNewFeaVc.button_Title = @"立即购买";
+            }
             dcNewFeaVc.product_price = weakSelf.gooodDetailModel.MinShowPrice;
             dcNewFeaVc.product_stock = weakSelf.gooodDetailModel.Stock;
             
@@ -432,13 +459,21 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             
             [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
 
-            
         };
         
         [menuView showMenuEnterAnimation:MLEnterAnimationStyleNone];
         
     };
     
+    
+    //跳转首页
+    self.addCartTool.homeIconImgV.userInteractionEnabled = YES;
+    [self.addCartTool.homeIconImgV setTapActionWithBlock:^{
+        
+        [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.dcObj];
+
+        kKeyWindow.rootViewController = [HJTabBarController new];
+    }];
     
     //跳转购物车
     self.addCartTool.cartIconImgV.userInteractionEnabled = YES;
@@ -554,18 +589,19 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         
         if (!error) {
             if (api.State == 1) {
+                
                 if ([api.Data isEqual:@1]) {
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
                     vc.enter_type = HHaddress_type_Spell_group;
                     vc.ids_Str = sku_id_Str;
                     vc.count = quantity;
-                    vc.mode = @2;
+                    vc.mode = self.Mode;
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
                     vc.titleStr = @"新增收货地址";
                     vc.addressType = HHAddress_settlementType_productDetail;
-                    vc.mode = @2;
+                    vc.mode = self.Mode;
                     vc.ids_Str = sku_id_Str;
                     [self.navigationController pushVC:vc];
                 }

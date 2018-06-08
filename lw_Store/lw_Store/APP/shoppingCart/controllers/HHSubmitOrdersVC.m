@@ -14,6 +14,8 @@
 //#import "HHGoodBaseViewController.h"
 #import "HHPaySucessVC.h"
 #import "HHActivityWebVC.h"
+#import "HHSendGiftWebVC.h"
+#import "HHSaleGroupWebVC.h"
 
 @interface HHSubmitOrdersVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,HHShippingAddressVCProtocol>
 {
@@ -142,18 +144,48 @@
     
     //去付款
     self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = YES;
+    
     [self.submitOrderTool.ImmediatePayLabel setTapActionWithBlock:^{
-        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
+        
+     if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
 
+        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
+        
         if (self.enter_type == HHaddress_type_Spell_group) {
             //活动拼团
             [self createOrder];
             
         }else if (self.enter_type == HHaddress_type_add_cart){
+            if ([self.sendGift isEqual:@1]) {
+                //送礼
+                [self createOrder];
+            }else{
             //购物车
             [self orderPayWithaddress_id:self.address_id orderId:nil];
+                
+            }
+            
         }
-        
+            
+        }else{
+            
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"你未安装微信，是否安装？" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                
+                
+             }];
+            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+                [alertC dismissViewControllerAnimated:YES completion:nil];
+                
+            }];
+            [alertC addAction:action1];
+            [alertC addAction:action2];
+            [self presentViewController:alertC animated:YES completion:nil];
+            
+           }
     }];
     [toolView addSubview:self.submitOrderTool];
     [self.view addSubview:toolView];
@@ -199,10 +231,12 @@
     
     
 }
+
 //地址列表
 - (void)getAddressData{
     
         [[[HHMineAPI GetAddressListWithpage:@(1)] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
+            
             if (!error) {
                 if (api.State == 1) {
                     NSArray *arr = (NSArray *)api.Data;
@@ -250,7 +284,8 @@
 //获取数据
 - (void)getDatas{
     
-        [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
+        [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
+            
                 if (!error) {
             
                     if (api.State == 1) {
@@ -384,12 +419,24 @@
         [[[HHMineAPI GetOrderDetailWithorderid:self.order_id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
             if (!error) {
                 if (api.State == 1) {
+                    //发送删除立即购买的通知
+                    [[NSNotificationCenter defaultCenter]postNotificationName:DELETE_SHOPITEMSELECTBACK object:nil userInfo:nil];
                     
                     self.model = [HHCartModel mj_objectWithKeyValues:api.Data];
-                    HHActivityWebVC *vc = [HHActivityWebVC new];
-                    vc.gbId = self.model.gbid;
-                    [self.navigationController pushVC:vc];
-                    
+                    if ([self.mode isEqual:@2]) {
+                        HHActivityWebVC *vc = [HHActivityWebVC new];
+                        vc.gbId = self.model.gbid;
+                        [self.navigationController pushVC:vc];
+                    }else if([self.mode isEqual:@8]){
+                        HHSendGiftWebVC *vc = [HHSendGiftWebVC new];
+                        vc.gbId = self.model.gbid;
+                        vc.orderId = self.order_id;
+                        [self.navigationController pushVC:vc];
+                    }else if ([self.mode isEqual:@32]){
+                        HHSaleGroupWebVC *vc = [HHSaleGroupWebVC new];
+                        vc.gbId = self.model.gbid;
+                        [self.navigationController pushVC:vc];
+                    }
                 }else{
                     
                     [SVProgressHUD showInfoWithStatus:api.Msg];

@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *settleBtn;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 @property (weak, nonatomic) IBOutlet UILabel *money_totalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sintegral_totalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sendGift_label;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendGift_widthConstant;
 
 @property (nonatomic, strong) idBlock allChooseBlock;
 

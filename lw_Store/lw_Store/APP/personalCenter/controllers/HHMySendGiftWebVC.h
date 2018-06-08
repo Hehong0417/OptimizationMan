@@ -1,5 +1,5 @@
 //
-//  HHSaleGroupWebVC.h
+//  HHSendGiftWebVC.h
 //  lw_Store
 //
 //  Created by User on 2018/6/6.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HHMyActivityWebVC : UIViewController
+@interface HHMySendGiftWebVC : UIViewController
 
 @end

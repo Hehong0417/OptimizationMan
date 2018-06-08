@@ -13,6 +13,7 @@
 @interface HHCartModel : BaseModel
 //购物车
 @property(nonatomic,strong) NSString *count;
+@property (nonatomic, strong) NSNumber *sendGift;
 
 @property(nonatomic,strong) NSArray <HHproductsModel*>*products;
 @property(nonatomic,strong) NSArray <HHproductsModel*>*prodcuts;

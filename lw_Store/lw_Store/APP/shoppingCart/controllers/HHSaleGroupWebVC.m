@@ -6,18 +6,19 @@
 //  Copyright © 2018年 User. All rights reserved.
 //
 
-#import "HHActivityWebVC.h"
+#import "HHSaleGroupWebVC.h"
 #import <WebKit/WebKit.h>
 
-@interface HHActivityWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
+@interface HHSaleGroupWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
 {
     WKWebView *_webView;
     UIButton *rightBtn;
     NSString *webpageUrl;
+
 }
 @end
 
-@implementation HHActivityWebVC
+@implementation HHSaleGroupWebVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -32,7 +33,7 @@
     
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-//    config.userContentController = userContentController;
+    //    config.userContentController = userContentController;
     
     _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
     _webView.UIDelegate = self;
@@ -43,9 +44,10 @@
     [self.view addSubview:_webView];
     
     HJUser *user = [HJUser sharedUser];
-    webpageUrl = [NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token];
+    webpageUrl = [NSString stringWithFormat:@"%@/ActivityWeb/CutGroupBuy?isUser=true&gbId=%@",API_HOST1,self.gbId];
     
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token]]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/ActivityWeb/CutGroupBuy?isUser=true&gbId=%@&token=%@",API_HOST1,self.gbId,user.token]]];
+
     [_webView loadRequest:req];
     
     //抓取返回按钮
@@ -69,6 +71,7 @@
         [self shareVedioToPlatformType:platformType];
         
     }];
+    
 }
 //分享到不同平台
 - (void)shareVedioToPlatformType:(UMSocialPlatformType)platformType
@@ -98,6 +101,7 @@
         }
     }];
 }
+
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Start:%@",navigation);
@@ -121,7 +125,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
-    
+
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 #pragma mark-WKScriptMessageHandler
@@ -146,3 +150,4 @@
 }
 
 @end
+

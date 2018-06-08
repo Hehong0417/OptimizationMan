@@ -19,6 +19,8 @@
 #import "HHnormalSuccessVC.h"
 #import "HHSetVC.h"
 #import "HHMyActivityWebVC.h"
+#import "HHMySaleGroupWebVC.h"
+#import "HHMySendGiftWebVC.h"
 
 @interface LwPersonalCenter ()
 {
@@ -199,7 +201,8 @@
         [self.navigationController pushVC:vc];
   
     }else if (indexPath.section == 3&&indexPath.row == 1){
-        
+        HHMySaleGroupWebVC *vc = [HHMySaleGroupWebVC new];
+        [self.navigationController pushVC:vc];
 
     }else if (indexPath.section == 3&&indexPath.row == 2){
         
@@ -208,7 +211,9 @@
       
     }else if (indexPath.section == 3&&indexPath.row == 3){
         
-   
+        HHMySendGiftWebVC *vc = [HHMySendGiftWebVC new];
+        [self.navigationController pushVC:vc];
+    
     }else if (indexPath.section == 3&&indexPath.row == 4){
         //设置
         HHSetVC *vc = [HHSetVC new];

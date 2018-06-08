@@ -16,7 +16,7 @@
 + (instancetype)GetCartProducts;
 
 //获得结算订单
-+ (instancetype)GetConfirmOrderWithids:(NSString *)ids mode:(NSNumber *)mode skuId:(NSString *)skuId;
++ (instancetype)GetConfirmOrderWithids:(NSString *)ids mode:(NSNumber *)mode skuId:(NSString *)skuId quantity:(NSNumber *)quantity;
 
 //热门搜索
 + (instancetype)GetHotSearchWithtop:(NSNumber *)top;

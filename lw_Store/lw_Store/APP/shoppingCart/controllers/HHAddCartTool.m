@@ -22,10 +22,6 @@
         UIView *line = [UIView lh_viewWithFrame:CGRectMake(self.cartIconImgV.mj_x, 0, 1, self.homeIconImgV.mj_h) backColor:RGB(220, 220, 220)];
         [self.cartIconBg addSubview:line];
         
-        //首页
-        [self.homeIconImgV setTapActionWithBlock:^{
-            kKeyWindow.rootViewController = [HJTabBarController new];
-        }];
         //购物车
         WEAK_SELF();
         [self.cartIconImgV setTapActionWithBlock:^{

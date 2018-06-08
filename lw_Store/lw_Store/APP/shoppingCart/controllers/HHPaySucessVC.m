@@ -38,10 +38,9 @@
     self.pageSize = 15;
     
     //头部
-    
     //collectionView
     self.collectionView.backgroundColor = kWhiteColor;
-    [self.view addSubview:self.collectionView];
+//    [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HXHomeCollectionCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"HXHomeCollectionCell"];
     
@@ -71,6 +70,12 @@
                 [self.navigationController popToVC:vc];
             }
         }];
+    }else if(self.enter_type == HHenter_type_activity){
+        if (self.backBlock) {
+            self.backBlock();
+        }
+        [self.navigationController popVC];
+        
     }else{
         [self.navigationController popToRootVC];
     }
@@ -196,14 +201,14 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    //    return self.datas.count;
-    return 6;
+//        return self.datas.count;
+    return 1;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     return CGSizeMake((SCREEN_WIDTH - 30)/2 , 220);
-    
+
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     

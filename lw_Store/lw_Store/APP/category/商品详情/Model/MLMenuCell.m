@@ -62,7 +62,14 @@
    
     self.labelPrice.text = [NSString stringWithFormat:@"¥%@",menuItem.Price];
 
-    self.labelTitle.text = [NSString stringWithFormat:@"%@人团",menuItem.Count];
+    if ([menuItem.Mode isEqual:@2]) {
+        //拼团
+        self.labelTitle.text = [NSString stringWithFormat:@"%@人团",menuItem.Count];
+    }else if ([menuItem.Mode isEqual:@8]){
+        self.labelTitle.text = @"送礼";
+    }else if ([menuItem.Mode isEqual:@32]){
+        self.labelTitle.text = @"降价团";
+    }
 
 }
 

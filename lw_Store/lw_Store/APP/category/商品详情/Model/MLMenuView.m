@@ -179,7 +179,8 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
         [_delegate didselectItemIndex:indexPath.row];
     }
     if (_didSelectBlock) {
-        _didSelectBlock(indexPath.row);
+        HHActivityModel *item = [HHActivityModel mj_objectWithKeyValues: self.dataArray[indexPath.row]];
+        _didSelectBlock(indexPath.row,item);
     }
     
     [self hidMenuExitAnimation:_animationStyle];
@@ -207,7 +208,6 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
     }
     return _contentView;
 }
-
 
 
 - (UITableView *)tableView

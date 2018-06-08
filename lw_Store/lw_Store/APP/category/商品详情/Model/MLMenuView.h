@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHActivityModel.h"
 
 @class MLMenuView;
 
@@ -20,7 +21,7 @@ typedef NS_ENUM(NSInteger,MLEnterAnimationStyle) {
     MLEnterAnimationStyleTop,
 };
 
-typedef void(^MLDidSelectBlock)(NSInteger index);
+typedef void(^MLDidSelectBlock)(NSInteger index ,HHActivityModel *model);
 
 @interface MLMenuView : UIView
 
