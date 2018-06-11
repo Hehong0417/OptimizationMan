@@ -10,7 +10,9 @@
 
 @interface HHApplyRefundVC : UITableViewController
 
-@property (nonatomic, strong) HHproductsModel *productModel;
+@property (nonatomic, strong) NSString *count;
+@property (nonatomic, strong) NSString *price;
+@property (nonatomic, strong) NSString *item_id;
 @property (nonatomic, strong) NSString *order_id;
 @property (nonatomic, copy) voidBlock  applyRefund_block;
 

@@ -31,6 +31,8 @@
 @property(nonatomic,strong) NSString *totalFreight;
 @property(nonatomic,strong) NSString *totalMoney;
 @property(nonatomic,strong) NSString *userName;
+@property(nonatomic,strong) NSNumber *familiarityPay;
+@property(nonatomic,strong) NSString *familiarityPayMoney;
 
 @property(nonatomic,strong) NSArray <HHordersModel*>*orders;
 
@@ -112,7 +114,6 @@
 
 //订单里的商品
 @interface HHproducts_item_Model : BaseModel
-
 @property(nonatomic,strong) NSString *product_item_id;
 @property(nonatomic,strong) NSString *product_item_price;
 @property(nonatomic,strong) NSString *product_item_quantity;

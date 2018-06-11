@@ -56,21 +56,22 @@
 {
     
     [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.color = KA0LabelColor;
-    hud.detailsLabelText = @"授权中，请稍后...";
-    hud.detailsLabelColor = kWhiteColor;
-    hud.detailsLabelFont = FONT(14);
-    hud.activityIndicatorColor = kWhiteColor;
-    [hud showAnimated:YES];
+
     
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+        
         if (error) {
-            [hud hideAnimated:YES];
             NSLog(@"error--error--%@",error);
             
         } else {
+            
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.color = KA0LabelColor;
+            hud.detailsLabelText = @"授权中，请稍后...";
+            hud.detailsLabelColor = kWhiteColor;
+            hud.detailsLabelFont = FONT(14);
+            hud.activityIndicatorColor = kWhiteColor;
+            [hud showAnimated:YES];
             
             UMSocialUserInfoResponse *resp = result;
             // 授权信息
@@ -101,14 +102,13 @@
                                         user.token = token;
                                         [user write];
                                         kKeyWindow.rootViewController = [[HJTabBarController alloc] init];
-                                      
 
                                     }else if (api.State == -99) {
                                         
                                         [self registerWithName:resp.name image:resp.iconurl openid:resp.openid unionId:resp.unionId];
                                     }else{
                                         [hud hideAnimated:YES];
-                                        [SVProgressHUD showInfoWithStatus:api.Msg];
+                                        [SVProgressHUD showInfoWithStatus:error.localizedDescription];
                                     }
                                 }else{
                                     [hud hideAnimated:YES];

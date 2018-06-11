@@ -38,7 +38,7 @@
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
     
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-64) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     

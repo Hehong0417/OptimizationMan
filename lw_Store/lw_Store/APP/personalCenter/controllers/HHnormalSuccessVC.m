@@ -24,8 +24,9 @@
     [self.back_btn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     
     self.title_label.text = self.title_label_str;
-    self.discrib_label.text = [NSString stringWithFormat:@"恭喜你，正式成为%@商...",self.discrib_str];
-
+    if (self.discrib_str.length>0) {
+        self.discrib_label.text = [NSString stringWithFormat:@"恭喜你，正式成为%@商...",self.discrib_str];
+    }
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
     [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
@@ -34,9 +35,15 @@
 - (void)backBtnAction{
     
     [[NSNotificationCenter defaultCenter] postNotificationName:KPersonCter_Refresh_Notification object:nil];
+    if (self.enter_Num ==1) {
+        if (self.backBlock) {
+            self.backBlock();
+        }
+        [self.navigationController popVC];
 
-    
-    [self.navigationController popToRootVC];
+    }else{
+        [self.navigationController popToRootVC];
+    }
     
 }
 - (IBAction)backAction:(UIButton *)sender {

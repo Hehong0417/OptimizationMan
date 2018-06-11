@@ -17,7 +17,6 @@
 
 #define API_HOST1 @"http://dm-client.elevo.cn"
 
-//优惠券使用
 #define API_HOST2 @"http://dm-order-api.elevo.cn/api"
 
 //分类、商品详情

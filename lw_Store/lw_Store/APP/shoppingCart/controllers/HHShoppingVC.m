@@ -301,9 +301,9 @@
         if (!error) {
             if (api.State == 1) {
                 if ([api.Data isEqual:@1]) {
-                    
+                
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-                    if (self.model.sendGift) {
+                    if ([self.model.sendGift isEqual:@1]) {
                         vc.enter_type = HHaddress_type_Spell_group;
                         vc.mode = @8;
                     }else{
@@ -315,7 +315,7 @@
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
                     vc.addressType = HHAddress_settlementType_cart;
-                    if (self.model.sendGift) {
+                    if ([self.model.sendGift isEqual:@1]) {
                         vc.mode = @8;
                     }else{
                         vc.mode = nil;

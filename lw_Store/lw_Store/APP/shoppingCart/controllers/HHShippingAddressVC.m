@@ -271,7 +271,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     HHMineModel *shippingAddressModel = [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.section]];
-    [self.navigationController popVC];
+    if (self.enter_type == HHenter_type_submitOrder) {
+        [self.navigationController popVC];
+    }
     if ([self.delegate respondsToSelector:@selector(shippingAddressTableView_didSelectRowWithaddressModel:)
          ]) {
         [self.delegate shippingAddressTableView_didSelectRowWithaddressModel:shippingAddressModel];

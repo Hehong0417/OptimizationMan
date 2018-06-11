@@ -15,13 +15,14 @@
 #import "HHOrderDetailVC.h"
 //#import "HHReturnGoodsVC.h"
 //#import "HHCategoryVC.h"
-#import "HHPaySucessVC.h"
 //#import "HHFillLogisticsVC.h"
 #import "HHMyOrderItem.h"
 #import "HHPostEvaluationVC.h"
 #import "HHEvaluationListVC.h"
 #import "HHApplyRefundVC.h"
 #import "HHOrderItemModel.h"
+#import "HHnormalSuccessVC.h"
+#import "HHMyOrderItem.h"
 
 @interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -194,11 +195,10 @@
 }
 
 #pragma mark - NetWork
-
 - (void)getDatasWithIndex:(NSNumber *)index{
     
     [[[HHMineAPI GetOrderListWithstatus:index page:@(self.page)] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-        
+     
         self.isLoading = YES;
         if (!error) {
             if (api.State == 1) {
@@ -326,8 +326,11 @@
                   [self getDatasWithIndex:@(self.sg_selectIndex)];
                   }
               };
-              vc.productModel = model.items[indexPath.row];
+              HHproducts_item_Model *model1 = model.items[indexPath.row];
+              vc.item_id = model1.product_item_id;
               vc.order_id = model.order_id;
+              vc.count = model1.product_item_quantity;
+              vc.price = model1.product_item_price;
             [self.navigationController pushVC:vc];
         }];
     }
@@ -456,31 +459,10 @@
     
 }
 -(void)setStandardLabWith:(HHproducts_item_Model *)productModel cell:(HJOrderCell *)cell{
+    
     cell.StandardLab.hidden = NO;
-    if (productModel.product_item_status.integerValue == 6) {
-        //退款中
-        cell.StandardLab.text = @" 退款中 ";
-        cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.product_item_status.integerValue == 7){
-        cell.StandardLab.text = @" 退货中 ";
-        cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.product_item_status.integerValue == 9){
-        cell.StandardLab.text = @" 已退款 ";
-        cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.product_item_status.integerValue == 10){
-        cell.StandardLab.text = @" 已退货 ";
-        cell.StandardLab.userInteractionEnabled = NO;
-    }else if (productModel.product_item_status.integerValue == 2){
-        cell.StandardLab.text = @" 申请退款 ";
-        cell.StandardLab.userInteractionEnabled = YES;
-    }else if (productModel.product_item_status.integerValue == 3){
-        cell.StandardLab.text = @" 申请退货 ";
-        cell.StandardLab.userInteractionEnabled = YES;
-    }else{
-        cell.StandardLab.text = @"";
-        cell.StandardLab.hidden = YES;
-        cell.StandardLab.userInteractionEnabled = NO;
-    }
+    
+    [HHMyOrderItem shippingLogisticsStateWithStatus_code:productModel.product_item_status.integerValue cell:cell];
 }
 - (void)setBtnAttrWithBtn:(UIButton *)btn Title:(NSString *)title CornerRadius:(NSInteger)cornerRadius borderColor:(UIColor *)borderColor titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backgroundColor{
     
@@ -502,9 +484,7 @@
         HHOrderDetailVC *vc = [HHOrderDetailVC new];
         vc.orderid = model.order_id;
         [self.navigationController pushVC:vc];
-        
     }
-
 }
 - (void)oneAction:(UIButton *)btn{
     NSInteger section = btn.tag - 100;
@@ -606,7 +586,7 @@
 
     btn.enabled = NO;
     //----->微信支付
-    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         btn.enabled = YES;
         if (!error) {
             if (api.State == 1) {
@@ -648,41 +628,12 @@
     }
 
 }
-//填写物流
-//- (void)leftBtnAction:(UIButton *)btn{
-//    NSInteger section = btn.tag - 1001;
-//    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
-//    if ([model.is_exist_reeturn_goods_Express isEqualToString:@"1"]) {
-//        //查看退货物流
-//        HHLogisticsVC *vc = [HHLogisticsVC new];
-//        vc.orderid = model.orderid;
-//        vc.express_order = model.return_goods_express_order;
-//        vc.express_name = model.return_goods_express_name;
-//        vc.type = @1;
-//        [self.navigationController pushVC:vc];
-//    }else{
-//        //填写物流
-//        HHFillLogisticsVC *vc = [HHFillLogisticsVC new];
-//        vc.orderid = model.orderid;
-//        vc.return_goods_express_code = model.return_goods_express_code;
-//        vc.return_goods_express_order = model.return_goods_express_order;
-//        vc.return_numb_block = ^(NSNumber *result) {
-//            self.page = 1;
-//            [self.datas removeAllObjects];
-//            [self getDatasWithIndex:@(self.sg_selectIndex-1)];
-//        };
-//        [self.navigationController pushVC:vc];
-//    }
-    
-//}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
     
     UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40) backColor:kWhiteColor];
     
-//    NSString *status =  [HHMyOrderItem shippingLogisticsStateWithStatus_code:model.status.integerValue];
-
     UILabel *textLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, 60, 40) text:model.status_name textColor:kRedColor font:[UIFont boldSystemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
     [headView addSubview:textLabel];
     UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+5, 0,1, 40) backColor:KVCBackGroundColor];
@@ -758,7 +709,10 @@
 }
 - (void)wxPaySucesscount{
     
-    HHPaySucessVC *vc = [HHPaySucessVC new];
+    HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
+    vc.title_str = @"支付成功";
+    vc.discrib_str = @"";
+    vc.title_label_str = @"支付成功";
     [self.navigationController pushVC:vc];
     
 }

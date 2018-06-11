@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view.
     
     // js配置
-    
+    self.title = @"拼团";
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
 //    config.userContentController = userContentController;

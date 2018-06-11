@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface HHnormalSuccessVC : UIViewController
 
 @property (strong, nonatomic) NSString *title_str;
 @property (strong, nonatomic) NSString *discrib_str;
 @property (strong, nonatomic) NSString *title_label_str;
+@property (copy, nonatomic) voidBlock backBlock;
+@property(nonatomic,assign) NSInteger enter_Num;
 
 @end

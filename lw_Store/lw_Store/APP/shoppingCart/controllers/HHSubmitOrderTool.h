@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *pay_modeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *money_totalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ImmediatePayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *closePay;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closePay_constant_w;
 
 @end

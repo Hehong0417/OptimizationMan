@@ -688,6 +688,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
     if (!_cycleScrollView) {
         _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH) imageNamesGroup:@[@""]];
+        _cycleScrollView.placeholderImage = [UIImage imageNamed:@"loadImag_default"];
         _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
         _cycleScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
         [_cycleScrollView setPlaceholderImage:[UIImage imageWithColor:kWhiteColor]];

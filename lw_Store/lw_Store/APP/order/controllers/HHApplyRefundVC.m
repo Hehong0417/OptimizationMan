@@ -11,7 +11,7 @@
 @interface HHApplyRefundVC ()
 @property (weak, nonatomic) IBOutlet UITextField *quantity_tf;
 @property (weak, nonatomic) IBOutlet UIImageView *tick_imgv;
-@property (strong, nonatomic)  YYTextView *reason_tv;
+@property (strong, nonatomic)  UITextView *reason_tv;
 @property (weak, nonatomic) IBOutlet UILabel *price_label;
 
 @end
@@ -24,7 +24,7 @@
     self.title = @"申请退款";
     self.tableView.backgroundColor = KVCBackGroundColor;
 
-    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.productModel.price.floatValue*self.productModel.quantity.integerValue];
+    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.price.floatValue*self.count.integerValue];
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) backColor:kClearColor];
     
@@ -42,9 +42,8 @@
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 2) {
-        self.reason_tv = [[YYTextView alloc] initWithFrame:CGRectMake(16, 26, ScreenW-32, 150)];
+        self.reason_tv = [[UITextView alloc] initWithFrame:CGRectMake(16, 26, ScreenW-32, 150)];
         [self.reason_tv  lh_setCornerRadius:5 borderWidth:1 borderColor:kBlackColor];
-        self.reason_tv.placeholderText = @"请输入您的退款原因...";
         [cell.contentView addSubview:self.reason_tv];
         
     }else{
@@ -64,11 +63,11 @@
 - (IBAction)addbuttonAction:(UIButton *)sender {
     
     NSInteger value = self.quantity_tf.text.integerValue;
-    if (value == self.productModel.quantity.integerValue) {
+    if (value == self.count.integerValue) {
         return;
     }
     self.quantity_tf.text = [NSString stringWithFormat:@"%ld",value++];
-    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.productModel.price.floatValue*self.quantity_tf.text.integerValue];
+    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.price.floatValue*self.quantity_tf.text.integerValue];
 
 }
 - (IBAction)minusBtnAction:(UIButton *)sender {
@@ -78,12 +77,12 @@
         return;
     }
     self.quantity_tf.text = [NSString stringWithFormat:@"%ld",value--];
-    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.productModel.price.floatValue*self.quantity_tf.text.integerValue];
+    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.price.floatValue*self.quantity_tf.text.integerValue];
 
 }
 - (void)commitAction:(UIButton *)btn{
     
-    [[[HHMineAPI postConfirmOrderWithorderid:self.order_id orderItemId:self.productModel.item_id quantity:self.quantity_tf.text comments:self.reason_tv.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    [[[HHMineAPI postConfirmOrderWithorderid:self.order_id orderItemId:self.item_id quantity:self.quantity_tf.text comments:self.reason_tv.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (api.State == 1) {
 
             [SVProgressHUD showSuccessWithStatus:@"提交成功！"];

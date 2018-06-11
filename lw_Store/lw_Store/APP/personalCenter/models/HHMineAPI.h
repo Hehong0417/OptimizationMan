@@ -109,7 +109,7 @@
 //发送短信验证码
 + (instancetype)postSms_SendCode:(NSString *)mobile code:(NSString *)code;
 //订单支付
-+ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId;
++ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money;
 //创建订单
 + (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSArray *)integralTempIds message:(NSString *)message;
 

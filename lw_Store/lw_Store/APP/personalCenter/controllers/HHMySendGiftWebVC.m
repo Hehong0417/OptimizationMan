@@ -10,8 +10,9 @@
 #import <WebKit/WebKit.h>
 #import "HHSubmitOrdersVC.h"
 #import "HHOrderVC.h"
+#import "HHnormalSuccessVC.h"
 
-@interface HHMySendGiftWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
+@interface HHMySendGiftWebVC ()<WKUIDelegate,WKNavigationDelegate>
 {
     WKWebView *_webView;
     UIButton *rightBtn;
@@ -23,10 +24,6 @@
 
 @implementation HHMySendGiftWebVC
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -36,18 +33,15 @@
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
     
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-64) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     
     [_webView.scrollView setShowsVerticalScrollIndicator:NO];
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
-    
-    HJUser *user = [HJUser sharedUser];
-    url = [NSString stringWithFormat:@"%@/Personal/SendGift?token=%@",API_HOST1,user.token];
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [_webView loadRequest:req];
+  
+    [self loadData];
     
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
@@ -74,6 +68,13 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+- (void)loadData{
+    
+    HJUser *user = [HJUser sharedUser];
+    url = [NSString stringWithFormat:@"%@/Personal/SendGift?token=%@",API_HOST1,user.token];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [_webView loadRequest:req];
+}
 -(void)shareAction{
     
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
@@ -92,7 +93,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建Webpage内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"邀请好友参团" descr:@"" thumImage:nil];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"送你一个小礼物" descr:@"" thumImage:nil];
     
     
     //设置Webpage地址
@@ -104,7 +105,7 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         
-        if (error) {
+        if (error) { 
             NSLog(@"************Share fail with error %@*********",error);
         }else{
             NSLog(@"response data is %@",data);
@@ -164,6 +165,26 @@
         [self.navigationController pushVC:vc];
         decisionHandler(WKNavigationResponsePolicyCancel);
         
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"WeiXin/Pay"]){
+       
+        HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
+        
+        [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:model.order_id money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                    [HHWXModel payReqWithModel:model];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else {
+                
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+                
+            }
+        }];
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        
     }else if ([navigationResponse.response.URL.absoluteString containsString:@"HttpError"]){
         
         [SVProgressHUD showInfoWithStatus:@"服务器出现错误"];
@@ -173,26 +194,42 @@
         decisionHandler(WKNavigationResponsePolicyAllow);
     }
 }
-#pragma mark-WKScriptMessageHandler
+#pragma mark-微信支付
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    
-    [self allowTurnAroundWithUsrlStr:message.body[@"url"]];
-    
-    NSLog(@"JS 调用了 %@ 方法，传回参数 %@",message.name,message.body);
-}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[_webView configuration].userContentController removeScriptMessageHandlerForName:@"closeMe"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
     
 }
-//跳转
-- (void)allowTurnAroundWithUsrlStr:(NSString *)urlStr{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    //微信支付通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
+    
+}
+- (void)wxPaySucesscount{
+    
+    HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
+    vc.title_str = @"支付成功";
+    vc.discrib_str = @"";
+    vc.title_label_str = @"支付成功";
+    vc.enter_Num = 1;
+    vc.backBlock = ^{
+        [self loadData];
+    };
+    [self.navigationController pushVC:vc];
     
 }
 
+- (void)wxPayFailcount {
+    
+    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+}
 @end
 
 

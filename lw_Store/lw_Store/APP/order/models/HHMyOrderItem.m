@@ -10,25 +10,32 @@
 
 @implementation HHMyOrderItem
 
-+ (NSString *)shippingLogisticsStateWithStatus_code:(NSInteger)status_code{
++ (void)shippingLogisticsStateWithStatus_code:(NSInteger)status_code cell:(HJOrderCell *)cell{
     
-    NSString *stutus;
-    if (status_code == 1) {
-        stutus = @"待付款";
-    }else if (status_code == 2){
-        stutus = @"待发货";
-    }else if (status_code == 3){
-        stutus = @"待收货";
-    }else if(status_code == 4){
-        stutus = @"订单关闭";
+    if (status_code == 6) {
+        cell.StandardLab.text = @" 退款中 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+        
+    }else if (status_code == 7){
+        cell.StandardLab.text = @" 退货中 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if (status_code == 9){
+        cell.StandardLab.text = @" 已退款 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if(status_code == 10){
+        cell.StandardLab.text = @" 已退货 ";
+        cell.StandardLab.userInteractionEnabled = NO;
+    }else if(status_code == 2){
+        cell.StandardLab.text = @" 申请退款 ";
+        cell.StandardLab.userInteractionEnabled = YES;
+    }else if(status_code == 3){
+        cell.StandardLab.text = @" 申请退货 ";
+        cell.StandardLab.userInteractionEnabled = YES;
+    }else{
+        cell.StandardLab.text = @"";
+        cell.StandardLab.hidden = YES;
+        cell.StandardLab.userInteractionEnabled = NO;
     }
-    //            stutus = @"待收货";
-    //            stutus = @"交易成功";
-    //            stutus = @"已退款";
-    //            stutus = @"已退货";
-    //            stutus = @"订单关闭";
-
-    return stutus;
 }
 + (CGFloat)rowHeightWithRow:(NSInteger)row Products_count:(NSInteger )products_count{
     

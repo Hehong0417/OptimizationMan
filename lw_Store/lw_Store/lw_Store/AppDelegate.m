@@ -21,7 +21,11 @@
 
 @implementation AppDelegate
 
-
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions{
+    
+    NSLog(@"willFinishLaunchingWithOptions");
+    return YES;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -34,17 +38,16 @@
     }else{
         self.window.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[[HHWXLoginVC alloc] init]];
     }
-    
     [self.window makeKeyAndVisible];
     
     
     [self IQKeyboardManagerConfig];
     
-    
-
     //配置友盟
     [self UMSocialConfig];
     
+    NSLog(@"didFinishLaunchingWithOptions");
+
     
     return YES;
 }

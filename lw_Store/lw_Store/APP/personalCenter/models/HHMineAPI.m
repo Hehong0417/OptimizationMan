@@ -424,7 +424,7 @@
     return api;
 }
 //订单支付
-+ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId{
++ (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money{
     
     HHMineAPI *api = [self new];
     api.subUrl = API_Order_AppPay;
@@ -433,6 +433,9 @@
     }
     if (orderId) {
         [api.parameters setObject:orderId forKey:@"orderId"];
+    }
+    if (money) {
+        [api.parameters setObject:money forKey:@"money"];
     }
     api.parametersAddToken = NO;
     return api;

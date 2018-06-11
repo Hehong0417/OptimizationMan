@@ -12,10 +12,11 @@
 #import "HHSubmitOrdersHead.h"
 #import "HHShippingAddressVC.h"
 //#import "HHGoodBaseViewController.h"
-#import "HHPaySucessVC.h"
+#import "HHnormalSuccessVC.h"
 #import "HHActivityWebVC.h"
 #import "HHSendGiftWebVC.h"
 #import "HHSaleGroupWebVC.h"
+#import "HHFamiliarityPayVC.h"
 
 @interface HHSubmitOrdersVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,HHShippingAddressVCProtocol>
 {
@@ -39,6 +40,8 @@
 @property (nonatomic, strong)   NSString *Id;
 @property (nonatomic, strong)   HHMineModel *address_model;
 @property(nonatomic,strong) NSString *order_id;
+@property(nonatomic,assign) BOOL  familiarityPay;
+
 
 @end
 
@@ -139,6 +142,7 @@
 - (void)addSubmitOrderTool{
     
     self.submitOrderTool  = [[[NSBundle mainBundle] loadNibNamed:@"HHSubmitOrderTool" owner:nil options:nil] lastObject];
+    self.submitOrderTool.closePay_constant_w = 0;
     UIView *toolView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-Status_HEIGHT-44-50, SCREEN_WIDTH, 50)];
     self.submitOrderTool.frame = CGRectMake(0,0, SCREEN_WIDTH, 50);
     
@@ -164,7 +168,6 @@
             [self orderPayWithaddress_id:self.address_id orderId:nil];
                 
             }
-            
         }
             
         }else{
@@ -187,6 +190,14 @@
             
            }
     }];
+    
+    //亲密付
+    self.submitOrderTool.closePay.userInteractionEnabled = YES;
+    [self.submitOrderTool.closePay setTapActionWithBlock:^{
+        self.familiarityPay = YES;
+        self.mode = @16;
+        [self createOrder];
+    }];
     [toolView addSubview:self.submitOrderTool];
     [self.view addSubview:toolView];
 }
@@ -199,8 +210,14 @@
             if (api.State == 1) {
               
                 self.order_id = api.Data;
-                [self orderPayWithaddress_id:nil orderId:self.order_id];
-
+                //亲密付
+                if (self.familiarityPay) {
+                    HHFamiliarityPayVC *vc = [HHFamiliarityPayVC new];
+                    vc.orderId = self.order_id;
+                    [self.navigationController pushVC:vc];
+                }else{
+                     [self orderPayWithaddress_id:nil orderId:self.order_id];
+                }
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -213,7 +230,7 @@
 //订单支付
 -(void)orderPayWithaddress_id:(NSString *)address_id orderId:(NSString *)orderId{
     
-    [[[HHMineAPI postOrder_AppPayAddrId:address_id orderId:orderId]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    [[[HHMineAPI postOrder_AppPayAddrId:address_id orderId:orderId money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
         if (!error) {
             if (api.State == 1) {
@@ -285,15 +302,19 @@
 - (void)getDatas{
     
         [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
-            
                 if (!error) {
             
                     if (api.State == 1) {
                         
                         self.model =  [HHCartModel mj_objectWithKeyValues:api.Data];
-                        
+                        if ([self.model.familiarityPay isEqual:@1]) {
+                            self.submitOrderTool.closePay_constant_w.constant = 77;
+                            self.submitOrderTool.closePay.hidden = NO;
+                        }else{
+                            self.submitOrderTool.closePay_constant_w.constant = 0;
+                            self.submitOrderTool.closePay.hidden = YES;
+                        }
                         self.datas = self.model.orders.mutableCopy;
-                        
                         //设置地址
                         SubmitOrdersHead.addressModel = self.model;
                         self.address_id = self.model.addrId;
@@ -310,7 +331,7 @@
                 }
         }];
 
-    
+
 }
 #pragma mark --- tableView delegate
 
@@ -450,7 +471,10 @@
         
     }else {
         //购物车
-        HHPaySucessVC *vc = [HHPaySucessVC new];
+        HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
+        vc.title_str = @"支付成功";
+        vc.discrib_str = @"";
+        vc.title_label_str = @"支付成功";
         [self.navigationController pushVC:vc];
     }
 }

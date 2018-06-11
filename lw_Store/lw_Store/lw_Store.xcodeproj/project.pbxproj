@@ -222,6 +222,7 @@
 		CE999C0C208DE33B00B9307D /* HXTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE999BAD208DE33B00B9307D /* HXTabBar.m */; };
 		CE999C0D208DE33B00B9307D /* HJTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE999BAF208DE33B00B9307D /* HJTabBarController.m */; };
 		CE999C25208DEF0E00B9307D /* LwHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE999C24208DEF0E00B9307D /* LwHomeVC.m */; };
+		CEB5EF2520CE74F30049CBDD /* HHFamiliarityPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB5EF2420CE74F30049CBDD /* HHFamiliarityPayVC.m */; };
 		CEBFE252209D623F005E09CD /* HHFansListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE251209D623F005E09CD /* HHFansListVC.m */; };
 		CEBFE256209D627A005E09CD /* HHFansListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFE254209D627A005E09CD /* HHFansListCell.m */; };
 		CEBFE257209D627A005E09CD /* HHFansListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBFE255209D627A005E09CD /* HHFansListCell.xib */; };
@@ -750,6 +751,8 @@
 		CE999C23208DEF0E00B9307D /* LwHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LwHomeVC.h; sourceTree = "<group>"; };
 		CE999C24208DEF0E00B9307D /* LwHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LwHomeVC.m; sourceTree = "<group>"; };
 		CE999C32208DEFC900B9307D /* Lw_Store.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lw_Store.pch; sourceTree = "<group>"; };
+		CEB5EF2320CE74F30049CBDD /* HHFamiliarityPayVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHFamiliarityPayVC.h; sourceTree = "<group>"; };
+		CEB5EF2420CE74F30049CBDD /* HHFamiliarityPayVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHFamiliarityPayVC.m; sourceTree = "<group>"; };
 		CEBFE250209D623F005E09CD /* HHFansListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHFansListVC.h; sourceTree = "<group>"; };
 		CEBFE251209D623F005E09CD /* HHFansListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHFansListVC.m; sourceTree = "<group>"; };
 		CEBFE253209D627A005E09CD /* HHFansListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHFansListCell.h; sourceTree = "<group>"; };
@@ -1861,6 +1864,8 @@
 				CEC135BA20C7F53E00C38D75 /* HHSaleGroupWebVC.m */,
 				CEC135BC20C7F55600C38D75 /* HHSendGiftWebVC.h */,
 				CEC135BD20C7F55600C38D75 /* HHSendGiftWebVC.m */,
+				CEB5EF2320CE74F30049CBDD /* HHFamiliarityPayVC.h */,
+				CEB5EF2420CE74F30049CBDD /* HHFamiliarityPayVC.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -2687,6 +2692,7 @@
 				CE999AAA208DDDDA00B9307D /* main.m in Sources */,
 				CE999C09208DE33B00B9307D /* HXTabControlCell.m in Sources */,
 				CE4B6FB3209C5219005482B1 /* HHWithDrawVC.m in Sources */,
+				CEB5EF2520CE74F30049CBDD /* HHFamiliarityPayVC.m in Sources */,
 				CE999BD3208DE33B00B9307D /* NSNumber+LH.m in Sources */,
 				CE999BDC208DE33B00B9307D /* UIView+Utils.m in Sources */,
 				CE319D51209B03FA0009A15A /* HHBaseTableViewVC.m in Sources */,

@@ -16,5 +16,8 @@
 @property (nonatomic, strong)   NSString *skuId;
 @property (nonatomic, strong)   NSNumber *mode;
 @property (nonatomic, strong)   NSString *order_id;
+@property (nonatomic, strong)   NSString *orderId;
+@property (nonatomic, strong)   NSString *orderItemId;
+@property (nonatomic, strong)   NSString *money;
 
 @end

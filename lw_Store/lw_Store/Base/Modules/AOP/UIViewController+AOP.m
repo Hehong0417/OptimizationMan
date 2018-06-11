@@ -39,7 +39,7 @@
 
         //导航栏返回按钮设置
         if ([NSStringFromClass([controller class]) hasPrefix:@"HH"] &&
-            ![controller isKindOfClass:NSClassFromString(@"HHHomePageVC")] &&
+            ![controller isKindOfClass:NSClassFromString(@"HHOrderVC")] &&
             ![controller isKindOfClass:NSClassFromString(@"HHShoppingVC")] &&
             ![controller isKindOfClass:NSClassFromString(@"HHCartVC")] &&
             ![controller isKindOfClass:NSClassFromString(@"HJNavigationController")] &&
@@ -78,7 +78,7 @@
         
         UIViewController *controller = [info instance];
         
-        if ([NSStringFromClass([controller class]) hasPrefix:@"HH"] && ([controller isKindOfClass:NSClassFromString(@"HHWXLoginVC")]||[controller isKindOfClass:NSClassFromString(@"HXVideoDetailVC")]||[controller isKindOfClass:NSClassFromString(@"HXTalentVideoDetailVC")]||[controller isKindOfClass:NSClassFromString(@"HXTeacherPersonCenterVC")]||[controller isKindOfClass:NSClassFromString(@"HXTeacherHomePageVC")]||[controller isKindOfClass:NSClassFromString(@"HXUserHomePageVC")])) {
+        if ([NSStringFromClass([controller class]) hasPrefix:@"HH"] && ([controller isKindOfClass:NSClassFromString(@"HHWXLoginVC")]||[controller isKindOfClass:NSClassFromString(@"")]||[controller isKindOfClass:NSClassFromString(@"")]||[controller isKindOfClass:NSClassFromString(@"")]||[controller isKindOfClass:NSClassFromString(@"")]||[controller isKindOfClass:NSClassFromString(@"")])) {
             
             [controller.navigationController setNavigationBarHidden:YES animated:YES];
             
@@ -101,7 +101,7 @@
         
         UIViewController *controller = [info instance];
         
-        if ([NSStringFromClass([controller class]) hasPrefix:@"HX"]) {
+        if ([NSStringFromClass([controller class]) hasPrefix:@"HH"]) {
             
             //Log 控制器释放
 //            DDLogInfo(@"%@-------------控制器释放完毕------------",controller);

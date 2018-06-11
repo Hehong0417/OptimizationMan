@@ -7,10 +7,11 @@
 //
 
 #import "BaseModel.h"
+#import "HJOrderCell.h"
 
 @interface HHMyOrderItem : BaseModel
 
-+ (NSString *)shippingLogisticsStateWithStatus_code:(NSInteger)status_code;
++ (void)shippingLogisticsStateWithStatus_code:(NSInteger)status_code cell:(HJOrderCell *)cell;
 
 + (CGFloat)rowHeightWithRow:(NSInteger)row Products_count:(NSInteger )products_count;
 
