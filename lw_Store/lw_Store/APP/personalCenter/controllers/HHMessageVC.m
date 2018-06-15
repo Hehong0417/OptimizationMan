@@ -38,6 +38,19 @@
     self.isRead = nil;
     
     [self getDatas];
+    
+    //抓取返回按钮
+    UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
+    [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+- (void)backBtnAction{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:KPersonCter_Refresh_Notification object:nil];
+
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (NSMutableArray *)datas{
     if (!_datas) {

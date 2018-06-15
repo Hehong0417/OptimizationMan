@@ -22,7 +22,7 @@
     self.namelabel.text = [NSString stringWithFormat:@"%@",productsModel.pname];
     self.quantityLabel.text = [NSString stringWithFormat:@"X%@",productsModel.quantity];
     [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:productsModel.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
-    self.sku_nameLabel.text = productsModel.sku_name;
+    self.sku_nameLabel.text = productsModel.skuName;
 
 }
 - (void)setOrderProductsModel:(HHproductsModel *)orderProductsModel{

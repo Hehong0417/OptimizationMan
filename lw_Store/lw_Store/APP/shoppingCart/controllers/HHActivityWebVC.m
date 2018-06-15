@@ -43,7 +43,7 @@
     [self.view addSubview:_webView];
     
     HJUser *user = [HJUser sharedUser];
-    webpageUrl = [NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token];
+    webpageUrl = [NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@",API_HOST1,self.gbId];
     
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/SpellGroup/Index?gbId=%@&token=%@",API_HOST1,self.gbId,user.token]]];
     [_webView loadRequest:req];

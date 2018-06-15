@@ -12,7 +12,7 @@
 
 +(NSDictionary *)mj_objectClassInArray{
     
-    return @{@"products": [HHproductsModel class],@"items": [HHproductsModel class],@"orders": [HHordersModel class],@"prodcuts":[HHproductsModel class]};
+    return @{@"products": [HHproductsModel class],@"items": [HHproductsModel class],@"orders": [HHordersModel class],@"prodcuts":[HHproductsModel class],@"coupons":[HHcouponsModel class]};
 }
 //我的订单
 - (void)mj_keyValuesDidFinishConvertingToObject {
@@ -28,7 +28,7 @@
 //        @"待收货
         self.footHeight = 58;
     }else if (status_code == 4){
-        //        @"订单关闭
+        //  @"订单关闭
         self.footHeight = 5;
     }else if (status_code == 5){
         //        @"交易完成
@@ -65,11 +65,24 @@
     
     return @{@"products": [HHproductsModel class]};
 }
+- (void)mj_keyValuesDidFinishConvertingToObject{
+    if (self.derateMoney.floatValue>0) {
+        self.addtion_arr = @[@"快递运费",@"减免活动",@"订单总计"];
+        self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"-¥%@",self.derateMoney],[NSString stringWithFormat:@"¥%@",self.showMoney]];
+    }else{
+        self.addtion_arr = @[@"快递运费",@"订单总计"];
+        self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"¥%@",self.showMoney]];
+    }
+}
+
 @end
 @implementation HHskuidModel
 
 @end
 @implementation HHproducts_item_Model
+
+@end
+@implementation HHcouponsModel
 
 @end
 

@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 
-@class HHproductsModel,HHordersModel,HHskuidModel,HHproducts_item_Model;
+@class HHproductsModel,HHordersModel,HHskuidModel,HHproducts_item_Model,HHcouponsModel;
 
 @interface HHCartModel : BaseModel
 //购物车
@@ -34,6 +34,9 @@
 @property(nonatomic,strong) NSNumber *familiarityPay;
 @property(nonatomic,strong) NSString *familiarityPayMoney;
 
+//优惠券模型
+@property(nonatomic,strong) NSArray <HHcouponsModel*>*coupons;
+//订单模型
 @property(nonatomic,strong) NSArray <HHordersModel*>*orders;
 
 //我的订单
@@ -58,6 +61,7 @@
 @property(nonatomic,strong) NSString *payTotal;
 @property(nonatomic,strong) NSString *freight;
 @property(nonatomic,strong) NSString *gbid;
+@property(nonatomic,strong) NSString *statusName;
 
 @end
 @interface HHordersModel : BaseModel
@@ -67,9 +71,12 @@
 @property(nonatomic,strong) NSString *freight;
 @property(nonatomic,strong) NSString *freightId;
 @property(nonatomic,strong) NSString *money;
+@property(nonatomic,strong) NSString *showMoney;
+@property(nonatomic,strong) NSString *derateMoney;//满减活动
+@property(nonatomic,strong) NSArray *addtion_arr;//[@"快递运费"，@“满减活动”，@“订单总计”]数组
+@property(nonatomic,strong) NSArray *addtion_value_arr;//[@"快递运费"，@“满减活动”，@“订单总计”]对应的值数组
 
 @end
-
 
 @interface HHproductsModel : BaseModel
 
@@ -89,14 +96,12 @@
 @property(nonatomic,strong) NSString *skuId;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *cartid;
+@property(nonatomic,strong) NSString *skuName;
 
 //提交订单
-//@property(nonatomic,strong) NSString *icon;
 @property(nonatomic,strong) NSString *money;
 @property(nonatomic,strong) NSString *pId;
 @property(nonatomic,strong) NSString *pname;
-//@property(nonatomic,strong) NSString *price;
-//@property(nonatomic,strong) NSString *quantity;
 
 //订单详情
 @property(nonatomic,strong) NSString *orderid;
@@ -104,8 +109,9 @@
 @property(nonatomic,strong) NSString *statusName;
 @property(nonatomic,strong) NSArray <HHskuidModel*>*skuid;
 //@property(nonatomic,strong) NSString *pname;
-
 @end
+
+
 @interface HHskuidModel : BaseModel
 @property(nonatomic,strong) NSString *Price;
 @property(nonatomic,strong) NSString *Value;
@@ -119,7 +125,16 @@
 @property(nonatomic,strong) NSString *product_item_quantity;
 @property(nonatomic,strong) NSString *product_item_sku_name;
 @property(nonatomic,strong) NSString *product_item_status;
-
 @property(nonatomic,strong) NSString *icon;
 @property(nonatomic,strong) NSString *prodcut_name;
 @end
+
+
+//优惠券模型
+@interface HHcouponsModel : BaseModel
+@property(nonatomic,strong) NSString *CouponId;
+@property(nonatomic,strong) NSString *CouponValue;
+@property(nonatomic,strong) NSString *DisplayName;
+@property(nonatomic,strong) NSString *UserCouponId;
+@end
+

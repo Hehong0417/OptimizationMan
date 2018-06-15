@@ -333,7 +333,7 @@
     HHMineAPI *api = [self new];
     api.subUrl = API_ConfirmOrder;
     if (orderid) {
-        [api.parameters setObject:orderid forKey:@"orderId"];
+        [api.parameters setObject:orderid forKey:@""];
     }
     api.parametersAddToken = NO;
     return api;
@@ -456,6 +456,9 @@
     }
     if (mode) {
         [api.parameters setObject:mode forKey:@"mode"];
+    }
+    if (couponId) {
+        [api.parameters setObject:couponId forKey:@"couponId"];
     }
     api.parametersAddToken = NO;
     return api;

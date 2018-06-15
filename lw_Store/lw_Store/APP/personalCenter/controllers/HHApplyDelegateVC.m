@@ -226,7 +226,7 @@
 }
 #pragma mark- payTypeDelegate
 
-- (void)commitActionWithBtn:(UIButton *)btn{
+- (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex{
     
     __block  HHMineModel *model;
     
@@ -255,8 +255,6 @@
         
         
     }];
-    
-    
 }
 #pragma mark - 微信支付
 

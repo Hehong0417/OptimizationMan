@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HHOrderDetailTableHead : UIView
+@property (weak, nonatomic) IBOutlet UILabel *order_status_label;
 
 @end

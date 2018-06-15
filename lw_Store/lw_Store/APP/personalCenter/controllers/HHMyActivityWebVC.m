@@ -9,7 +9,7 @@
 #import "HHMyActivityWebVC.h"
 #import <WebKit/WebKit.h>
 #import "HHSubmitOrdersVC.h"
-#import "HHOrderVC.h"
+#import "HHOrderDetailVC.h"
 #import "HHGoodBaseViewController.h"
 
 @interface HHMyActivityWebVC ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
@@ -46,9 +46,13 @@
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
     
+    
     HJUser *user = [HJUser sharedUser];
     url = [NSString stringWithFormat:@"%@/SpellGroup/SpellGroupList?token=%@",API_HOST1,user.token];
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+    
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:req];
+
     [_webView loadRequest:req];
     
     //抓取返回按钮
@@ -147,10 +151,11 @@
         webpageUrl = navigationResponse.response.URL.absoluteString;
         
         decisionHandler(WKNavigationResponsePolicyAllow);
-        
-    }else if([navigationResponse.response.URL.absoluteString containsString:@"MyOrder/MyOrder"]){
+    }else if([navigationResponse.response.URL.absoluteString containsString:@"MyOrder/MyOrderDetail"]){
         rightBtn.hidden = YES;
-        HHOrderVC *vc = [HHOrderVC new];
+        HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
+        HHOrderDetailVC *vc = [HHOrderDetailVC new];
+        vc.orderid = model.orderId;
         [self.navigationController pushVC:vc];
         decisionHandler(WKNavigationResponsePolicyCancel);
         

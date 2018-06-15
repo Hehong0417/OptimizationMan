@@ -45,9 +45,29 @@
     [_webView.scrollView setShowsVerticalScrollIndicator:NO];
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
+    
+    [self loadData];
 
+    [self addHeadRefresh];
+    
+}
+- (void)loadData{
+    
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/MiniPrograms/Index?cid=12",API_HOST1]]];
     [_webView loadRequest:req];
+    if (_webView.scrollView.mj_header.isRefreshing) {
+        [_webView.scrollView.mj_header endRefreshing];
+    }
+}
+- (void)addHeadRefresh{
+    
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self loadData];
+    }];
+    refreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    refreshHeader.stateLabel.hidden = YES;
+    _webView.scrollView.mj_header = refreshHeader;
 }
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
@@ -72,34 +92,34 @@
     
      decisionHandler(WKNavigationResponsePolicyAllow);
 }
-#pragma mark-WKScriptMessageHandler
-
-
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    
-    [self allowTurnAroundWithUsrlStr:message.body[@"url"]];
-    
-    NSLog(@"JS 调用了 %@ 方法，传回参数 %@",message.name,message.body);
-}
+//#pragma mark-WKScriptMessageHandler
+//
+//
+//- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
+//
+//    [self allowTurnAroundWithUsrlStr:message.body[@"url"]];
+//
+//    NSLog(@"JS 调用了 %@ 方法，传回参数 %@",message.name,message.body);
+//}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
     [[_webView configuration].userContentController removeScriptMessageHandlerForName:@"closeMe"];
 
 }
-//跳转
-- (void)allowTurnAroundWithUsrlStr:(NSString *)urlStr{
-    
-    HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[urlStr lh_parametersKeyValue]];
-    //允许跳转
-    if ([urlStr containsString:@"detail"]) {
-        
-        HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
-        vc.Id = model.Id;
-        [self.navigationController pushVC:vc];
-        
-    }
-    
-}
+////跳转
+//- (void)allowTurnAroundWithUsrlStr:(NSString *)urlStr{
+//
+//    HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[urlStr lh_parametersKeyValue]];
+//    //允许跳转
+//    if ([urlStr containsString:@"detail"]) {
+//
+//        HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
+//        vc.Id = model.Id;
+//        [self.navigationController pushVC:vc];
+//
+//    }
+//
+//}
 
 @end

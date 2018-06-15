@@ -216,8 +216,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                 [self.tableView reloadData];
             }
         }];
-
-        
         if ([buttonTag isEqualToString:@"0"]) { //加入购物车
 
             if ([button_title isEqualToString:@"加入购物车"]) {
@@ -282,7 +280,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                 
                 [self setUpGoodsWKWebView];
                 
-                
 //                self.addCartTool
                 //拼团
                HHActivityModel *GroupBy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuy];
@@ -309,7 +306,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                     self.addCartTool.buyBtn.hidden = YES;
                     self.addCartTool.addCartBtn.mj_w = ScreenW/3*2;
                 }
-                
 //                //评价
 //                [self  getFinishLogData];
                 
@@ -318,7 +314,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                 [self.activityIndicator stopAnimating];
                 
                 [SVProgressHUD showInfoWithStatus:api.Msg];
-
             }
 
         }else{
@@ -329,12 +324,10 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                 notAlanView.hidden = YES;
                 [hudView removeFromSuperview];
                 [SVProgressHUD showInfoWithStatus:error.localizedDescription];
-
             }
             
         }
     }];
-
     
 }
 #pragma mark-猜你喜欢
@@ -733,14 +726,12 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
     UITableViewCell *gridcell = nil;
     if (indexPath.section == 0) {
-        
         HHDetailGoodReferralCell *cell = [tableView dequeueReusableCellWithIdentifier:HHDetailGoodReferralCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         cell.gooodDetailModel = self.gooodDetailModel;
         gridcell = cell;
-        
     }else if (indexPath.section == 1) {
-
+        //店铺介绍
         HHShopIntroCell *cell = [tableView dequeueReusableCellWithIdentifier:HHShopIntroCellID];
         // cell.gooodDetailModel = self.gooodDetailModel;
         gridcell = cell;
@@ -756,31 +747,14 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         if (indexPath.row == 0) {
             HHGoodDealRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodDealRecordCellID];
             cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-           
-//            if(self.evaluations.count == 0){
-//                cell.recordTitleLabel.text = @"暂无用户评价";
-//            }else{
-                cell.recordTitleLabel.text = [NSString stringWithFormat:@"用户评价(%@)",self.count?self.count:@"0"];
-//            }
+            cell.recordTitleLabel.text = [NSString stringWithFormat:@"优惠套餐"];
             gridcell = cell;
         }else if (indexPath.row == 1){
-            HHEvaluationListCell *cell = [tableView dequeueReusableCellWithIdentifier:HHEvaluationListCellID];
+            
+            HHGoodDealRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodDealRecordCellID];
             cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            HHEvaluationListModel *model = [HHEvaluationListModel new];
-            model.icon_url = @"icon0";
-            model.name = @"小帅****";
-            model.dateTime = @"2018.12.1";
-            model.proper = @"15/1包";
-            model.grade = @"1";
-            model.content = @"";
-            model.imagesModelArray = @[@"icon1",@"icon2",@"icon3"];
-            model.replyContent = @"";
-            model.addition_time = @"";
-            model.addition_comment = @"";
-            cell.model = model;
-//            if(self.datas.count == 0){
-//                cell.hidden = YES;
-//            }
+            cell.recordTitleLabel.text = [NSString stringWithFormat:@"111111"];
+            cell.accessoryType = UITableViewCellAccessoryNone;
             gridcell = cell;
         }
         if (self.datas.count>0) {
@@ -799,7 +773,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return 4;
-    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
@@ -826,23 +799,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         
     }else if (indexPath.section == 3){
         if (indexPath.row == 1) {
-//            if(self.datas.count == 0){
-//                return 0.01;
-//            }else{
-            HHEvaluationListModel *model = [HHEvaluationListModel new];
-            model.icon_url = @"icon0";
-            model.name = @"小帅****";
-            model.dateTime = @"2018.12.1";
-            model.proper = @"15/1包";
-            model.grade = @"1";
-            model.content = @"";
-            model.imagesModelArray = @[@"icon1",@"icon2",@"icon3"];
-            model.replyContent = @"";
-            model.addition_time = @"";
-            model.addition_comment = @"";
-            return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[HHEvaluationListCell class] contentViewWidth:[self cellContentViewWith]];
-                
-//            }
+            return 80;
         }
         if (indexPath.row == 2) {
             return 85;
@@ -903,7 +860,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
 - (void)selfAlterViewback{
     
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 - (void)dealloc

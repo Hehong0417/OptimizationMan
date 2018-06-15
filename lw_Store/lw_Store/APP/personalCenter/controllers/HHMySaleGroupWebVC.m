@@ -59,8 +59,12 @@
     
     HJUser *user = [HJUser sharedUser];
     url = [NSString stringWithFormat:@"%@/Personal/CutGroup?token=%@",API_HOST1,user.token];
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:req];
+    
     [_webView loadRequest:req];
+
 }
 - (void)backBtnAction{
     
@@ -97,7 +101,6 @@
     //创建Webpage内容对象
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"邀请好友参团" descr:@"" thumImage:nil];
 
-    
     //设置Webpage地址
     shareObject.webpageUrl = webpageUrl;
     
@@ -106,12 +109,10 @@
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
-        
         if (error) {
             NSLog(@"************Share fail with error %@*********",error);
         }else{
             NSLog(@"response data is %@",data);
-            
         }
     }];
 }
@@ -131,6 +132,28 @@
     }];
     
 }
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    
+    completionHandler();
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler {
+    
+    NSLog(@"runJavaScriptConfirmPanelWithMessage:%@",message);
+   
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(YES);
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+}
+
 // 接收到服务器跳转请求之后调用
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{
     
@@ -145,9 +168,7 @@
     if ([navigationResponse.response.URL.absoluteString containsString:@"Personal/CutGroup"]) {
         rightBtn.hidden = YES;
         decisionHandler(WKNavigationResponsePolicyAllow);
-
     }else if([navigationResponse.response.URL.absoluteString containsString:@"ActivityWeb/CutGroupBuy"]){
-        
         rightBtn.hidden = NO;
         webpageUrl = navigationResponse.response.URL.absoluteString;
         decisionHandler(WKNavigationResponsePolicyAllow);

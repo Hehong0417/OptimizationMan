@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "HHEvaluationListModel.h"
+#import <WebKit/WebKit.h>
 
-@interface HHMessageDeatilCell : UITableViewCell<UIWebViewDelegate>
+@interface HHMessageDeatilCell : UITableViewCell<WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic)  UILabel *msg_titleLabel;
-@property (strong, nonatomic)  UIWebView *msg_contentWebView;
+@property (strong, nonatomic)  WKWebView *msg_contentWebView;
 @property (strong, nonatomic)  UILabel *dateTimeLabel;
 @property (strong, nonatomic)  UINavigationController *nav;
 @property (strong, nonatomic)  UILabel *line;

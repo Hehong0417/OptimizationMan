@@ -24,3 +24,4 @@ typedef enum : NSUInteger {
 @property(nonatomic,strong) NSNumber *sendGift;
 
 @end
+

@@ -260,67 +260,56 @@
     self.settleAccountView.sendGift_label.userInteractionEnabled = YES;
     [self.settleAccountView.sendGift_label setTapActionWithBlock:^{
        
-        [self isExitAddress];
+        [self isExitAddressWithSendGift:@1];
 
     }];
     
     //提交订单
     [self.settleAccountView.settleBtn setTapActionWithBlock:^{
-        
-//        __block  NSMutableArray *orderSelect_IdsArr = [NSMutableArray array];
-//        [weakSelf.datas enumerateObjectsUsingBlock:^(HHproductsModel *model, NSUInteger oneIdx, BOOL * _Nonnull stop) {
-//            [weakSelf.selectItems enumerateObjectsUsingBlock:^(NSNumber *select, NSUInteger idx, BOOL * _Nonnull stop) {
-//                if ([select isEqual:@1]) {
-//                    if (idx == oneIdx) {
-//                        [orderSelect_IdsArr addObject:model.pid];
-//                    }
-//                }
-//
-//            }];
-//        }];
-//
-//        if (orderSelect_IdsArr.count>0) {
-//            HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-//            vc.ids_Arr = orderSelect_IdsArr;
-//            [self.navigationController pushVC:vc];
-//        }else{
-//
-//            [SVProgressHUD showInfoWithStatus:@"请先选择商品！"];
-//        }
 
-        [self isExitAddress];
+        [self isExitAddressWithSendGift:@0];
         
     }];
     
 }
 //是否存在收货地址
-- (void)isExitAddress{
+- (void)isExitAddressWithSendGift:(NSNumber *)sendGiftBtnSelected{
     
     [[[HHCartAPI IsExistOrderAddress] netWorkClient] getRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
         
         if (!error) {
             if (api.State == 1) {
                 if ([api.Data isEqual:@1]) {
-                
+
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
                     if ([self.model.sendGift isEqual:@1]) {
-                        vc.enter_type = HHaddress_type_Spell_group;
-                        vc.mode = @8;
+                        if ([sendGiftBtnSelected isEqual:@1]) {
+                            vc.enter_type = HHaddress_type_Spell_group;
+                            vc.sendGift = self.model.sendGift;
+                            vc.mode = @8;
+                        }else{
+                            vc.mode = nil;
+                            vc.enter_type = HHaddress_type_add_cart;
+                        }
                     }else{
                         vc.mode = nil;
                         vc.enter_type = HHaddress_type_add_cart;
                     }
-                    vc.sendGift = self.model.sendGift;
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
                     vc.addressType = HHAddress_settlementType_cart;
                     if ([self.model.sendGift isEqual:@1]) {
-                        vc.mode = @8;
+                        if ([sendGiftBtnSelected isEqual:@1]) {
+                          vc.mode = @8;
+                          vc.sendGift = self.model.sendGift;
+                        }else{
+                          vc.mode = nil;
+
+                        }
                     }else{
-                        vc.mode = nil;
+                          vc.mode = nil;
                     }
-                    vc.sendGift = self.model.sendGift;
                     vc.titleStr = @"新增收货地址";
                     [self.navigationController pushVC:vc];
                 }
@@ -365,7 +354,7 @@
         NSInteger   quantity = model.quantity.integerValue;
         quantity--;
         [self minusQuantityWithcart_id:model.cartid quantity:@"-1"  cartCell:cell];
-        
+      
     }
 }
 - (void)plusQuantityWithcart_id:(NSString *)cart_id quantity:(NSString *)quantity cartCell:(HHCartCell *)cartCell{
@@ -375,10 +364,9 @@
             if (api.State == 1) {
                 
                 [self refreshData];
-                
+
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
-                
             }
         }else{
             
@@ -386,19 +374,16 @@
         }
         
     }];
-    
 }
 - (void)minusQuantityWithcart_id:(NSString *)cart_id quantity:(NSString *)quantity cartCell:(HHCartCell *)cartCell{
     
-    [[[HHCartAPI postminusQuantityWithcart_id:cart_id quantity:nil] netWorkClient] postRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
+    [[[HHCartAPI postminusQuantityWithcart_id:cart_id quantity:quantity] netWorkClient] postRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
                 
                 [self refreshData];
-                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
-                
             }
         }else{
             
@@ -524,7 +509,6 @@
                     [self deleteGetData];
                 }else{
                     [SVProgressHUD showInfoWithStatus:api.Msg];
-                    
                 }
             }else{
                 
@@ -532,10 +516,7 @@
             }
         }];
         
-        
-        
     }else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        
         
     }
 }

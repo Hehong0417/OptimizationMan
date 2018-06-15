@@ -16,6 +16,7 @@
 {
     UILabel *orderIdLabel;
     UILabel *createdateLabel;
+    HHOrderDetailTableHead *subhead;
 }
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, strong)   HHCartModel *model;
@@ -73,7 +74,8 @@
                     self.model = [HHCartModel mj_objectWithKeyValues:api.Data];
                     orderIdLabel.text = [NSString stringWithFormat:@"订单编号：%@",self.model.orderid];
                     createdateLabel.text = [NSString stringWithFormat:@"下单时间：%@",self.model.orderDate];
-                [self.model.prodcuts enumerateObjectsUsingBlock:^(HHproductsModel *  product_model, NSUInteger idx, BOOL * _Nonnull stop) {
+                subhead.order_status_label.text = self.model.statusName;
+                  [self.model.prodcuts enumerateObjectsUsingBlock:^(HHproductsModel *  product_model, NSUInteger idx, BOOL * _Nonnull stop) {
                     [product_model.skuid  enumerateObjectsUsingBlock:^(HHskuidModel *  sku_model, NSUInteger idx, BOOL * _Nonnull stop) {
                         
                         HHproductsModel *model = [HHproductsModel new];
@@ -106,7 +108,7 @@
     UIView *tableHead = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 100) backColor:KVCBackGroundColor];
     tableHead.backgroundColor = KVCBackGroundColor;
 
-    HHOrderDetailTableHead *subhead = [[[NSBundle mainBundle] loadNibNamed:@"HHOrderDetailTableHead" owner:self options:nil] lastObject];
+    subhead = [[[NSBundle mainBundle] loadNibNamed:@"HHOrderDetailTableHead" owner:self options:nil] lastObject];
     orderIdLabel = [UILabel lh_labelWithFrame:CGRectMake(41,35 , ScreenW, 30) text:@"订单编号：" textColor:kBlackColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:KVCBackGroundColor];
     createdateLabel = [UILabel lh_labelWithFrame:CGRectMake(41,65 , ScreenW, 30) text:@"下单时间：" textColor:kBlackColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:KVCBackGroundColor];
     [tableHead addSubview:subhead];

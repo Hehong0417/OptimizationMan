@@ -40,7 +40,7 @@
     [self.view addSubview:_webView];
     
     HJUser *user = [HJUser sharedUser];
-    webpageUrl = [NSString stringWithFormat:@"%@/ActivityWeb/IntimatePerson?orderId=%@&token=%@",API_HOST1,self.orderId,user.token];
+    webpageUrl = [NSString stringWithFormat:@"%@/ActivityWeb/IntimatePerson?orderId=%@",API_HOST1,self.orderId];
     
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/ActivityWeb/IntimatePerson?orderId=%@&token=%@",API_HOST1,self.orderId,user.token]]];
     
@@ -63,10 +63,15 @@
         }else{
             rightBtn.hidden = YES;
         }
-        [_webView goBack];
+        if ([responseUrl containsString:@"ActivityWeb/IntimatePayProduct"]) {
+            [self.view resignFirstResponder];
+            [self.navigationController popToRootVC];
+        }else if ([responseUrl containsString:@"ActivityWeb/IntimatePerson"]) {
+            [_webView goBack];
+        }
     }else{
         [self.view resignFirstResponder];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootVC];
     }
     
 }
@@ -186,7 +191,6 @@
     vc.title_str = @"支付成功";
     vc.discrib_str = @"";
     vc.title_label_str = @"支付成功";
-    vc.enter_Num = 1;
     [self.navigationController pushVC:vc];
 }
 

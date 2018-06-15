@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ApplyRefundDelegate <NSObject>
+
+- (void)backActionWithBtn:(UIButton *)btn;
+
+@end
+
 @interface HHApplyRefundVC : UITableViewController
 
 @property (nonatomic, strong) NSString *count;
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, strong) NSString *item_id;
 @property (nonatomic, strong) NSString *order_id;
-@property (nonatomic, copy) voidBlock  applyRefund_block;
+
+@property(nonatomic,copy) id<ApplyRefundDelegate> delegate;
 
 @end

@@ -23,8 +23,9 @@
 #import "HHOrderItemModel.h"
 #import "HHnormalSuccessVC.h"
 #import "HHMyOrderItem.h"
+#import "HHFamiliarityPayVC.h"
 
-@interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,ApplyRefundDelegate>
 
 @property(nonatomic,strong)   SGSegmentedControl *SG;
 @property (nonatomic, strong)   NSArray *title_arr;
@@ -291,6 +292,17 @@
     [self.tableView.mj_header beginRefreshing];
 
 }
+#pragma mark --- ApplyRefundDelegate
+
+- (void)backActionWithBtn:(UIButton *)btn{
+    
+    [self.datas removeAllObjects];
+    if (self.sg_selectIndex == 0) {
+        [self getDatasWithIndex:@0];
+    }else{
+        [self getDatasWithIndex:@(self.sg_selectIndex)];
+    }
+}
 
 #pragma mark --- tableView delegate
 
@@ -318,15 +330,8 @@
           [cell.StandardLab setTapActionWithBlock:^{
             UIStoryboard *board = [UIStoryboard storyboardWithName:@"PersonCenter" bundle:nil];
             HHApplyRefundVC *vc = [board instantiateViewControllerWithIdentifier:@"HHApplyRefundVC"];
-              vc.applyRefund_block = ^{
-                  [self.datas removeAllObjects];
-                  if (self.sg_selectIndex == 0) {
-                      [self getDatasWithIndex:@0];
-                  }else{
-                  [self getDatasWithIndex:@(self.sg_selectIndex)];
-                  }
-              };
-              HHproducts_item_Model *model1 = model.items[indexPath.row];
+              vc.delegate = self;
+              HHproducts_item_Model *model1 = orders_m.items[indexPath.row];
               vc.item_id = model1.product_item_id;
               vc.order_id = model.order_id;
               vc.count = model1.product_item_quantity;
@@ -362,17 +367,23 @@
 //    leftBtn.hidden = YES;
     
     //分割线Y坐标
-    CGFloat down_y = 52;
+    CGFloat down_y = 55;
     if (self.datas.count>0) {
         HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
         NSString *status = model.status;
         if ([status isEqualToString:@"1"]) {
             //待付款
-            down_y = 52;
+            down_y = 55;
             //oneBtn
             [self setBtnAttrWithBtn:oneBtn Title:@"取消订单" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
             //twoBtn
-            [self setBtnAttrWithBtn:twoBtn Title:@"去支付" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_COMMON_COLOR];
+            NSString *twoBtn_title = @"去支付";
+            if ([model.order_mode isEqual:@16]) {
+                twoBtn_title = @"亲密付";
+            }else{
+                twoBtn_title = @"去支付";
+            }
+            [self setBtnAttrWithBtn:twoBtn Title:twoBtn_title CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_COMMON_COLOR];
         }else if([status isEqualToString:@"2"]){
             //待发货
              down_y = 0;
@@ -382,8 +393,8 @@
             twoBtn.hidden = YES;
         }else if([status isEqualToString:@"3"]){
             //待收货
-            down_y = 52;
-            oneBtn.hidden = NO;
+            down_y = 55;
+            oneBtn.hidden = YES;
             [self setBtnAttrWithBtn:oneBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
             //twoBtn
             twoBtn.hidden = NO;
@@ -400,11 +411,11 @@
             
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = 52;
+            down_y = 55;
             //oneBtn
             oneBtn.hidden = YES;
             //twoBtn
-            twoBtn.hidden = NO;
+            twoBtn.hidden = YES;
 //            [self setBtnAttrWithBtn:oneBtn Title:@"删除订单" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
             
             //twoBtn
@@ -530,11 +541,8 @@
                         [self.datas removeAllObjects];
                         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
                         [SVProgressHUD showSuccessWithStatus:@"取消订单成功！"];
-                        if (self.sg_selectIndex == 0) {
-                            [self getDatasWithIndex:nil];
-                        }else{
-                            [self getDatasWithIndex:@(self.sg_selectIndex)];
-                        }
+                
+                        [self getDatasWithIndex:@(self.sg_selectIndex)];
                     }else{
                         
                         [SVProgressHUD showInfoWithStatus:api.Msg];
@@ -612,11 +620,18 @@
 
     if ([status isEqualToString:@"1"]) {
         //待付款--->去支付
-        [self payOrderWithorderid:model.order_id btn:btn];
-        
+        if ([model.order_mode isEqual:@16]) {
+            //亲密付
+            HHFamiliarityPayVC *vc = [HHFamiliarityPayVC new];
+            vc.orderId = model.order_id;
+            [self.navigationController pushVC:vc];
+            
+        }else{
+           [self payOrderWithorderid:model.order_id btn:btn];
+        }
     }else if([status isEqualToString:@"3"]){
 //        //待收货--->确认收货
-        [self handleOrderWithorderid:model.order_id status:HHhandle_type_Confirm btn:btn title:@"确认收货吗？"];
+        [self handleOrderWithorderid:model.order_id status:HHhandle_type_Confirm btn:btn title:@"确认收货？"];
         
     }else if([status isEqualToString:@"5"]){
         //交易成功-->追加评价
@@ -630,6 +645,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
+
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
     
     UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40) backColor:kWhiteColor];
@@ -645,7 +661,6 @@
     [headView addSubview:orderLabel];
     if (![model.order_mode isEqual:@1]) {
       CGSize mode_size = [model.order_mode_name lh_sizeWithFont:[UIFont systemFontOfSize:14]  constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
-       
         UILabel *activityLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(orderLabel.frame)+5, 0,mode_size.width+10, 20) text:model.order_mode_name textColor:kWhiteColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentCenter backgroundColor:[UIColor colorWithHexString:@"#F7BC4B"]];
         activityLabel.centerY = headView.centerY;
         [headView addSubview:activityLabel];
@@ -721,5 +736,11 @@
     
     [SVProgressHUD setMinimumDismissTimeInterval:1.0];
     [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+}
+- (id)copyWithZone:(NSZone *)zone
+{
+    id copy = [[[self class] alloc] init];
+    
+    return copy;
 }
 @end

@@ -40,7 +40,7 @@
     self.product_nameLabel.text = productModel.name;
     self.product_priceLabel.text = [NSString stringWithFormat:@"¥%.2f",productModel.price.floatValue];
     self.quantityTextField.text = productModel.quantity;
-    self.sku_nameLabel.text = productModel.sku_name;
+    self.sku_nameLabel.text = productModel.skuName;
     
 }
 - (void)setPModel:(HHproductsModel *)pModel{

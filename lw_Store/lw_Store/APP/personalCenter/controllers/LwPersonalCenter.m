@@ -58,7 +58,8 @@
     
     self.tableV.tableHeaderView = self.mineHeadView;
     
-    rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
+    rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
+    [rightBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, -15)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     
     [self getDatas];
@@ -91,10 +92,8 @@
         if (self.tableV.mj_header.isRefreshing) {
             [self.tableV.mj_header endRefreshing];
         }
-        
         if (!error) {
             if (api.State == 1) {
-
                 self.mineModel = [HHMineModel mj_objectWithKeyValues:api.Data[@"user"]];
                 self.usableComm = api.Data[@"usableComm"];
                 self.fanscount = api.Data[@"fanscount"];
@@ -118,6 +117,14 @@
                 self.mineHeadView.titleLabel.text = self.mineModel.BuyTotal?[NSString stringWithFormat:@"累计:¥%@",self.mineModel.BuyTotal]:@"";
                 [self.mineHeadView.teacherImageIcon sd_setImageWithURL:[NSURL URLWithString:self.mineModel.UserImage] placeholderImage:nil];
                 [self.tableV reloadData];
+                
+                NSNumber  *hasUnReadyMessage = api.Data[@"hasUnReadyMessage"];
+                if ([hasUnReadyMessage isEqual:@1]) {
+                    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+                }else{
+                    [rightBtn setImage:[UIImage imageNamed:@"no_message"] forState:UIControlStateNormal];
+                }
+                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -174,14 +181,14 @@
         [self.navigationController pushVC:vc];
         
     }else if (indexPath.section == 2&&indexPath.row==0){
-        
+
           if ([self.isAgent isEqual:@1]) {
               if ([self.isJoinAgent isEqual:@1]) {
 //                  已加入代理
                   HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
                   vc.title_str = @"申请成功";
                   vc.discrib_str = @"";
-                  vc.title_label_str = @"申请成功";
+                  vc.title_label_str = @"已申请";
                   [self.navigationController pushVC:vc];
               }else{
                   HHApplyDelegateVC *vc = [HHApplyDelegateVC new];

@@ -65,7 +65,8 @@
     
     keyboardManager.enableAutoToolbar = YES; // 控制是否显示键盘上的工具条
     
-    
+    keyboardManager.toolbarDoneBarButtonItemText = @"确定";
+
 }
 #pragma mark - 配置友盟
 

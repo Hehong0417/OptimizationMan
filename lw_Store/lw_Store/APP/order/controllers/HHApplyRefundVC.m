@@ -84,12 +84,10 @@
     
     [[[HHMineAPI postConfirmOrderWithorderid:self.order_id orderItemId:self.item_id quantity:self.quantity_tf.text comments:self.reason_tv.text] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (api.State == 1) {
-
             [SVProgressHUD showSuccessWithStatus:@"提交成功！"];
-            if (self.applyRefund_block) {
-                self.applyRefund_block();
+            if (self.delegate&&[self.delegate respondsToSelector:@selector(backActionWithBtn:)]) {
+                [self.navigationController popVC];
             }
-            [self.navigationController popVC];
         }else{
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }

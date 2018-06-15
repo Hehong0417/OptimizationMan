@@ -20,12 +20,12 @@
         self.msg_titleLabel.textAlignment = NSTextAlignmentCenter;
         self.line = [UILabel new];
         self.line.backgroundColor = KVCBackGroundColor;
-        self.msg_contentWebView = [UIWebView new];
+        WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+        self.msg_contentWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
         self.msg_contentWebView.scrollView.scrollEnabled = NO;
-        self.msg_contentWebView.delegate = self;
+        self.msg_contentWebView.UIDelegate = self;
         self.msg_contentWebView.backgroundColor = kClearColor;
         self.msg_contentWebView.opaque = NO;
-        [self.msg_contentWebView scalesPageToFit];
         self.dateTimeLabel = [UILabel new];
         self.dateTimeLabel.textAlignment = NSTextAlignmentRight;
         self.dateTimeLabel.font = FONT(13);
@@ -112,11 +112,9 @@
 
     NSString *reqStr = [NSString stringWithFormat:@"%@",request];
     if ([reqStr containsString:@"http"]) {
-        
         HHMessageWeb *vc = [HHMessageWeb new];
         vc.url = reqStr;
         [self.nav pushVC:vc];
-        
         return NO;
     }
     return YES;
