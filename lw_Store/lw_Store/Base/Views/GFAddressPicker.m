@@ -98,6 +98,7 @@
                     HHAddressModel *model = [HHAddressModel mj_objectWithKeyValues:dic];
                     [self.provinceArray addObject:model.Name];
                     [self.provinceIdsArray addObject:model.Id];
+                    *stop = NO;
                 }];
                 
                NSInteger index = [self.pickView selectedRowInComponent:0];
@@ -128,12 +129,12 @@
                     HHAddressModel *model = [HHAddressModel mj_objectWithKeyValues:dic];
                     [self.cityArray addObject:model.Name];
                     [self.cityIdsArray addObject:model.Id];
+                    *stop = NO;
                 }];
                 NSInteger index = [self.pickView selectedRowInComponent:1];
                 
                 NSString *id_str =  [self.cityIdsArray objectAtIndex:index];
                 if (id_str.length >0) {
-                    
                   [self getTownInfomationWithId:id_str];
                 }
             }
@@ -157,8 +158,9 @@
                     HHAddressModel *model = [HHAddressModel mj_objectWithKeyValues:dic];
                     [self.townArray addObject:model.Name];
                     [self.townIdsArray addObject:model.Id];
-                    *stop = YES;
+                    *stop = NO;
                 }];
+                
                 [self.pickView reloadAllComponents];
             }
         }
@@ -248,23 +250,20 @@
 
 - (void)dateEnsureAction {
     
-    [self hidePickViewComplete:nil];
-    
-    [self updateAddress];
-
-    if(self.selectedSexItem){
-        if (self.townId.length>0) {
-            self.completeBlock(self.selectedSexItem,self.townId);
-        }else if (self.cityId.length>0){
-            self.completeBlock(self.selectedSexItem,self.cityId);
-
-        }else if (self.provinceId.length>0){
-            self.completeBlock(self.selectedSexItem,self.provinceId);
-        }else{
-            self.completeBlock(self.selectedSexItem,@"");
+        [self hidePickViewComplete:nil];
+        [self updateAddress];
+        if(self.selectedSexItem){
+            if (self.townId.length>0) {
+                self.completeBlock(self.selectedSexItem,self.townId);
+            }else if (self.cityId.length>0){
+                self.completeBlock(self.selectedSexItem,self.cityId);
+                
+            }else if (self.provinceId.length>0){
+                self.completeBlock(self.selectedSexItem,self.provinceId);
+            }else{
+                self.completeBlock(self.selectedSexItem,@"");
+            }
         }
-    }
-    
 }
 - (void)hidePickViewComplete:(void (^)())completeBlock {
     
@@ -368,7 +367,7 @@
     self.area  = [self.townArray objectAtIndex:index2]?[self.townArray objectAtIndex:index2]:[self.townArray objectAtIndex:0];
     self.townId = [self.townIdsArray objectAtIndex:index2];
     
-    self.selectedSexItem = [NSString stringWithFormat:@"%@ %@ %@",self.province,self.city,self.area];
+    self.selectedSexItem = [NSString stringWithFormat:@"%@ %@ %@",self.province.length>0?self.province:@"",self.city?self.city:@"",self.area?self.area:@""];
     
 }
 

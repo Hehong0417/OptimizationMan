@@ -26,7 +26,6 @@
     [self.StandardLab lh_setCornerRadius:5 borderWidth:1 borderColor:KA0LabelColor];
 
 }
-
 - (void)setProductModel:(HHproducts_item_Model *)productModel{
     _productModel = productModel;
 

@@ -8,15 +8,15 @@
 
 #import "HHPayTypeVC.h"
 #import "HHPayTypeCell.h"
+#import "HHCouponItem.h"
 
 @interface HHPayTypeVC ()
 {
     NSInteger _selectIndex;
+    BOOL _isSelect;//是否进行了选择
 }
 @property (nonatomic, strong) UITableView *tableV;
-
 @end
-
 @implementation HHPayTypeVC
 
 - (void)loadView {
@@ -48,7 +48,6 @@
     UIView *line = [UIView lh_viewWithFrame:CGRectMake(0, 49, ScreenW, 1) backColor:KVCBackGroundColor];
     [header addSubview:line];
     [self.view addSubview:header];
-    
     UIView *footer = [UIView lh_viewWithFrame:CGRectMake(0, ScreenH/2-60, ScreenW, 60) backColor:kWhiteColor];
     UIButton *commit_btn = [UIButton lh_buttonWithFrame:CGRectMake(30, 10, ScreenW-60, 35) target:self action:@selector(closeAction:) image:nil];
     [commit_btn setBackgroundColor:kBlackColor];
@@ -62,6 +61,17 @@
 }
 -(void)closeAction:(UIButton *)btn{
     
+    HHCouponItem *couponItem = [HHCouponItem sharedCouponItem];
+    [couponItem.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == couponItem.lastSelectIndex) {
+            [couponItem.selectItems replaceObjectAtIndex:idx withObject:@1];
+        }else{
+            [couponItem.selectItems replaceObjectAtIndex:idx withObject:@0];
+        }
+        *stop = 0;
+    }];
+    [couponItem write];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -70,13 +80,71 @@
 //确认支付
 - (void)commitAction:(UIButton *)btn{
     
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(commitActionWithBtn: selectIndex:)]) {
+    //申请代理
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(commitActionWithBtn:selectIndex:)]) {
         [self dismissViewControllerAnimated:YES completion:nil];
         [self.delegate commitActionWithBtn:btn selectIndex:_selectIndex];
     }
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(commitActionWithBtn: selectIndex: select_model: total_money: submitOrderTool: couponCell:)]) {
+    
+    //优惠券
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(commitActionWithBtn: selectIndex: select_model: total_money: submitOrderTool: couponCell: lastConponValue: last_total_money:)]) {
         [self dismissViewControllerAnimated:YES completion:nil];
-        [self.delegate commitActionWithBtn:btn selectIndex:_selectIndex select_model:self.coupons[_selectIndex] total_money:self.total_money submitOrderTool:self.submitOrderTool couponCell:self.couponCell];
+        CGFloat couponValue;
+        CGFloat total_money;
+        
+        HHCouponItem *coupon_item = [HHCouponItem sharedCouponItem];
+
+        if (_selectIndex == 0) {
+            if (_isSelect == YES) {
+                //选择不使用
+                HHcouponsModel *model = self.coupons[coupon_item.lastSelectIndex];
+                couponValue = model.CouponValue.floatValue;
+                _selectIndex = 0;
+                if (coupon_item.last_total_money<=model.CouponValue.floatValue) {
+                    //
+                    total_money = coupon_item.order_total_money;
+                }else{
+                    total_money =  self.total_money.floatValue;
+                }
+            }else{
+                //未选择选项，默认上次
+                HHcouponsModel *model = self.coupons[coupon_item.lastSelectIndex];
+                couponValue = model.CouponValue.floatValue;
+                _selectIndex = coupon_item.lastSelectIndex;
+                if (coupon_item.last_total_money<=model.CouponValue.floatValue) {
+                    total_money = coupon_item.last_total_money;
+                }else{
+                    total_money =  self.total_money.floatValue + couponValue;
+                }
+            }
+        }else{
+            //选择了其他的选项
+            HHcouponsModel *model = self.coupons[coupon_item.lastSelectIndex];
+            couponValue = model.CouponValue.floatValue;
+            if (coupon_item.last_total_money<=model.CouponValue.floatValue) {
+                //    如果上次的支付金额<上一次优惠券  那么改变选择之后 总价格为最开始价格
+                total_money = coupon_item.order_total_money;
+            }else{
+               //    1.加上上一次选择的优惠劵值
+                total_money =  self.total_money.floatValue + couponValue;
+            }
+        }
+        [self.delegate commitActionWithBtn:btn selectIndex:_selectIndex select_model:self.coupons[_selectIndex] total_money:total_money submitOrderTool:self.submitOrderTool couponCell:self.couponCell lastConponValue:couponValue last_total_money:coupon_item.last_total_money];
+        
+        //记录已选择索引
+        
+        
+        HHCouponItem *couponItem = [HHCouponItem sharedCouponItem];
+        [couponItem.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == _selectIndex) {
+                [couponItem.selectItems replaceObjectAtIndex:idx withObject:@1];
+            }else{
+                [couponItem.selectItems replaceObjectAtIndex:idx withObject:@0];
+            }
+            *stop = 0;
+        }];
+        couponItem.last_total_money = self.total_money.floatValue;
+        [couponItem write];
     }
 }
 #pragma mark - Table view data source
@@ -104,23 +172,34 @@
     
     HHPayTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHPayTypeCell"];
     if (!cell) {
-      cell = [[HHPayTypeCell alloc] createCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HHPayTypeCell" contentType:HHPayTypeCellContentType_rightSelectBtn haveIconView:NO];
+     cell  = [[HHPayTypeCell alloc] createCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HHPayTypeCell" contentType:HHPayTypeCellContentType_rightSelectBtn haveIconView:NO];
     }
-    cell.couponsModel = self.coupons[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.couponsModel = self.coupons[indexPath.row];
+    HHCouponItem *couponItem = [HHCouponItem sharedCouponItem];
+    cell.btnSelected = ((NSNumber *)couponItem.selectItems[indexPath.row]).boolValue;
+    cell.selected = YES;
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    HHPayTypeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.selected = YES;
-    _selectIndex = indexPath.row;
+        
+        HHCouponItem *couponItem = [HHCouponItem sharedCouponItem];
+        [couponItem.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == indexPath.row) {
+                [couponItem.selectItems replaceObjectAtIndex:idx withObject:@1];
+            }else{
+                [couponItem.selectItems replaceObjectAtIndex:idx withObject:@0];
+            }
+            *stop = 0;
+        }];
+        [couponItem write];
+        _selectIndex = indexPath.row;
+        _isSelect = YES;
+        [self.tableV reloadData];
+
 }
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    HHPayTypeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.selected = NO;
-}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (self.subtitle_str) {

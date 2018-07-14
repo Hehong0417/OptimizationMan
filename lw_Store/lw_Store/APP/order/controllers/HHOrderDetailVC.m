@@ -53,8 +53,6 @@
     //添加头部
     [self addTableHeader];
     
-//    [self addPayBtn];
-    
     //获取数据
     [self getDatas];
 }
@@ -64,7 +62,7 @@
     }
     return _datas;
 }
-//获取数据
+#pragma mark - 加载数据
 - (void)getDatas{
     
     [[[HHMineAPI GetOrderDetailWithorderid:self.orderid] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
@@ -180,11 +178,11 @@
             
         }else  if (indexPath.row == 1){
             cell.textLabel.text = @"订单总计";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal?self.model.payTotal:@""];
 
         }else {
             cell.textLabel.text = @"实付";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%@",self.model.payTotal?self.model.payTotal:@""];
         }
 
         gridCell = cell;
@@ -210,9 +208,7 @@
         return 3;
     }
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
     if (indexPath.section == 0) {
         return 80;
@@ -222,11 +218,6 @@
         return 50;
     }
     return 0.01;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     

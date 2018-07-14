@@ -33,6 +33,7 @@
 @property(nonatomic,strong) NSString *userName;
 @property(nonatomic,strong) NSNumber *familiarityPay;
 @property(nonatomic,strong) NSString *familiarityPayMoney;
+@property(nonatomic,strong) NSString *totalIntegral;
 
 //优惠券模型
 @property(nonatomic,strong) NSArray <HHcouponsModel*>*coupons;
@@ -75,6 +76,10 @@
 @property(nonatomic,strong) NSString *derateMoney;//满减活动
 @property(nonatomic,strong) NSArray *addtion_arr;//[@"快递运费"，@“满减活动”，@“订单总计”]数组
 @property(nonatomic,strong) NSArray *addtion_value_arr;//[@"快递运费"，@“满减活动”，@“订单总计”]对应的值数组
+@property(nonatomic,strong) NSString *integralDisplayName;
+@property(nonatomic,strong) NSString *isCanUseIntegral;
+@property(nonatomic,strong) NSString *orderIntegral;
+@property(nonatomic,strong) NSString *orderIntegralMoney;
 
 @end
 

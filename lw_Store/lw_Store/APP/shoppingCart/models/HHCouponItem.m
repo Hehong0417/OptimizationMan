@@ -32,5 +32,11 @@ singleton_m(CouponItem)
     
     return copy;
 }
-
+- (NSMutableArray *)selectItems{
+    
+    if (!_selectItems) {
+        _selectItems = [NSMutableArray array];
+    }
+    return _selectItems;
+}
 @end

@@ -21,6 +21,7 @@
 #import "HHMyActivityWebVC.h"
 #import "HHMySaleGroupWebVC.h"
 #import "HHMySendGiftWebVC.h"
+#import "HHExtraBonusVC.h"
 
 @interface LwPersonalCenter ()
 {
@@ -35,6 +36,7 @@
 @property(nonatomic,strong) NSNumber *isAgent;
 @property(nonatomic,strong) NSNumber *isJoinAgent;
 @property(nonatomic,strong) id obj;
+@property(nonatomic,strong) NSNumber *isExtraBonus;
 
 @end
 
@@ -46,12 +48,16 @@
   _obj =  [[NSNotificationCenter defaultCenter] addObserverForName:KPersonCter_Refresh_Notification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
       
       [self getDatas];
-
       [[NSNotificationCenter defaultCenter]removeObserver:_obj];
       
     }];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:_obj];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -66,6 +72,7 @@
     
     [self addHeadRefresh];
 }
+#pragma mark - 刷新控件
 - (void)addHeadRefresh{
     
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -78,14 +85,11 @@
 }
 - (void)setBtnAction{
     
-//    HHModifyInfoVC *vc = [HHModifyInfoVC new];
-//    vc.username = self.mineModel.username;
-//    vc.userIcon = self.mineModel.usericon;
-//    [self.navigationController pushVC:vc];
     HHMessageVC *vc = [HHMessageVC new];
     [self.navigationController pushVC:vc];
     
 }
+#pragma mark - 获取数据
 - (void)getDatas{
     
     [[[HHMineAPI GetUserDetail] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
@@ -94,23 +98,41 @@
         }
         if (!error) {
             if (api.State == 1) {
+                
                 self.mineModel = [HHMineModel mj_objectWithKeyValues:api.Data[@"user"]];
                 self.usableComm = api.Data[@"usableComm"];
                 self.fanscount = api.Data[@"fanscount"];
                 self.saletotal = api.Data[@"saletotal"];
                 self.isAgent = api.Data[@"isAgent"];
                 self.isJoinAgent = api.Data[@"isJoinAgent"];
+                self.isExtraBonus = api.Data[@"isExtraBonus"];
+
+                [self setGroups];
+                
+                if ([self.isAgent isEqual:@1]) {
+                    if ([self.isJoinAgent isEqual:@1]) {
+                        //已申请
+                        HJSettingItem *item0 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                        item0.detailTitle = self.mineModel.Points;
+                        HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                        item1.detailTitle = [NSString stringWithFormat:@"%@   %@折",api.Data[@"userLevelName"],api.Data[@"userLevelDiscount"]];
+                    }else{
+                        HJSettingItem *item0 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                        item0.detailTitle = self.mineModel.Points;
+                        HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:2 inSection:2]];
+                        item1.detailTitle = [NSString stringWithFormat:@"%@   %@折",api.Data[@"userLevelName"],api.Data[@"userLevelDiscount"]];
+                    }
+                }else{
+                    HJSettingItem *item0 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                    item0.detailTitle = self.mineModel.Points;
+                    
+                    HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+                    item1.detailTitle = [NSString stringWithFormat:@"%@   %@折",api.Data[@"userLevelName"],api.Data[@"userLevelDiscount"]];
+                    
+                }
                 HJSettingItem *item = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
                 if (self.mineModel.ReferralUserName) {
                     item.title = [NSString stringWithFormat:@"您是由【%@】推荐的",self.mineModel.ReferralUserName];
-                }
-                self.isJoinAgent = api.Data[@"isJoinAgent"];
-                if ([self.isAgent isEqual:@0]) {
-                    HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
-                    item1.detailTitle = [NSString stringWithFormat:@"%@   %@折",api.Data[@"userLevelName"],api.Data[@"userLevelDiscount"]];
-                }else{
-                HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:2 inSection:2]];
-                item1.detailTitle = [NSString stringWithFormat:@"%@   %@折",api.Data[@"userLevelName"],api.Data[@"userLevelDiscount"]];
                 }
                 self.mineHeadView.nameLabel.text = self.mineModel.UserName;
                 self.mineHeadView.IDLabel.text = self.mineModel.Id?[NSString stringWithFormat:@"ID:%@",self.mineModel.Id]:@"";
@@ -124,7 +146,6 @@
                 }else{
                     [rightBtn setImage:[UIImage imageNamed:@"no_message"] forState:UIControlStateNormal];
                 }
-                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -134,13 +155,15 @@
     }];
     
 }
+#pragma mark - tableView Delegate
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *gridCell;
     
     if (indexPath.section == 0 &&indexPath.row == 1) {
         LwPersonCenterCell *cell = [[LwPersonCenterCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LwPersonCenterCell"];
-        [cell setCellWithUsableComm:self.usableComm fanscount:self.fanscount saletotal:self.saletotal];
+        [cell setCellWithUsableComm:self.usableComm fanscount:self.fanscount saletotal:[NSString stringWithFormat:@"%.2f",self.saletotal.floatValue]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.nav = self.navigationController;
         gridCell = cell;
@@ -184,15 +207,11 @@
 
           if ([self.isAgent isEqual:@1]) {
               if ([self.isJoinAgent isEqual:@1]) {
-//                  已加入代理
-                  HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
-                  vc.title_str = @"申请成功";
-                  vc.discrib_str = @"";
-                  vc.title_label_str = @"已申请";
+                  HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
                   [self.navigationController pushVC:vc];
               }else{
-                  HHApplyDelegateVC *vc = [HHApplyDelegateVC new];
-                  [self.navigationController pushVC:vc];
+                HHApplyDelegateVC *vc = [HHApplyDelegateVC new];
+                [self.navigationController pushVC:vc];
               }
          }else{
              HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
@@ -222,58 +241,150 @@
         [self.navigationController pushVC:vc];
     
     }else if (indexPath.section == 3&&indexPath.row == 4){
+     //额外奖励
+        HHExtraBonusVC *vc = [HHExtraBonusVC new];
+        [self.navigationController pushVC:vc];
+
+    }else if (indexPath.section == 4){
+        
         //设置
         HHSetVC *vc = [HHSetVC new];
         [self.navigationController pushVC:vc];
     }
     
 }
-- (NSArray *)groupTitles{
-    
-    if ([self.isAgent isEqual:@0]) {
-        
-        if (self.mineModel.ReferralUserName) {
-                return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
-            }else{
-                return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
-            }
-    }
-    if (self.mineModel.ReferralUserName) {
+#pragma mark - 控制器设置
 
-       return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+- (NSArray *)groupTitles{
+
+    if ([self.isAgent isEqual:@1]) {
+        //************************//
+        if ([self.isJoinAgent isEqual:@1]) {
+            //已申请
+            if (self.mineModel.ReferralUserName) {
+                
+                if ([self.isExtraBonus isEqual:@0]) {
+                    return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+                }else{
+                    return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+                }
+                
+            }else{
+                if ([self.isExtraBonus isEqual:@0]) {
+                    return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+                }else{
+                    return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+                }
+            }
+            
+            
+        }else{
+            
+            if (self.mineModel.ReferralUserName) {
+                
+                if ([self.isExtraBonus isEqual:@0]) {
+                    return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价 团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+                }else{
+                    return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+                }
+                
+            }else{
+                if ([self.isExtraBonus isEqual:@0]) {
+                    
+                    return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+                }else{
+                    return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+                }
+            }
+            
+        }
+        //************************//
+      
     }else{
-        return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"申请代理",@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"设置"]];
+        //**********
+        if (self.mineModel.ReferralUserName) {
+            if ([self.isExtraBonus isEqual:@0]) {
+                return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+            }else{
+                return @[@[@"分享赚钱",@"",@"您是由【德玛西亚】推荐的"],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+            }
+            
+        }else{
+            if ([self.isExtraBonus isEqual:@0]) {
+                return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼",@"额外奖励"],@[@"设置"]];
+                
+            }else{
+                return @[@[@"分享赚钱",@""],@[@"地址管理"],@[@"我的积分",@"会员等级"],@[@"我的拼团",@"降价团",@"优惠券",@"送礼"],@[@"设置"]];
+                
+            }
+            
+        }
+        //***************
     }
 
 }
 - (NSArray *)groupIcons {
     
-    if ([self.isAgent isEqual:@0]) {
+    if ([self.isAgent isEqual:@1]) {
+        //********************//
+        if ([self.isJoinAgent isEqual:@1]) {
+            //已申请
+            if (self.mineModel.ReferralUserName) {
+                
+                return @[@[@"",@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            }else{
+                return @[@[@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            }
+            
+        }else{
+            if (self.mineModel.ReferralUserName) {
+                return @[@[@"",@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+            }else{
+                return @[@[@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+            }
+        }
+        //********************//
+        
+    }else{
+        //********************//
         if (self.mineModel.ReferralUserName) {
-        return @[@[@"",@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            return @[@[@"",@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
         }else{
             return @[@[@"",@""],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
         }
+        //********************//
     }
-    if (self.mineModel.ReferralUserName) {
-       return @[@[@"",@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-    }else{
-        return @[@[@"",@""],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-    }
+
 }
 - (NSArray *)groupDetials{
-    if ([self.isAgent isEqual:@0]) {
+    if ([self.isAgent isEqual:@1]) {
+        //********************//
+        if ([self.isJoinAgent isEqual:@1]) {
+            //已申请
+            if (self.mineModel.ReferralUserName) {
+                return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            }else{
+                return @[@[@"推广二维码",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            }
+        }else{
+            
+            if (self.mineModel.ReferralUserName) {
+                return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+            }else{
+                return @[@[@"推广二维码",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
+            }
+        }
+        //********************//
+       
+
+    }else{
+        //********************//
         if (self.mineModel.ReferralUserName) {
-        return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
+            return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
         }else{
             return @[@[@"推广二维码",@" "],@[@""],@[@"",@""],@[@"",@"",@"",@"",@""]];
         }
-    }else{
-        if (self.mineModel.ReferralUserName) {
-            return @[@[@"推广二维码",@" ",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-        }else{
-            return @[@[@"推广二维码",@" "],@[@""],@[@"",@"",@""],@[@"",@"",@"",@"",@""]];
-        }
+        //********************//
     }
 }
 - (NSArray *)indicatorIndexPaths{

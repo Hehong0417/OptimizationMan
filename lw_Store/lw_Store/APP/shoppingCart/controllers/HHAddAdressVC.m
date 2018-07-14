@@ -142,6 +142,7 @@
                       }else if(self.addressType == HHAddress_settlementType_cart){
                           //提交订单页面
                           HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
+                          vc.pids = self.pids;
                           if ([self.sendGift isEqual:@1]) {
                               vc.enter_type = HHaddress_type_Spell_group;
                               vc.mode = @8;
@@ -158,6 +159,7 @@
                           vc.enter_type = HHaddress_type_add_productDetail;
                           vc.mode = self.mode;
                           vc.ids_Str = self.ids_Str;
+                          vc.pids = self.pids;
                           [self.navigationController pushVC:vc];
                       }
                       
@@ -193,11 +195,19 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (toBeString.length > 11 && range.length!=1){
-        textField.text = [toBeString substringToIndex:11];
-        return NO;
+    if (textField.tag == 10000) {
+        if (toBeString.length > 15 && range.length!=1){
+         //收货人姓名
+            textField.text = [toBeString substringToIndex:15];
+            return NO;
+        }
+    }else  if (textField.tag == 10001) {
+        //手机号
+        if (toBeString.length > 11 && range.length!=1){
+            textField.text = [toBeString substringToIndex:11];
+            return NO;
+        }
     }
-    
     return YES;
 }
 #pragma mark --- tableView delegate
@@ -209,9 +219,11 @@
     if (!cell) {
         cell = [[HHTextfieldcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleLabel"];
     }
+    cell.inputTextField.tag = indexPath.row+10000;
     if (indexPath.row == 0) {
         cell.titleLabel.attributedText =  [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor];
         cell.inputTextField.text = self.username;
+        cell.inputTextField.delegate = self;
     }else{
         cell.titleLabel.attributedText =  [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor];
         if (indexPath.row == 1){

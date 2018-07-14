@@ -38,7 +38,7 @@
     }
     return _datas;
 }
-
+#pragma mark -加载数据
 - (void)getDatas{
     
     [[[HHMineAPI GetIntegralListWithPage:@(self.page)] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {

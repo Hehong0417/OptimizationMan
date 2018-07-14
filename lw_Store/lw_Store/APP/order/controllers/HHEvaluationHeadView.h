@@ -18,5 +18,7 @@
 
 @property(nonatomic,strong)   UILabel *success_lab;
 
+@property(nonatomic,strong)   UILabel *title_lab;
+
 
 @end

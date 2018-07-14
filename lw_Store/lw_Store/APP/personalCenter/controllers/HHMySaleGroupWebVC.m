@@ -20,6 +20,7 @@
     NSString *url;
     NSString *webpageUrl;
     NSString *responseUrl;
+    MBProgressHUD *_hud;
 
 }
 @end
@@ -35,7 +36,7 @@
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
     
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-Status_HEIGHT-44) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     
@@ -54,17 +55,40 @@
     rightBtn.hidden = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     
+    [self addHeadRefresh];
+    
+}
+#pragma mark - 刷新控件
+
+- (void)addHeadRefresh{
+    
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        if ([responseUrl containsString:@"http://dm-client.elevo.cn/Personal/CutGroup"]) {
+            [self loadData];
+        }else{
+            if (_webView.scrollView.mj_header.isRefreshing) {
+                [_webView.scrollView.mj_header endRefreshing];
+            }
+        }
+    }];
+    refreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    refreshHeader.stateLabel.hidden = YES;
+    _webView.scrollView.mj_header = refreshHeader;
 }
 - (void)loadData{
     
     HJUser *user = [HJUser sharedUser];
-    url = [NSString stringWithFormat:@"%@/Personal/CutGroup?token=%@",API_HOST1,user.token];
+    url = [NSString stringWithFormat:@"%@/Personal/CutGroup?token=%@&cid=12",API_HOST1,user.token];
     
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
     [[NSURLCache sharedURLCache] removeCachedResponseForRequest:req];
     
     [_webView loadRequest:req];
 
+    if (_webView.scrollView.mj_header.isRefreshing) {
+        [_webView.scrollView.mj_header endRefreshing];
+    }
 }
 - (void)backBtnAction{
     
@@ -120,12 +144,15 @@
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Start:%@",navigation);
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Finish:%@",navigation);
    //获取当前页面的title
+    [_hud hideAnimated:YES];
 
     [_webView evaluateJavaScript: @"document.title" completionHandler:^(id data, NSError * _Nullable error) {
         self.title = data;
@@ -163,6 +190,8 @@
 // 在收到响应后，决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
+    [_hud hideAnimated:YES];
+
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
     responseUrl = navigationResponse.response.URL.absoluteString;
     if ([navigationResponse.response.URL.absoluteString containsString:@"Personal/CutGroup"]) {
@@ -216,8 +245,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
     
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -241,11 +270,14 @@
     [self.navigationController pushVC:vc];
     
 }
-//88 288 1288
+
 - (void)wxPayFailcount {
     
-    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+        
+    });
 }
 @end
 

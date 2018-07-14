@@ -19,6 +19,7 @@
     NSString *url;
     NSString *webpageUrl;
     NSString *responseUrl;
+    MBProgressHUD *_hud;
 
 }
 @end
@@ -38,7 +39,7 @@
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
     
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-Status_HEIGHT-44) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     
@@ -46,14 +47,7 @@
     [_webView.scrollView setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:_webView];
     
-    
-    HJUser *user = [HJUser sharedUser];
-    url = [NSString stringWithFormat:@"%@/SpellGroup/SpellGroupList?token=%@",API_HOST1,user.token];
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
-    
-    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:req];
-
-    [_webView loadRequest:req];
+    [self loadData];
     
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
@@ -65,11 +59,43 @@
     rightBtn.hidden = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     
+    
+    
+    [self addHeadRefresh];
+    
+}
+#pragma mark - 刷新控件
+
+- (void)addHeadRefresh{
+    
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if ([responseUrl containsString:@"http://dm-client.elevo.cn/SpellGroup/SpellGroupList"]&&![responseUrl containsString:@"http://dm-client.elevo.cn/SpellGroup/SpellGroupList?status"]) {
+            [self loadData];
+        }else{
+            if (_webView.scrollView.mj_header.isRefreshing) {
+                [_webView.scrollView.mj_header endRefreshing];
+            }
+        }
+    }];
+    refreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    refreshHeader.stateLabel.hidden = YES;
+    _webView.scrollView.mj_header = refreshHeader;
+}
+- (void)loadData{
+    
+    HJUser *user = [HJUser sharedUser];
+    url = [NSString stringWithFormat:@"%@/SpellGroup/SpellGroupList?token=%@",API_HOST1,user.token];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:req];
+    [_webView loadRequest:req];
+    
+    if (_webView.scrollView.mj_header.isRefreshing) {
+        [_webView.scrollView.mj_header endRefreshing];
+    }
 }
 - (void)backBtnAction{
     
     if ([responseUrl containsString:@"SpellGroup/SpellGroupList"]) {
-        
         [self.view resignFirstResponder];
         [self.navigationController popViewControllerAnimated:YES];
     }else if ([_webView canGoBack]) {
@@ -120,10 +146,13 @@
         }
     }];
 }
+#pragma mark - webView Delegate
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Start:%@",navigation);
+    
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
@@ -133,7 +162,8 @@
     [_webView evaluateJavaScript: @"document.title" completionHandler:^(id data, NSError * _Nullable error) {
         self.title = data;
     }];
-    
+    [_hud hideAnimated:YES];
+
 }
 // 接收到服务器跳转请求之后调用
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{
@@ -144,6 +174,8 @@
 // 在收到响应后，决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
+    [_hud hideAnimated:YES];
+
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
     responseUrl = navigationResponse.response.URL.absoluteString;
     if ([navigationResponse.response.URL.absoluteString containsString:@"SpellGroup/Index"]) {
@@ -178,6 +210,7 @@
     }else if([navigationResponse.response.URL.absoluteString containsString:@"ProductWeb/ProductDetail"]){
         rightBtn.hidden = YES;
         HHUrlModel *model = [HHUrlModel mj_objectWithKeyValues:[navigationResponse.response.URL.absoluteString lh_parametersKeyValue]];
+        
         HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
         vc.Id = model.Id;
         [self.navigationController pushVC:vc];

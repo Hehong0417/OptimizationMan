@@ -35,9 +35,22 @@
     [self.goodImageV sd_setImageWithURL:[NSURL URLWithString:goodsModel.ImageUrl1] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
     self.product_min_priceLabel.text = [NSString stringWithFormat:@"¥%@",goodsModel.MinShowPrice];
 
-    self.product_s_intergralLabel.attributedText = [self.product_s_intergralLabel lh_addtrikethroughStyleAtContent:[NSString stringWithFormat:@"¥%@",goodsModel.MarketPrice] rangeStr:[NSString stringWithFormat:@"¥%@",goodsModel.MarketPrice] color:KA0LabelColor];;
+    self.product_s_intergralLabel.attributedText = [self.product_s_intergralLabel lh_addtrikethroughStyleAtContent:[NSString stringWithFormat:@"¥%@",goodsModel.MarketPrice] rangeStr:[NSString stringWithFormat:@"¥%@",goodsModel.MarketPrice] color:KA0LabelColor];
+    
    
 }
+- (void)setGuess_you_likeModel:(HHGuess_you_likeModel *)guess_you_likeModel{
+    
+    _guess_you_likeModel = guess_you_likeModel;
+    
+    self.product_min_priceLabel.textColor = kBlackColor;
 
+    self.product_nameLabel.text = guess_you_likeModel.name;
+    [self.goodImageV sd_setImageWithURL:[NSURL URLWithString:guess_you_likeModel.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
+    self.product_min_priceLabel.text = [NSString stringWithFormat:@"¥%@",guess_you_likeModel.sale_price];
+
+    self.product_s_intergralLabel.attributedText = [self.product_s_intergralLabel lh_addtrikethroughStyleAtContent:[NSString stringWithFormat:@"¥%@",guess_you_likeModel.market_price] rangeStr:[NSString stringWithFormat:@"¥%@",guess_you_likeModel.market_price] color:KA0LabelColor];
+    
+}
 
 @end

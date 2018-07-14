@@ -36,6 +36,7 @@
     self.canWithdrawTf2.leftView = [UILabel lh_labelWithFrame:CGRectMake(0, 0, 41, 41) text:@"¥" textColor:kBlackColor font:FONT(22) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
     
 }
+#pragma mark - 加载数据
 -(void)getDatas{
     
     [[[HHMineAPI GetUserApplyMessage] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
@@ -76,6 +77,7 @@
         
     }];
 }
+#pragma mark - 体现
 - (IBAction)withDrawAction:(UIButton *)sender {
     
     HHCommissionWithdrawalVC *vc = [HHCommissionWithdrawalVC new];

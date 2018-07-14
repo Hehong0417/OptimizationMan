@@ -18,7 +18,6 @@
     NSString *responseUrl;
 }
 @end
-
 @implementation HHFamiliarityPayVC
 
 - (void)viewDidLoad {
@@ -30,7 +29,6 @@
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
-    
     _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-64) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
@@ -54,6 +52,7 @@
     rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH - 60, 20, 60, 44) target:self action:@selector(shareAction) image:[UIImage imageNamed:@"icon-share"]];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     
+    //dm-order-api.elevo.cn/api/PreviewOrder/Get?mode=128&addrId=10243787&skuId=10243583_10243897_10243900,10243585_10243926,10243611_0,10243629_0
 }
 - (void)backBtnAction{
     
@@ -63,10 +62,16 @@
         }else{
             rightBtn.hidden = YES;
         }
-        if ([responseUrl containsString:@"ActivityWeb/IntimatePayProduct"]) {
+        if ([responseUrl containsString:@"ActivityWeb/IntimatePerson"]) {
             [self.view resignFirstResponder];
             [self.navigationController popToRootVC];
-        }else if ([responseUrl containsString:@"ActivityWeb/IntimatePerson"]) {
+        }else  if ([responseUrl containsString:@"ActivityWeb/IntimatePayProduct"]) {
+            [self.view resignFirstResponder];
+            [self.navigationController popToRootVC];
+        }else  if ([responseUrl containsString:@"ActivityWeb/IntimatePay"]) {
+            [self.view resignFirstResponder];
+            [self.navigationController popToRootVC];
+        }else{
             [_webView goBack];
         }
     }else{
@@ -108,10 +113,10 @@
             NSLog(@"************Share fail with error %@*********",error);
         }else{
             NSLog(@"response data is %@",data);
-            
         }
     }];
 }
+
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
     NSLog(@"Start:%@",navigation);
@@ -173,8 +178,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -185,6 +190,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
     
 }
+
 - (void)wxPaySucesscount{
     
     HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
@@ -196,7 +202,10 @@
 
 - (void)wxPayFailcount {
     
-    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+        
+    });
 }
 @end

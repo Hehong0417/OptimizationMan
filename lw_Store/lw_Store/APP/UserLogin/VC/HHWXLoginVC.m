@@ -25,8 +25,7 @@
    
     self.view.backgroundColor = RGB(120, 159, 243);
     
-    self.wxLoginView.hidden = NO;
-
+    
     self.wxLoginView.userInteractionEnabled = YES;
         
          if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
@@ -52,6 +51,8 @@
 
 
 }
+#pragma mark - 微信授权，获取微信信息
+
 - (void)getAuthWithUserInfoFromWechat
 {
     
@@ -84,13 +85,8 @@
             NSLog(@"Wechat name: %@", resp.name);
             NSLog(@"Wechat iconurl: %@", resp.iconurl);
             NSLog(@"Wechat gender: %@", resp.gender);
-            
-            //判断账号是否存在
-            //存在-->登录-->已绑手机号
-            //存在-->登录-->未绑--->绑
-            //不存在---->注册(token？)-->绑
-            
-            //账户是否存在
+
+            //账户是否存在 ？登录:注册
 
                             //***************//
                             [[[HHUserLoginAPI postApiLoginWithopenId:resp.openid] netWorkClient] postRequestInView:nil finishedBlock:^(HHUserLoginAPI *api, NSError *error) {
@@ -115,7 +111,6 @@
                                     if ([error.localizedDescription isEqualToString:@"似乎已断开与互联网的连接。"]||[error.localizedDescription  containsString:@"请求超时"]) {
                                         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
                                         [SVProgressHUD showInfoWithStatus:@"网络竟然崩溃了～"];
-
                                     }
                                 }
 
@@ -129,6 +124,8 @@
 
     
 }
+#pragma mark- 注册
+
 - (void)registerWithName:(NSString *)name image:(NSString *)image openid:(NSString *)openid  unionId:(NSString *)unionId{
     
     //注册

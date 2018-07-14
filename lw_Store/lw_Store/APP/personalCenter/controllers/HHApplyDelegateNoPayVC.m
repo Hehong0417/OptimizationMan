@@ -106,17 +106,21 @@
     [self.navigationController pushVC:vc];
 
 }
-//88 288 1288
+
 - (void)wxPayFailcount {
     
-    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+        
+    });
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
 
 }
 

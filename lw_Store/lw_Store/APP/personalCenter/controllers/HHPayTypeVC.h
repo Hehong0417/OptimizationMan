@@ -13,7 +13,7 @@
 
 - (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex;
 
-- (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex select_model:(HHcouponsModel *)model total_money:(NSString *)total_money submitOrderTool:(HHSubmitOrderTool *)submitOrderTool couponCell:(UITableViewCell *)couponCell;
+- (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex select_model:(HHcouponsModel *)model total_money:(CGFloat )total_money submitOrderTool:(HHSubmitOrderTool *)submitOrderTool couponCell:(UITableViewCell *)couponCell lastConponValue:(CGFloat)lastConponValue last_total_money:(CGFloat)last_total_money;
 
 @end
 @interface HHPayTypeVC : UITableViewController
@@ -27,5 +27,4 @@
 @property(nonatomic,copy) NSString *total_money;
 @property (nonatomic, strong)   HHSubmitOrderTool *submitOrderTool;
 @property (nonatomic, strong)   UITableViewCell *couponCell;
-
 @end

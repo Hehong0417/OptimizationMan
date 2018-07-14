@@ -13,9 +13,8 @@
 +(NSDictionary *)mj_objectClassInArray{
     
     return @{@"SKUValues": [HHproduct_sku_valueModel class],@"SKUList": [HHproduct_skuModel class],
-             @"AttributeValueList" :[HHattributeValueModel class]};
+             @"AttributeValueList" :[HHattributeValueModel class],@"Packages":[HHPackagesModel class]};
 }
-
 
 @end
 @implementation HHproduct_sku_valueModel
@@ -32,9 +31,23 @@
 @implementation HHproduct_skuModel
 
 @end
-
+//商品信息
 @implementation HHattributeValueModel
 
 @end
 
+//优惠套餐模型
+@implementation HHPackagesModel
+
++(NSDictionary *)mj_objectClassInArray{
+    
+    return @{@"Products": [HHPackagesProductsModel class]};
+}
+@end
+@implementation HHPackagesProductsModel
+
+@end
+@implementation HHGuess_you_likeModel
+
+@end
 

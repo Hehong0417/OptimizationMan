@@ -68,6 +68,7 @@
     return _datas;
 }
 
+#pragma mark - 加载数据
 - (void)getDatas{
     
     [[[HHMineAPI GetApplyAgent] netWorkClient] getRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
@@ -269,11 +270,13 @@
     [self.navigationController pushVC:vc];
     
 }
-//88 288 1288
 - (void)wxPayFailcount {
-    
-    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+        
+    });
 }
 
 - (NSString *)varifyDelegateName:(NSString *)delegateName phoneNum:(NSString *)phoneNum imageCode:(NSString *)imageCode smsCode:(NSString *)smsCode{
@@ -356,8 +359,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
-
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    //微信支付通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayFailcount) name:KWX_Pay_Fail_Notification object:nil];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
     
    
 @end

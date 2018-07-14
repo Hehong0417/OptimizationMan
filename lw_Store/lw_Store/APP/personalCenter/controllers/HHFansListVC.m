@@ -56,9 +56,12 @@
     }
     return _datas;
 }
+#pragma mark - 加载数据
 -(void)getDatas{
     
     [[[HHMineAPI GetAgentListWithPage:@(self.page) userName:self.userName] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
+        search_view.search_btn.enabled = YES;
+
         if (!error) {
             if (api.State == 1) {
 
@@ -199,15 +202,17 @@
 //搜索
 - (void)searchAction:(UIButton *)btn{
     
+    [search_view.search_tf resignFirstResponder];
+    
+    search_view.search_btn.enabled = NO;
     self.userName = search_view.search_tf.text;
     [self.datas removeAllObjects];
     [self getDatas];
-    
+
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-    if (textField.text.length==0) {
-
+    if (textField.text.length>0) {
         self.userName = textField.text;
         [self.datas removeAllObjects];
         [self getDatas];
@@ -224,6 +229,7 @@
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
+    [textField resignFirstResponder];
     self.userName = search_view.search_tf.text;
     [self.datas removeAllObjects];
     [self getDatas];

@@ -62,11 +62,12 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     HJUser *user = [HJUser sharedUser];
     user.category_selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [user write];
     
-    
+    //title
     UILabel *qestionTitle = [[UILabel alloc]initWithFrame:CGRectMake(WidthScaleSize_W(15), 0, SCREEN_WIDTH - WidthScaleSize_W(15), WidthScaleSize_H(50))];
     qestionTitle.text = @"分类";
     qestionTitle.textAlignment = NSTextAlignmentCenter;
@@ -78,16 +79,18 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     
     [self setUpData];
     
+    //搜索条
     UIView *search_head = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 50) backColor:kBlackColor];
     [self.view addSubview:search_head];
-
     searchView = [[SearchView alloc] initWithFrame:CGRectMake(0, 5, self.view.frame.size.width, 30)];
     searchView.textField.text = @"";
     searchView.delegate = self;
     searchView.userInteractionEnabled = YES;
     [search_head addSubview:searchView];
 }
+
 #pragma mark- SearchViewDelegate
+
 - (void)searchButtonWasPressedForSearchView:(SearchView *)searchView{
     
     HHGoodListVC *vc = [HHGoodListVC new];
@@ -208,7 +211,6 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     }
     return cell;
 }
-#pragma mark - SGSegmentedControlDelegate
 
 #pragma mark - <UITableViewDelegate>
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

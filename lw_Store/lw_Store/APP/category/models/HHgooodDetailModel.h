@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 
-@class HHsku_name_valueModel,HHattributeValueModel,HHproduct_sku_valueModel,HHproduct_skuModel;
+@class HHsku_name_valueModel,HHattributeValueModel,HHproduct_sku_valueModel,HHproduct_skuModel,HHPackagesModel,HHPackagesProductsModel,HHGuess_you_likeModel;
 
 @interface HHgooodDetailModel : BaseModel
 
@@ -23,6 +23,8 @@
 @property(nonatomic,strong) NSDictionary *GroupBuy;
 @property(nonatomic,strong) NSDictionary *CutGroupBuy;
 @property(nonatomic,strong) NSDictionary *SendGift;
+@property(nonatomic,strong) NSDictionary *SecKill;
+@property(nonatomic,strong) NSArray <HHPackagesModel *>*Packages;
 
 
 //属性值
@@ -80,5 +82,26 @@
 @property(nonatomic,strong) NSString *Id;
 @property(nonatomic,strong) NSString *ValueName;
 @property(nonatomic,strong) NSString *ValueStr;
+@end
+
+//优惠套餐模型
+@interface HHPackagesModel : BaseModel
+@property(nonatomic,strong) NSString *FinalPrice;
+@property(nonatomic,strong) NSString *PKID;
+@property(nonatomic,strong) NSString *ProductCount;
+@property(nonatomic,strong) NSArray <HHPackagesProductsModel *>*Products;
+@end
+@interface HHPackagesProductsModel : BaseModel
+@property(nonatomic,strong) NSString *Image;
+@property(nonatomic,strong) NSString *PID;
+@property(nonatomic,strong) NSString *Price;
+@end
+
+@interface HHGuess_you_likeModel : BaseModel
+@property(nonatomic,strong) NSString *icon;
+@property(nonatomic,strong) NSString *market_price;
+@property(nonatomic,strong) NSString *name;
+@property(nonatomic,strong) NSString *pid;
+@property(nonatomic,strong) NSString *sale_price;
 
 @end

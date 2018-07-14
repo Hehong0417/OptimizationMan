@@ -175,6 +175,11 @@ static const CGFloat kNormalButtonMargin = 30;
 /** 删除商品属性选择返回通知 */
 #define DELETE_SHOPITEMSELECTBACK @"DELETE_SHOPITEMSELECTBACK"
 
+
+/** 删除通知 */
+#define DELETE_SHOPITEMSELE @"DELETE_SHOPITEMSELECT"
+
+
 //Block
 //
 typedef void(^voidBlock)();

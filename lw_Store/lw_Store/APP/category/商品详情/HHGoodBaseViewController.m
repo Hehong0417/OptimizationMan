@@ -10,8 +10,6 @@
 #import <WebKit/WebKit.h>
 #import "HHDetailGoodReferralCell.h"
 #import "HHGoodSpecificationsCell.h"
-#import "HHGoodDealRecordCell.h"
-#import "HHGoodDealRecordInfoCell.h"
 #import "HHGoodDealRecordInfoDetailCell.h"
 #import "HHAddCartTool.h"
 #import "DCFeatureSelectionViewController.h"
@@ -19,7 +17,6 @@
 #import "UIViewController+XWTransition.h"
 #import "HHShoppingVC.h"
 #import "HHSubmitOrdersVC.h"
-#import "HHTransactionRecordVC.h"
 #import "HHNotWlanView.h"
 #import "HHShopIntroCell.h"
 #import "HHEvaluationListCell.h"
@@ -27,9 +24,17 @@
 #import "HHAddAdressVC.h"
 #import "HHActivityModel.h"
 #import "MLMenuView.h"
+#import "CZCountDownView.h"
+#import "HHdiscountPackageViewTabCell.h"
+#import "HHdiscountPackageVC.h"
+#import "HHGuess_you_likeTabCell.h"
 
 @interface HHGoodBaseViewController ()<UITableViewDelegate,UITableViewDataSource,WKNavigationDelegate,SDCycleScrollViewDelegate,HHCartVCProtocol>
-
+{
+    UIView *_tableHeader;
+    UILabel *_title_label;
+    CZCountDownView *countDown;
+}
 @property (strong, nonatomic) UIScrollView *scrollerView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) WKWebView *webView;
@@ -46,14 +51,9 @@
 @property (nonatomic, strong) NSString *headTitle;
 @property (nonatomic, strong) NSString *count;
 @property (nonatomic, strong) NSMutableArray *alert_Arr;
+@property (nonatomic, strong) NSMutableArray *guess_you_like_arr;
 @property (nonatomic, strong) NSNumber *Mode;
-
-
-/* 通知 */
-@property (weak ,nonatomic) id dcObj;
-
-/* 删除加入购物车何立即购买的通知 */
-@property (weak ,nonatomic) id deleteDcObj;
+@property (nonatomic, strong) UIView *countTimeView;
 
 @end
 
@@ -65,10 +65,9 @@ static NSArray *lastSele_IdArray_;
 static NSString *HHDetailGoodReferralCellID = @"HHDetailGoodReferralCell";//商品信息
 static NSString *HHShopIntroCellID = @"HHShopIntroCell";//店铺简介
 static NSString *HHGoodSpecificationsCellID = @"HHGoodSpecificationsCell";//商品规格
-static NSString *HHGoodDealRecordCellID = @"HHGoodDealRecordCell";//月成交记录跳转
-static NSString *HHGoodDealRecordInfoCellID = @"HHGoodDealRecordInfoCell";//月成交记录信息
-static NSString *HHGoodDealRecordInfoDetailCellID = @"HHGoodDealRecordInfoDetailCell";//月成交记录信息详情
-static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记录信息详情
+static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";
+static NSString *HHdiscountPackageViewTabCellID = @"HHdiscountPackageViewTabCell";
+static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你喜欢
 
 
 
@@ -78,7 +77,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
     [super viewWillAppear:animated];
     self.addCartTool.hidden = NO;
-    
 }
 
 - (void)viewDidLoad {
@@ -114,9 +112,10 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
     [[NSNotificationCenter defaultCenter]removeObserver:_dcObj];
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
-//网络监测
+
+#pragma mark -网络监测
+
 - (void)setMonitor{
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -136,6 +135,8 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }];
     
 }
+#pragma mark - 懒加载
+
 - (NSMutableArray *)datas{
     if (!_datas) {
         _datas = [NSMutableArray array];
@@ -155,6 +156,18 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }
     return _evaluations;
 }
+- (NSMutableArray *)discribeArr{
+    if (!_discribeArr) {
+        _discribeArr = [NSMutableArray array];
+    }
+    return _discribeArr;
+}
+- (NSMutableArray *)guess_you_like_arr{
+    if (!_guess_you_like_arr) {
+        _guess_you_like_arr = [NSMutableArray array];
+    }
+    return _guess_you_like_arr;
+}
 #pragma mark - initialize
 
 - (void)setUpInit
@@ -168,19 +181,36 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     lastSele_IdArray_ = [NSArray array];
     lastNum_ = 0;
     
+    //tableHeaderView
+    _tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenW)];
+    
+    UIView *bg_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 350, 50)];
+    bg_view.backgroundColor = [UIColor blackColor];
+    _title_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+    _title_label.textColor = kWhiteColor;
+    _title_label.textAlignment = NSTextAlignmentRight;
+    _title_label.text = @"距离活动结束";
+    countDown = [CZCountDownView new];
+    countDown.frame = CGRectMake(CGRectGetMaxX(_title_label.frame),0, 200, 50);
+    countDown.backgroundImageName = @"";
+    countDown.timerStopBlock = ^{
+        NSLog(@"时间停止");
+    };
+    [bg_view addSubview:_title_label];
+    [bg_view addSubview:countDown];
+    [self.countTimeView addSubview:bg_view];
+    [_tableHeader addSubview:self.countTimeView];
+    bg_view.centerX = self.countTimeView.centerX;
+    
+    [_tableHeader addSubview:self.cycleScrollView];
+
 }
-- (NSMutableArray *)discribeArr{
-    if (!_discribeArr) {
-        _discribeArr = [NSMutableArray array];
-    }
-    return _discribeArr;
-}
+
 #pragma mark - 记载图文详情
 - (void)setUpGoodsWKWebView
 {
     NSString *content =   [NSString stringWithFormat:@"<style>img{width:100%%;}</style>%@",self.gooodDetailModel.Description];
     [self.webView loadHTMLString:content baseURL:nil];
-    
 }
 
 #pragma mark - 接受通知
@@ -189,9 +219,10 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     //删除通知
     _deleteDcObj = [[NSNotificationCenter defaultCenter] addObserverForName:DELETE_SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         
-        [[NSNotificationCenter defaultCenter]removeObserver:_dcObj];
-        
+        [self deleteObj];
+
     }];
+    
     WEAK_SELF();
     //选择Item通知
     _dcObj = [[NSNotificationCenter defaultCenter]addObserverForName:SHOPITEMSELECTBACK object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
@@ -201,6 +232,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         NSString *num = note.userInfo[@"Num"];
         NSString *buttonTag = note.userInfo[@"Tag"];
         NSString *button_title = note.userInfo[@"button_title"];
+        NSString *pid = note.userInfo[@"pid"];
 
         lastNum_ = num;
         lastSeleArray_ = selectArray;
@@ -220,24 +252,26 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
 
             if ([button_title isEqualToString:@"加入购物车"]) {
 
-           [weakSelf setUpWithAddSuccessWithselect_IdArray:select_IdArray quantity:num];
+           [weakSelf setUpWithAddSuccessWithselect_IdArray:select_IdArray quantity:num pid:pid];
                 NSLog(@" 加入购物车");
 
             }else{
                 NSLog(@"参加拼团");
 
-                [weakSelf instanceBuyActionWithselect_IdArray:select_IdArray quantity:num];
-
-
+                [weakSelf instanceBuyActionWithselect_IdArray:select_IdArray quantity:num pid:pid];
             }
-
         }
 
     }];
     
 }
+- (void)deleteObj{
 
-//获取数据
+    [[NSNotificationCenter defaultCenter]removeObserver:self.dcObj];
+
+}
+#pragma mark -加载数据
+
 - (void)getDatas{
 
     UIView *hudView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) backColor:kWhiteColor];
@@ -254,26 +288,18 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     self.activityIndicator.hidesWhenStopped = YES;
     [hudView addSubview:self.activityIndicator];
     [self.activityIndicator startAnimating];
-
+    
     //商品详情
     [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
-            
+                self.gooodDetailModel = nil;
                 self.gooodDetailModel = [HHgooodDetailModel mj_objectWithKeyValues:api.Data];
-                
                 self.cycleScrollView.imageURLStringsGroup = self.gooodDetailModel.ImageUrls;
                 self.discribeArr =  self.gooodDetailModel.AttributeValueList.mutableCopy;
                 
-                //HK香港区域商品
-                if (self.gooodDetailModel.tip.length>0) {
-                    
-                    [self alertMessageWithTip];
-                }
-                
                 [self.tableView reloadData];
                 
-                self.headTitle = @"商品信息";
                 [self.activityIndicator stopAnimating];
                 [hudView removeFromSuperview];
                 [self tableView:self.tableView viewForHeaderInSection:1];
@@ -306,16 +332,30 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                     self.addCartTool.buyBtn.hidden = YES;
                     self.addCartTool.addCartBtn.mj_w = ScreenW/3*2;
                 }
-//                //评价
-//                [self  getFinishLogData];
-                
-       
+                // 秒杀
+                HHActivityModel *SecKill_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.SecKill];
+                if ([SecKill_m.IsSecKill isEqual:@1]) {
+                    self.cycleScrollView.frame = CGRectMake(0, 50, ScreenW, ScreenW);
+                    _tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW+50);
+                    if (SecKill_m.StartSecond.integerValue>0) {
+                        _titleLabel.text = @"距离活动开始";
+                        countDown.timestamp = SecKill_m.StartSecond.integerValue;
+                    }else{
+                        _titleLabel.text = @"距离活动结束";
+                        countDown.timestamp = SecKill_m.EndSecond.integerValue;
+                    }
+                    
+                }else{
+                    self.cycleScrollView.frame = CGRectMake(0, 0, ScreenW, ScreenW);
+                    _tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW);
+                }
+                _tableView.tableHeaderView = _tableHeader;
+
             }else{
                 [self.activityIndicator stopAnimating];
                 
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
-
         }else{
             [self.activityIndicator stopAnimating];
             if ([error.localizedDescription isEqualToString:@"似乎已断开与互联网的连接。"]||[error.localizedDescription  containsString:@"请求超时"]||[error.localizedDescription isEqualToString:@"The Internet connection appears to be offline."]) {
@@ -329,40 +369,37 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         }
     }];
     
-}
-#pragma mark-猜你喜欢
-
-- (void)getFinishLogData{
+    //猜你喜欢
+    [self getGuess_you_likeData];
     
-    [[[HHCategoryAPI GetAlliancesProductsWithpids:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
-            
-            if (!error) {
-                if (api.State == 1) {
-                    NSArray  *arr = api.Data;
-                    self.datas = arr.mutableCopy;
-                    [self.tableView reloadData];
-
-                }else{
-                    [SVProgressHUD showInfoWithStatus:api.Msg];
-                }
-                
+}
+//猜你喜欢
+- (void)getGuess_you_likeData{
+    
+    [[[HHCategoryAPI GetAlliancesProductsWithpids:self.Id]  netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
+        
+        if (!error) {
+            if (api.State == 1) {
+                NSArray *arr =  api.Data;
+                self.guess_you_like_arr = arr.mutableCopy;
+                [self.tableView reloadData];
             }else{
-                
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
+        }else{
             
-        }];
+        }
+    }];
     
 }
-#pragma mark-用户评价
-
 //编码图片
 - (NSString *)htmlForJPGImage:(UIImage *)image
 {
     NSData *imageData = UIImageJPEGRepresentation(image,1.0);
-    NSString *imageSource = [NSString stringWithFormat:@"data:image/jpg;base64,%@",[imageData base64Encoding]];
+    NSString *imageSource = [NSString stringWithFormat:@"data:image/jpg;base64,%@",[imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
     return [NSString stringWithFormat:@"<img src = \"%@\" />", imageSource];
 }
+#pragma mark - 加入购物车、立即购买
 //加入购物车、立即购买
 - (void)addCartOrBuyAction{
     
@@ -370,15 +407,9 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
     WEAK_SELF();
     //加入购物车
-    HJUser *user = [HJUser sharedUser];
-
+    
     self.addCartTool.addCartBlock = ^{
         
-//        if (user.token.length <=0) {
-//            //去登录
-//            [weakSelf alertView];
-//
-//        }else{
             DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
             dcNewFeaVc.product_sku_value_arr = weakSelf.gooodDetailModel.SKUValues;
             dcNewFeaVc.lastNum = lastNum_;
@@ -388,6 +419,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             dcNewFeaVc.button_Title = @"加入购物车";
             dcNewFeaVc.product_price = weakSelf.gooodDetailModel.MinShowPrice;
             dcNewFeaVc.product_id = weakSelf.gooodDetailModel.Id;
+        
             dcNewFeaVc.product_stock = weakSelf.gooodDetailModel.Stock;
             if (self.gooodDetailModel.ImageUrls.count>0) {
                 dcNewFeaVc.goodImageView = weakSelf.gooodDetailModel.ImageUrls[0];
@@ -402,8 +434,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             }
             dcNewFeaVc.nowScreenH = distance;
             [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
-//        }
-       
     };
     //立即购买
     self.addCartTool.buyBlock = ^{
@@ -451,15 +481,12 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             }
             
             [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
-
         };
-        
         [menuView showMenuEnterAnimation:MLEnterAnimationStyleNone];
         
     };
     
-    
-    //跳转首页
+    //***跳转首页****
     self.addCartTool.homeIconImgV.userInteractionEnabled = YES;
     [self.addCartTool.homeIconImgV setTapActionWithBlock:^{
         
@@ -468,55 +495,20 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         kKeyWindow.rootViewController = [HJTabBarController new];
     }];
     
-    //跳转购物车
+    //****跳转购物车****
     self.addCartTool.cartIconImgV.userInteractionEnabled = YES;
     
     [self.addCartTool.cartIconImgV setTapActionWithBlock:^{
-        if (user.token.length <=0) {
-            //去登录
-            [weakSelf alertView];
-            
-        }else{
-        
-      [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.dcObj];
 
+      [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.dcObj];
         weakSelf.addCartTool.hidden = YES;
         HHShoppingVC *vc = [HHShoppingVC new];
         vc.cartType = HHcartType_goodDetail;
         vc.delegate = weakSelf;
         [weakSelf.navigationController pushVC:vc];
-            
-        }
     }];
 }
--(void)alertView{
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"您还没有登录哦～" preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"去登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-//        HHLoginVC *vc = [[HHLoginVC alloc] initWithNibName:@"HHLoginVC" bundle:nil];
-//        HJNavigationController *nav = [[HJNavigationController alloc] initWithRootViewController:vc];
-//        [self  presentViewController:nav animated:YES completion:nil];
-        
-    }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-        
-    }];
-    [alertC addAction:action1];
-    [alertC addAction:action2];
-    [self presentViewController:alertC animated:YES completion:nil];
-}
-- (void)alertMessageWithTip{
-    
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"注意" message:self.gooodDetailModel.tip preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [alertC addAction:action1];
-    [self presentViewController:alertC animated:YES completion:nil];
-    
-}
+
 #pragma mark - HHCartVCProtocol
 
 - (void)cartVCBackActionHandle{
@@ -526,7 +518,8 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     
 }
 #pragma mark - 加入购物车成功
-- (void)setUpWithAddSuccessWithselect_IdArray:(NSArray *)select_IdArray quantity:(NSString *)quantity
+
+- (void)setUpWithAddSuccessWithselect_IdArray:(NSArray *)select_IdArray quantity:(NSString *)quantity pid:(NSString *)pid
 {
     NSString *select_Id = [select_IdArray componentsJoinedByString:@"_"];
     NSString *sku_id;
@@ -535,7 +528,8 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }else{
         sku_id = @"0";
     }
-    NSString *sku_id_Str = [NSString stringWithFormat:@"%@_%@",self.gooodDetailModel.Id,sku_id];
+        
+    NSString *sku_id_Str = [NSString stringWithFormat:@"%@_%@",pid,sku_id];
     
     //加入购物车
     [[[HHCartAPI postAddProductsWithsku_id:sku_id_Str quantity:quantity] netWorkClient] postRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
@@ -554,10 +548,10 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }
     }];
-
+    
 }
 #pragma mark - 立即购买
-- (void)instanceBuyActionWithselect_IdArray:(NSArray *)select_IdArray quantity:(NSString *)quantity{
+- (void)instanceBuyActionWithselect_IdArray:(NSArray *)select_IdArray quantity:(NSString *)quantity pid:(NSString *)pid{
     
     NSString *select_Id = [select_IdArray componentsJoinedByString:@"_"];
     NSString *sku_id;
@@ -566,7 +560,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }else{
         sku_id = @"0";
     }
-    NSString *sku_id_Str = [NSString stringWithFormat:@"%@_%@",self.gooodDetailModel.Id,sku_id];
+    NSString *sku_id_Str = [NSString stringWithFormat:@"%@_%@",pid,sku_id];
     NSLog(@"select_Id:%@",sku_id_Str);
 
     if (sku_id_Str.length>0) {
@@ -575,18 +569,18 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         [self isExitAddressWithsku_id_Str:sku_id_Str quantity:quantity];
     }
 }
-//是否存在收货地址
+#pragma mark - 是否存在收货地址
 - (void)isExitAddressWithsku_id_Str:(NSString *)sku_id_Str quantity:(NSString *)quantity{
     
     [[[HHCartAPI IsExistOrderAddress] netWorkClient] getRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
         
         if (!error) {
             if (api.State == 1) {
-                
                 if ([api.Data isEqual:@1]) {
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
                     vc.enter_type = HHaddress_type_Spell_group;
                     vc.ids_Str = sku_id_Str;
+                    vc.pids = self.Id;
                     vc.count = quantity;
                     vc.mode = self.Mode;
                     [self.navigationController pushVC:vc];
@@ -596,9 +590,9 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
                     vc.addressType = HHAddress_settlementType_productDetail;
                     vc.mode = self.Mode;
                     vc.ids_Str = sku_id_Str;
+                    vc.pids = self.Id;
                     [self.navigationController pushVC:vc];
                 }
-                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -606,11 +600,11 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
             
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }
-        
     }];
     
 }
 #pragma mark - LazyLoad
+
 - (UIScrollView *)scrollerView
 {
     if (!_scrollerView) {
@@ -625,7 +619,6 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
 }
 
 - (UITableView *)tableView{
-    
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, ScreenH - 64-35) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
@@ -633,25 +626,19 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = KVCBackGroundColor;
-        //轮播图
-        _tableView.tableHeaderView = self.cycleScrollView;
         _tableView.tableFooterView = self.tableFooter;
-        
         //注册cell
         [_tableView registerNib:[UINib nibWithNibName:HHDetailGoodReferralCellID bundle:nil] forCellReuseIdentifier:HHDetailGoodReferralCellID];
         [_tableView registerNib:[UINib nibWithNibName:HHShopIntroCellID bundle:nil] forCellReuseIdentifier:HHShopIntroCellID];
         [_tableView registerNib:[UINib nibWithNibName:HHGoodSpecificationsCellID bundle:nil] forCellReuseIdentifier:HHGoodSpecificationsCellID];
-        [_tableView registerNib:[UINib nibWithNibName:HHGoodDealRecordCellID bundle:nil] forCellReuseIdentifier:HHGoodDealRecordCellID];
-        [_tableView registerNib:[UINib nibWithNibName:HHGoodDealRecordInfoCellID bundle:nil] forCellReuseIdentifier:HHGoodDealRecordInfoCellID];
-        [_tableView registerNib:[UINib nibWithNibName:HHGoodDealRecordInfoDetailCellID bundle:nil] forCellReuseIdentifier:HHGoodDealRecordInfoDetailCellID];
-        [_tableView registerClass:[HHEvaluationListCell class] forCellReuseIdentifier:HHEvaluationListCellID];
+        [_tableView registerClass:[HHdiscountPackageViewTabCell class] forCellReuseIdentifier:HHdiscountPackageViewTabCellID];
+        [_tableView registerClass:[HHGuess_you_likeTabCell class] forCellReuseIdentifier:HHGuess_you_likeTabCellID];
+
 
         [self.scrollerView addSubview:_tableView];
     }
     return _tableView;
-    
 }
-
 - (WKWebView *)webView
 {
     if (!_webView) {
@@ -690,6 +677,13 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }
     
     return _cycleScrollView;
+}
+- (UIView *)countTimeView{
+    if (!_countTimeView) {
+        _countTimeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 50)];
+        _countTimeView.backgroundColor = kBlackColor;
+    }
+    return _countTimeView;
 }
 - (UILabel *)tableFooter{
     
@@ -736,6 +730,7 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         // cell.gooodDetailModel = self.gooodDetailModel;
         gridcell = cell;
     }else if (indexPath.section == 2){
+        //商品信息
         HHGoodSpecificationsCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodSpecificationsCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, -ScreenW, 0, 0);
         HHattributeValueModel *model = self.discribeArr[indexPath.row];
@@ -743,36 +738,26 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
         cell.discribeLabel.text = model.ValueStr;
         gridcell = cell;
     }else if (indexPath.section == 3){
-        
-        if (indexPath.row == 0) {
-            HHGoodDealRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodDealRecordCellID];
-            cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            cell.recordTitleLabel.text = [NSString stringWithFormat:@"优惠套餐"];
-            gridcell = cell;
-        }else if (indexPath.row == 1){
-            
-            HHGoodDealRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodDealRecordCellID];
-            cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            cell.recordTitleLabel.text = [NSString stringWithFormat:@"111111"];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            gridcell = cell;
-        }
-        if (self.datas.count>0) {
-            if (indexPath.row == self.datas.count+1){
-                HHGoodDealRecordInfoDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodDealRecordInfoDetailCellID];
-                cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-                HHHomeModel *model = [HHHomeModel mj_objectWithKeyValues:self.datas[0]];
-                cell.model = model;
-                gridcell = cell;
-            }
-        }
+            //优惠套餐
+            HHdiscountPackageViewTabCell *cell = [tableView dequeueReusableCellWithIdentifier:HHdiscountPackageViewTabCellID];
+             cell.packages_model = self.gooodDetailModel.Packages[indexPath.row];
+             cell.indexPath = indexPath;
+             cell.nav = self.navigationController;
+             gridcell = cell;
+    }else if (indexPath.section == 4){
+        //猜你喜欢
+       HHGuess_you_likeTabCell  *cell = [tableView dequeueReusableCellWithIdentifier:HHGuess_you_likeTabCellID];
+        cell.guess_you_like_arr =  self.guess_you_like_arr;
+        cell.nav = self.navigationController;
+        cell.dcObj = self.dcObj;
+        gridcell = cell;
     }
     gridcell.selectionStyle = UITableViewCellSelectionStyleNone;
     return gridcell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 4;
+  return  5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
@@ -782,7 +767,9 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }else if (section == 2) {
      return self.discribeArr.count;
     }else if (section == 3){
-     return self.datas.count+2;
+     return self.gooodDetailModel.Packages.count;
+    }else if (section == 4){
+        return self.guess_you_like_arr.count>0?1:0;
     }
     return 0;
 }
@@ -794,50 +781,42 @@ static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";//月成交记
     }else if (indexPath.section == 1) {
         return 90;
     }else if (indexPath.section == 2) {
-        
-        return 30;
-        
-    }else if (indexPath.section == 3){
-        if (indexPath.row == 1) {
-            return 80;
-        }
-        if (indexPath.row == 2) {
-            return 85;
-        }
-
        return 30;
+    }else if (indexPath.section == 3) {
+        return 130;
+    }else if (indexPath.section == 4) {
+        return 220+45;
     }
     return 0.001;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 3&&indexPath.row == 0) {
-        //用户评价
-        HHEvaluationListVC *vc = [HHEvaluationListVC new];
-        [self.navigationController pushVC:vc];
-    }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section == 2) {
-        UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, 30)];
-        headView.backgroundColor = kWhiteColor;
-        self.titleLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, ScreenW-30, 30) text:self.headTitle textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
-        [headView addSubview:self.titleLabel];
-        return headView;
+        if (self.discribeArr.count>0) {
+            UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, 30)];
+            headView.backgroundColor = kWhiteColor;
+            self.titleLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, ScreenW-30, 30) text:@"商品信息" textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+            [headView addSubview:self.titleLabel];
+            return headView;
+        }else{
+            return [UIView new];
+        }
     }
-
+    
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    return 5;
+    return 3;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     if (section == 2) {
-        
-        return 30;
+        if (self.discribeArr.count>0) {
+          return 30;
+        }else{
+            return 0.001;
+        }
     }
     return 0.001;
     

@@ -66,11 +66,11 @@
     _attLabel.text = content.ValueItemName;
 
     if (content.isSelect) {
-        _attLabel.textColor = [UIColor redColor];
-        [DCSpeedy dc_chageControlCircularWith:_attLabel AndSetCornerRadius:5 SetBorderWidth:1 SetBorderColor:[UIColor redColor] canMasksToBounds:YES];
+        _attLabel.textColor = [UIColor whiteColor];
+        [DCSpeedy dc_chageControlCircularWith:_attLabel AndSetCornerRadius:5 SetBorderWidth:1 SetBorderColor:[UIColor darkGrayColor] canMasksToBounds:YES backgroundColor:[UIColor darkGrayColor]];
     }else{
         _attLabel.textColor = [UIColor blackColor];
-        [DCSpeedy dc_chageControlCircularWith:_attLabel AndSetCornerRadius:5 SetBorderWidth:1 SetBorderColor:[[UIColor lightGrayColor]colorWithAlphaComponent:0.4] canMasksToBounds:YES];
+        [DCSpeedy dc_chageControlCircularWith:_attLabel AndSetCornerRadius:5 SetBorderWidth:1 SetBorderColor:[[UIColor lightGrayColor]colorWithAlphaComponent:0.4] canMasksToBounds:YES backgroundColor:[UIColor whiteColor]];
     }
 }
 

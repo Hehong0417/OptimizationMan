@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,8 +58,8 @@
                         <constraint firstItem="2ub-0F-UWi" firstAttribute="leading" secondItem="XUn-q7-f7K" secondAttribute="leading" id="jJH-p3-TRv"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sign_logo_default" translatesAutoresizingMaskIntoConstraints="NO" id="xfN-OY-I7l">
-                    <rect key="frame" x="0.0" y="21" width="375" height="135"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="you_logo" translatesAutoresizingMaskIntoConstraints="NO" id="xfN-OY-I7l">
+                    <rect key="frame" x="0.0" y="54" width="375" height="135"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="135" id="npx-6v-8rX"/>
                     </constraints>
@@ -80,7 +80,7 @@
                 <constraint firstItem="xfN-OY-I7l" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="1sp-PU-wZu"/>
                 <constraint firstItem="XUn-q7-f7K" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="3XT-l4-jWH"/>
                 <constraint firstItem="XUn-q7-f7K" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="A6W-EX-6kf"/>
-                <constraint firstItem="xfN-OY-I7l" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="1" id="FlE-LK-Dc3"/>
+                <constraint firstItem="xfN-OY-I7l" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="34" id="FlE-LK-Dc3"/>
                 <constraint firstItem="xfN-OY-I7l" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="RfX-zj-cGb"/>
                 <constraint firstItem="XUn-q7-f7K" firstAttribute="centerY" secondItem="Q5M-cg-NOt" secondAttribute="centerY" id="Y8U-Hp-9lV"/>
                 <constraint firstItem="eAu-Mm-F0x" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="dYV-z5-M19"/>
@@ -93,6 +93,6 @@
     </objects>
     <resources>
         <image name="login_icon_button_default" width="122" height="122"/>
-        <image name="sign_logo_default" width="150" height="34"/>
+        <image name="you_logo" width="172" height="50"/>
     </resources>
 </document>

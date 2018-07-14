@@ -54,8 +54,9 @@
     self.tableView.tableFooterView = footView;
     
 }
+//绑定手机号
 - (void)saveAction{
-    //绑定手机号
+
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UITextField *phoneTf = cell.contentView.subviews[0];
     UITableViewCell *cell1 = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
@@ -65,34 +66,6 @@
     }else  if (codeTf.text.length == 0) {
         [SVProgressHUD showInfoWithStatus:@"请填写验证码"];
     }else{
-//        [[[HHPerCenterDataAPI postEditUserPhoneWithPhone:phoneTf.text code:codeTf.text] netWorkClient] postRequestInView:nil finishedBlock:^(HHPerCenterDataAPI *api, NSError *error) {
-//
-//            if (!error) {
-//
-//                if (api.code == 0) {
-//
-//                    kKeyWindow.rootViewController = [[HJTabBarController alloc] init];
-//
-//                }else {
-//                    if ([api.msg isEqualToString:@"短信验证码不存在"]) {
-//
-//                        [SVProgressHUD showInfoWithStatus:@"验证码不正确"];
-//                    }else{
-//                        [SVProgressHUD showInfoWithStatus:api.msg];
-//                    }
-//
-//                }
-//
-//            }else{
-//
-//                if ([error.localizedDescription isEqualToString:@"似乎已断开与互联网的连接。"]||[error.localizedDescription  containsString:@"请求超时"]) {
-//                    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-//                    [SVProgressHUD showInfoWithStatus:@"网络竟然崩溃了"];
-//
-//                }
-//            }
-//
-//        }];
         
     }
     
@@ -173,6 +146,8 @@
     return 0.01;
     
 }
+#pragma mark-发送验证码
+
 - (void)sendVerifyCode{
     
      //发送验证码
@@ -186,22 +161,6 @@
       BOOL  isValid =  [NSString valiMobile:phoneTf.text];
         if (isValid) {
         self.verifyCodeBtn.enabled = NO;
-//        [[[HHUserLoginAPI postSendCodeWithPhone:phoneTf.text] netWorkClient] postRequestInView:nil finishedBlock:^(HHUserLoginAPI *api, NSError *error) {
-//            self.verifyCodeBtn.enabled = YES;
-//            if (!error) {
-//
-//                if (api.code == 0) {
-//
-//                    [self.verifyCodeBtn startTimer:60];
-//                }
-//
-//            }else{
-//
-//                [SVProgressHUD showInfoWithStatus:api.msg];
-//
-//            }
-//
-//        }];
         }else{
             
             [SVProgressHUD showInfoWithStatus:@"请填写正确的手机号"];

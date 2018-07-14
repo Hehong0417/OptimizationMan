@@ -12,7 +12,7 @@
 #import "HHSubmitOrdersHead.h"
 #import "HHShippingAddressVC.h"
 //#import "HHGoodBaseViewController.h"
-#import "HHnormalSuccessVC.h"
+#import "HHPaySucessVC.h"
 #import "HHActivityWebVC.h"
 #import "HHSendGiftWebVC.h"
 #import "HHSaleGroupWebVC.h"
@@ -47,6 +47,8 @@
 @property(nonatomic,strong) NSMutableArray *coupons_copys;
 @property(nonatomic,strong) HHcouponsModel *select_coupon_model;
 
+@property(nonatomic,strong) NSMutableArray *integralSelecItems;
+
 @end
 
 @implementation HHSubmitOrdersVC
@@ -57,13 +59,16 @@
     
     HHCouponItem *couponsModel = [HHCouponItem sharedCouponItem];
     couponsModel.coupon_model = nil;
+    couponsModel.lastSelectIndex = 0;
+    couponsModel.order_total_money = 0.0f;
+    couponsModel.last_total_money = 0.0f;
     [couponsModel write];
 
     HHOrderIdItem *OrderIdItem = [HHOrderIdItem sharedOrderIdItem];
     OrderIdItem.order_id = nil;
+    OrderIdItem.pids = self.pids;
     [OrderIdItem write];
     
-
     self.page = 1;
     self.leftTitleArr  = @[@"快递运费",@"订单总计"];
 
@@ -123,6 +128,9 @@
         }];
     }else if(self.enter_type == HHaddress_type_another){
         [self.navigationController popViewControllerAnimated:YES];
+    }else if (self.enter_type == HHaddress_type_package){
+        [self.navigationController popViewControllerAnimated:YES];
+
     }
 }
 - (NSMutableArray *)datas{
@@ -137,6 +145,12 @@
         _coupons_copys = [NSMutableArray array];
     }
     return _coupons_copys;
+}
+- (NSMutableArray *)integralSelecItems{
+    if (!_integralSelecItems) {
+        _integralSelecItems = [NSMutableArray array];
+    }
+    return _integralSelecItems;
 }
 //地址列表
 - (void)getAddressData{
@@ -160,7 +174,7 @@
 //获取数据
 - (void)getDatas{
     
-    [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
+    [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue gbId:self.gbId] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
                 
@@ -174,6 +188,11 @@
                     self.submitOrderTool.closePay.hidden = YES;
                 }
                 self.datas = self.model.orders.mutableCopy;
+                NSArray *orders_copys = self.model.orders;
+                
+                [orders_copys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [self.integralSelecItems addObject:@0];
+                }];
                 if (self.model.coupons.count>0) {
                     [self.datas addObject:@"优惠券"];
                 }
@@ -183,7 +202,21 @@
                 
                 CGFloat money_total = self.model.totalMoney.floatValue;
                 self.submitOrderTool.money_totalLabel.text = [NSString stringWithFormat:@"共计¥%.2f",money_total];
+                
                 [self.tableView reloadData];
+                
+                //
+                HHCouponItem *couponItem = [HHCouponItem sharedCouponItem];
+                couponItem.order_total_money = self.model.totalMoney.floatValue;
+                NSMutableArray *arr = [NSMutableArray array];
+                [self.model.coupons enumerateObjectsUsingBlock:^(HHcouponsModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [arr addObject:@0];
+                    *stop = 0;
+                }];
+                
+                [arr insertObject:@1 atIndex:0];
+                couponItem.selectItems = arr.mutableCopy;
+                [couponItem write];
                 
             }else{
                 
@@ -214,7 +247,7 @@
 - (void)addSubmitOrderTool{
     
     self.submitOrderTool  = [[[NSBundle mainBundle] loadNibNamed:@"HHSubmitOrderTool" owner:nil options:nil] lastObject];
-    self.submitOrderTool.closePay_constant_w = 0;
+    self.submitOrderTool.closePay_constant_w.constant = 0;
     UIView *toolView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-Status_HEIGHT-44-50, SCREEN_WIDTH, 50)];
     self.submitOrderTool.frame = CGRectMake(0,0, SCREEN_WIDTH, 50);
     
@@ -224,6 +257,7 @@
     [self.submitOrderTool.ImmediatePayLabel setTapActionWithBlock:^{
         
      if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
+
          self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
          self.submitOrderTool.closePay.userInteractionEnabled = NO;
 
@@ -240,7 +274,11 @@
                 self.mode = @1;
                 [self createOrder];
             }
+        }else if (self.enter_type == HHaddress_type_package){
+            //优惠套餐
+            [self createOrder];
         }
+         
         }else{
             
             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"你未安装微信，是否安装？" preferredStyle:UIAlertControllerStyleAlert];
@@ -274,11 +312,10 @@
     
     HHOrderIdItem *OrderIdItem = [HHOrderIdItem sharedOrderIdItem];
     if (OrderIdItem.order_id) {
-      
         [self orderPayWithaddress_id:nil orderId:OrderIdItem.order_id];
-        
     }else{
     
+    //优惠券
     NSString *coupon_id=nil;
     HHCouponItem *couponsModel = [HHCouponItem sharedCouponItem];
     if (couponsModel.coupon_model) {
@@ -286,7 +323,22 @@
     }else{
         coupon_id = nil;
     }
-    [[[HHMineAPI postOrder_CreateWithAddrId:self.address_id skuId:self.ids_Str count:self.count mode:self.mode gbId:nil couponId:coupon_id integralTempIds:nil message:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        //积分
+        NSString *integralTempIds_str;
+        NSMutableArray *integralTempIds_arr = [NSMutableArray array];
+        [self.model.orders enumerateObjectsUsingBlock:^(HHordersModel * order_m, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.integralSelecItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isEqual:@1]) {
+                    
+                    [integralTempIds_arr addObject:order_m.freightId];
+                }
+            }];
+            
+        }];
+        if (integralTempIds_arr.count>0) {
+         integralTempIds_str = [integralTempIds_arr mj_JSONString];
+        }
+    [[[HHMineAPI postOrder_CreateWithAddrId:self.address_id skuId:self.ids_Str count:self.count mode:self.mode gbId:self.gbId couponId:coupon_id integralTempIds:integralTempIds_str message:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
         self.submitOrderTool.closePay.userInteractionEnabled = YES;
         if (!error) {
@@ -372,16 +424,15 @@
     
     if (indexPath.section == self.datas.count-1&&self.datas.count>self.model.orders.count) {
      //优惠券
-        UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         if (!cell1) {
-            cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+            cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
         }
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
         cell1.textLabel.font = FONT(14);
         cell1.detailTextLabel.font = FONT(14);
         cell1.textLabel.text = self.datas[indexPath.section];
         cell1.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
-        
         return cell1;
         
     }else{
@@ -393,22 +444,88 @@
             cell.productsModel = model;
             return cell;
         }else{
-            UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-            if (!cell1) {
-                cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-            }
+            UITableViewCell *cell1 =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
             cell1.selectionStyle = UITableViewCellSelectionStyleNone;
             cell1.textLabel.font = FONT(14);
             cell1.detailTextLabel.font = FONT(14);
             cell1.textLabel.text = order_model.addtion_arr[indexPath.row-order_model.products.count];
             cell1.detailTextLabel.text = order_model.addtion_value_arr[indexPath.row-order_model.products.count];
-
+            if (order_model.isCanUseIntegral.integerValue == 1&&indexPath.row == order_model.products.count+order_model.addtion_value_arr.count-1) {
+                //可用积分
+                UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 35, 35) target:self action:@selector(IntegralSelectAction:) image:[UIImage imageNamed:@"icon_sign_default"]];
+                [btn setImage:[UIImage imageNamed:@"icon_sign_selected"] forState:UIControlStateSelected];
+                btn.tag = indexPath.section+10000;
+                cell1.accessoryView = btn;
+                btn.selected = ((NSNumber *)self.integralSelecItems[indexPath.section]).boolValue;
+                if (btn.selected) {
+                    NSInteger  row = indexPath.row-1;
+                    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:indexPath.section]];
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%.2f",order_model.showMoney.floatValue -  order_model.orderIntegralMoney.floatValue];
+                }
+            }
             return cell1;
         }
     }
     return nil;
 }
+//积分选择
+- (void)IntegralSelectAction:(UIButton *)btn{
+    
+    NSInteger section = btn.tag-10000;
+    UITableViewCell *btn_cell = (UITableViewCell *)btn.superview;
+    NSInteger  row = [self.tableView indexPathForCell:btn_cell].row-1;
+    
+    if (section == self.datas.count-1&&self.datas.count>self.model.orders.count) {
+        
+    }else{
+        
+    __block  float totol_Integral=0;
+    [self.model.orders enumerateObjectsUsingBlock:^(HHordersModel *order_model, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [self.integralSelecItems enumerateObjectsUsingBlock:^(NSNumber  *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isEqual:@1]) {
+                totol_Integral = totol_Integral+order_model.orderIntegral.floatValue;
+            }
+            *stop = 0;
+        }];
+    }];
+        if (btn.selected) {
+            btn.selected = NO;
+        }else{
+          if (totol_Integral>self.model.totalIntegral.floatValue) {
+            [SVProgressHUD showInfoWithStatus:@"积分不足"];
+          }else{
+            btn.selected = YES;
+          }
+        }
+        NSLog(@"totol_Integral:%.2f",totol_Integral);
 
+    //订单总计
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+    HHordersModel *order_model = self.datas[section];
+    if (btn.selected) {
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%.2f",order_model.showMoney.floatValue -  order_model.orderIntegralMoney.floatValue];
+        
+        //总计
+        NSString *money_total_str = [self.submitOrderTool.money_totalLabel.text substringFromIndex:3];
+        
+        CGFloat money_total =  money_total_str.floatValue - order_model.orderIntegralMoney.floatValue;
+        self.submitOrderTool.money_totalLabel.text = [NSString stringWithFormat:@"共计¥%.2f",money_total];
+        
+    }else{
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"¥%.2f",order_model.showMoney.floatValue];
+        
+        //总计
+        NSString *money_total_str = [self.submitOrderTool.money_totalLabel.text substringFromIndex:3];
+        
+        CGFloat money_total = money_total_str.floatValue + order_model.orderIntegralMoney.floatValue;
+        self.submitOrderTool.money_totalLabel.text = [NSString stringWithFormat:@"共计¥%.2f",money_total];
+    }
+
+        [self.integralSelecItems replaceObjectAtIndex:section withObject:@(btn.selected)];
+    }
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (self.datas.count>self.model.orders.count&&section == self.datas.count-1) {
@@ -448,7 +565,8 @@
         coupon_m.DisplayName = @"不使用";
         [self.coupons_copys insertObject:coupon_m atIndex:0];
         vc.coupons = self.coupons_copys;
-        vc.total_money = self.model.totalMoney;
+        NSString *money_total_str = [self.submitOrderTool.money_totalLabel.text substringFromIndex:3];
+        vc.total_money = money_total_str;
         vc.submitOrderTool = self.submitOrderTool;
         vc.title_str = @"优惠详情";
         vc.btn_title = @"确   定";
@@ -484,25 +602,32 @@
 }
 #pragma mark- payTypeDelegate
 
-- (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex select_model:(HHcouponsModel *)model total_money:(NSString *)total_money submitOrderTool:(HHSubmitOrderTool *)submitOrderTool couponCell:(UITableViewCell *)couponCell{
+- (void)commitActionWithBtn:(UIButton *)btn selectIndex:(NSInteger)selectIndex select_model:(HHcouponsModel *)model total_money:(CGFloat )total_money submitOrderTool:(HHSubmitOrderTool *)submitOrderTool couponCell:(UITableViewCell *)couponCell lastConponValue:(CGFloat)lastConponValue last_total_money:(CGFloat)last_total_money {
+    
     if (selectIndex == 0) {
         //不使用
         HHCouponItem *coupon_item = [HHCouponItem sharedCouponItem];
         coupon_item.coupon_model = nil;
+        coupon_item.lastSelectIndex = 0;
         [coupon_item write];
-        
-        CGFloat money_total = total_money.floatValue;
+        CGFloat money_total;
+        if (last_total_money<=lastConponValue) {
+            money_total = total_money;
+        }else{
+            money_total = total_money + lastConponValue;
+        }
         submitOrderTool.money_totalLabel.text = [NSString stringWithFormat:@"共计¥%.2f",money_total>0?money_total:0.01];
         couponCell.detailTextLabel.text = @"不使用";
 
     }else{
         
-        CGFloat money_total = total_money.floatValue-model.CouponValue.floatValue;
+        CGFloat money_total = total_money-model.CouponValue.floatValue;
         submitOrderTool.money_totalLabel.text = [NSString stringWithFormat:@"共计¥%.2f",money_total>0?money_total:0.01];
         couponCell.detailTextLabel.text = model.DisplayName;
         
         HHCouponItem *coupon_item = [HHCouponItem sharedCouponItem];
         coupon_item.coupon_model = model;
+        coupon_item.lastSelectIndex = selectIndex;
         [coupon_item write];
         
     }
@@ -531,12 +656,13 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Sucess_Notification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:KWX_Pay_Fail_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     
     //微信支付通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPaySucesscount) name:KWX_Pay_Sucess_Notification object:nil];
@@ -548,7 +674,7 @@
     HHOrderIdItem *OrderIdItem = [HHOrderIdItem sharedOrderIdItem];
     OrderIdItem.order_id = nil;
     [OrderIdItem write];
-    
+
     if (self.enter_type == HHaddress_type_Spell_group) {
         //活动拼团----订单详情
         [[[HHMineAPI GetOrderDetailWithorderid:self.order_id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
@@ -583,19 +709,19 @@
         
     }else {
         //购物车
-        HHnormalSuccessVC *vc = [HHnormalSuccessVC new];
-        vc.title_str = @"支付成功";
-        vc.discrib_str = @"";
-        vc.title_label_str = @"支付成功";
+        HHPaySucessVC *vc = [HHPaySucessVC new];
+        vc.pids = OrderIdItem.pids;
         [self.navigationController pushVC:vc];
     }
 }
 
 - (void)wxPayFailcount {
-    
-    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-    [SVProgressHUD showErrorWithStatus:@"支付失败～"];
-//    [self.navigationController popVC];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
+
+    });
 }
 
 - (id)copyWithZone:(NSZone *)zone

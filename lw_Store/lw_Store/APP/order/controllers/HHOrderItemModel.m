@@ -16,4 +16,10 @@
     }
     return _items;
 }
+- (NSMutableArray *)pids{
+    if (!_pids) {
+        _pids = [NSMutableArray array];
+    }
+    return _pids;
+}
 @end

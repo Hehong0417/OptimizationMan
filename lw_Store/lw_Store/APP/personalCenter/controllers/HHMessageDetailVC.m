@@ -30,6 +30,7 @@
     
     [self getDatas];
 }
+#pragma mark -加载数据
 - (void)getDatas{
     
     [[[HHMineAPI GetNoticeDetailWithId:self.Id.numberValue] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {

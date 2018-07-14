@@ -14,6 +14,7 @@
     WKWebView *_webView;
     UIButton *rightBtn;
     NSString *webpageUrl;
+    NSString *responseUrl;
 }
 @end
 
@@ -79,7 +80,6 @@
     //创建Webpage内容对象
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"送礼" descr:@"" thumImage:nil];
     
-    
     //设置Webpage地址
     shareObject.webpageUrl = webpageUrl;
     
@@ -99,7 +99,15 @@
 }
 - (void)backBtnAction{
     
-    [self.navigationController popToRootVC];
+    if ([responseUrl containsString:@"ActivityWeb/SendGift"]) {
+        [self.view resignFirstResponder];
+        [self.navigationController popToRootVC];
+    }else if ([_webView canGoBack]) {
+        [_webView goBack];
+    } else{
+        [self.view resignFirstResponder];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
     
@@ -124,7 +132,12 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     NSLog(@"Response %@",navigationResponse.response.URL.absoluteString);
-    
+    responseUrl = navigationResponse.response.URL.absoluteString;
+    if ([responseUrl containsString:@"ActivityWeb/SendGiftList"]) {
+        rightBtn.hidden = NO;
+    }else{
+        rightBtn.hidden = YES;
+    }
     decisionHandler(WKNavigationResponsePolicyAllow);
     
 }

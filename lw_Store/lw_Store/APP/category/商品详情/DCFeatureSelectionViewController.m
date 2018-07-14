@@ -349,7 +349,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
         
     }
 
-    cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",self.product_price];
+    cell.goodPriceLabel.text = [NSString stringWithFormat:@"¥ %@",self.product_price?self.product_price:@""];
     
     [cell.goodImageView sd_setImageWithURL:[NSURL URLWithString:_goodImageView] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
 
@@ -379,7 +379,8 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
                                              @"Array" : numArray,
                                              @"id_Array" : id_Array,
-                                             @"button_title" : self.button_Title
+                                             @"button_title" : self.button_Title,
+                                             @"pid" : self.product_id
                                              };
                     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
                     [[NSNotificationCenter defaultCenter]postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:dict];
@@ -390,7 +391,8 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
                                              @"Array" : weakSelf.seleArray,
                                              @"id_Array" : weakSelf.seleId_Array,
-                                             @"button_title" : self.button_Title
+                                             @"button_title" : self.button_Title,
+                                             @"pid" : self.product_id
                                              };
                     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
                     
@@ -411,7 +413,8 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
                                              @"Array" : numArray,
                                              @"id_Array" : id_Array,
-                                             @"button_title" : self.button_Title
+                                             @"button_title" : self.button_Title,
+                                             @"pid" : self.product_id
                                              };
                     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
                     [[NSNotificationCenter defaultCenter]postNotificationName:SHOPITEMSELECTBACK object:nil userInfo:dict];
@@ -422,7 +425,8 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
                                              @"Num" : [NSString stringWithFormat:@"%zd",num_],
                                              @"Array" : weakSelf.seleArray,
                                              @"id_Array" : weakSelf.seleId_Array,
-                                             @"button_title" : self.button_Title
+                                             @"button_title" : self.button_Title,
+                                             @"pid" : self.product_id
                                              };
                     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:paDict];
                     
@@ -454,19 +458,22 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     
     DCFeatureItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DCFeatureItemCellID forIndexPath:indexPath];
     if (_featureAttr.count>0) {
-        cell.content = _featureAttr[indexPath.section].ItemList[indexPath.row];
+        ///不可选
+        if ([self.seletedEnable containsObject:indexPath]) {
+            cell.content = _featureAttr[indexPath.section].ItemList[indexPath.row];
+            cell.userInteractionEnabled = NO;
+            cell.attLabel.textColor = [UIColor lightGrayColor];
+        }
+        //可选
+        else
+        {
+//            cell.attLabel.textColor = [UIColor blackColor];
+            cell.content = _featureAttr[indexPath.section].ItemList[indexPath.row];
+            cell.userInteractionEnabled = YES;
+        }
+        
     }
-    ///不可选
-    if ([self.seletedEnable containsObject:indexPath]) {
-        cell.attLabel.textColor = [UIColor lightGrayColor];
-        cell.userInteractionEnabled = NO;
-    }
-    //可选
-    else
-    {
-        cell.attLabel.textColor = [UIColor blackColor];
-        cell.userInteractionEnabled = YES;
-    }
+    
     
     return cell;
 }

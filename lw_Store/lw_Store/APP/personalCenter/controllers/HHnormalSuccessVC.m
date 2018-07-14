@@ -24,7 +24,7 @@
     [self.back_btn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     
     self.title_label.text = self.title_label_str;
-    if (self.discrib_str.length>0) {
+    if (self.discrib_str.length > 0) {
         self.discrib_label.text = [NSString stringWithFormat:@"恭喜你，正式成为%@商...",self.discrib_str];
     }
     //抓取返回按钮

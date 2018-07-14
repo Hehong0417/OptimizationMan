@@ -18,7 +18,8 @@
 - (void)setOrderTotalModel:(HHCartModel *)orderTotalModel{
     _orderTotalModel = orderTotalModel;
     self.express_nameLabel.textColor = kRedColor;
-    self.express_nameLabel.text = [NSString stringWithFormat:@"¥%@",orderTotalModel.total?orderTotalModel.total:@""];
+    
+    self.express_nameLabel.text = [NSString stringWithFormat:@"¥%.2f",orderTotalModel.total.floatValue];
     self.express_orderLabel.text = @"订单总计:";
 }
 

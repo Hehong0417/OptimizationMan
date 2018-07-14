@@ -87,11 +87,12 @@
     .widthIs(40);
 
 }
-- (void)setSelected:(BOOL)selected{
-
-    self.leftSelect_btn.selected = selected;
-    self.rightSelect_btn.selected = selected;
+- (void)setBtnSelected:(BOOL)btnSelected{
+    _btnSelected = btnSelected;
+    self.leftSelect_btn.selected = btnSelected;
+    self.rightSelect_btn.selected = btnSelected;
 }
+
 - (void)setCouponsModel:(HHcouponsModel *)couponsModel{
     _couponsModel = couponsModel;
     self.payType_label.text = couponsModel.DisplayName;

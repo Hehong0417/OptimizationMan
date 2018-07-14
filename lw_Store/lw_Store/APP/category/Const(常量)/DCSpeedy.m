@@ -10,10 +10,11 @@
 
 @implementation DCSpeedy
 
-+(id)dc_chageControlCircularWith:(id)anyControl AndSetCornerRadius:(NSInteger)radius SetBorderWidth:(NSInteger)width SetBorderColor:(UIColor *)borderColor canMasksToBounds:(BOOL)can
++(id)dc_chageControlCircularWith:(id)anyControl AndSetCornerRadius:(NSInteger)radius SetBorderWidth:(NSInteger)width SetBorderColor:(UIColor *)borderColor canMasksToBounds:(BOOL)can backgroundColor:(UIColor *)backgroundColor
 {
     CALayer *icon_layer=[anyControl layer];
     [icon_layer setCornerRadius:radius];
+    [icon_layer setBackgroundColor:backgroundColor.CGColor];
     [icon_layer setBorderWidth:width];
     [icon_layer setBorderColor:[borderColor CGColor]];
     [icon_layer setMasksToBounds:can];

@@ -21,4 +21,6 @@ typedef enum : NSUInteger {
 
 @property(nonatomic,copy) voidBlock backBlock;
 
+@property(nonatomic,strong) NSString *pids;
+
 @end

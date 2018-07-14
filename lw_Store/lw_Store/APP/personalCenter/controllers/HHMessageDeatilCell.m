@@ -8,6 +8,7 @@
 
 #import "HHMessageDeatilCell.h"
 #import "HHMessageWeb.h"
+#import "HHCouponSuperVC.h"
 
 @implementation HHMessageDeatilCell
 
@@ -25,6 +26,7 @@
         self.msg_contentWebView.scrollView.scrollEnabled = NO;
         self.msg_contentWebView.UIDelegate = self;
         self.msg_contentWebView.backgroundColor = kClearColor;
+        self.msg_contentWebView.navigationDelegate = self;
         self.msg_contentWebView.opaque = NO;
         self.dateTimeLabel = [UILabel new];
         self.dateTimeLabel.textAlignment = NSTextAlignmentRight;
@@ -76,11 +78,11 @@
     
     _model = model;
     self.msg_titleLabel.text = model.Title;
-    NSString *htmlStr = [NSString stringWithFormat:@"<div style=word-wrap:break-word;font-size:14px; width:20px;>%@</div>",model.Memo];
+    NSString *htmlStr = [NSString stringWithFormat:@"<div style=word-wrap:break-word;font-size:30px; width:20px;>%@</div>",model.Memo];
     [self.msg_contentWebView loadHTMLString: htmlStr baseURL:nil];
     self.dateTimeLabel.text = model.AddTime;
     
-    CGRect rect = [model.Memo boundingRectWithSize:CGSizeMake(ScreenW-50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14]} context:nil];
+    CGRect rect = [model.Memo boundingRectWithSize:CGSizeMake(ScreenW-50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]} context:nil];
     NSLog(@"rectheight:%.f",rect.size.height);
         CGFloat height = rect.size.height+20;
         self.msg_titleLabel.sd_resetLayout
@@ -107,19 +109,24 @@
         .heightIs(20);
     
 }
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-
-    NSString *reqStr = [NSString stringWithFormat:@"%@",request];
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
+    
+    NSString *reqStr = navigationResponse.response.URL.absoluteString;
     if ([reqStr containsString:@"http"]) {
-        HHMessageWeb *vc = [HHMessageWeb new];
-        vc.url = reqStr;
-        [self.nav pushVC:vc];
-        return NO;
-    }
-    return YES;
-}
+        if ([reqStr containsString:@"CouponsList"]) {
+            HHCouponSuperVC *vc = [HHCouponSuperVC new];
+            [self.nav pushVC:vc];
 
+        }else{
+          HHMessageWeb *vc = [HHMessageWeb new];
+          vc.url = reqStr;
+          [self.nav pushVC:vc];
+        }
+        decisionHandler(WKNavigationResponsePolicyCancel);
+    }else{
+        decisionHandler(WKNavigationResponsePolicyAllow);
+    }
+}
 - (void)setShadowWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath model:(HHMineModel *)model{
     
     CGFloat height = [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[self class] contentViewWidth:[self cellContentViewWith]];

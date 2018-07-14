@@ -12,4 +12,6 @@
 
 @property(nonatomic,strong) NSMutableArray *items;
 
+@property(nonatomic,strong) NSMutableArray *pids;
+
 @end

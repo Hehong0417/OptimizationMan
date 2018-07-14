@@ -20,19 +20,19 @@
     NSInteger status_code = self.status.integerValue;
     if (status_code == 1) {
 //        @"待付款"
-        self.footHeight = 58;
+        self.footHeight = 55;
     }else if (status_code == 2){
 //        @"待发货"
         self.footHeight = 5;
     }else if (status_code == 3){
 //        @"待收货
-        self.footHeight = 58;
+        self.footHeight = 55;
     }else if (status_code == 4){
         //  @"订单关闭
         self.footHeight = 5;
     }else if (status_code == 5){
-        //        @"交易完成
-        self.footHeight = 58;
+        //   @"交易完成
+        self.footHeight = 5;
         
     }else if (status_code == 6){
         //        @"申请退款
@@ -53,6 +53,7 @@
 }
 @end
 @implementation HHproductsModel
+
 +(NSDictionary *)mj_objectClassInArray{
     
     return @{@"skuid":[HHskuidModel class],@"product_item":[HHproducts_item_Model class]};
@@ -67,14 +68,23 @@
 }
 - (void)mj_keyValuesDidFinishConvertingToObject{
     if (self.derateMoney.floatValue>0) {
-        self.addtion_arr = @[@"快递运费",@"减免活动",@"订单总计"];
-        self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"-¥%@",self.derateMoney],[NSString stringWithFormat:@"¥%@",self.showMoney]];
+        if (self.isCanUseIntegral.integerValue == 1) {
+            self.addtion_arr = @[@"快递运费",@"减免活动",@"订单总计",self.integralDisplayName];
+            self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"-¥%@",self.derateMoney],[NSString stringWithFormat:@"¥%.2f",self.showMoney.floatValue],@""];
+        }else{
+            self.addtion_arr = @[@"快递运费",@"减免活动",@"订单总计"];
+            self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"-¥%@",self.derateMoney],[NSString stringWithFormat:@"¥%.2f",self.showMoney.floatValue]];
+        }
     }else{
+        if (self.isCanUseIntegral.integerValue == 1) {
+            self.addtion_arr = @[@"快递运费",@"订单总计",self.integralDisplayName];
+            self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"¥%.2f",self.showMoney.floatValue],@""];
+        }else{
         self.addtion_arr = @[@"快递运费",@"订单总计"];
-        self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"¥%@",self.showMoney]];
+        self.addtion_value_arr = @[[NSString stringWithFormat:@"¥%@",self.freight],[NSString stringWithFormat:@"¥%.2f",self.showMoney.floatValue]];
+        }
     }
 }
-
 @end
 @implementation HHskuidModel
 

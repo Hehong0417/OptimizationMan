@@ -40,16 +40,14 @@
     //头部
     //collectionView
     self.collectionView.backgroundColor = kWhiteColor;
-//    [self.view addSubview:self.collectionView];
+    [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HXHomeCollectionCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"HXHomeCollectionCell"];
     
     [self.collectionView registerClass:[HHEvaluationHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HHEvaluationHeadView"];
     
     //获取数据
-    //    [self getDatas];
-    //    [self addHeadRefresh];
-    //    [self addFootRefresh];
+    [self getGuess_you_likeData];
     
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
@@ -83,117 +81,32 @@
 }
 #pragma mark - DZNEmptyDataSetDelegate
 
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"img_list_disable"];
-//}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    return [[NSAttributedString alloc] initWithString:@"还没有相关的宝贝，先看看其他的吧～" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
-//}
-//
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-//
-//    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
-//    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
-//    return -offset;
-//
-//}
-//- (void)getDatas{
-//
-//    [[[HHCategoryAPI GetProductListWithType:@1 categoryId:@"" name:nil orderby:@1 page:@(self.page) pageSize:@(self.pageSize)] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
-//
-//        if (!error) {
-//            if (api.code == 0) {
-//
-//                [self loadDataFinish:api.data[@"list"]];
-//            }else{
-//                [SVProgressHUD showInfoWithStatus:api.msg];
-//            }
-//
-//        }else{
-//
-//            [SVProgressHUD showInfoWithStatus:api.msg];
-//        }
-//
-//    }];
-//
-//}
-//- (void)addHeadRefresh{
-//
-//    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        self.page = 1;
-//        [self.datas removeAllObjects];
-//        [self getDatas];
-//    }];
-//    refreshHeader.lastUpdatedTimeLabel.hidden = YES;
-//    refreshHeader.stateLabel.hidden = YES;
-//    self.collectionView.mj_header = refreshHeader;
-//
-//}
-//- (void)addFootRefresh{
-//
-//    MJRefreshAutoNormalFooter *refreshfooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        self.page++;
-//
-//        [self getDatas];
-//    }];
-//    self.collectionView.mj_footer = refreshfooter;
-//
-//}
-///**
-// *  加载数据完成
-// */
-//- (void)loadDataFinish:(NSArray *)arr {
-//
-//    [self.datas addObjectsFromArray:arr];
-//
-//    if (arr.count < self.pageSize) {
-//
-//        [self endRefreshing:YES];
-//
-//    }else{
-//        [self endRefreshing:NO];
-//    }
-//
-//}
-//
-///**
-// *  结束刷新
-// */
-//- (void)endRefreshing:(BOOL)noMoreData {
-//    // 取消刷新
-//
-//    if (noMoreData) {
-//        if (self.datas.count == 0) {
-//            self.collectionView.mj_footer.hidden = YES;
-//        }else {
-//            [self.collectionView.mj_footer setState:MJRefreshStateNoMoreData];
-//        }
-//    }else{
-//
-//        [self.collectionView.mj_footer setState:MJRefreshStateIdle];
-//
-//    }
-//
-//    if (self.collectionView.mj_header.isRefreshing) {
-//        [self.collectionView.mj_header endRefreshing];
-//    }
-//
-//    if (self.collectionView.mj_footer.isRefreshing) {
-//        [self.collectionView.mj_footer endRefreshing];
-//    }
-//    //刷新界面
-//    [self.collectionView reloadData];
-//
-//}
+//猜你喜欢
+- (void)getGuess_you_likeData{
+    
+    [[[HHCategoryAPI GetAlliancesProductsWithpids:self.pids]  netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
+        
+        if (!error) {
+            if (api.State == 1) {
+                NSArray *arr =  api.Data;
+                self.datas = arr.mutableCopy;
+                [self.collectionView reloadData];
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            
+        }
+    }];
+    
+}
 
 #pragma  mark - collectionView Delegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     HXHomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXHomeCollectionCell" forIndexPath:indexPath];
-    //    cell.goodsModel = [HHCategoryModel mj_objectWithKeyValues:self.datas[indexPath.row]];
+        cell.guess_you_likeModel =  [HHGuess_you_likeModel mj_objectWithKeyValues:self.datas[indexPath.row]];
     
     return cell;
     
@@ -201,10 +114,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-//        return self.datas.count;
+        return self.datas.count;
+}
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     return CGSizeMake((SCREEN_WIDTH - 30)/2 , 220);
@@ -216,13 +130,11 @@
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    
+
     return  CGSizeMake(ScreenW, WidthScaleSize_H(350));
-    
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    
-    
+
     return  CGSizeZero;
     
 }
@@ -230,23 +142,27 @@
     
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
-        
         HHEvaluationHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HHEvaluationHeadView" forIndexPath:indexPath];
+        headerView.backgroundColor = KVCBackGroundColor;
         headerView.isPay = 1;
         headerView.nav = self.navigationController;
-
+        if (self.datas.count == 0) {
+            headerView.title_lab.hidden = YES;
+        }else{
+            headerView.title_lab.hidden = NO;
+        }
         headerView.backgroundColor = KVCBackGroundColor;
         reusableview = headerView;
     }
     return reusableview;
 }
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//
-//    HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
-//    HHCategoryModel *goodsModel = [HHCategoryModel mj_objectWithKeyValues:self.datas[indexPath.row]];
-//    vc.Id = goodsModel.product_id;
-//    [self.navigationController pushVC:vc];
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+    HHGuess_you_likeModel *goodsModel = [HHGuess_you_likeModel mj_objectWithKeyValues:self.datas[indexPath.row]];
+    HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
+    vc.Id = goodsModel.pid;
+    [self.navigationController pushVC:vc];
+}
 
 - (UICollectionView *)collectionView{
     

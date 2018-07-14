@@ -447,8 +447,21 @@
 }
 
 @end
+#pragma mark - 金额double转换
 
+@implementation  NSString (decNumber)
+/**
+ *  金额double转换
+ */
++ (NSString *)reviseString:(NSString *)string{
+    /* 直接传入精度丢失有问题的Double类型*/
+    double conversionValue        = (double)[string floatValue];
+    NSString *doubleString        = [NSString stringWithFormat:@"%lf", conversionValue];
+    NSDecimalNumber *decNumber    = [NSDecimalNumber decimalNumberWithString:doubleString];
+    return [decNumber stringValue];
+}
 
+@end
 #pragma mark - 验证 -
 
 @implementation NSString (Validate)

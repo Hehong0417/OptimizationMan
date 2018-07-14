@@ -32,7 +32,10 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong)   NSNumber *mode;
 @property (nonatomic, strong)   NSNumber *sendGift;
 
+//sku_ids
 @property(nonatomic,strong) NSString *ids_Str;
 
+//商品id
+@property(nonatomic,strong) NSString *pids;
 
 @end

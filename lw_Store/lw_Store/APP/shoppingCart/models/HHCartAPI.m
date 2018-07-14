@@ -28,7 +28,7 @@
 }
 
 //获得结算订单
-+ (instancetype)GetConfirmOrderWithids:(NSString *)ids mode:(NSNumber *)mode skuId:(NSString *)skuId quantity:(NSNumber *)quantity{
++ (instancetype)GetConfirmOrderWithids:(NSString *)ids mode:(NSNumber *)mode skuId:(NSString *)skuId quantity:(NSNumber *)quantity gbId:(NSString *)gbId{
     
     HHCartAPI *api = [self new];
     api.subUrl = API_GetConfirmOrder;
@@ -43,6 +43,9 @@
     }
     if (quantity) {
         [api.parameters setObject:quantity forKey:@"quantity"];
+    }
+    if (gbId) {
+        [api.parameters setObject:gbId forKey:@"gbId"];
     }
     api.parametersAddToken = NO;
     return api;

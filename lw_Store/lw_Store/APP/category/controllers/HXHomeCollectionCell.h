@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HHHomeModel.h"
+#import "HHgooodDetailModel.h"
 
 @interface HXHomeCollectionCell : UICollectionViewCell
 
@@ -21,6 +22,9 @@
 
 //分类商品列表
 @property(nonatomic,strong) HHCategoryModel *goodsModel;
+
+//首页商品列表
+@property(nonatomic,strong) HHGuess_you_likeModel *guess_you_likeModel;
 
 @end
 

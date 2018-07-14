@@ -12,6 +12,7 @@ typedef enum : NSUInteger {
     HHaddress_type_add_cart,
     HHaddress_type_add_productDetail,
     HHaddress_type_Spell_group,
+    HHaddress_type_package,
     HHaddress_type_another
     
 } HHenter_type;
@@ -22,6 +23,9 @@ typedef enum : NSUInteger {
 @property(nonatomic,strong) NSNumber *mode;
 @property(nonatomic,strong) NSString *count;
 @property(nonatomic,strong) NSNumber *sendGift;
+@property(nonatomic,strong) NSString *gbId;
+//商品id
+@property(nonatomic,strong) NSString *pids;
 
 @end
 

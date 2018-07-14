@@ -48,6 +48,7 @@
     [self addHeadRefresh];
     [self addFootRefresh];
 }
+#pragma mark - 加载数据
 - (void)getDatas{
     
     [[[HHMineAPI GetMyCouponListWithPage:@(self.page) status:@(2)] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {

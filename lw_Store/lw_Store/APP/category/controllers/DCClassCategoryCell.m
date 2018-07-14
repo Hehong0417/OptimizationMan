@@ -8,17 +8,8 @@
 
 #import "DCClassCategoryCell.h"
 
-// Controllers
 
-// Models
 #import "DCClassGoodsItem.h"
-// Views
-
-// Vendors
-
-// Categories
-
-// Others
 
 @interface DCClassCategoryCell ()
 
@@ -47,7 +38,7 @@
 - (void)setUpUI
 {
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = FONT(14);
+    _titleLabel.font = FONT(13);
     _titleLabel.textColor = KTitleLabelColor;
     [self addSubview:_titleLabel];
     
@@ -79,11 +70,11 @@
     if (selected) {
         _indicatorView.hidden = NO;
         _titleLabel.textColor = [UIColor blackColor];
-        _titleLabel.font = BoldFONT(14);
+        _titleLabel.font = BoldFONT(13);
         self.backgroundColor = [UIColor whiteColor];
     }else{
         _indicatorView.hidden = YES;
-        _titleLabel.font = FONT(14);
+        _titleLabel.font = FONT(13);
         _titleLabel.textColor = KTitleLabelColor;
         self.backgroundColor = [UIColor clearColor];
     }

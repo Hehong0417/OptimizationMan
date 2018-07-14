@@ -26,6 +26,9 @@
 @property(nonatomic,assign)   NSInteger pageSize;
 @property(nonatomic,strong)   NSMutableArray *datas;
 @property(nonatomic,assign)   NSInteger  orderState;
+@property(nonatomic,assign)   BOOL  isFooterRefresh;
+@property(nonatomic,strong)   NSURLSessionDataTask *task;
+@property(nonatomic,assign)   BOOL  isCategory;
 
 @end
 
@@ -35,11 +38,11 @@
     
     [super viewDidLoad];
     
-    self.datas = [NSMutableArray array];
-    
     //商品列表
     self.page = 1;
     self.pageSize = 10;
+    
+    self.isCategory = YES;
     
     //collectionView
     self.collectionView.backgroundColor = KVCBackGroundColor;
@@ -47,17 +50,25 @@
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HXHomeCollectionCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"HXHomeCollectionCell"];
     
-    
     //搜索
     [self setupSGSegmentedControl];
 
     [self setupSearchView];
 
+    [self addFootRefresh];
     //获取数据
     [self addHeadRefresh];
-    [self addFootRefresh];
+    
     
 }
+- (NSMutableArray *)datas{
+    if (!_datas) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
+}
+#pragma mark - SGSegmentedControl init
+
 - (void)setupSGSegmentedControl{
     
     self.title_arr = [NSMutableArray arrayWithArray:@[@"价格",@"上架",@"浏览量",@"销量"]];
@@ -81,6 +92,38 @@
     self.collectionView.emptyDataSetSource = self;
     
 }
+#pragma 加载数据
+
+- (void)getDatas{
+    
+    self.task =  [[[HHCategoryAPI GetProductListWithType:self.type categoryId:self.isCategory?self.categoryId:nil name:self.name orderby:self.orderby page:@(self.page) pageSize:@(self.pageSize)] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
+        
+        if (!error) {
+            
+            if (api.State == 1) {
+
+                if (self.isFooterRefresh) {
+                    [self loadDataFinish:api.Data];
+                }else{
+                   [self.datas removeAllObjects];
+                    [self loadDataFinish:api.Data];
+                }
+            }else{
+                
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+            
+        }else{
+            if ([error.localizedDescription isEqualToString:@"已取消"]) {
+                
+            }else{
+            [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+                
+            }
+        }
+    }];
+    
+}
 #pragma mark - DZNEmptyDataSetDelegate
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
@@ -99,32 +142,13 @@
     return -offset;
     
 }
-- (void)getDatas{
-    
-    [[[HHCategoryAPI GetProductListWithType:self.type categoryId:self.categoryId name:self.name orderby:self.orderby page:@(self.page) pageSize:@(self.pageSize)] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
-        
-        if (!error) {
+#pragma mark - 刷新控件
 
-            if (api.State == 1) {
-                
-                [self loadDataFinish:api.Data];
-            }else{
-                [SVProgressHUD showInfoWithStatus:api.Msg];
-            }
-            
-        }else{
-            
-            [SVProgressHUD showInfoWithStatus:api.Msg];
-        }
-    }];
-    
-}
 - (void)addHeadRefresh{
     
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
-        self.name = nil;
-        [self.datas removeAllObjects];
+        self.isFooterRefresh = NO;
         [self getDatas];
     }];
     refreshHeader.lastUpdatedTimeLabel.hidden = YES;
@@ -136,7 +160,7 @@
     
     MJRefreshAutoNormalFooter *refreshfooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         self.page++;
-        
+        self.isFooterRefresh = YES;
         [self getDatas];
     }];
     self.collectionView.mj_footer = refreshfooter;
@@ -148,7 +172,7 @@
 - (void)loadDataFinish:(NSArray *)arr {
     
     [self.datas addObjectsFromArray:arr];
-    
+
     if (arr.count < self.pageSize) {
         
         [self endRefreshing:YES];
@@ -164,7 +188,8 @@
  */
 - (void)endRefreshing:(BOOL)noMoreData {
     // 取消刷新
-    
+    self.collectionView.mj_footer.hidden = NO;
+
     if (noMoreData) {
         if (self.datas.count == 0) {
             self.collectionView.mj_footer.hidden = YES;
@@ -180,7 +205,7 @@
     if (self.collectionView.mj_header.isRefreshing) {
         [self.collectionView.mj_header endRefreshing];
     }
-    
+   
     if (self.collectionView.mj_footer.isRefreshing) {
         [self.collectionView.mj_footer endRefreshing];
     }
@@ -192,7 +217,7 @@
 #pragma mark - SearchView
 
 - (void)setupSearchView {
-    searchView = [[SearchView alloc] initWithFrame:CGRectMake(10, 3, self.view.frame.size.width-20, 30)];
+    searchView = [[SearchView alloc] initWithFrame:CGRectMake(15, 3, self.view.frame.size.width-30, 30)];
     searchView.textField.text = @"";
     searchView.delegate = self;
     searchView.userInteractionEnabled = YES;
@@ -202,9 +227,8 @@
         [self searchButtonWasPressedForSearchView:searchView];
         
     }else{
-        
+      
     }
-    
     UIButton *backBtn = [UIButton lh_buttonWithFrame:CGRectMake(-15, 3, 30, 30) target:self action:@selector(backAction) backgroundColor:kClearColor];
     backBtn.highlighted = NO;
     [searchView addSubview:backBtn];
@@ -235,7 +259,13 @@
 
 - (void)tagViewButtonDidSelectedForTagTitle:(NSString *)title{
     //热门搜索/历史搜索标题
+    self.page = 1;
     self.name = title;
+    if (title.length>0) {
+        self.isCategory = NO;
+    }else{
+        self.isCategory = YES;
+    }
     [self.datas removeAllObjects];
     [self getDatas];
     
@@ -249,7 +279,7 @@
 
 - (void)SGSegmentedControl:(SGSegmentedControl *)segmentedControl didSelectBtnAtIndex:(NSInteger)index{
     
-    [self.datas removeAllObjects];
+    [self.task cancel];
     
     if (index == 0){
         //价格
@@ -298,7 +328,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
     HXHomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXHomeCollectionCell" forIndexPath:indexPath];
     cell.goodsModel = [HHCategoryModel mj_objectWithKeyValues:self.datas[indexPath.row]];
     
@@ -333,8 +362,8 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
     HHCategoryModel *goodsModel = [HHCategoryModel mj_objectWithKeyValues:self.datas[indexPath.row]];
+    HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
     vc.Id = goodsModel.Id;
     [self.navigationController pushVC:vc];
 }
@@ -343,7 +372,7 @@
     
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowout = [[UICollectionViewFlowLayout alloc]init];
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT - Status_HEIGHT-44 -20) collectionViewLayout:flowout];
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT - Status_HEIGHT-40-44) collectionViewLayout:flowout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
@@ -351,6 +380,7 @@
     }
     return _collectionView;
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];

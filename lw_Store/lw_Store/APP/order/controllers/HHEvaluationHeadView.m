@@ -8,6 +8,8 @@
 
 #import "HHEvaluationHeadView.h"
 #import "HHEvaluationListVC.h"
+#import "HHGoodListVC.h"
+#import "HHOrderVC.h"
 
 @implementation HHEvaluationHeadView
 
@@ -34,8 +36,8 @@
         }
         //猜你喜欢
         
-        UILabel *title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, WidthScaleSize_H(350)-WidthScaleSize_H(50), ScreenW, WidthScaleSize_H(50)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
-        [self addSubview:title_lab];
+        self.title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, WidthScaleSize_H(350)-WidthScaleSize_H(50), ScreenW, WidthScaleSize_H(50)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        [self addSubview:self.title_lab];
 
     }
     return self;
@@ -66,11 +68,13 @@
 }
 - (void)evaluateAction:(UIButton *)btn{
     
-    if(btn.tag == 0){
+    if(btn.tag == 1000){
         //去逛逛
+        HHGoodListVC  *vc = [HHGoodListVC new];
+        [self.nav pushVC:vc];
     }else{
-        //查看我的评价
-        HHEvaluationListVC  *vc = [HHEvaluationListVC new];
+        //查看我的订单
+        HHOrderVC  *vc = [HHOrderVC new];
         [self.nav pushVC:vc];
     }
     

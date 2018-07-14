@@ -61,7 +61,9 @@ SKTagViewDelegate,SearchTagHeadViewDelegate>
     //获取数据
     [self getDatas];
 }
-//获取数据
+
+#pragma mark - 加载数据
+
 - (void)getDatas{
     
     //热门搜索
@@ -134,7 +136,6 @@ SKTagViewDelegate,SearchTagHeadViewDelegate>
     self.searchTagTableView.tableFooterView = [[UIView alloc] init];
     self.searchTagTableView.backgroundColor = [UIColor whiteColor];
 }
-
 - (void)registerCells {
     UINib *searchTagNib =
     [UINib nibWithNibName:NSStringFromClass([SearchTagTableViewCell class])

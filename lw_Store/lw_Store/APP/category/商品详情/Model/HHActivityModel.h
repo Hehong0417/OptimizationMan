@@ -13,5 +13,8 @@
 @property(nonatomic,strong) NSNumber *IsJoin;
 @property(nonatomic,strong) NSNumber *Price;
 @property(nonatomic,strong) NSNumber *Mode;
+@property(nonatomic,strong) NSString *EndSecond;
+@property(nonatomic,strong) NSNumber *IsSecKill;
+@property(nonatomic,strong) NSString *StartSecond;
 
 @end

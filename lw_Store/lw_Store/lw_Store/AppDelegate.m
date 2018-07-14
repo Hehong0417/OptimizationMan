@@ -18,7 +18,6 @@
 @interface AppDelegate ()<WXApiDelegate>
 
 @end
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions{
@@ -119,7 +118,6 @@
                 break;
             default:{
                 [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Fail_Notification object:@""];
-                
                 NSLog(@"支付失败，retcode=%d",resp.errCode);
             }
                 break;

@@ -9,16 +9,6 @@
 #import "HHRegisterVC.h"
 #import "HHTextfieldcell.h"
 #import "LHVerifyCodeButton.h"
-//#import "HXApplyForBeTeacherVC.h"
-//#import "HXVerifyPhoneNumAPI.h"
-//#import "HXGetVerifyCodeAPI.h"
-//#import "HXRegisterAPI.h"
-//#import "HXLoginAPI.h"
-//#import "HXProtocolStatusAPI.h"
-//#import "HXStateModel.h"
-//#import "HXTeacherProtocal.h"
-//#import "HXDeleteTeacherAndUsersAPI.h"
-//#import "HXTeacherLoginAPI.h"
 
 
 @interface HHRegisterVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
@@ -136,10 +126,9 @@
     return self.inputArr.count;
     
 }
+#pragma mark- 注册
+
 - (void)registerAction {
-    
-//    HHTextfieldcell *cell0 = (HHTextfieldcell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    
     
     HHTextfieldcell *cell1 = (HHTextfieldcell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     NSString *phoneStr = cell1.inputTextField.text;
@@ -157,25 +146,6 @@
     
     if (!isValid) {
         
-//       [[[HXRegisterAPI registerWithPhoneNum:phoneStr password:[commitPwdStr md5String]] netWorkClient] postRequestInView:self.view finishedBlock:^(id responseObject, NSError *error) {
-//
-//           if (error == nil) {
-//               NSString *state = responseObject[@"pd"][@"state"];
-//               if ([state isEqualToString:@"ok"]) {
-//
-//
-//
-//               }else if ([state isEqualToString:@"no"]){
-//
-//                   [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-//
-//                   [SVProgressHUD showInfoWithStatus:@"账号已经存在"];
-//
-//               }
-//
-//           }
-//       } ];
-        
     }else{
         [SVProgressHUD setMinimumDismissTimeInterval:1.0];
         
@@ -186,13 +156,8 @@
 }
 - (void)loginSuccessWithPhonstr:(NSString *)phoneStr{
     
-//    //设置别名
-//    [self setAlias:phoneStr];
-//    [self.navigationController popToRootVC];
 
 }
-
-
 
 //获取验证码
 - (void)sendVerifyCode {
@@ -222,23 +187,6 @@
         }else {
             [self.verifyCodeBtn startTimer:60];
         
-//            [[[HXVerifyPhoneNumAPI verifyPhoneNumWithPhoneNum:cell.inputTextField.text] netWorkClient] postRequestInView:nil finishedBlock:^(id responseObject, NSError *error) {
-//
-//                if (error==nil) {
-//                NSString *state = responseObject[@"pd"][@"state"];
-//                if ([state isEqualToString:@"ok"]) {
-//
-//                    [self sendverifyCodeRequest:cell.inputTextField.text];
-//
-//
-//                }else if ([state isEqualToString:@"no"]){
-//
-//                    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-//                    [SVProgressHUD showInfoWithStatus:@"账号已经存在"];
-//
-//                }
-//                }
-//            }];
         }
         
     }
@@ -247,28 +195,7 @@
 
 - (void)sendverifyCodeRequest:(NSString *)phoneNum
 {
-//        [[[HXGetVerifyCodeAPI getVerifyCodeWithPhoneNum:phoneNum] netWorkClient] postRequestInView:self.view finishedBlock:^(id responseObject, NSError *error) {
-//
-//            if (error==nil) {
-//
-//                NSString *verifyCodeStr = responseObject[@"pd"][@"code"];
-//
-//                if ([verifyCodeStr isEqualToString:@"no authorization"]) {
-//                    [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-//                    [SVProgressHUD showInfoWithStatus:@"获取验证码失败！"];
-//                }else{
-//                    [self.verifyCodeBtn startTimer:120];
-//                    self.verifyCode = verifyCodeStr;
-//
-//                }
-//
-//            }else{
-//
-//                [self lh_showHudInView:self.view labText:error.localizedDescription];
-//
-//            }
-//
-//          }];
+
 }
 
 - (NSString *)isValidWithphoneStr:(NSString *)phoneStr verifyCodeStr:(NSString *)verifyCodeStr  newPwdStr:(NSString *)newPwdStr commitPwdStr:(NSString *)commitPwdStr{
@@ -301,7 +228,6 @@
     
     return YES;
 }
-
 
 - (UITableView *)tableView {
     

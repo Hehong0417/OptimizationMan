@@ -258,7 +258,13 @@ typedef enum {
 
 @end
 
+@interface NSString (decNumber)
+/**
+ *  金额double转换
+ */
++ (NSString *)reviseString:(NSString *)string;
 
+@end
 #pragma mark - 验证 -
 
 @interface NSString (Validate)
@@ -340,9 +346,9 @@ typedef enum {
 
 //@property (nonatomic,copy) idBlock mp4HandleCompleteBlock;
 
+
 /**
- 
- 
+ h5相关
  **/
 - (NSString *)lh_h5UrlStringAddUserIDAndToken:(NSMutableDictionary *)parameters;
 

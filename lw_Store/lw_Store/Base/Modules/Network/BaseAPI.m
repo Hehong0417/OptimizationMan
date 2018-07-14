@@ -132,7 +132,8 @@
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.containerView animated:YES];
     self.HUD.color = KA0LabelColor;
-    self.HUD.detailsLabelText = @"正在加载中...";
+    self.HUD.bezelView.frame = CGRectMake(0, 0, 25, 25);
+    self.HUD.detailsLabelText = @"加载中...";
     self.HUD.detailsLabelColor = kWhiteColor;
     self.HUD.detailsLabelFont = FONT(14);
     self.HUD.activityIndicatorColor = kWhiteColor;

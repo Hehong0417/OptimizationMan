@@ -15,11 +15,12 @@
 @property(nonatomic,strong) NSString *Id;
 @property(nonatomic,strong) NSString *UserName;
 @property(nonatomic,strong) NSString *UserImage;
-
 @property(nonatomic,strong) NSString *parent_userid;
 @property(nonatomic,strong) NSString *parent_username;
 @property(nonatomic,strong) NSString *level;
 @property(nonatomic,strong) NSString *ReferralUserName;
+@property(nonatomic,strong) NSString  *Points;
+@property(nonatomic,strong) NSNumber  *isExtraBonus;
 
 
 //优惠券信息

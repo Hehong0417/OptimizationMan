@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HHOrderDetailVC : UIViewController
-
 @property (nonatomic, strong)   NSString *orderid;
-
-
 @end

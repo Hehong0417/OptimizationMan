@@ -36,4 +36,6 @@ singleton_h(User)
 //体验店编号
 @property(nonatomic,strong) NSString *shop_userid;
 
+@property(nonatomic,strong) NSString *pids;
+
 @end

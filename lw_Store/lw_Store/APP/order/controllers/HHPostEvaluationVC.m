@@ -21,7 +21,6 @@
 
 @implementation HHPostEvaluationVC
 
-
 - (void)viewDidLoad {
    [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -43,8 +42,6 @@
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.backgroundColor = kWhiteColor;
     [self.view addSubview:self.tableView];
-    
-//    [self.tableView registerNib:[UINib nibWithNibName:@"HHShippingAddressCell" bundle:nil] forCellReuseIdentifier:@"HHShippingAddressCell"];
     
     HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
 
@@ -74,7 +71,6 @@
         make.height.mas_greaterThanOrEqualTo(30);
     }];
     
-    
     //footerView
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(80)) backColor:kWhiteColor];
     UIButton *addAddressBtn = [UIButton lh_buttonWithFrame:CGRectMake(60, WidthScaleSize_H(20), SCREEN_WIDTH-120, WidthScaleSize_H(35)) target:self action:@selector(pushEvulation:) image:nil];
@@ -94,7 +90,6 @@
     
     
 }
-
 //发布评价
 - (void)pushEvulation:(UIButton *)btn{
     
@@ -105,7 +100,6 @@
     [self.navigationController pushVC:vc];
     
 }
-
 #pragma mark --- tableView delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,13 +117,10 @@
     
      return gridCell;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return 2;
-    
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.row == 0){

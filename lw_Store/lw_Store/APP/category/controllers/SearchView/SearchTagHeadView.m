@@ -36,7 +36,7 @@
     
     if ([self.delegate respondsToSelector:@selector(clearButtonWasPressedForSearchTagHeadView:)]) {
         
-        [self.delegate clearButtonWasPressedForSearchTagHeadView:self];
+//        [self.delegate clearButtonWasPressedForSearchTagHeadView:self];
     }
     
 }

@@ -19,5 +19,8 @@
 @property (nonatomic, strong)   NSString *orderId;
 @property (nonatomic, strong)   NSString *orderItemId;
 @property (nonatomic, strong)   NSString *money;
+@property (nonatomic, strong)   NSString *Name;
+@property (nonatomic, strong)   NSString *gbId;
+
 
 @end

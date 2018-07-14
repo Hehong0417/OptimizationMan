@@ -26,4 +26,7 @@ typedef enum : NSUInteger {
 
 - (instancetype)createCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier contentType:(HHPayTypeCellContentType)contentType haveIconView:(BOOL)haveIconView;
 
+//选择按钮
+@property(nonatomic,assign) BOOL btnSelected;
+
 @end
