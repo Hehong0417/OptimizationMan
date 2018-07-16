@@ -55,7 +55,6 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
 
     [self getDatasWithType:nil];
     
-    
 }
 
 - (void)viewDidLoad {
@@ -66,7 +65,6 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     HJUser *user = [HJUser sharedUser];
     user.category_selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [user write];
-    
     //title
     UILabel *qestionTitle = [[UILabel alloc]initWithFrame:CGRectMake(WidthScaleSize_W(15), 0, SCREEN_WIDTH - WidthScaleSize_W(15), WidthScaleSize_H(50))];
     qestionTitle.text = @"分类";
@@ -107,7 +105,13 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [UIView new];
 }
-
+- (NSMutableArray<DCClassGoodsItem *> *)titleItem{
+    
+    if (!_titleItem) {
+        _titleItem = [NSMutableArray array];
+    }
+    return _titleItem;
+}
 #pragma mark - 加载数据
 - (void)setUpData
 {
@@ -119,12 +123,12 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
 }
 - (void)getDatasWithType:(NSNumber *)type{
     
-    [self.titleItem removeAllObjects];
     [[[HHCategoryAPI GetCategoryListWithType:type] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
-        
         if (!error) {
             if (api.State == 1) {
                 
+                [self.titleItem removeAllObjects];
+
                 NSArray *arr = api.Data[@"CategoryList"];
                 
                 self.titleItem = [DCClassGoodsItem mj_objectArrayWithKeyValuesArray:arr];
