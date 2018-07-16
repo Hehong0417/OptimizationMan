@@ -247,6 +247,7 @@
     self.settleAccountView.selectBtn.selected = NO;
     
     //pids
+    [self.pids_arr removeAllObjects];
     [arr enumerateObjectsUsingBlock:^(HHproductsModel *productsModel, NSUInteger idx, BOOL *stop) {
         [self.pids_arr addObject:productsModel.pid];
         

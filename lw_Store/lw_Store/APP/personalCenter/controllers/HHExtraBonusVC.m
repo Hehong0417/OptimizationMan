@@ -16,7 +16,6 @@
     NSString *webpageUrl;
     NSString *responseUrl;
     MBProgressHUD *_hud;
-
 }
 @end
 

@@ -30,7 +30,7 @@
         self.msg_contentWebView.opaque = NO;
         self.dateTimeLabel = [UILabel new];
         self.dateTimeLabel.textAlignment = NSTextAlignmentRight;
-        self.dateTimeLabel.font = FONT(13);
+        self.dateTimeLabel.font = FONT(12);
 
         [self.contentView addSubview:self.msg_titleLabel];
         [self.contentView addSubview:self.line];
@@ -78,11 +78,11 @@
     
     _model = model;
     self.msg_titleLabel.text = model.Title;
-    NSString *htmlStr = [NSString stringWithFormat:@"<div style=word-wrap:break-word;font-size:30px; width:20px;>%@</div>",model.Memo];
+    NSString *htmlStr = [NSString stringWithFormat:@"<div style=word-wrap:break-word;font-size:30px; width:20px;>%@</div>",model.Memo?model.Memo:@""];
     [self.msg_contentWebView loadHTMLString: htmlStr baseURL:nil];
     self.dateTimeLabel.text = model.AddTime;
     
-    CGRect rect = [model.Memo boundingRectWithSize:CGSizeMake(ScreenW-50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]} context:nil];
+    CGRect rect = [model.Memo boundingRectWithSize:CGSizeMake(ScreenW-50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16]} context:nil];
     NSLog(@"rectheight:%.f",rect.size.height);
         CGFloat height = rect.size.height+20;
         self.msg_titleLabel.sd_resetLayout

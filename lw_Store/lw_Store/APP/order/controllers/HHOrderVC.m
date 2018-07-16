@@ -31,6 +31,7 @@
 @property (nonatomic, strong)   NSMutableArray *items_arr;
 @property (nonatomic, assign)   NSInteger sg_selectIndex;
 @property (nonatomic, assign)   BOOL isFooterRefresh;
+@property (nonatomic, assign)   BOOL isHeaderRefresh;
 @property(nonatomic,assign)   BOOL  isLoading;
 @property(nonatomic,assign)   BOOL  isWlan;
 @end
@@ -110,8 +111,7 @@
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         self.isFooterRefresh = NO;
-        [self.datas removeAllObjects];
-        [self.items_arr removeAllObjects];
+        self.isHeaderRefresh = YES;
         if (self.sg_selectIndex == 0) {
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }else if(self.sg_selectIndex == 4){
@@ -129,6 +129,7 @@
     MJRefreshAutoNormalFooter *refreshfooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         self.page++;
         self.isFooterRefresh = YES;
+        self.isHeaderRefresh = NO;
         if (self.sg_selectIndex == 0) {
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }else if(self.sg_selectIndex == 4){
@@ -195,6 +196,10 @@
     
     [[[HHMineAPI GetOrderListWithstatus:index page:@(self.page)] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
         self.isLoading = YES;
+        if (self.isHeaderRefresh ==YES) {
+            [self.datas removeAllObjects];
+            [self.items_arr removeAllObjects];
+        }
         if (!error) {
             if (api.State == 1) {
                 self.isWlan = YES;

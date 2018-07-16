@@ -70,7 +70,6 @@ static NSString *HHdiscountPackageViewTabCellID = @"HHdiscountPackageViewTabCell
 static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你喜欢
 
 
-
 @implementation HHGoodBaseViewController
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -86,8 +85,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    //获取数据
-    [self getDatas];
     
     //网络监测
     [self setMonitor];
@@ -95,6 +92,9 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     [self setUpViewScroll];
     
     [self setUpInit];
+    
+    //获取数据
+    [self getDatas];
     
     //加入购物车、立即购买
     [self addCartOrBuyAction];
@@ -201,7 +201,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     [self.countTimeView addSubview:bg_view];
     [_tableHeader addSubview:self.countTimeView];
     bg_view.centerX = self.countTimeView.centerX;
-    
     [_tableHeader addSubview:self.cycleScrollView];
 
 }
@@ -277,6 +276,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     UIView *hudView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) backColor:kWhiteColor];
     [self.tableView addSubview:hudView];
     
+    
     HHNotWlanView *notAlanView = [[HHNotWlanView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     [hudView addSubview:notAlanView];
     notAlanView.hidden = YES;
@@ -288,11 +288,13 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     self.activityIndicator.hidesWhenStopped = YES;
     [hudView addSubview:self.activityIndicator];
     [self.activityIndicator startAnimating];
+    self.addCartTool.userInteractionEnabled = NO;
     
     //商品详情
     [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
+                
                 self.gooodDetailModel = nil;
                 self.gooodDetailModel = [HHgooodDetailModel mj_objectWithKeyValues:api.Data];
                 self.cycleScrollView.imageURLStringsGroup = self.gooodDetailModel.ImageUrls;
@@ -302,11 +304,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 
                 [self.activityIndicator stopAnimating];
                 [hudView removeFromSuperview];
+                self.addCartTool.userInteractionEnabled = YES;
+
+                [self.activityIndicator removeFromSuperview];
                 [self tableView:self.tableView viewForHeaderInSection:1];
                 
                 [self setUpGoodsWKWebView];
                 
-//                self.addCartTool
+
                 //拼团
                HHActivityModel *GroupBy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuy];
                 //降价团
@@ -365,7 +370,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 [hudView removeFromSuperview];
                 [SVProgressHUD showInfoWithStatus:error.localizedDescription];
             }
-            
         }
     }];
     
