@@ -140,6 +140,7 @@
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }
     }];
+    refreshfooter.stateLabel.textColor = KTitleLabelColor;
     self.tableView.mj_footer = refreshfooter;
 }
 #pragma mark - DZNEmptyDataSetDelegate
@@ -399,10 +400,10 @@
 
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:YES];
+            down_y = 50;
+            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
             //twoBtn
-            [self setBtnAttrWithBtn:twoBtn Title:@"追加评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"6"]){
             // 申请退款
             down_y = 0;

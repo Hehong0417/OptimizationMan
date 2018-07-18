@@ -86,7 +86,6 @@
     /* 设置微信的appKey和appSecret */
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:Wechat_AppKey appSecret:Wechat_appSecret redirectURL:@"http://mobile.umeng.com/social"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatTimeLine appKey:Wechat_AppKey appSecret:Wechat_appSecret redirectURL:@"http://mobile.umeng.com/social"];
-    
 }
 // 支持所有iOS系统
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -101,6 +100,7 @@
     return result;
 }
 
+
 //微信支付回调
 - (void)onResp:(BaseResp *)resp {
     
@@ -111,9 +111,7 @@
             case WXSuccess:{
                 //服务器端查询支付通知或查询API返回的结果再提示成功
                 [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Sucess_Notification object:@""];
-                
                 NSLog(@"支付成功");
-                
             }
                 break;
             default:{

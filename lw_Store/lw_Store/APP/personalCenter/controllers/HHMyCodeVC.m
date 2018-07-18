@@ -69,16 +69,16 @@
     
     //创建Webpage内容对象
     
-//    UMShareImageObject *shareObject = [UMShareImageObject shareObjectWithTitle:@"扫一扫" descr:@"" thumImage:nil];
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:webpageUrl]];
-//    shareObject.shareImage = data;
+    UMShareImageObject *shareObject = [UMShareImageObject shareObjectWithTitle:@"长按识别图中二维码" descr:@"长按识别图中二维码2" thumImage:nil];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:webpageUrl]];
+    shareObject.shareImage = data;
     //设置Webpage地址
     //分享消息对象设置分享内容对象
     //创建Webpage内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"邀请好友参团" descr:@"" thumImage:nil];
-    //设置Webpage地址
-    shareObject.webpageUrl = webpageUrl;
-    
+//    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"长按识别图中二维码" descr:@"" thumImage:nil];
+//    //设置Webpage地址
+//    shareObject.webpageUrl = webpageUrl;
+//
     messageObject.shareObject = shareObject;
     
     //调用分享接口

@@ -146,7 +146,6 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
                     [self.collectionView reloadData];
                 }
                 
-                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
                 
@@ -158,7 +157,6 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
         }
         
     }];
-    
 }
 
 #pragma mark - LazyLoad
