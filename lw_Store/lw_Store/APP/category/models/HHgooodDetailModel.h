@@ -15,6 +15,7 @@
 @property(nonatomic,strong) NSString *Id;
 @property(nonatomic,strong) NSString *ProductName;
 @property(nonatomic,strong) NSString *MarketPrice;
+@property(nonatomic,strong) NSString *BuyPrice;
 @property(nonatomic,strong) NSString *MinShowPrice;
 @property(nonatomic,strong) NSString *Stock;
 @property(nonatomic,strong) NSString *SaleCounts;
@@ -24,6 +25,7 @@
 @property(nonatomic,strong) NSDictionary *CutGroupBuy;
 @property(nonatomic,strong) NSDictionary *SendGift;
 @property(nonatomic,strong) NSDictionary *SecKill;
+@property(nonatomic,strong) NSDictionary *CutPrice;
 @property(nonatomic,strong) NSArray <HHPackagesModel *>*Packages;
 
 

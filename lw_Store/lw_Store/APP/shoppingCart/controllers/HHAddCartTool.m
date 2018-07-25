@@ -46,10 +46,9 @@
         self.addCartBlock();
     }
 }
-- (void)buyCartBtnAction{
-    
+- (void)buyCartBtnAction:(UIButton *)btn{
     if (self.buyBlock) {
-        self.buyBlock();
+        self.buyBlock(btn);
     }
 }
 //购物车图标底图
@@ -101,7 +100,11 @@
     
     if (!_buyBtn) {
         
-        _buyBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, 50) target:self action:@selector(buyCartBtnAction) image:nil title:@"活动" titleColor:kWhiteColor font:FONT(15)];
+        _buyBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, 50) target:self action:@selector(buyCartBtnAction:) image:nil title:@"活动" titleColor:kWhiteColor font:FONT(15)];
+        [_buyBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 75, 5, 10)];
+        [_buyBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 40)];
+        [_buyBtn setImage:[UIImage imageNamed:@"triangle2"] forState:UIControlStateSelected];
+        [_buyBtn setImage:[UIImage imageNamed:@"triangle1"] forState:UIControlStateNormal];
         [_buyBtn setBackgroundColor:kDarkGrayColor];
 
     }

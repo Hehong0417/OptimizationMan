@@ -25,7 +25,7 @@
 
 @property (nonatomic, copy)   voidBlock  addCartBlock;
 
-@property (nonatomic, copy)   voidBlock  buyBlock;
+@property (nonatomic, copy)   idBlock  buyBlock;
 
 @property (nonatomic, strong)   UINavigationController *nav;
 

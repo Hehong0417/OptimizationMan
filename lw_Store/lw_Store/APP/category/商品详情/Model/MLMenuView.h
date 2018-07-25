@@ -34,7 +34,7 @@ typedef void(^MLDidSelectBlock)(NSInteger index ,HHActivityModel *model);
 
  @return MenuView
  */
-- (instancetype)initWithFrame:(CGRect)frame WithmodelsArr:(NSArray *)modelsArr WithMenuViewOffsetTop:(CGFloat)top WithTriangleOffsetLeft:(CGFloat)left;
+- (instancetype)initWithFrame:(CGRect)frame WithmodelsArr:(NSArray *)modelsArr WithMenuViewOffsetTop:(CGFloat)top WithTriangleOffsetLeft:(CGFloat)left button:(UIButton *)button;
 
 /**
  设置背景颜色
@@ -63,6 +63,9 @@ typedef void(^MLDidSelectBlock)(NSInteger index ,HHActivityModel *model);
  设置标题颜色
  */
 @property (nonatomic, strong) UIColor *titleColor;
+
+@property (nonatomic, strong) UIButton *button;
+
 
 /**
  设置字体大小

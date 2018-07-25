@@ -126,7 +126,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建Webpage内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"邀请好友参团" descr:@"" thumImage:nil];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"赶快来一起拼团啦！" descr:@"优惠多多" thumImage:nil];
     
     
     //设置Webpage地址
@@ -218,7 +218,7 @@
         
     }else if ([navigationResponse.response.URL.absoluteString containsString:@"HttpError"]){
         
-        [SVProgressHUD showInfoWithStatus:@"服务器出现错误"];
+        [SVProgressHUD showInfoWithStatus:@"商品已下架"];
         decisionHandler(WKNavigationResponsePolicyCancel);
         
     }  else{

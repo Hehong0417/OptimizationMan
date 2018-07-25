@@ -23,6 +23,8 @@
     
     self.desCribLabel.text = [NSString stringWithFormat:@"提示：您此次可提现的最大金额为%@元",self.model.MaxBalance];
     
+    [self.withDrawBtn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
+
 }
 - (IBAction)commitWithdrawAction:(UIButton *)sender {
     

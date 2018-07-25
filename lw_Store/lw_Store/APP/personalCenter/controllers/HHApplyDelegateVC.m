@@ -299,7 +299,6 @@
         
         if (!error) {
             if (api.State == 1) {
-                
                   NSString *vari_str = [self varifyDelegateName:@"1" phoneNum:self.phone_tf.text imageCode:self.codeImage_tf.text smsCode:@"1"];
                   if (!vari_str) {
                         //发送验证码
@@ -316,7 +315,8 @@
             
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }
-        
+
+
     }];
 }
 - (void)sendCodeReq{

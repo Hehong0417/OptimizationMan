@@ -75,6 +75,7 @@
 		CE2519A020D264C000010DE0 /* HHCouponItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE25199F20D264C000010DE0 /* HHCouponItem.m */; };
 		CE26816020941F490065D3A5 /* HHShopIntroCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE26815E20941F490065D3A5 /* HHShopIntroCell.m */; };
 		CE26816120941F490065D3A5 /* HHShopIntroCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE26815F20941F490065D3A5 /* HHShopIntroCell.xib */; };
+		CE286F4421007EE3004F2E2A /* HHBargainingWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE286F4321007EE3004F2E2A /* HHBargainingWebVC.m */; };
 		CE2F1A8220AFC19C007ACE58 /* HHApplyDelegateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F1A8020AFC19C007ACE58 /* HHApplyDelegateVC.m */; };
 		CE2F1A8320AFC19C007ACE58 /* HHApplyDelegateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F1A8120AFC19C007ACE58 /* HHApplyDelegateVC.xib */; };
 		CE2F1A8720AFCC28007ACE58 /* HHApplyDelegateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F1A8520AFCC28007ACE58 /* HHApplyDelegateCell.m */; };
@@ -106,6 +107,7 @@
 		CE4B6FC2209C5B24005482B1 /* HHMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B6FC1209C5B24005482B1 /* HHMessageCell.m */; };
 		CE4B6FC5209C6AC9005482B1 /* HHMessageDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B6FC4209C6AC9005482B1 /* HHMessageDetailVC.m */; };
 		CE4B6FC9209C6B0B005482B1 /* HHMessageDeatilCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4B6FC7209C6B0B005482B1 /* HHMessageDeatilCell.m */; };
+		CE4F60772106D5A3009B7321 /* LSPaoMaView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F60762106D5A2009B7321 /* LSPaoMaView.m */; };
 		CE52D43820995AF200C7BAF6 /* HHEvaluationSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D43720995AF200C7BAF6 /* HHEvaluationSuccessVC.m */; };
 		CE52D43B20995D8000C7BAF6 /* HHEvaluationHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D43A20995D8000C7BAF6 /* HHEvaluationHeadView.m */; };
 		CE52D43E20996A7000C7BAF6 /* HHPostEvaluationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D43D20996A7000C7BAF6 /* HHPostEvaluationVC.m */; };
@@ -464,6 +466,8 @@
 		CE26815D20941F490065D3A5 /* HHShopIntroCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHShopIntroCell.h; sourceTree = "<group>"; };
 		CE26815E20941F490065D3A5 /* HHShopIntroCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHShopIntroCell.m; sourceTree = "<group>"; };
 		CE26815F20941F490065D3A5 /* HHShopIntroCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHShopIntroCell.xib; sourceTree = "<group>"; };
+		CE286F4221007EE3004F2E2A /* HHBargainingWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBargainingWebVC.h; sourceTree = "<group>"; };
+		CE286F4321007EE3004F2E2A /* HHBargainingWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBargainingWebVC.m; sourceTree = "<group>"; };
 		CE2F1A7F20AFC19C007ACE58 /* HHApplyDelegateVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHApplyDelegateVC.h; sourceTree = "<group>"; };
 		CE2F1A8020AFC19C007ACE58 /* HHApplyDelegateVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHApplyDelegateVC.m; sourceTree = "<group>"; };
 		CE2F1A8120AFC19C007ACE58 /* HHApplyDelegateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHApplyDelegateVC.xib; sourceTree = "<group>"; };
@@ -524,6 +528,8 @@
 		CE4B6FC4209C6AC9005482B1 /* HHMessageDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMessageDetailVC.m; sourceTree = "<group>"; };
 		CE4B6FC6209C6B0B005482B1 /* HHMessageDeatilCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMessageDeatilCell.h; sourceTree = "<group>"; };
 		CE4B6FC7209C6B0B005482B1 /* HHMessageDeatilCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMessageDeatilCell.m; sourceTree = "<group>"; };
+		CE4F60752106D5A2009B7321 /* LSPaoMaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPaoMaView.h; sourceTree = "<group>"; };
+		CE4F60762106D5A2009B7321 /* LSPaoMaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPaoMaView.m; sourceTree = "<group>"; };
 		CE52D43620995AF200C7BAF6 /* HHEvaluationSuccessVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHEvaluationSuccessVC.h; sourceTree = "<group>"; };
 		CE52D43720995AF200C7BAF6 /* HHEvaluationSuccessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHEvaluationSuccessVC.m; sourceTree = "<group>"; };
 		CE52D43920995D8000C7BAF6 /* HHEvaluationHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHEvaluationHeadView.h; sourceTree = "<group>"; };
@@ -1892,6 +1898,8 @@
 				CEC135BD20C7F55600C38D75 /* HHSendGiftWebVC.m */,
 				CEB5EF2320CE74F30049CBDD /* HHFamiliarityPayVC.h */,
 				CEB5EF2420CE74F30049CBDD /* HHFamiliarityPayVC.m */,
+				CE286F4221007EE3004F2E2A /* HHBargainingWebVC.h */,
+				CE286F4321007EE3004F2E2A /* HHBargainingWebVC.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -1922,6 +1930,8 @@
 			children = (
 				CE2193A4208F0E9B005351B4 /* LwPersonalCenter.h */,
 				CE2193A3208F0E9B005351B4 /* LwPersonalCenter.m */,
+				CE4F60752106D5A2009B7321 /* LSPaoMaView.h */,
+				CE4F60762106D5A2009B7321 /* LSPaoMaView.m */,
 				CE0C12B620901F2500195A81 /* LwPersonCenterCell.h */,
 				CE0C12B720901F2500195A81 /* LwPersonCenterCell.m */,
 				CE0C12BB209020F700195A81 /* HHPersonCenterView.h */,
@@ -2618,6 +2628,7 @@
 				CE999BE9208DE33B00B9307D /* LHAlertView.m in Sources */,
 				CE219123208EDA0A005351B4 /* SearchTagTableViewCell.m in Sources */,
 				CE52D4552099ACD600C7BAF6 /* HHSelectPhotosCell.m in Sources */,
+				CE4F60772106D5A3009B7321 /* LSPaoMaView.m in Sources */,
 				CE6247EA20B2B438001E0C56 /* HHPayTypeCell.m in Sources */,
 				CE7772B120BCFE4B00D8E1AC /* Base64Util.m in Sources */,
 				CE219319208EE6B8005351B4 /* HHShoppingVC.m in Sources */,
@@ -2842,6 +2853,7 @@
 				CEE2A03F2093247B00843DBD /* HJOrderCell.m in Sources */,
 				CE37948220A9271500A3CDC9 /* HHMyIntegralListVC.m in Sources */,
 				CE4B6FC9209C6B0B005482B1 /* HHMessageDeatilCell.m in Sources */,
+				CE286F4421007EE3004F2E2A /* HHBargainingWebVC.m in Sources */,
 				CE2190EC208ED9E2005351B4 /* HHCategoryModel.m in Sources */,
 				CE52D4452099A02400C7BAF6 /* CDPStarEvaluation.m in Sources */,
 			);

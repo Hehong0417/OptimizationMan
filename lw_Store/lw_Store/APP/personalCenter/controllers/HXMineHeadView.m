@@ -32,6 +32,11 @@
         [self.loginContentView addSubview:self.bottomView];
         [self.bottomView addSubview:self.IDLabel];
         [self.bottomView addSubview:self.titleLabel];
+        
+        UIView *down_line = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 1, self.bottomView.mj_h-20)];
+        down_line.backgroundColor = kWhiteColor;
+        [self.bottomView addSubview:down_line];
+        down_line.centerX = self.bottomView.centerX;
 
     }
     return self;

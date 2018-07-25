@@ -17,6 +17,7 @@
 #import "HHSendGiftWebVC.h"
 #import "HHSaleGroupWebVC.h"
 #import "HHFamiliarityPayVC.h"
+#import "HHBargainingWebVC.h"
 #import "HHPayTypeVC.h"
 #import "HHCouponItem.h"
 #import "HHOrderIdItem.h"
@@ -349,7 +350,12 @@
                     HHFamiliarityPayVC *vc = [HHFamiliarityPayVC new];
                     vc.orderId = self.order_id;
                     [self.navigationController pushVC:vc];
-                }else{
+                }else if ([self.mode isEqual:@4096]){
+                    HHBargainingWebVC *vc = [HHBargainingWebVC new];
+                    vc.orderId = self.order_id;
+                    
+                    [self.navigationController pushVC:vc];
+                } else{
                     //保存创建的订单号
                     HHOrderIdItem *OrderIdItem = [HHOrderIdItem sharedOrderIdItem];
                     OrderIdItem.order_id = self.order_id;

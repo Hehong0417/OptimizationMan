@@ -11,7 +11,6 @@
 #define USHARE_DEMO_APPKEY  @"5a5f10bfa40fa34719000128"
 #define Wechat_AppKey  @"wx33876b8653ae654a"
 #define Wechat_appSecret  @"e6e57e630f10b8b6529aece037c334c3"
-
 #import "WXApi.h"
 #import <UMSocialCore/UMSocialCore.h>
 
@@ -39,14 +38,12 @@
     }
     [self.window makeKeyAndVisible];
     
-    
     [self IQKeyboardManagerConfig];
     
     //配置友盟
     [self UMSocialConfig];
     
     NSLog(@"didFinishLaunchingWithOptions");
-
     
     return YES;
 }
@@ -65,7 +62,6 @@
     keyboardManager.enableAutoToolbar = YES; // 控制是否显示键盘上的工具条
     
     keyboardManager.toolbarDoneBarButtonItemText = @"确定";
-
 }
 #pragma mark - 配置友盟
 

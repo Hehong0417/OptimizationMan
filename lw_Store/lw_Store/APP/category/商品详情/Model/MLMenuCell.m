@@ -69,6 +69,9 @@
         self.labelTitle.text = @"送礼";
     }else if ([menuItem.Mode isEqual:@32]){
         self.labelTitle.text = @"降价团";
+    }else if ([menuItem.Mode isEqual:@4096]){
+        
+        self.labelTitle.text = @"砍价";
     }
 
 }

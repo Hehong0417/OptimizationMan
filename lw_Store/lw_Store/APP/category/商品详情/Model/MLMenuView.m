@@ -28,7 +28,7 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
 @implementation MLMenuView
 
 
-- (instancetype)initWithFrame:(CGRect)frame WithmodelsArr:(NSArray *)modelsArr WithMenuViewOffsetTop:(CGFloat)top WithTriangleOffsetLeft:(CGFloat)left
+- (instancetype)initWithFrame:(CGRect)frame WithmodelsArr:(NSArray *)modelsArr WithMenuViewOffsetTop:(CGFloat)top WithTriangleOffsetLeft:(CGFloat)left button:(UIButton *)button
 {
     self = [super initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     
@@ -40,6 +40,7 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
         _triangleOffsetLeft = left;
         _menuViewOffsetTop = top;
         _isHasTriangle = self.isHasTriangle;
+        self.button = button;
         self.modelsArr = modelsArr;
         self.backgroundColor = [UIColor clearColor];
         
@@ -107,7 +108,7 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
     
    _animationStyle = animationStyle;
     [self setSubViews];
-
+    self.button.selected = YES;
     [self delaDataWithmodelsArr:self.modelsArr];
 
         self.coverView.alpha = 0;
@@ -121,7 +122,8 @@ static  NSString * const IDETIFIRE = @"MLMENUCELLIDETIFIRE";
 
 - (void)hidMenuExitAnimation:(MLEnterAnimationStyle)animationStyle
 {
-    
+        self.button.selected = NO;
+
         self.coverView.alpha = 1;
         [UIView animateWithDuration:0.2 animations:^{
             self.coverView.alpha = 0;

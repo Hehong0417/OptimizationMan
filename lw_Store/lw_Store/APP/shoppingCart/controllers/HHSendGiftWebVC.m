@@ -27,11 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     // js配置
-    
-    
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     //    config.userContentController = userContentController;
     
@@ -63,7 +59,7 @@
 -(void)shareAction{
     
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        // 根据获取的platformType确定所选平台进行下一步操作
+        // 根据获取的platformType确定所选平台进行下一步操作·
         
         [self shareVedioToPlatformType:platformType];
         
@@ -78,7 +74,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建Webpage内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"送礼" descr:@"" thumImage:nil];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"你被礼物砸到了～" descr:@"点我点我，快点我" thumImage:nil];
     
     //设置Webpage地址
     shareObject.webpageUrl = webpageUrl;

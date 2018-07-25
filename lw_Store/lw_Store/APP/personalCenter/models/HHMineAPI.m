@@ -359,9 +359,7 @@
     api.subUrl = API_SetReadNotice;
     api.parametersAddToken = NO;
     return api;
-    
 }
-
 //申请代理不支付
 + (instancetype)postApplyAgentWithagnetId:(NSString *)agnetId smsCode:(NSString *)smsCode mobile:(NSString *)mobile{
     

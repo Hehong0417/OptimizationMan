@@ -241,7 +241,7 @@
     HHShippingAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHShippingAddressCell"];
     cell.shippingAddressModel =  [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.section]];
     [cell.editAddressBtn addTarget:self action:@selector(editAddressBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    cell.deleteAddressBtn.tag = indexPath.row+100;
+    cell.deleteAddressBtn.tag = indexPath.section+100;
     [cell.deleteAddressBtn addTarget:self action:@selector(deleteAddressBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     if (self.enter_type == HHenter_type_submitOrder) {
         cell.editAddressBtn.hidden = YES;

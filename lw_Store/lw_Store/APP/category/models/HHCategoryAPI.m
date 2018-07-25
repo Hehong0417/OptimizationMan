@@ -19,9 +19,7 @@
     if (type) {
         [api.parameters setObject:type forKey:@"type"];
     }
-    
     api.parametersAddToken = NO;
-    
     return api;
 }
 //获取商品列表

@@ -233,7 +233,7 @@
         
     }else if ([navigationResponse.response.URL.absoluteString containsString:@"HttpError"]){
         
-        [SVProgressHUD showInfoWithStatus:@"服务器出现错误"];
+        [SVProgressHUD showInfoWithStatus:@"商品已下架"];
         decisionHandler(WKNavigationResponsePolicyCancel);
 
     }else{

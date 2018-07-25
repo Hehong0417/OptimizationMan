@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *money_tf;
 @property (strong, nonatomic) HHMineModel *model;
 
+@property (weak, nonatomic) IBOutlet UIButton *withDrawBtn;
 
 @end

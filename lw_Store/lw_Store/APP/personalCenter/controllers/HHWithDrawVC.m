@@ -35,6 +35,7 @@
     self.canWithdrawTf2.leftViewMode = UITextFieldViewModeAlways;
     self.canWithdrawTf2.leftView = [UILabel lh_labelWithFrame:CGRectMake(0, 0, 41, 41) text:@"¥" textColor:kBlackColor font:FONT(22) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
     
+    [self.withDrawBtn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
 }
 #pragma mark - 加载数据
 -(void)getDatas{
@@ -70,7 +71,7 @@
    
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
-            }
+            }  
         }else{
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }
