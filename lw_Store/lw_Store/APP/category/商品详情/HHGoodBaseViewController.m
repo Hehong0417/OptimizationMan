@@ -287,7 +287,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     [hudView addSubview:self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.addCartTool.userInteractionEnabled = NO;
-   
+    
     //商品详情
     [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
         if (!error) {

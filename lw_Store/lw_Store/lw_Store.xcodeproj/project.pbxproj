@@ -93,6 +93,7 @@
 		CE37948820A9430900A3CDC9 /* NSObject+AutoProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37948720A9430800A3CDC9 /* NSObject+AutoProperty.m */; };
 		CE37948F20A98A6300A3CDC9 /* HHMyCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37948D20A98A6300A3CDC9 /* HHMyCodeVC.m */; };
 		CE37949320A9913700A3CDC9 /* HHMessageWeb.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37949220A9913700A3CDC9 /* HHMessageWeb.m */; };
+		CE3C14212109B07700A2FC42 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */; };
 		CE3E59B120F8A2330010BA90 /* HHGoodBaseSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */; };
 		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
 		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
@@ -500,6 +501,8 @@
 		CE37948D20A98A6300A3CDC9 /* HHMyCodeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMyCodeVC.m; sourceTree = "<group>"; };
 		CE37949120A9913700A3CDC9 /* HHMessageWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMessageWeb.h; sourceTree = "<group>"; };
 		CE37949220A9913700A3CDC9 /* HHMessageWeb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMessageWeb.m; sourceTree = "<group>"; };
+		CE3C141F2109B07700A2FC42 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		CE3E59AF20F8A2330010BA90 /* HHGoodBaseSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHGoodBaseSubVC.h; sourceTree = "<group>"; };
 		CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGoodBaseSubVC.m; sourceTree = "<group>"; };
 		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
@@ -1057,6 +1060,15 @@
 			path = HHCellCommentView;
 			sourceTree = "<group>";
 		};
+		CE3C141E2109B07700A2FC42 /* CatchedHelper */ = {
+			isa = PBXGroup;
+			children = (
+				CE3C141F2109B07700A2FC42 /* UncaughtExceptionHandler.h */,
+				CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */,
+			);
+			path = CatchedHelper;
+			sourceTree = "<group>";
+		};
 		CE52D4422099A02400C7BAF6 /* CDPStarEvaluation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1226,6 +1238,7 @@
 				CE999B99208DE33B00B9307D /* Controllers */,
 				CE999B9C208DE33B00B9307D /* Views */,
 				CE999BAC208DE33B00B9307D /* TabBarController */,
+				CE3C141E2109B07700A2FC42 /* CatchedHelper */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2589,6 +2602,7 @@
 				CE219120208EDA0A005351B4 /* HHSGSegmentedControl.m in Sources */,
 				CE999C02208DE33B00B9307D /* BaseModel.m in Sources */,
 				CE999C0B208DE33B00B9307D /* HHAddressModel.m in Sources */,
+				CE3C14212109B07700A2FC42 /* UncaughtExceptionHandler.m in Sources */,
 				CE2F1A8220AFC19C007ACE58 /* HHApplyDelegateVC.m in Sources */,
 				CE319D5F209B0E2C0009A15A /* HHCellCommentView.m in Sources */,
 				CEBFE265209D9DD3005E09CD /* HHCouponUsedVC.m in Sources */,

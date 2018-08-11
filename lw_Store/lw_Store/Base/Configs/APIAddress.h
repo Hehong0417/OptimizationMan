@@ -11,7 +11,6 @@
 //(57)
 //#ifdef DEBUG
 
-//////////
 //阿里云
 #define API_HOST @"http://dm-base-api.elevo.cn/api"
 
@@ -33,7 +32,6 @@
 //#define API_APP_BASE_URL @""
 //#define API_BASE_URL [NSString stringWithFormat:@"%@", API_HOST]
 #define API_QR_BASE_URL [NSString stringWithFormat:@"%@/image", API_BASE_URL]
-
 //接口类型1
 #define API_SUB_URL(_url) [NSString stringWithFormat:@"%@/%@", API_HOST, _url]
 //接口类型2
@@ -44,8 +42,6 @@
 #define API_SUB_URL3(_url) [NSString stringWithFormat:@"%@/%@", API_HOST3, _url]
 //接口类型5
 #define API_SUB_URL4(_url) [NSString stringWithFormat:@"%@/%@", API_HOST4, _url]
-
-//
 
 typedef enum : NSUInteger {
     HHenter_home_Type,

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UncaughtExceptionHandler.h"
 
 #define USHARE_DEMO_APPKEY  @"5a5f10bfa40fa34719000128"
 #define Wechat_AppKey  @"wx33876b8653ae654a"
@@ -17,6 +18,7 @@
 @interface AppDelegate ()<WXApiDelegate>
 
 @end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions{
@@ -27,6 +29,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [UncaughtExceptionHandler installUncaughtExceptionHandler:YES showAlert:YES];
+
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
@@ -44,7 +48,7 @@
     [self UMSocialConfig];
     
     NSLog(@"didFinishLaunchingWithOptions");
-    
+
     return YES;
 }
 - (void)IQKeyboardManagerConfig {
