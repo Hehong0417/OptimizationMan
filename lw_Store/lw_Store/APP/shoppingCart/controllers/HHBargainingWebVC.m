@@ -62,11 +62,8 @@
     
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
         // 根据获取的platformType确定所选平台进行下一步操作
-        
         [self shareVedioToPlatformType:platformType];
-        
     }];
-    
 }
 //分享到不同平台
 - (void)shareVedioToPlatformType:(UMSocialPlatformType)platformType
