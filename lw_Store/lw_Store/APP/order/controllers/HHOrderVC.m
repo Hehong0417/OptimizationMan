@@ -202,6 +202,7 @@
             [self.items_arr removeAllObjects];
         }
         if (!error) {
+            
             if (api.State == 1) {
                 self.isWlan = YES;
                 [self loadDataFinish:api.Data];
@@ -401,7 +402,8 @@
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
             down_y = 50;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
+            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
             //twoBtn
             [self setBtnAttrWithBtn:twoBtn Title:@"评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"6"]){

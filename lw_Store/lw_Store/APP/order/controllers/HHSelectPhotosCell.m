@@ -18,8 +18,6 @@
     CGFloat _margin;
 }
 @property (nonatomic ,strong) UICollectionView *collectionView;
-@property (nonatomic ,strong) NSMutableArray *photosArray;
-@property (nonatomic ,strong) NSMutableArray *assestArray;
 @property (nonatomic ,strong) YYTextView  *textView;
 
 @property BOOL isSelectOriginalPhoto;
@@ -72,11 +70,10 @@
         
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
-        //        self.collectionView.scrollEnabled = NO;
+        //self.collectionView.scrollEnabled = NO;
     }
     return _collectionView;
 }
-
 
 - (void)checkLocalPhoto{
     
@@ -90,11 +87,11 @@
 }
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto{
+    
     self.photosArray = [NSMutableArray arrayWithArray:photos];
     self.assestArray = [NSMutableArray arrayWithArray:assets];
     _isSelectOriginalPhoto = isSelectOriginalPhoto;
     [_collectionView reloadData];
-    
     
 }
 

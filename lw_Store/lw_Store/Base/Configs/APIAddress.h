@@ -126,7 +126,8 @@ typedef enum : NSUInteger {
 #define API_Order_AppPay API_SUB_URL2(@"Order/AppPay")
 //3.9创建订单
 #define API_Order_Create API_SUB_URL2(@"Order/Create")
-
+//3.10 发布评价
+#define API_OrderEvaluate API_SUB_URL2(@"Order/OrderEvaluate")
 /**
  *  我的
  */

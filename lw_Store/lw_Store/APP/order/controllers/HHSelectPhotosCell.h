@@ -11,5 +11,7 @@
 @interface HHSelectPhotosCell : UITableViewCell
 
 @property (nonatomic ,strong) UIViewController *vc;
+@property (nonatomic ,strong) NSMutableArray *photosArray;
+@property (nonatomic ,strong) NSMutableArray *assestArray;
 
 @end

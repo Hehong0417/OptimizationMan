@@ -467,5 +467,27 @@
     api.parametersAddToken = NO;
     return api;
 }
-
+//发布评价
++ (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSArray *)productEvaluate{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_OrderEvaluate;
+    if (orderId) {
+        [api.parameters setObject:orderId forKey:@"orderId"];
+    }
+    if (level) {
+        [api.parameters setObject:level forKey:@"level"];
+    }
+    if (logisticsScore) {
+        [api.parameters setObject:logisticsScore forKey:@"logisticsScore"];
+    }
+    if (serviceScore) {
+        [api.parameters setObject:serviceScore forKey:@"serviceScore"];
+    }
+    if (productEvaluate) {
+        [api.parameters setObject:productEvaluate forKey:@"productEvaluate"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
 @end

@@ -97,7 +97,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建Webpage内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"亲爱哒，快来送礼物给你的小可爱～" descr:@"  " thumImage:nil];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"亲爱哒，快来送礼物给你的小可爱～" descr:nil thumImage:nil];
     
     
     //设置Webpage地址

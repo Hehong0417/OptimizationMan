@@ -13,6 +13,7 @@
 -(id)initWithFrame:(CGRect)frame onTheView:(UIView *)view{
     if (self=[super init]) {
         _commentText=@"无";
+        
         //空星级imageView
         UIImage *starEmptyImag = [UIImage imageNamed:@"stoke_star"];
         _starEmptyImageView=[[UIImageView alloc] initWithImage:starEmptyImag];
@@ -41,36 +42,41 @@
 #pragma mark 手势
 //单击手势
 -(void)tapGR:(UITapGestureRecognizer *)tapGR{
+    
     CGPoint tapPoint=[tapGR locationInView:_starEmptyImageView];
     _width=tapPoint.x/_starEmptyImageView.bounds.size.width;
     
     if (_width<=1/5.0) {
         //差
         _commentText=@"差";
+        _grade = @1;
     _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width/5,_starEmptyImageView.bounds.size.height);
 
     }
     else if(_width<=2/5.0&&_width>1/5.0){
         //一般
         _commentText=@"一般";
+        _grade = @2;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*2/5,_starEmptyImageView.bounds.size.height);
 
     }
     else if(_width<=3/5.0&&_width>2/5.0){
         //好
     _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*3/5,_starEmptyImageView.bounds.size.height);
-
+        _grade = @3;
         _commentText=@"好";
     }
     else if(_width<=4/5.0&&_width>3/5.0){
         //很好
         _commentText=@"很好";
+        _grade = @4;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*4/5,_starEmptyImageView.bounds.size.height);
 
     }
     else{
         //非常好
         _commentText=@"非常好";
+        _grade = @5;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*5/5,_starEmptyImageView.bounds.size.height);
 
     }
@@ -92,30 +98,35 @@
     if (_width<=1/5.0) {
         //差
         _commentText=@"差";
+        _grade = @1;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*1/5,_starEmptyImageView.bounds.size.height);
-
+        
     }
     else if(_width<=2/5.0&&_width>1/5.0){
         //一般
         _commentText=@"一般";
+        _grade = @2;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*2/5,_starEmptyImageView.bounds.size.height);
-
+        
     }
     else if(_width<=3/5.0&&_width>2/5.0){
         //好
         _commentText=@"好";
+        _grade = @3;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*3/5,_starEmptyImageView.bounds.size.height);
-
+        
     }
     else if(_width<=4/5.0&&_width>3/5.0){
         //很好
         _commentText=@"很好";
+         _grade = @4;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*4/5,_starEmptyImageView.bounds.size.height);
-
+       
     }
     else{
         //非常好
         _commentText=@"非常好";
+        _grade = @5;
         _starImageView.frame=CGRectMake(_starEmptyImageView.frame.origin.x,_starEmptyImageView.frame.origin.y,_starEmptyImageView.bounds.size.width*5/5,_starEmptyImageView.bounds.size.height);
     }
     

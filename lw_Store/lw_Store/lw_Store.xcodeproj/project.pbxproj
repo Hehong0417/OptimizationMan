@@ -15,6 +15,7 @@
 		CE0C1CE120C6714C001F59F9 /* HHMySaleGroupWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C1CE020C6714C001F59F9 /* HHMySaleGroupWebVC.m */; };
 		CE1EBF1220F761D00095AF4D /* HHGuess_you_likeTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1EBF1120F761D00095AF4D /* HHGuess_you_likeTabCell.m */; };
 		CE1EBF1520F762270095AF4D /* HHGuess_you_likeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1EBF1420F762270095AF4D /* HHGuess_you_likeView.m */; };
+		CE218477212573D7003F354F /* HHPostEvaluateSectionHead.m in Sources */ = {isa = PBXBuildFile; fileRef = CE218476212573D7003F354F /* HHPostEvaluateSectionHead.m */; };
 		CE2190EB208ED9E2005351B4 /* HHCategoryAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190E9208ED9E2005351B4 /* HHCategoryAPI.m */; };
 		CE2190EC208ED9E2005351B4 /* HHCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190EA208ED9E2005351B4 /* HHCategoryModel.m */; };
 		CE219118208EDA0A005351B4 /* DCClassCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2190ED208EDA07005351B4 /* DCClassCategoryCell.m */; };
@@ -364,6 +365,8 @@
 		CE1EBF1120F761D00095AF4D /* HHGuess_you_likeTabCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGuess_you_likeTabCell.m; sourceTree = "<group>"; };
 		CE1EBF1320F762270095AF4D /* HHGuess_you_likeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHGuess_you_likeView.h; sourceTree = "<group>"; };
 		CE1EBF1420F762270095AF4D /* HHGuess_you_likeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGuess_you_likeView.m; sourceTree = "<group>"; };
+		CE218475212573D7003F354F /* HHPostEvaluateSectionHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPostEvaluateSectionHead.h; sourceTree = "<group>"; };
+		CE218476212573D7003F354F /* HHPostEvaluateSectionHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHPostEvaluateSectionHead.m; sourceTree = "<group>"; };
 		CE2190E7208ED9E1005351B4 /* HHCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHCategoryModel.h; sourceTree = "<group>"; };
 		CE2190E8208ED9E2005351B4 /* HHCategoryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHCategoryAPI.h; sourceTree = "<group>"; };
 		CE2190E9208ED9E2005351B4 /* HHCategoryAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHCategoryAPI.m; sourceTree = "<group>"; };
@@ -1838,6 +1841,8 @@
 				CE52D43D20996A7000C7BAF6 /* HHPostEvaluationVC.m */,
 				CE8EED0D20FF257A008F5D3D /* HHPostEvaluateFooter.h */,
 				CE8EED0E20FF257A008F5D3D /* HHPostEvaluateFooter.m */,
+				CE218475212573D7003F354F /* HHPostEvaluateSectionHead.h */,
+				CE218476212573D7003F354F /* HHPostEvaluateSectionHead.m */,
 				CE52D4532099ACD600C7BAF6 /* HHSelectPhotosCell.h */,
 				CE52D4542099ACD600C7BAF6 /* HHSelectPhotosCell.m */,
 				CE52D43F20999E6300C7BAF6 /* HHEvaluteStarCell.h */,
@@ -2721,6 +2726,7 @@
 				CE999C05208DE33B00B9307D /* HHAddressAPI.m in Sources */,
 				CE21931F208EE6B8005351B4 /* HHCartFootView.m in Sources */,
 				CE999BB8208DE33B00B9307D /* LHTools.m in Sources */,
+				CE218477212573D7003F354F /* HHPostEvaluateSectionHead.m in Sources */,
 				CE999BCD208DE33B00B9307D /* NSArray+NSRangeException.m in Sources */,
 				CE0835E820B407D3004C3781 /* HHUrlModel.m in Sources */,
 				CE4B6FC2209C5B24005482B1 /* HHMessageCell.m in Sources */,

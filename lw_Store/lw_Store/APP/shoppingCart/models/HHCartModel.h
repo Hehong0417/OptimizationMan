@@ -34,6 +34,8 @@
 @property(nonatomic,strong) NSNumber *familiarityPay;
 @property(nonatomic,strong) NSString *familiarityPayMoney;
 @property(nonatomic,strong) NSString *totalIntegral;
+@property(nonatomic,strong) NSNumber *order_can_evaluate;
+
 
 //优惠券模型
 @property(nonatomic,strong) NSArray <HHcouponsModel*>*coupons;

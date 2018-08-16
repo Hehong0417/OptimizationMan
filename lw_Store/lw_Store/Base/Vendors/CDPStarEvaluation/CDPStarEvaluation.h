@@ -15,7 +15,7 @@
 
 @end
 
-@interface CDPStarEvaluation : NSObject
+@interface CDPStarEvaluation : NSObject<UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) UIImageView *starImageView;//满五星imageView
 
@@ -25,9 +25,11 @@
 
 @property (nonatomic,assign) float width;//实时记录评价详细分数
 
+@property (nonatomic,strong) NSNumber *grade;//星级
+
 @property (nonatomic,assign) id <CDPStarEvaluationDelegate> delegate;
 
--(id)initWithFrame:(CGRect)frame  onTheView:(UIView *)view;//初始化
+-(id)initWithFrame:(CGRect)frame onTheView:(UIView *)view;//初始化
 
 
 @end
