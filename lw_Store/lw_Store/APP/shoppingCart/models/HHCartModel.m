@@ -32,7 +32,7 @@
         self.footHeight = 5;
     }else if (status_code == 5){
         //   @"交易完成
-        self.footHeight = 55;
+        self.footHeight =  [self.order_can_evaluate isEqual:@1]?55:5;
         
     }else if (status_code == 6){
         //        @"申请退款

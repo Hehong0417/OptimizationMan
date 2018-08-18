@@ -13,5 +13,11 @@
 @property(nonatomic,strong) NSMutableArray *items;
 
 @property(nonatomic,strong) NSMutableArray *pids;
+@property(nonatomic,strong) NSNumber *order_can_evaluate;
+@property(nonatomic,strong) NSString *order_id;
+@property(nonatomic,strong) NSString *order_date;
+@property(nonatomic,strong) NSString *status;
+@property(nonatomic,strong) NSString *status_name;
+@property(nonatomic,strong) NSString *total;
 
 @end

@@ -20,5 +20,6 @@
 
 @property(nonatomic,strong)   UILabel *title_lab;
 
+@property(nonatomic,strong)   NSString *pid;
 
 @end

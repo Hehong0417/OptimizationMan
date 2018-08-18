@@ -30,7 +30,7 @@
         [self addBtns:grageView];
         
         //描述相符
-        UILabel *left_discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(15, CGRectGetMaxY(grageView.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"描述相符" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        UILabel *left_discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(15, CGRectGetMaxY(grageView.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"物流服务" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self addSubview:left_discrib_lab];
         
         //CDPStarEvaluation星形评价
@@ -41,7 +41,7 @@
         //        [self.contentView addSubview:self.discrib_lab];
         
         //物流服务
-        UILabel *left_logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(15, CGRectGetMaxY(left_discrib_lab.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"物流服务" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        UILabel *left_logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(15, CGRectGetMaxY(left_discrib_lab.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"服务态度" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self addSubview:left_logistics_lab];
         
         //        self.logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(self.discrib_lab.frame.origin.x, CGRectGetMaxY(self.discrib_lab.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
@@ -62,17 +62,21 @@
     
     return self;
 }
--(void)theCurrentCommentText:(NSString *)commentText starEvaluation:(id)starEvaluation{
+- (void)theCurrentCommentText:(NSString *)commentText starEvaluation:(id)starEvaluation{
 
+    NSNumber *describeScore =  ((CDPStarEvaluation *)starEvaluation).grade;
+    
+    HHPostOrderEvaluateItem *oEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    
     if(starEvaluation == self.starEvaluation){
 
-        self.discrib_lab.text = commentText;
+        oEvaluateItem.logisticsScore = describeScore;
 
-    }else if(starEvaluation == self.starEvaluation){
+    }else if(starEvaluation == self.starEvaluation2){
 
-        self.logistics_lab.text = commentText;
-
+        oEvaluateItem.serviceScore = describeScore;
     }
+    [oEvaluateItem write];
 }
 //发布评价
 - (void)pushEvulation:(UIButton *)btn{
@@ -92,6 +96,7 @@
         UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(i*grageView_w/3, 0, 65, 30) target:self action:@selector(gradeBtnAction:) image:[UIImage imageNamed:images[i]] title:titles[i]  titleColor:kBlackColor font:FONT(14)];
         [btn setImage:[UIImage imageNamed:select_images[i]] forState:UIControlStateSelected];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, -10)];
+        btn.tag = 10000+i;
         if (i==0) {
             [self gradeBtnAction:btn];
         }
@@ -104,6 +109,8 @@
     self.currentSelectBtn.selected = NO;
     gradeBtn.selected = YES;
     self.currentSelectBtn = gradeBtn;
-    
+    HHPostOrderEvaluateItem *oEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    oEvaluateItem.level = [NSNumber numberWithInteger:gradeBtn.tag-9999];
+    [oEvaluateItem write];
 }
 @end

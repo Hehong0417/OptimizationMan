@@ -100,4 +100,10 @@
 @property(nonatomic,strong) NSString *IsVerifyMobile;
 @property(nonatomic,strong) NSDictionary *ApplyName;
 
+//评价统计信息
+@property(nonatomic,strong) NSString *describeScore;
+@property(nonatomic,strong) NSString *totalCount;
+@property(nonatomic,strong) NSString *hasImageCount;
+@property(nonatomic,strong) NSString *goodEvaluateProportion;
+
 @end

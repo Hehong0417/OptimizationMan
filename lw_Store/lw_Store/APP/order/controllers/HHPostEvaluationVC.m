@@ -14,8 +14,9 @@
 #import "HHEvaluationSuccessVC.h"
 #import "HHPostEvaluateFooter.h"
 #import "HHPostEvaluateSectionHead.h"
+#import "HHPostOrderEvaluateItem.h"
 
-@interface HHPostEvaluationVC ()<UITableViewDelegate,UITableViewDataSource,HHPostEvaluateFooterDelegate,CDPStarEvaluationDelegate>
+@interface HHPostEvaluationVC ()<UITableViewDelegate,UITableViewDataSource,HHPostEvaluateFooterDelegate>
 
 @property (nonatomic, strong)   UITableView *tableView;
 
@@ -23,9 +24,38 @@
 
 @implementation HHPostEvaluationVC
 
+
 - (void)viewDidLoad {
    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    
+    NSBlockOperation *operation1 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        //清除评价总模型数据
+        [self clearpostOrderEvaluateItem];
+        
+    }];
+    NSBlockOperation *operation2 = [NSBlockOperation blockOperationWithBlock:^{
+        
+        //创建评价总模型
+        HHPostOrderEvaluateItem *postOrderEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+        
+        postOrderEvaluateItem.orderId = self.orderId;
+        postOrderEvaluateItem.level = @1;
+        [self.orderItem_m.items enumerateObjectsUsingBlock:^(HHproducts_item_Model *item_model, NSUInteger idx, BOOL * _Nonnull stop) {
+            HHproductEvaluateModel *evaluate_m = [HHproductEvaluateModel new];
+            evaluate_m.orderItemId = item_model.product_item_id;
+            [postOrderEvaluateItem.productEvaluate addObject:evaluate_m];
+        } ];
+        
+        [postOrderEvaluateItem write];
+        
+    }];
+
+    [operation2 addDependency:operation1];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperations:@[operation2,operation1] waitUntilFinished:NO];
+   
     
     self.title = @"发布评价";
     
@@ -51,8 +81,6 @@
     footer.delegate = self;
     self.tableView.tableFooterView = footer;
     
-
-    
     [self.tableView registerClass:[HHSelectPhotosCell class] forCellReuseIdentifier:@"HHSelectPhotosCell"];
 
     [self.tableView registerClass:[HHEvaluteStarCell class] forCellReuseIdentifier:@"HHEvaluteStarCell"];
@@ -68,6 +96,7 @@
     UITableViewCell *gridCell;
         HHSelectPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHSelectPhotosCell"];
         cell.vc = self;
+        cell.section = indexPath.section;
         gridCell = cell;
      return gridCell;
 }
@@ -76,11 +105,11 @@
     HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
     //headView
     HHPostEvaluateSectionHead *section_head = [[HHPostEvaluateSectionHead alloc] initWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(85))];
-   [section_head.product_imageV sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
+    section_head.section = section;
+    [section_head.product_imageV sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
 
     return section_head;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -88,7 +117,7 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 2;
+    return self.orderItem_m.items.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -107,21 +136,43 @@
 
 - (void)postEvaluateBtnClick:(UIButton *)button{
     
-    HHSelectPhotosCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    NSLog(@"photosArray-%@",cell.photosArray);
-    
-    
-//    HHEvaluationSuccessVC *vc = [HHEvaluationSuccessVC new];
-//    vc.title_str = @"评价成功";
-//    HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
-//    vc.pid = model.product_item_id;
-//    [self.navigationController pushVC:vc];
-    
-}
-- (void)theCurrentCommentText:(NSString *)commentText starEvaluation:(id)starEvaluation{
-    
-    
+    HHPostOrderEvaluateItem *oEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    NSLog(@"oEvaluateItem:%@",[oEvaluateItem mj_JSONString]);
+
+    [[[HHMineAPI postOrderEvaluateWithOrderId:nil level:nil logisticsScore:nil serviceScore:nil productEvaluate:[oEvaluateItem mj_JSONString]] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+
+        if (!error) {
+            if (api.State == 1) {
+                
+                    [self clearpostOrderEvaluateItem];
+
+                    HHEvaluationSuccessVC *vc = [HHEvaluationSuccessVC new];
+                    vc.title_str = @"评价成功";
+                    HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
+                    vc.pid = model.product_item_id;
+                    [self.navigationController pushVC:vc];
+            }else{
+                NSLog(@"Msg:%@",api.Msg);
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            NSLog(@"error:%@",api.Msg);
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+    }];
 }
 
+//清除
+- (void)clearpostOrderEvaluateItem{
+    
+    HHPostOrderEvaluateItem *postOrderEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    postOrderEvaluateItem.orderId = nil;
+    postOrderEvaluateItem.level = nil;
+    postOrderEvaluateItem.logisticsScore = nil;
+    postOrderEvaluateItem.serviceScore = nil;
+    postOrderEvaluateItem.productEvaluate = nil;
+    [postOrderEvaluateItem write];
+    
+}
 @end
 

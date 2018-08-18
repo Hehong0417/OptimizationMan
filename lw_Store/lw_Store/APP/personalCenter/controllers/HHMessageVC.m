@@ -86,11 +86,6 @@
     
     return [[NSAttributedString alloc] initWithString:@"消息列表为空" attributes:@{NSFontAttributeName:FONT(14),NSForegroundColorAttributeName:KACLabelColor}];
 }
-//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView{
-//
-//    return [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FONT(12),NSForegroundColorAttributeName:KACLabelColor}];
-//
-//}
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     

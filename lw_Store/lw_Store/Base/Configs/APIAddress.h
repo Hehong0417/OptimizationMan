@@ -99,7 +99,8 @@ typedef enum : NSUInteger {
 #define API_Product_search API_SUB_URL3(@"SearchProduct")
 //3.5获取单个商品
 #define API_GetProductDetail API_SUB_URL3(@"GetProduct")
-
+//3.6商品评价列表
+#define API_GetProductEvaluate API_SUB_URL2(@"Order/GetProductEvaluate")
 
 /**
  *  购物车
@@ -128,6 +129,8 @@ typedef enum : NSUInteger {
 #define API_Order_Create API_SUB_URL2(@"Order/Create")
 //3.10 发布评价
 #define API_OrderEvaluate API_SUB_URL2(@"Order/OrderEvaluate")
+//3.11 上传多张图片
+#define API_UploadManyImage API_SUB_URL(@"FileUpload/UploadManyImage")
 /**
  *  我的
  */
@@ -201,7 +204,8 @@ typedef enum : NSUInteger {
 #define API_AgentApplyPay API_SUB_URL2(@"Order/AgentApplyRealAppPay")
 //4.47 粉丝列表搜索
 #define API_GetAgentList API_SUB_URL(@"UserInfo/GetAgentList")
-
+//4.48获取商品评价统计接口
+#define API_GetProductEvaluateStatictis API_SUB_URL2(@"Order/GetProductEvaluateStatictis")
 //省
 #define API_GetProvinces API_SUB_URL1(@"Admin/Region/GetRegionList")
 //获取城市或地区

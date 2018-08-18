@@ -10,5 +10,6 @@
 #import "HHBaseTableViewVC.h"
 
 @interface HHEvaluationListVC : HHBaseTableViewVC
+@property (nonatomic, strong) NSString *pid;
 
 @end

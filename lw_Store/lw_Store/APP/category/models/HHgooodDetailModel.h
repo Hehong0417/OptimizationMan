@@ -26,6 +26,9 @@
 @property(nonatomic,strong) NSDictionary *SendGift;
 @property(nonatomic,strong) NSDictionary *SecKill;
 @property(nonatomic,strong) NSDictionary *CutPrice;
+
+@property(nonatomic,strong) NSString *EvaluateCount;
+
 @property(nonatomic,strong) NSArray <HHPackagesModel *>*Packages;
 
 

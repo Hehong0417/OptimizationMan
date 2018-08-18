@@ -101,6 +101,7 @@
 #import "HHWXLoginVC.h"
 #import "WXApi.h"
 #import "HHWXModel.h"
+#import "HHPostOrderEvaluateItem.h"
 
 
 #endif /* Lw_Store_pch */

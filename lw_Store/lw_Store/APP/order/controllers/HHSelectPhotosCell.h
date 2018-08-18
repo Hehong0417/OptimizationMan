@@ -13,5 +13,6 @@
 @property (nonatomic ,strong) UIViewController *vc;
 @property (nonatomic ,strong) NSMutableArray *photosArray;
 @property (nonatomic ,strong) NSMutableArray *assestArray;
+@property (nonatomic ,assign) NSInteger section;
 
 @end

@@ -33,8 +33,11 @@
 
 - (void)theCurrentCommentText:(NSString *)commentText starEvaluation:(id)starEvaluation{
     
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(getEvaluateLevel:)]) {
-        [self.delegate getEvaluateLevel:((CDPStarEvaluation *)starEvaluation).grade];
-    }
+    NSNumber *describeScore =  ((CDPStarEvaluation *)starEvaluation).grade;
+    
+    HHPostOrderEvaluateItem *postOrderEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    HHproductEvaluateModel *evaluate_m =  postOrderEvaluateItem.productEvaluate[self.section];
+    evaluate_m.describeScore = describeScore;
+    [postOrderEvaluateItem write];
 }
 @end

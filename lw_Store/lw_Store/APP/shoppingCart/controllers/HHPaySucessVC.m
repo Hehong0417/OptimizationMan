@@ -151,7 +151,6 @@
         }else{
             headerView.title_lab.hidden = NO;
         }
-        headerView.backgroundColor = KVCBackGroundColor;
         reusableview = headerView;
     }
     return reusableview;

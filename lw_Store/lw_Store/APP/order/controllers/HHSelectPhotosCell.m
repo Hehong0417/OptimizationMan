@@ -13,9 +13,12 @@
 #define Kwidth [UIScreen mainScreen].bounds.size.width
 #define Kheight [UIScreen mainScreen].bounds.size.height
 
-@interface HHSelectPhotosCell ()<TZImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>{
+typedef   void (^completeHandle)();
+
+@interface HHSelectPhotosCell ()<TZImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,YYTextViewDelegate>{
     CGFloat _itemWH;
     CGFloat _margin;
+    MBProgressHUD  *hud;
 }
 @property (nonatomic ,strong) UICollectionView *collectionView;
 @property (nonatomic ,strong) YYTextView  *textView;
@@ -33,6 +36,7 @@
         self.textView = [[YYTextView alloc] initWithFrame:CGRectMake(10, 10, ScreenW-20, WidthScaleSize_H(150))];
         self.textView.placeholderText = @"点击输入你对宝贝的看法，宝贝们满足您的期待嘛？说说你的使用心得，分享给想买它们的人吧～";
         self.textView.placeholderFont = FONT(14);
+        self.textView.delegate = self;
         self.textView.font = FONT(14);
         [self.contentView addSubview:self.textView];
 
@@ -75,6 +79,26 @@
     return _collectionView;
 }
 
+#pragma mark - YYTextViewDelegate
+
+- (void)textViewDidEndEditing:(YYTextView *)textView{
+    
+    HHPostOrderEvaluateItem *oEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+    HHproductEvaluateModel  *evaluate_m  = oEvaluateItem.productEvaluate[self.section];
+    evaluate_m.content = textView.text;
+    [oEvaluateItem write];
+    
+    NSLog(@"textViewDidEndEditing");
+}
+- (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    NSString * toBeString = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    if (toBeString.length > 11 && range.length!=1){
+        textView.text = [toBeString substringToIndex:11];
+        return NO;
+    }
+    return YES;
+}
 - (void)checkLocalPhoto{
     
     TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initWithMaxImagesCount:4 delegate:self];
@@ -88,10 +112,15 @@
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto{
     
-    self.photosArray = [NSMutableArray arrayWithArray:photos];
-    self.assestArray = [NSMutableArray arrayWithArray:assets];
-    _isSelectOriginalPhoto = isSelectOriginalPhoto;
-    [_collectionView reloadData];
+    //上传多张图片
+    [self uploadPhotosWithPhotos:photos completeHandle:^{
+        [hud hideAnimated:YES];
+        self.photosArray = [NSMutableArray arrayWithArray:photos];
+        self.assestArray = [NSMutableArray arrayWithArray:assets];
+        _isSelectOriginalPhoto = isSelectOriginalPhoto;
+        [_collectionView reloadData];
+        
+    }];
     
 }
 
@@ -102,11 +131,16 @@
         TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_assestArray selectedPhotos:_photosArray index:indexPath.row];
         imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
         [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-            _photosArray = [NSMutableArray arrayWithArray:photos];
-            _assestArray = [NSMutableArray arrayWithArray:assets];
-            _isSelectOriginalPhoto = isSelectOriginalPhoto;
-            [_collectionView reloadData];
-            _collectionView.contentSize = CGSizeMake(0, ((_photosArray.count + 2) / 3 ) * (_margin + _itemWH));
+            //上传多张图片
+            [self uploadPhotosWithPhotos:photos completeHandle:^{
+                _photosArray = [NSMutableArray arrayWithArray:photos];
+                _assestArray = [NSMutableArray arrayWithArray:assets];
+                _isSelectOriginalPhoto = isSelectOriginalPhoto;
+                [_collectionView reloadData];
+                _collectionView.contentSize = CGSizeMake(0, ((_photosArray.count + 2) / 3 ) * (_margin + _itemWH));
+            }];
+            
+           
         }];
         [self.vc presentViewController:imagePickerVc animated:YES completion:nil];
     }
@@ -134,7 +168,45 @@
     return cell;
     
 }
+#pragma mark- 上传多张图片
 
+- (void)uploadPhotosWithPhotos:(NSArray *)photos completeHandle:(completeHandle)completeHandle{
+    
+    hud = [MBProgressHUD showHUDAddedTo:self.vc.view animated:YES];
+    hud.color = KA0LabelColor;
+    hud.detailsLabelText = @"完成中";
+    hud.detailsLabelColor = kWhiteColor;
+    hud.detailsLabelFont = FONT(14);
+    hud.activityIndicatorColor = kWhiteColor;
+    [hud show:YES];
+    
+    NSMutableArray *photo_datas = [NSMutableArray array];
+    [photos enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+        [photo_datas addObject:imageData];
+    }];
+    [[[HHMineAPI postUploadManyImageWithimageDatas:photo_datas] netWorkClient] uploadFileInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
+       
+        if (!error) {
+            if (api.State == 1) {
+                
+              HHPostOrderEvaluateItem *oEvaluateItem = [HHPostOrderEvaluateItem sharedPostOrderEvaluateItem];
+                if (oEvaluateItem.productEvaluate>0) {
+                    HHproductEvaluateModel  *evaluate_m  = oEvaluateItem.productEvaluate[self.section];
+                    evaluate_m.pictures = api.Path;
+                    
+                    [oEvaluateItem write];
+                    completeHandle();
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+    }];
+    
+}
 - (void)deletePhotos:(UIButton *)sender{
     
     [_photosArray removeObjectAtIndex:sender.tag - 100];

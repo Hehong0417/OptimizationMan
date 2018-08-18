@@ -78,6 +78,7 @@
             [self.nav pushVC:vc];
         }else{
             HHEvaluationListVC *vc = [HHEvaluationListVC new];
+            vc.pid = self.pid;
             [self.nav pushVC:vc];
         }
     }

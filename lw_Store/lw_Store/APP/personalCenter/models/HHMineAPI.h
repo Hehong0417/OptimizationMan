@@ -65,6 +65,10 @@
 //获取代理信息
 + (instancetype)GetApplyAgent;
 
+//获取商品评价统计接口
++ (instancetype)GetProductEvaluateStatictisWithpid:(NSString *)pid;
+
+
 #pragma mark - post
 
 //修改登录密码
@@ -113,7 +117,7 @@
 //创建订单
 + (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message;
 //发布评价
-+ (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSArray *)productEvaluate;
++ (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSString *)productEvaluate;
 //上传多张图片
-+ (instancetype)postUploadManyImageWith;
++ (instancetype)postUploadManyImageWithimageDatas:(NSArray *)imageDatas;
 @end

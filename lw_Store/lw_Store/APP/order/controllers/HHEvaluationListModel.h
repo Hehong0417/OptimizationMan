@@ -10,14 +10,14 @@
 
 @interface HHEvaluationListModel : BaseModel
 
-@property (nonatomic, strong) NSString *icon_url;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *grade;
-@property (nonatomic, strong) NSString *dateTime;
-@property (nonatomic, strong) NSString *proper;
+@property (nonatomic, strong) NSString *userImage;
+@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *describeScore;
+@property (nonatomic, strong) NSString *createDate;
+@property (nonatomic, strong) NSString *skuName;
 @property (nonatomic, strong) NSString *content;
-@property (nonatomic, strong) NSArray *imagesModelArray;
-@property (nonatomic, strong) NSString *replyContent;
+@property (nonatomic, strong) NSArray *pictures;
+@property (nonatomic, strong) NSString *adminReply;
 
 @property (nonatomic, strong) NSString *addition_time;
 @property (nonatomic, strong) NSString *addition_comment;

@@ -458,7 +458,7 @@
 
 - (void)postRequestInView:(UIView *)containerView successBlock:(APISuccessBlock)successBlock {
     [self readyForRequest:containerView];
-    
+ 
 #ifdef kNCLoaclResponse
     
     id responseObject = [self.bAPI localResponseJSON];
@@ -518,7 +518,6 @@
         
         [self.files enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NetworkClientFile *file = obj;
-            
             [formData appendPartWithFileData:file.fileData name:file.name fileName:file.fileName mimeType:file.mimeType];
         }];
         

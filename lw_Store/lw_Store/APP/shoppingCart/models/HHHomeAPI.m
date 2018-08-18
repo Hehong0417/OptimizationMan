@@ -42,6 +42,28 @@
     return api;
     
 }
+//评论列表
++ (instancetype)GetProductEvaluateWithId:(NSString *)Id page:(NSNumber *)page  pageSize:(NSNumber *)pageSize hasImage:(NSNumber *)hasImage{
+    
+    HHHomeAPI *api = [self new];
+    api.subUrl = API_GetProductEvaluate;
+    if (Id) {
+        [api.parameters setObject:Id forKey:@"pid"];
+    }
+    if (hasImage) {
+        [api.parameters setObject:@"true" forKey:@"hasImage"];
+    }
+    if (page) {
+        [api.parameters setObject:page forKey:@"page"];
+    }
+    if (pageSize) {
+        [api.parameters setObject:pageSize forKey:@"pageSize"];
+    }
+    api.parametersAddToken = NO;
+    
+    return api;
+    
+}
 
 //月成交记录
 + (instancetype)GetFinishLogId:(NSString *)Id page:(NSNumber *)page pageSize:(NSNumber *)pageSize{

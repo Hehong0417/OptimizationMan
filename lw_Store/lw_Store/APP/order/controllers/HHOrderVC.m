@@ -197,14 +197,15 @@
     
     [[[HHMineAPI GetOrderListWithstatus:index page:@(self.page)] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
         self.isLoading = YES;
+        
         if (self.isHeaderRefresh ==YES) {
             [self.datas removeAllObjects];
             [self.items_arr removeAllObjects];
         }
         if (!error) {
-            
             if (api.State == 1) {
                 self.isWlan = YES;
+                [self.items_arr  removeAllObjects];
                 [self loadDataFinish:api.Data];
 
             }else{
@@ -227,7 +228,7 @@
  *  加载数据完成
  */
 - (void)loadDataFinish:(NSArray *)arr {
-
+    
     [self.datas addObjectsFromArray:arr];
     
     //处理数据
@@ -235,6 +236,13 @@
         HHCartModel *cart_m = [HHCartModel mj_objectWithKeyValues:dic];
 
         HHOrderItemModel *orderItem_m = [HHOrderItemModel new];
+        orderItem_m.order_id = cart_m.order_id;
+        orderItem_m.order_date = cart_m.order_date;
+        orderItem_m.status = cart_m.status;
+        orderItem_m.status_name = cart_m.status_name;
+        orderItem_m.order_can_evaluate = cart_m.order_can_evaluate;
+        orderItem_m.total = cart_m.total;
+
         [cart_m.items enumerateObjectsUsingBlock:^(HHproductsModel *productsM, NSUInteger idx, BOOL * _Nonnull stop) {
 
             [productsM.product_item enumerateObjectsUsingBlock:^(HHproducts_item_Model * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -298,7 +306,7 @@
 #pragma mark --- ApplyRefundDelegate
 
 - (void)backActionWithBtn:(UIButton *)btn{
-    
+    [self.items_arr removeAllObjects];
     [self.datas removeAllObjects];
     if (self.sg_selectIndex == 0) {
         [self getDatasWithIndex:@0];
@@ -310,7 +318,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[indexPath.section]];
+//    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[indexPath.section]];
     HHOrderItemModel *orders_m = self.items_arr[indexPath.section];
 
     UITableViewCell *grideCell;
@@ -318,7 +326,7 @@
         //订单总计
         HHOrderTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHOrderTwoCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.orderTotalModel = model;
+        cell.orderTotalModel = orders_m;
         grideCell = cell;
 
     }else{
@@ -335,7 +343,7 @@
               vc.delegate = self;
               HHproducts_item_Model *model1 = orders_m.items[indexPath.row];
               vc.item_id = model1.product_item_id;
-              vc.order_id = model.order_id;
+              vc.order_id = orders_m.order_id;
               vc.count = model1.product_item_quantity;
               vc.price = model1.product_item_price;
             [self.navigationController pushVC:vc];
@@ -358,13 +366,6 @@
     twoBtn.tag = section+1000;
     [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
     [footView addSubview:twoBtn];
-    
-    //最左边按钮
-//    UIButton *leftBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-20-90, 10, 80, 30) target:self action:@selector(leftBtnAction:) title:@"填写物流" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
-//    leftBtn.tag = section+1001;
-//    [leftBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
-//    [footView addSubview:leftBtn];
-//    leftBtn.hidden = YES;
     
     //分割线Y坐标
     CGFloat down_y = 50;
@@ -401,7 +402,7 @@
 
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = 50;
+            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
             BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
             [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
             //twoBtn
@@ -503,10 +504,11 @@
             //取消订单
             [[[HHMineAPI postOrder_CloseWithorderid:orderid] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
                 btn.enabled = YES;
-                [btn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
+                [btn lh_setBackgroundColor:kWhiteColor forState:UIControlStateNormal];
                 if (!error) {
                     if (api.State == 1) {
                         [self.datas removeAllObjects];
+                        [self.items_arr removeAllObjects];
                         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
                         [SVProgressHUD showSuccessWithStatus:@"取消订单成功！"];
                         [self getDatasWithIndex:@(self.sg_selectIndex)];
@@ -522,8 +524,8 @@
             //确认收货
             [[[HHMineAPI postConfirmOrderWithorderid:orderid]netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
                 btn.enabled = YES;
-                [btn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
-                
+                [btn lh_setBackgroundColor:kWhiteColor forState:UIControlStateNormal];
+
                 if (!error) {
                     if (api.State == 1) {
                         
@@ -531,6 +533,7 @@
                         [SVProgressHUD showSuccessWithStatus:@"确认收货成功！"];
                         self.page = 1;
                         [self.datas removeAllObjects];
+                        [self.items_arr removeAllObjects];
                         [self getDatasWithIndex:@(self.sg_selectIndex)];
                     }else{
                         [SVProgressHUD showInfoWithStatus:api.Msg];
@@ -599,8 +602,11 @@
     }else if([status isEqualToString:@"5"]){
         //交易成功-->追加评价
         HHPostEvaluationVC *vc = [HHPostEvaluationVC new];
+        HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
         HHOrderItemModel *itemModel = self.items_arr[section];
         vc.orderItem_m = itemModel;
+        vc.orderId = model.order_id;
+        
         [self.navigationController pushVC:vc];
     }
 }

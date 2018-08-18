@@ -40,7 +40,6 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
 }
 - (void)setup
 {
-
     _iconView = [UIImageView new];
     [_iconView lh_setCornerRadius:20 borderWidth:0 borderColor:nil];
 
@@ -111,7 +110,7 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     _timeLabel.sd_layout
     .leftEqualToView(_iconView)
     .topSpaceToView(_iconView, margin)
-    .widthIs(100)
+    .widthIs(200)
     .heightIs(20);
     
     _propertyLabel.sd_layout
@@ -144,14 +143,14 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
 }
 - (void)setModel:(HHEvaluationListModel *)model{
     _model = model;
-    _iconView.image = [UIImage imageNamed:model.icon_url];
-    _nameLable.text = model.name;
-    _timeLabel.text = model.dateTime;
-    _propertyLabel.text = model.proper;
-    _contentLabel.text = model.content;
-    _picContainerView.picPathStringsArray = model.imagesModelArray;
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:model.userImage]];
+    _nameLable.text = model.userName;
+    _timeLabel.text = model.createDate;
+    _propertyLabel.text = model.skuName;
+    _contentLabel.text = model.content?model.content:@"此用户没有填写评价";
+    _picContainerView.picPathStringsArray = model.pictures;
     
-    NSInteger grade = model.grade.integerValue;
+    NSInteger grade = model.describeScore.integerValue;
     CGFloat width = _gradeEmptyImgV.frame.size.width/5;
     UIImage *gradeImage = [UIImage imageNamed:@"stoke_star"];
     _gradeImgV.sd_resetLayout
@@ -160,10 +159,10 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     .widthIs(grade*width)
     .heightIs(gradeImage.size.height);
     
-    [_commentView setupWithCommentItems:model.replyContent];
+    [_commentView setupWithCommentItems:model.adminReply];
     
     [_additionalCommentView setupAddition_time:model.addition_time addition_comment:model.addition_comment];
-    if (model.replyContent.length==0) {
+    if (model.adminReply.length==0) {
         _additionalCommentView.sd_resetLayout
         .leftEqualToView(_contentLabel)
         .topSpaceToView(_picContainerView, 10)
@@ -176,13 +175,12 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     }
 
     UIView *bottomView;
-    if (model.addition_comment.length == 0&&model.replyContent.length==0) {
+    if (model.addition_comment.length == 0&&model.adminReply.length==0) {
         bottomView = _picContainerView;
-    }else if (model.addition_comment.length == 0&&model.replyContent.length>0){
+    }else if (model.addition_comment.length == 0&&model.adminReply.length>0){
         bottomView = _commentView;
     }else if (model.addition_comment.length>0){
         bottomView = _additionalCommentView;
-
     }
     [self setupAutoHeightWithBottomView:bottomView bottomMargin:15];
 

@@ -22,6 +22,9 @@
 + (instancetype)GetFinishLogId:(NSString *)Id page:(NSNumber *)page pageSize:(NSNumber *)pageSize;
 
 
+//商品详情
++ (instancetype)GetProductEvaluateWithId:(NSString *)Id page:(NSNumber *)page  pageSize:(NSNumber *)pageSize hasImage:(NSNumber *)hasImage;
+
 #pragma mark - post
 
 

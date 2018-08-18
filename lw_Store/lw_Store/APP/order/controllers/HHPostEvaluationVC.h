@@ -12,5 +12,6 @@
 @interface HHPostEvaluationVC : UIViewController
 
 @property(nonatomic,strong)   HHOrderItemModel *orderItem_m;
+@property(nonatomic,strong)   NSString *orderId;
 
 @end

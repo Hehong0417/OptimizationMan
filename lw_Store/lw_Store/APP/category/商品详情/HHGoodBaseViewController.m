@@ -28,6 +28,7 @@
 #import "HHdiscountPackageViewTabCell.h"
 #import "HHdiscountPackageVC.h"
 #import "HHGuess_you_likeTabCell.h"
+#import "HHEvaluationListVC.h"
 
 @interface HHGoodBaseViewController ()<UITableViewDelegate,UITableViewDataSource,WKNavigationDelegate,SDCycleScrollViewDelegate,HHCartVCProtocol>
 {
@@ -745,13 +746,22 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         cell.discribeLabel.text = model.ValueStr;
         gridcell = cell;
     }else if (indexPath.section == 3){
+        //用户评价
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = FONT(13);
+        cell.textLabel.text = [NSString stringWithFormat:@"用户评价(%@)",self.gooodDetailModel.EvaluateCount];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }else if (indexPath.section == 4){
             //优惠套餐
             HHdiscountPackageViewTabCell *cell = [tableView dequeueReusableCellWithIdentifier:HHdiscountPackageViewTabCellID];
              cell.packages_model = self.gooodDetailModel.Packages[indexPath.row];
              cell.indexPath = indexPath;
              cell.nav = self.navigationController;
              gridcell = cell;
-    }else if (indexPath.section == 4){
+    }else if (indexPath.section == 5){
         //猜你喜欢
        HHGuess_you_likeTabCell  *cell = [tableView dequeueReusableCellWithIdentifier:HHGuess_you_likeTabCellID];
         cell.guess_you_like_arr =  self.guess_you_like_arr;
@@ -764,7 +774,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-  return  5;
+  return  6;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
@@ -773,9 +783,11 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         return 1;
     }else if (section == 2) {
      return self.discribeArr.count;
-    }else if (section == 3){
-     return self.gooodDetailModel.Packages.count;
+    }else if (section == 3) {
+        return self.gooodDetailModel.EvaluateCount.integerValue>0?1:0;
     }else if (section == 4){
+     return self.gooodDetailModel.Packages.count;
+    }else if (section == 5){
         return self.guess_you_like_arr.count>0?1:0;
     }
     return 0;
@@ -790,8 +802,10 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if (indexPath.section == 2) {
        return 30;
     }else if (indexPath.section == 3) {
-        return 130;
+        return 30;
     }else if (indexPath.section == 4) {
+        return 130;
+    }else if (indexPath.section == 5) {
         return 220+45;
     }
     return 0.001;
@@ -811,6 +825,16 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }
     
     return nil;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.gooodDetailModel.EvaluateCount.integerValue>0&&indexPath.section==3) {
+        //用户评价
+        HHEvaluationListVC *vc = [HHEvaluationListVC new];
+        vc.pid = self.gooodDetailModel.Id;
+        [self.navigationController pushVC:vc];
+    }
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     

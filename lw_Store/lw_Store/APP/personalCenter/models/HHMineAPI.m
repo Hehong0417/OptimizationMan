@@ -158,6 +158,18 @@
     api.parametersAddToken = NO;
     return api;
 }
+//获取商品评价统计接口
++ (instancetype)GetProductEvaluateStatictisWithpid:(NSString *)pid{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetProductEvaluateStatictis;
+    if (pid) {
+        [api.parameters setObject:pid forKey:@"pid"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
 #pragma mark - post
 
 //修改登录密码
@@ -468,7 +480,7 @@
     return api;
 }
 //发布评价
-+ (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSArray *)productEvaluate{
++ (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSString *)productEvaluate{
     HHMineAPI *api = [self new];
     api.subUrl = API_OrderEvaluate;
     if (orderId) {
@@ -484,7 +496,23 @@
         [api.parameters setObject:serviceScore forKey:@"serviceScore"];
     }
     if (productEvaluate) {
-        [api.parameters setObject:productEvaluate forKey:@"productEvaluate"];
+        [api.parameters setObject:productEvaluate forKey:@"evaluate"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
+//上传多张图片
++ (instancetype)postUploadManyImageWithimageDatas:(NSArray *)imageDatas{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_UploadManyImage;
+    NSMutableArray *uploadFile = [NSMutableArray array];
+    if (imageDatas) {
+        for (NSData *imageData  in imageDatas) {
+            NetworkClientFile *file = [NetworkClientFile imageFileWithFileData:imageData name:@"file"];
+            [uploadFile addObject:file];
+        }
+        api.uploadFile = uploadFile;
     }
     api.parametersAddToken = NO;
     return api;

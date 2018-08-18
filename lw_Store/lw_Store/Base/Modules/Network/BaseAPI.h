@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) id  Data;
 @property (nonatomic, strong) id  List;
+@property (nonatomic, strong) id  Path;
 
 //@property (nonatomic, strong) id  data;
 

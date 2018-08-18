@@ -15,7 +15,7 @@
 
 }
 //订单总计
-- (void)setOrderTotalModel:(HHCartModel *)orderTotalModel{
+- (void)setOrderTotalModel:(HHOrderItemModel *)orderTotalModel{
     _orderTotalModel = orderTotalModel;
     self.express_nameLabel.textColor = kRedColor;
     

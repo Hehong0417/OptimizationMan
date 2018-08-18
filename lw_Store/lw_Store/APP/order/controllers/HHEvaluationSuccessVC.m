@@ -29,7 +29,7 @@
     
     [super viewDidLoad];
     
-    self.title = self.title_str;
+    self.title = @"评价成功";
     
     self.datas = [NSMutableArray array];
     
@@ -40,7 +40,7 @@
     //头部
     
     //collectionView
-    self.collectionView.backgroundColor = kWhiteColor;
+    self.collectionView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HXHomeCollectionCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"HXHomeCollectionCell"];
@@ -50,8 +50,16 @@
     [self getDatas];
     [self addFootRefresh];
     
+    //抓取返回按钮
+    UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
+    [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    
 }
-
+- (void)backBtnAction{
+    
+    [self.navigationController popToRootVC];
+}
 #pragma mark - DZNEmptyDataSetDelegate
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
@@ -193,6 +201,12 @@
         HHEvaluationHeadView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HHEvaluationHeadView" forIndexPath:indexPath];
         headerView.isPay = 0;
         headerView.nav = self.navigationController;
+        if (self.datas.count == 0) {
+            headerView.title_lab.hidden = YES;
+        }else{
+            headerView.title_lab.hidden = NO;
+        }
+        headerView.pid = self.pid;
         headerView.backgroundColor = KVCBackGroundColor;
         reusableview = headerView;
     }
