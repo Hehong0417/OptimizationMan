@@ -26,6 +26,7 @@
 
         [self addSubview:self.success_lab];
         
+        
         //按钮
         for(NSInteger i =0;i<2;i++){
             CGFloat btn_W = (ScreenW - 2*WidthScaleSize_W(40) - WidthScaleSize_W(35))/2;
