@@ -23,7 +23,8 @@
     
     self.title = @"申请退款";
     self.tableView.backgroundColor = KVCBackGroundColor;
-
+   
+    
     self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.price.floatValue*self.count.integerValue];
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) backColor:kClearColor];
@@ -60,6 +61,17 @@
     header.textLabel.textColor = KA0LabelColor;
     header.textLabel.font = FONT(15);
 }
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return self.title_str;
+    }else if (section == 1){
+        return @"退款方式";
+    }else{
+    return @"退款原因";
+    }
+}
+
 - (IBAction)addbuttonAction:(UIButton *)sender {
     
     NSInteger value = self.quantity_tf.text.integerValue;

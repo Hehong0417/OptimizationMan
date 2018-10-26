@@ -101,6 +101,24 @@
     return api;
     
 }
+//获取订单的物流信息
++ (instancetype)GetOrderExpressWithRefundId:(NSString *)refundId{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetReturnLogistics;
+    if (refundId) {
+        [api.parameters setObject:refundId forKey:@"refundId"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+}
+//获取所有的快递公司
++ (instancetype)GetExpressCompany{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetExpressCompany;
+    api.parametersAddToken = NO;
+    return api;
+    
+}
 //获取提现信息
 + (instancetype)GetUserApplyMessage{
     
@@ -433,7 +451,7 @@
     api.parametersAddToken = NO;
     return api;
 }
-//订单支付
+//订单支付(微信)
 + (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money{
     
     HHMineAPI *api = [self new];
@@ -451,6 +469,26 @@
     return api;
     
 }
+//订单支付(支付宝)
++ (instancetype)postAlipayOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_Order_AppPay_alipay;
+    if (addrId) {
+        [api.parameters setObject:addrId forKey:@"addrId"];
+    }
+    if (orderId) {
+        [api.parameters setObject:orderId forKey:@"orderId"];
+    }
+    if (money) {
+        [api.parameters setObject:money forKey:@"money"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
+
+
 //创建订单
 + (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message{
     HHMineAPI *api = [self new];
@@ -516,6 +554,25 @@
     }
     api.parametersAddToken = NO;
     return api;
+    
+}
+//提交退货快递物流单号
++ (instancetype)postSubReturnGoodsExpressWithorderid:(NSString *)orderid exp_code:(NSString *)exp_code exp_order:(NSString *)exp_order{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_SubReturnGoodsExpress;
+    if (orderid) {
+        [api.parameters setObject:orderid forKey:@"refundId"];
+    }
+    if (exp_code) {
+        [api.parameters setObject:exp_code forKey:@"expressCompanyAbb"];
+    }
+    if (exp_order) {
+        [api.parameters setObject:exp_order forKey:@"shipOrderNumber"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
     
 }
 @end

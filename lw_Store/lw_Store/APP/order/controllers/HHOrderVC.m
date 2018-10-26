@@ -20,10 +20,11 @@
 #import "HHMyOrderItem.h"
 #import "HHFamiliarityPayVC.h"
 #import "HHPaySucessVC.h"
+#import "HHLogisticsVC.h"
 
 @interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,ApplyRefundDelegate>
 
-@property(nonatomic,strong)   SGSegmentedControl *SG;
+@property(nonatomic,strong)   SGSegmentedControl  *SG;
 @property (nonatomic, strong)   NSArray *title_arr;
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, assign)   NSInteger page;
@@ -254,6 +255,8 @@
                 products_item_m.product_item_quantity = obj.product_item_quantity;
                 products_item_m.product_item_status = obj.product_item_status;
                 products_item_m.product_item_sku_name = obj.product_item_sku_name;
+                products_item_m.product_item_refund_id = obj.product_item_refund_id;
+
                 [orderItem_m.items addObject:products_item_m];
                 [orderItem_m.pids addObject:obj.product_item_id];
             }];
@@ -336,17 +339,12 @@
             cell.productModel =  orders_m.items[indexPath.row];
             cell.nav = self.navigationController;
             [self setStandardLabWith:orders_m.items[indexPath.row] cell:cell];
+             
             grideCell = cell;
           [cell.StandardLab setTapActionWithBlock:^{
-            UIStoryboard *board = [UIStoryboard storyboardWithName:@"PersonCenter" bundle:nil];
-            HHApplyRefundVC *vc = [board instantiateViewControllerWithIdentifier:@"HHApplyRefundVC"];
-              vc.delegate = self;
-              HHproducts_item_Model *model1 = orders_m.items[indexPath.row];
-              vc.item_id = model1.product_item_id;
-              vc.order_id = orders_m.order_id;
-              vc.count = model1.product_item_quantity;
-              vc.price = model1.product_item_price;
-            [self.navigationController pushVC:vc];
+              
+          [self pushVCWith:orders_m.items[indexPath.row] orders_m:orders_m];
+           
         }];
     }
     grideCell.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
@@ -458,6 +456,12 @@
     cell.StandardLab.hidden = NO;
     [HHMyOrderItem shippingLogisticsStateWithStatus_code:productModel.product_item_status.integerValue cell:cell];
 }
+//跳转对应控制器
+-(void)pushVCWith:(HHproducts_item_Model *)productModel orders_m:(HHOrderItemModel *)orders_m{
+    WEAK_SELF();
+    [HHMyOrderItem pushVCWithStatus_code:productModel.product_item_status.integerValue navC:weakSelf.navigationController VC:weakSelf product_m:productModel order_id:orders_m.order_id];
+}
+
 //设置段尾按钮属性和标题
 - (void)setBtnAttrWithBtn:(UIButton *)btn Title:(NSString *)title CornerRadius:(NSInteger)cornerRadius borderColor:(UIColor *)borderColor titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backgroundColor{
     
@@ -481,12 +485,12 @@
     }else if([status isEqualToString:@"3"]){
         //待收货--->查看物流
                 //查看物流
-//                HHLogisticsVC *vc = [HHLogisticsVC new];
-//                vc.orderid = model.orderid;
-//                vc.express_order = model.return_goods_express_order;
-//                vc.express_name = model.return_goods_express_name;
-//                vc.type = @1;
-//                [self.navigationController pushVC:vc];
+                HHLogisticsVC *vc = [HHLogisticsVC new];
+                vc.orderid = model.orderid;
+                vc.express_order =  model.return_goods_express_order;
+                vc.express_name =  model.return_goods_express_name;
+                vc.type = @1;
+                [self.navigationController pushVC:vc];
 
     }else if([status isEqualToString:@"5"]){
         //交易成功-->删除订单
@@ -543,8 +547,7 @@
                 }
             }];
         }
-//        广州市番禺区大石镇周岸坊前街一巷6-1
-//        兴华街3巷3号401
+
     }];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
@@ -560,15 +563,35 @@
 
     btn.enabled = NO;
     //----->微信支付
-    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-        btn.enabled = YES;
+//    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+//        btn.enabled = YES;
+//        if (!error) {
+//            if (api.State == 1) {
+//                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+//                HJUser *user = [HJUser sharedUser];
+//                user.pids = pid;
+//                [user write];
+//                [HHWXModel payReqWithModel:model];
+//            }else{
+//                [SVProgressHUD showInfoWithStatus:api.Msg];
+//            }
+//        }else {
+//            [SVProgressHUD showInfoWithStatus:api.Msg];
+//        }
+//    }];
+    //----->支付宝支付
+    [[[HHMineAPI postAlipayOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
-                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
                 HJUser *user = [HJUser sharedUser];
                 user.pids = pid;
                 [user write];
-                [HHWXModel payReqWithModel:model];
+                HHAlipayModel *model = [HHAlipayModel mj_objectWithKeyValues:api.Data];
+                if (model.sign) {
+                    [[AlipaySDK defaultService] payOrder:model.sign fromScheme:Alipay_appScheme callback:^(NSDictionary *resultDic) {
+                        
+                    }];
+                }
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }

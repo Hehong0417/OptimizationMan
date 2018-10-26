@@ -69,6 +69,7 @@
     self.tableView.tableFooterView = footView;
 
 }
+
 - (void)getDatas{
     
     [[[HHMineAPI GetAddressWithId:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
@@ -214,7 +215,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HHTextfieldcell *cell = [tableView dequeueReusableCellWithIdentifier:@"tit leLabel"];
+    HHTextfieldcell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleLabel"];
     
     if (!cell) {
         cell = [[HHTextfieldcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleLabel"];
@@ -282,7 +283,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 44;
+    return WidthScaleSize_H(50);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

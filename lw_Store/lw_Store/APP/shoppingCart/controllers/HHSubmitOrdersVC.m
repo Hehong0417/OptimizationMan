@@ -21,6 +21,7 @@
 #import "HHPayTypeVC.h"
 #import "HHCouponItem.h"
 #import "HHOrderIdItem.h"
+#import "HHPayWayCell.h"
 
 @interface HHSubmitOrdersVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,HHShippingAddressVCProtocol,payTypeDelegate>
 {
@@ -49,6 +50,8 @@
 @property(nonatomic,strong) HHcouponsModel *select_coupon_model;
 
 @property(nonatomic,strong) NSMutableArray *integralSelecItems;
+
+@property(nonatomic,strong) NSMutableArray  *payWaySelecItems;
 
 @end
 
@@ -94,6 +97,7 @@
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HHSubmitOrderCell" bundle:nil] forCellReuseIdentifier:@"HHSubmitOrderCell"];
+    [self.tableView registerClass:[HHPayWayCell class] forCellReuseIdentifier:@"HHPayWayCell"];
     
     
     self.tableView.emptyDataSetDelegate = self;
@@ -108,11 +112,13 @@
     //获取收货数据
     [self getAddressData];
     
+    [self.payWaySelecItems addObjectsFromArray:@[@1,@0]];
     
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
     [backBtn bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
     [backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    
     
 }
 - (void)backBtnAction{
@@ -152,6 +158,12 @@
         _integralSelecItems = [NSMutableArray array];
     }
     return _integralSelecItems;
+}
+- (NSMutableArray *)payWaySelecItems{
+    if (!_payWaySelecItems) {
+        _payWaySelecItems = [NSMutableArray array];
+    }
+    return _payWaySelecItems;
 }
 //地址列表
 - (void)getAddressData{
@@ -257,45 +269,33 @@
     
     [self.submitOrderTool.ImmediatePayLabel setTapActionWithBlock:^{
         
-     if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
-
-         self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
-         self.submitOrderTool.closePay.userInteractionEnabled = NO;
-
-        if (self.enter_type == HHaddress_type_Spell_group) {
-            //活动拼团
-            [self createOrder];
-            
-        }else if (self.enter_type == HHaddress_type_add_cart){
-            if ([self.sendGift isEqual:@1]) {
-                //送礼
-                [self createOrder];
+        if ([[self.payWaySelecItems firstObject] isEqual:@1]) {
+            //微信支付
+            if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
+                
+                [self prepareCreateOrder];
+                
             }else{
-            //购物车
-                self.mode = @1;
-                [self createOrder];
+                
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"你未安装微信，是否安装？" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [alertC dismissViewControllerAnimated:YES completion:nil];
+                    
+                }];
+                [alertC addAction:action1];
+                [alertC addAction:action2];
+                [self presentViewController:alertC animated:YES completion:nil];
             }
-        }else if (self.enter_type == HHaddress_type_package){
-            //优惠套餐
-            [self createOrder];
-        }
-         
         }else{
-            
-            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"你未安装微信，是否安装？" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-             }];
-            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-                [alertC dismissViewControllerAnimated:YES completion:nil];
-                
-            }];
-            [alertC addAction:action1];
-            [alertC addAction:action2];
-            [self presentViewController:alertC animated:YES completion:nil];
-           }
+           //支付宝支付
+            [self prepareCreateOrder];
+
+        }
     }];
     
     //亲密付
@@ -308,6 +308,31 @@
     [toolView addSubview:self.submitOrderTool];
     [self.view addSubview:toolView];
 }
+//创建订单,预备阶段
+- (void)prepareCreateOrder{
+    
+    self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled = NO;
+    self.submitOrderTool.closePay.userInteractionEnabled = NO;
+    
+    if (self.enter_type == HHaddress_type_Spell_group) {
+        //活动拼团
+        [self createOrder];
+        
+    }else if (self.enter_type == HHaddress_type_add_cart){
+        if ([self.sendGift isEqual:@1]) {
+            //送礼
+            [self createOrder];
+        }else{
+            //购物车
+            self.mode = @1;
+            [self createOrder];
+        }
+    }else if (self.enter_type == HHaddress_type_package){
+        //优惠套餐
+        [self createOrder];
+    }
+}
+
 //创建订单
 - (void)createOrder{
     
@@ -353,7 +378,6 @@
                 }else if ([self.mode isEqual:@4096]){
                     HHBargainingWebVC *vc = [HHBargainingWebVC new];
                     vc.orderId = self.order_id;
-                    
                     [self.navigationController pushVC:vc];
                 } else{
                     //保存创建的订单号
@@ -377,22 +401,50 @@
      }
   
 }
+
 //订单支付
 -(void)orderPayWithaddress_id:(NSString *)address_id orderId:(NSString *)orderId{
     
-    [[[HHMineAPI postOrder_AppPayAddrId:address_id orderId:orderId money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-        self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
-        if (!error) {
-            if (api.State == 1) {
-                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
-                [HHWXModel payReqWithModel:model];
-            }else{
+    if ([[self.payWaySelecItems firstObject] isEqual:@1]) {
+        //微信支付
+        [[[HHMineAPI postOrder_AppPayAddrId:address_id orderId:orderId money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
+            if (!error) {
+                if (api.State == 1) {
+                    HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                    [HHWXModel payReqWithModel:model];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else {
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
-        }else {
-            [SVProgressHUD showInfoWithStatus:api.Msg];
-        }
-    }];
+        }];
+        
+    }else{
+        //支付宝支付
+        [[[HHMineAPI postAlipayOrder_AppPayAddrId:address_id orderId:orderId money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+            self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
+            if (!error) {
+                if (api.State == 1) {
+                    HHAlipayModel *model = [HHAlipayModel mj_objectWithKeyValues:api.Data];
+                    
+                    if (model.sign) {
+                        [[AlipaySDK defaultService] payOrder:model.sign fromScheme:Alipay_appScheme callback:^(NSDictionary *resultDic) {
+                            
+                            
+                        }];
+                    }
+                }else{
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else {
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }];
+        
+    }
+   
 }
 
 #pragma mark - HHShippingAddressVCProtocol
@@ -441,6 +493,16 @@
         cell1.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
         return cell1;
         
+    }else if(indexPath.section == self.datas.count){
+        //支付方式
+      HHPayWayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHPayWayCell"];
+      cell.selectionStyle = UITableViewCellSelectionStyleNone;
+      NSArray *arr = @[@"微信",@"支付宝"];
+      cell.text_label.text = arr[indexPath.row];
+      cell.detail_button.userInteractionEnabled = NO;
+      cell.detail_button.selected = ((NSNumber *)self.payWaySelecItems[indexPath.row]).boolValue;
+     return cell;
+
     }else{
         HHordersModel *order_model = self.datas[indexPath.section];
         if (indexPath.row<order_model.products.count) {
@@ -536,6 +598,9 @@
     
     if (self.datas.count>self.model.orders.count&&section == self.datas.count-1) {
         return 1;
+    }else if(section == self.datas.count){
+        //支付方式
+        return 2;
     }else{
         HHordersModel *order_model = self.datas[section];
         return order_model.products.count+order_model.addtion_arr.count;
@@ -543,15 +608,19 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return self.datas.count;
+    return self.datas.count+1;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HHordersModel *order_model = self.datas[indexPath.section];
     if (indexPath.section == self.datas.count-1&&self.datas.count>self.model.orders.count) {
         return 44;
+    }else if(indexPath.section == self.datas.count){
+        
+        return 44;
+
     }else{
+        HHordersModel *order_model = self.datas[indexPath.section];
       if (indexPath.row<order_model.products.count) {
         return 95;
       }else{
@@ -579,6 +648,22 @@
         vc.couponCell = cell;
         [self setUpAlterViewControllerWith:vc WithDistance:ScreenH/2 WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
     }
+    if (indexPath.section == self.datas.count) {
+        NSMutableArray *pay_copys = self.payWaySelecItems.mutableCopy;
+        [pay_copys enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (indexPath.row == idx) {
+                [self.payWaySelecItems replaceObjectAtIndex:idx withObject:@1];
+            }else{
+                [self.payWaySelecItems replaceObjectAtIndex:idx withObject:@0];
+            }
+        }];
+        if (indexPath.row == 0) {
+            self.submitOrderTool.pay_modeLabel.text = @"微信支付";
+        }else{
+            self.submitOrderTool.pay_modeLabel.text = @"支付宝支付";
+        }
+        [self.tableView reloadSection:indexPath.section withRowAnimation:UITableViewRowAnimationNone];
+    }
 
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -588,7 +673,10 @@
     if (self.datas.count>self.model.orders.count&&section == self.datas.count-1) {
       //优惠券
         
-    }else{
+    }else if(section == self.datas.count){
+        
+        return nil;
+    } else{
         UILabel *orderNo = [UILabel lh_labelWithFrame:CGRectMake(15, 0, SCREEN_WIDTH-30, 35) text:[NSString stringWithFormat:@"订单%ld",section+1] textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:KVCBackGroundColor];
         [sectionHead addSubview:orderNo];
     }
@@ -602,6 +690,9 @@
     if (self.datas.count>self.model.orders.count&&section == self.datas.count-1) {
         //优惠券
         return 5;
+        
+    }else if(section == self.datas.count){
+        return 0.01;
     }else{
         return 35;
     }

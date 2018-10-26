@@ -66,6 +66,11 @@
 @property(nonatomic,strong) NSString *gbid;
 @property(nonatomic,strong) NSString *statusName;
 
+//物流信息
+@property(nonatomic,strong) NSString *return_goods_express_order;
+@property(nonatomic,strong) NSString *return_goods_express_name;
+
+
 @end
 @interface HHordersModel : BaseModel
 
@@ -96,6 +101,8 @@
 @property(nonatomic,strong) NSString *sku_name;
 @property(nonatomic,strong) NSString *prodcut_name;
 @property(nonatomic,strong) NSString *item_status;
+@property(nonatomic,strong) NSString *OrderItemStatus;
+
 @property(nonatomic,strong) NSArray <HHproducts_item_Model*>*product_item;
 
 //购物车
@@ -134,6 +141,8 @@
 @property(nonatomic,strong) NSString *product_item_status;
 @property(nonatomic,strong) NSString *icon;
 @property(nonatomic,strong) NSString *prodcut_name;
+@property(nonatomic,strong) NSString *product_item_refund_id;
+
 @end
 
 

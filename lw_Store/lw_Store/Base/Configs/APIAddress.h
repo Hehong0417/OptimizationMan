@@ -26,9 +26,9 @@
 ////公共设置
 #define APP_key @"59334e721bcd31"
 #define APP_scode @"15ca7554e8cb486f3b8cbe1fa166c75b"
-// [NSString md5:[APP_key stringByAppendingString:@"trans"]]
+#define Alipay_appScheme  @"OptimizeManScheme"
 
-//MD5加密（APP_key+”weicai”）
+
 //#define API_APP_BASE_URL @""
 //#define API_BASE_URL [NSString stringWithFormat:@"%@", API_HOST]
 #define API_QR_BASE_URL [NSString stringWithFormat:@"%@/image", API_BASE_URL]
@@ -123,14 +123,19 @@ typedef enum : NSUInteger {
 #define API_GetHotSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
 //3.8用户历史搜索
 #define API_GetUserSearch API_SUB_URL(@"UserInfo/GetUserSearchAndHotSearch")
-// APP订单去支付
+// APP订单去支付（微信）
 #define API_Order_AppPay API_SUB_URL2(@"Order/AppPay")
+// APP订单去支付(支付宝)
+#define API_Order_AppPay_alipay API_SUB_URL2(@"Order/AliPay")
 //3.9创建订单
 #define API_Order_Create API_SUB_URL2(@"Order/Create")
 //3.10 发布评价
 #define API_OrderEvaluate API_SUB_URL2(@"Order/OrderEvaluate")
 //3.11 上传多张图片
 #define API_UploadManyImage API_SUB_URL(@"FileUpload/UploadManyImage")
+//4.52提交退货快递物流单号
+#define API_SubReturnGoodsExpress  API_SUB_URL2(@"Order/ReturnExpress")
+
 /**
  *  我的
  */
@@ -166,6 +171,12 @@ typedef enum : NSUInteger {
 #define API_GetOrderList API_SUB_URL2(@"Order/Get")
 //4.33获取订单详情
 #define API_GetOrderDetail API_SUB_URL2(@"Order/GetOrderDetail")
+//4.2获取订单的物流信息
+#define API_GetOrderExpress API_SUB_URL(@"CustomerApi/Order/GetOrderExpress")
+//4.2获取退货的物流信息
+#define API_GetReturnLogistics API_SUB_URL2(@"Order/GetReturnLogistics")
+//4.3获取所有的快递公司
+#define API_GetExpressCompany API_SUB_URL(@"Client/GetExpress")
 //4.33获取提现信息
 #define API_GetUserApplyMessage API_SUB_URL(@"Commission/GetUserApplyMessage")
 //4.21佣金申请

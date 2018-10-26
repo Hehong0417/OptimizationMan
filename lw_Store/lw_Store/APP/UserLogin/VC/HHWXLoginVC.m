@@ -8,8 +8,6 @@
 
 #import "HHWXLoginVC.h"
 #import "HHBandPhoneVc.h"
-#import "WXApi.h"
-#import <UMSocialCore/UMSocialCore.h>
 #import "HHPhoneLoginVC.h"
 
 @interface HHWXLoginVC ()
@@ -29,6 +27,7 @@
     self.wxLoginView.userInteractionEnabled = YES;
         
          if ([WXApi isWXAppInstalled]&&[WXApi isWXAppSupportApi]){
+             
           //已安装微信
              [self.loginBtn setImage:[UIImage imageNamed:@"login_icon_button_default"] forState:UIControlStateNormal];
              self.login_label.text = @"微信登录";
@@ -38,6 +37,7 @@
 
                 }];
         }else{
+            
           //未安装微信
             [self.loginBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
             self.login_label.text = @"登 录";

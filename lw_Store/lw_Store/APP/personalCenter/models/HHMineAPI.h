@@ -50,6 +50,12 @@
 //获取订单详情
 + (instancetype)GetOrderDetailWithorderid:(NSString *)orderid;
 
+//获取订单的物流信息
++ (instancetype)GetOrderExpressWithRefundId:(NSString *)refundId;
+
+//获取所有的快递公司
++ (instancetype)GetExpressCompany;
+
 //获取提现信息
 + (instancetype)GetUserApplyMessage;
 
@@ -112,12 +118,18 @@
 + (instancetype)postVerifyMobile:(NSString *)mobile;
 //发送短信验证码
 + (instancetype)postSms_SendCode:(NSString *)mobile code:(NSString *)code;
-//订单支付
+//订单支付（微信）
 + (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money;
+//订单支付(支付宝)
++ (instancetype)postAlipayOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money;
 //创建订单
 + (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message;
 //发布评价
 + (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSString *)productEvaluate;
 //上传多张图片
 + (instancetype)postUploadManyImageWithimageDatas:(NSArray *)imageDatas;
+
+//提交退货快递物流单号
++ (instancetype)postSubReturnGoodsExpressWithorderid:(NSString *)orderid exp_code:(NSString *)exp_code exp_order:(NSString *)exp_order;
+
 @end

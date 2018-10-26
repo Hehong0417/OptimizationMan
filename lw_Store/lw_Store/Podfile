@@ -19,9 +19,13 @@ pod 'IQKeyboardManager'
 pod 'TZImagePickerController'
 pod 'YYText'
 pod 'SDAutoLayout'
+
 # U-Share SDK UI模块（分享面板，建议添加）
-pod 'UMengUShare/UI'
+#pod 'UMCCommon'
+#pod 'UMCSecurityPlugins'
+pod 'UMCShare/UI'
 # 集成微信
-pod 'UMengUShare/Social/WeChat'
+pod 'UMCShare/Social/ReducedWeChat'
+pod 'WechatOpenSDK'
 
 end

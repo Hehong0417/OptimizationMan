@@ -11,9 +11,8 @@
 
 #define USHARE_DEMO_APPKEY  @"5a5f10bfa40fa34719000128"
 #define Wechat_AppKey  @"wx33876b8653ae654a"
-#define Wechat_appSecret  @"e6e57e630f10b8b6529aece037c334c3"
-#import "WXApi.h"
-#import <UMSocialCore/UMSocialCore.h>
+#define Wechat_appSecret  @"202317c588688ebc058099ab101603fa"
+
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -74,9 +73,12 @@
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     
-    /* 设置友盟appkey */
-    [[UMSocialManager defaultManager] setUmSocialAppkey:USHARE_DEMO_APPKEY];
+    [WXApi registerApp:Wechat_AppKey];
+
     
+    /* 设置友盟appkey */
+    [UMConfigure initWithAppkey:USHARE_DEMO_APPKEY channel:@"App Store"];
+
     [self configUSharePlatforms];
     
     
@@ -94,8 +96,24 @@
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
     if (!result) {
         // 其他如支付等SDK的回调
-        
-        return [WXApi handleOpenURL:url delegate:self];
+        if ([url.host isEqualToString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+                NSString *resultStatus = resultDic[@"resultStatus"];
+                
+                if ([resultStatus isEqualToString:@"9000"]) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Sucess_Notification object:@""];
+                    NSLog(@"支付成功");
+                }else{
+                    [[NSNotificationCenter defaultCenter]postNotificationName:KWX_Pay_Fail_Notification object:@""];
+                    NSLog(@"支付失败，resultStatus=%@",resultStatus);
+                }
+            }];
+        }else{
+            //微信支付
+            return [WXApi handleOpenURL:url delegate:self];
+        }
     }
     return result;
 }

@@ -20,7 +20,8 @@
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, strong) NSString *item_id;
 @property (nonatomic, strong) NSString *order_id;
+@property (strong, nonatomic)  NSString *title_str;
 
-@property(nonatomic,copy) id<ApplyRefundDelegate> delegate;
+@property(nonatomic,weak) id<ApplyRefundDelegate> delegate;
 
 @end

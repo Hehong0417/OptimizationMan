@@ -37,7 +37,7 @@
 - (UITextField *)inputTextField {
 
     if (!_inputTextField) {
-        _inputTextField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, SCREEN_WIDTH - CGRectGetMaxX(self.titleLabel.frame)-20, WidthScaleSize_H(50))];
+        _inputTextField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, SCREEN_WIDTH - CGRectGetMaxX(self.titleLabel.frame)-20, WidthScaleSize_H(40))];
         _inputTextField.font = FONT(15);
     }
     return _inputTextField;
@@ -46,7 +46,7 @@
 - (UIImageView *)imageIcon {
 
     if (!_imageIcon) {
-        _imageIcon = [[UIImageView alloc]initWithFrame:CGRectMake(WidthScaleSize_W(20), 0, 40, WidthScaleSize_H(50))];
+        _imageIcon = [[UIImageView alloc]initWithFrame:CGRectMake(WidthScaleSize_W(20), 0, WidthScaleSize_H(2.5), WidthScaleSize_H(35))];
         _imageIcon.contentMode = UIViewContentModeCenter;
     }
     return _imageIcon;

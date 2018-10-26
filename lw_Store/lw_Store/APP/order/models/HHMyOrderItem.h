@@ -15,4 +15,6 @@
 
 + (CGFloat)rowHeightWithRow:(NSInteger)row Products_count:(NSInteger )products_count;
 
++ (void)pushVCWithStatus_code:(NSInteger)status_code navC:(UINavigationController *)navC VC:(UIViewController *)vc product_m:(HHproducts_item_Model *)product_m order_id:(NSString *)order_id;
+
 @end

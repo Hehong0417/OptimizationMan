@@ -18,7 +18,8 @@
 #import <Masonry/Masonry.h>
 #import "MJRefresh.h"
 #import <Aspects/Aspects.h>
-#import <UMSocialCore/UMSocialCore.h>
+#import <UMShare/UMShare.h>
+#import <UMCommon/UMCommon.h>
 #import <UShareUI/UShareUI.h>
 
 
@@ -71,6 +72,7 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "IQKeyboardManager.h"
 #import "NSObject+AutoProperty.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 
 //api
@@ -102,6 +104,7 @@
 #import "WXApi.h"
 #import "HHWXModel.h"
 #import "HHPostOrderEvaluateItem.h"
+#import "HHAlipayModel.h"
 
 
 #endif /* Lw_Store_pch */

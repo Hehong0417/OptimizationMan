@@ -51,7 +51,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
     [_attLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self);
     }];

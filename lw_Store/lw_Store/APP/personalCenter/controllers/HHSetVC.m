@@ -47,18 +47,29 @@
     
 }
 - (NSArray *)groupIcons{
-    return @[@[],@[@"",@""]];
+    return @[@[@""],@[@"",@""]];
 
 }
 - (NSArray *)groupTitles{
 
-    return @[@[],@[@"关于我们",@"清除缓存"]];
+    return @[@[@"跳转小程序"],@[@"关于我们",@"清除缓存"]];
 }
 - (NSArray *)groupDetials{
     
-    return @[@[],@[@"",@""]];
+    return @[@[@""],@[@"",@""]];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+     //跳转小程序
+        
+        WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
+        launchMiniProgramReq.userName = @"优选君TM";  //拉起的小程序的username
+//        launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeTest; //拉起小程序的类型
+        [WXApi sendReq:launchMiniProgramReq];
+        
+    }else{
     
     if (indexPath.row == 0) {
         
@@ -88,5 +99,6 @@
         
     }
     
+    }
 }
 @end

@@ -76,6 +76,13 @@
 @property(nonatomic,strong) NSString *CityId;
 @property(nonatomic,strong) NSString *RegionId;
 
+//物流信息
+@property(nonatomic,strong) NSString *express_name;
+@property(nonatomic,strong) NSString *express_order;
+@property(nonatomic,strong) NSArray *express_message_list;
+@property(nonatomic,strong) NSString *express_abb;
+
+
 //收款银行卡列表
 @property(nonatomic,strong) NSString *bank_name;
 @property(nonatomic,strong) NSString *bank_no;
@@ -105,5 +112,13 @@
 @property(nonatomic,strong) NSString *totalCount;
 @property(nonatomic,strong) NSString *hasImageCount;
 @property(nonatomic,strong) NSString *goodEvaluateProportion;
+
+@end
+
+@interface HHExpress_message_list : BaseModel
+@property(nonatomic,strong) NSString *express_full_date;
+@property(nonatomic,strong) NSString *express_date;
+@property(nonatomic,strong) NSString *express_time;
+@property(nonatomic,strong) NSString *express_message;
 
 @end

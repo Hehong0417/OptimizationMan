@@ -254,12 +254,13 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        UIView *head_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
-        NSString* text = @"两块钱,你买不了吃亏,两块钱,你买不了上当！";
-        
-        LSPaoMaView* paomav = [[LSPaoMaView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) title:text];
-        [head_view addSubview:paomav];
-        return head_view;
+//        UIView *head_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
+//        NSString* text = @"两块钱,你买不了吃亏,两块钱,你买不了上当！";
+//
+//        LSPaoMaView* paomav = [[LSPaoMaView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) title:text];
+//        [head_view addSubview:paomav];
+//        return head_view;
+        return nil;
     }else{
         return nil;
     }
