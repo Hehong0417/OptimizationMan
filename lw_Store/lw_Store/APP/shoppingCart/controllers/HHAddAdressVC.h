@@ -35,7 +35,10 @@ typedef enum : NSUInteger {
 //sku_ids
 @property(nonatomic,strong) NSString *ids_Str;
 
-//商品id
+//购物车id
+@property(nonatomic,strong) NSString *cartIds_str;
+
+//商品id-->支付成功猜你喜欢接口需要使用到
 @property(nonatomic,strong) NSString *pids;
 
 @end

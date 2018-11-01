@@ -50,8 +50,11 @@
 //获取订单详情
 + (instancetype)GetOrderDetailWithorderid:(NSString *)orderid;
 
-//获取订单的物流信息
+//获取订单的退货物流信息
 + (instancetype)GetOrderExpressWithRefundId:(NSString *)refundId;
+
+//获取订单的物流信息
++ (instancetype)GetOrderLogisticsWithOrderId:(NSString *)orderId;
 
 //获取所有的快递公司
 + (instancetype)GetExpressCompany;
@@ -123,7 +126,7 @@
 //订单支付(支付宝)
 + (instancetype)postAlipayOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money;
 //创建订单
-+ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message;
++ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode cartIds:(NSString *)cartIds gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message;
 //发布评价
 + (instancetype)postOrderEvaluateWithOrderId:(NSString *)orderId level:(NSNumber *)level logisticsScore:(NSNumber *)logisticsScore serviceScore:(NSNumber *)serviceScore productEvaluate:(NSString *)productEvaluate;
 //上传多张图片

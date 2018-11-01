@@ -23,12 +23,13 @@
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 30)];
-        _guess_you_likeView = [[HHGuess_you_likeView alloc] initWithFrame:CGRectMake(0, 45, ScreenW, 220)];
+        _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
+        _titleView.backgroundColor = kWhiteColor;
+        _guess_you_likeView = [[HHGuess_you_likeView alloc] initWithFrame:CGRectMake(0, 45, ScreenW, 230)];
         [self.contentView addSubview:_titleView];
         [self.contentView addSubview:_guess_you_likeView];
         
-        _titleLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, ScreenW, 45) text:@"————  猜你喜欢  ————" textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
+        _titleLabel = [UILabel lh_labelWithFrame:CGRectMake(0, 0, ScreenW, 45) text:@"————  猜你喜欢  ————" textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         [_titleView addSubview:_titleLabel];
         

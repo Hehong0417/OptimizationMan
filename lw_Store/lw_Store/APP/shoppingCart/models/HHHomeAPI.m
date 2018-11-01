@@ -84,10 +84,50 @@
     return api;
     
 }
+//获取个人商品收藏
++ (instancetype)GetProductCollectionWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize{
+    
+    HHHomeAPI *api = [self new];
+    api.subUrl = API_GetProductCollection;
+    if (page) {
+        [api.parameters setObject:page forKey:@"page"];
+    }
+    if (pageSize) {
+        [api.parameters setObject:pageSize forKey:@"pageSize"];
+    }
+    api.parametersAddToken = NO;
+    
+    return api;
+    
+}
 #pragma mark - post
+//增加商品收藏
++ (instancetype)postAddProductCollectionWithpids:(NSString *)pids {
+    
+    HHHomeAPI *api = [self new];
+    api.subUrl = API_AddProductCollection;
+    if (pids) {
+        [api.parameters setObject:pids forKey:@""];
+    }
+    api.parametersAddToken = NO;
+    
+    return api;
+    
+}
 
-
-
+//取消商品收藏
++ (instancetype)postDeleteProductCollectionWithpids:(NSString *)pids{
+    
+    HHHomeAPI *api = [self new];
+    api.subUrl = API_DeleteProductCollection;
+    if (pids) {
+        [api.parameters setObject:pids forKey:@""];
+    }
+    api.parametersAddToken = NO;
+    
+    return api;
+    
+}
 
 
 @end

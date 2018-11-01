@@ -21,6 +21,7 @@
 #import "HHFamiliarityPayVC.h"
 #import "HHPaySucessVC.h"
 #import "HHLogisticsVC.h"
+#import "HHSelectChannelAlertView.h"
 
 @interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,ApplyRefundDelegate>
 
@@ -35,6 +36,8 @@
 @property (nonatomic, assign)   BOOL isHeaderRefresh;
 @property(nonatomic,assign)   BOOL  isLoading;
 @property(nonatomic,assign)   BOOL  isWlan;
+@property(nonatomic,strong) HHSelectChannelAlertView *alertView;
+
 @end
 @implementation HHOrderVC
 
@@ -70,6 +73,7 @@
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
     //registerCell
@@ -355,12 +359,12 @@
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 55) backColor:kWhiteColor];
     
-    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-20, 10, 80, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
+    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-30, 10, 80, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
     oneBtn.tag = section+100;
     [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
     [footView addSubview:oneBtn];
 
-    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-90, 10, 80, 30) target:self action:@selector(twoAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_COMMON_COLOR];
+    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 30) target:self action:@selector(twoAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_COMMON_COLOR];
     twoBtn.tag = section+1000;
     [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
     [footView addSubview:twoBtn];
@@ -391,7 +395,7 @@
             //待收货
             down_y = 50;
             [self setBtnAttrWithBtn:oneBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:NO];
             [self setBtnAttrWithBtn:twoBtn Title:@"确认收货" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"4"]){
             //订单关闭
@@ -400,11 +404,12 @@
 
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
-            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
+            down_y = 50;
+//            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
+//            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
+            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
             //twoBtn
-            [self setBtnAttrWithBtn:twoBtn Title:@"评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"去评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"6"]){
             // 申请退款
             down_y = 0;
@@ -484,9 +489,8 @@
         
     }else if([status isEqualToString:@"3"]){
         //待收货--->查看物流
-                //查看物流
                 HHLogisticsVC *vc = [HHLogisticsVC new];
-                vc.orderid = model.orderid;
+                vc.orderid = model.order_id;
                 vc.express_order =  model.return_goods_express_order;
                 vc.express_name =  model.return_goods_express_name;
                 vc.type = @1;
@@ -561,44 +565,58 @@
 //支付订单
 - (void)payOrderWithorderid:(NSString *)orderid btn:(UIButton *)btn pid:(NSString *)pid{
 
-    btn.enabled = NO;
-    //----->微信支付
-//    [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-//        btn.enabled = YES;
-//        if (!error) {
-//            if (api.State == 1) {
-//                HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
-//                HJUser *user = [HJUser sharedUser];
-//                user.pids = pid;
-//                [user write];
-//                [HHWXModel payReqWithModel:model];
-//            }else{
-//                [SVProgressHUD showInfoWithStatus:api.Msg];
-//            }
-//        }else {
-//            [SVProgressHUD showInfoWithStatus:api.Msg];
-//        }
-//    }];
-    //----->支付宝支付
-    [[[HHMineAPI postAlipayOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-        if (!error) {
-            if (api.State == 1) {
-                HJUser *user = [HJUser sharedUser];
-                user.pids = pid;
-                [user write];
-                HHAlipayModel *model = [HHAlipayModel mj_objectWithKeyValues:api.Data];
-                if (model.sign) {
-                    [[AlipaySDK defaultService] payOrder:model.sign fromScheme:Alipay_appScheme callback:^(NSDictionary *resultDic) {
-                        
-                    }];
+    self.alertView = [[HHSelectChannelAlertView alloc]init];
+    self.alertView.close_btn.hidden = NO;
+    [self.alertView showAnimated:NO];
+    WEAK_SELF();
+    self.alertView.commitBlock = ^(NSString *channel) {
+        btn.enabled = NO;
+        if ([channel isEqualToString:@"0"]) {
+            //----->微信支付
+                [[[HHMineAPI postOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:weakSelf.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+                    [weakSelf.alertView hideWithCompletion:nil];
+                    btn.enabled = YES;
+                    if (!error) {
+                        if (api.State == 1) {
+                            HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
+                            HJUser *user = [HJUser sharedUser];
+                            user.pids = pid;
+                            [user write];
+                            [HHWXModel payReqWithModel:model];
+                        }else{
+                            [SVProgressHUD showInfoWithStatus:api.Msg];
+                        }
+                    }else {
+                        [SVProgressHUD showInfoWithStatus:api.Msg];
+                    }
+                }];
+        }else{
+            //----->支付宝支付
+            [[[HHMineAPI postAlipayOrder_AppPayAddrId:nil orderId:orderid money:nil]netWorkClient]postRequestInView:weakSelf.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+                [weakSelf.alertView hideWithCompletion:nil];
+                btn.enabled = YES;
+                if (!error) {
+                    if (api.State == 1) {
+                        HJUser *user = [HJUser sharedUser];
+                        user.pids = pid;
+                        [user write];
+                        HHAlipayModel *model = [HHAlipayModel mj_objectWithKeyValues:api.Data];
+                        if (model.sign) {
+                            [[AlipaySDK defaultService] payOrder:model.sign fromScheme:Alipay_appScheme callback:^(NSDictionary *resultDic) {
+                                
+                            }];
+                        }
+                    }else{
+                        [SVProgressHUD showInfoWithStatus:api.Msg];
+                    }
+                }else {
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
                 }
-            }else{
-                [SVProgressHUD showInfoWithStatus:api.Msg];
-            }
-        }else {
-            [SVProgressHUD showInfoWithStatus:api.Msg];
+            }];
         }
-    }];
+        
+    };
+
 }
 - (void)twoAction:(UIButton *)btn{
     
@@ -668,20 +686,20 @@
     
     HHOrderItemModel *orders_m = self.items_arr[indexPath.section];
     if (indexPath.row == orders_m.items.count) {
-        return 44;
+        return AdapationLabelHeight(35);
     }else{
-        return 85;
+        return AdapationLabelHeight(85);
     }
     return 0.01;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
+
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
     return model.footHeight;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 40;
+    return AdapationLabelHeight(40);
 }
 #pragma mark-微信支付
 - (void)viewWillDisappear:(BOOL)animated{

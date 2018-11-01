@@ -102,6 +102,7 @@
 @property(nonatomic,strong) NSString *prodcut_name;
 @property(nonatomic,strong) NSString *item_status;
 @property(nonatomic,strong) NSString *OrderItemStatus;
+@property(nonatomic,strong) NSString *RefundId;
 
 @property(nonatomic,strong) NSArray <HHproducts_item_Model*>*product_item;
 
@@ -130,6 +131,10 @@
 @property(nonatomic,strong) NSString *Price;
 @property(nonatomic,strong) NSString *Value;
 @property(nonatomic,strong) NSString *Quantity;
+@property(nonatomic,strong) NSString *OrderItemStatus;
+@property(nonatomic,strong) NSString *RefundId;
+@property(nonatomic,strong) NSString *OrdetItemId;
+
 @end
 
 //订单里的商品

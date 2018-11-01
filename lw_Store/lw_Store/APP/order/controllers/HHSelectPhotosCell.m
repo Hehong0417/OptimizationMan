@@ -185,8 +185,9 @@ typedef   void (^completeHandle)();
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [photo_datas addObject:imageData];
     }];
+    
     [[[HHMineAPI postUploadManyImageWithimageDatas:photo_datas] netWorkClient] uploadFileInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
-       
+        [hud hideAnimated:YES];
         if (!error) {
             if (api.State == 1) {
                 

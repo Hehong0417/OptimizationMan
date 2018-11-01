@@ -5,8 +5,16 @@
 //rgb converter（hex->dec）
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-#define FONT(x) [UIFont systemFontOfSize:WidthScaleSize_H(x)]
-#define BoldFONT(x) [UIFont boldSystemFontOfSize:WidthScaleSize_H(x)]
+#define FONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x)]
+#define BoldFONT(x) [UIFont boldSystemFontOfSize:AdapationLabelFont(x)]
+#define ThinFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightThin]
+#define UltraLightFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightUltraLight]
+#define LightFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightLight]
+#define RegularFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightRegular]
+#define MediumFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightMedium]
+#define SemiboldFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightSemibold]
+#define HeavyFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightHeavy]
+#define BlackFONT(x) [UIFont systemFontOfSize:AdapationLabelFont(x) weight:UIFontWeightBlack]
 
 
 //NSString
@@ -52,6 +60,11 @@
 
 #define WidthScaleSize_H(x) ((x/667.0)*SCREEN_HEIGHT)
 #define WidthScaleSize_W(x) ((x/375.0)*SCREEN_WIDTH)
+
+#define IOS_VERSION_10_OR_LATER (([[[UIDevice currentDevice]systemVersion]floatValue]>=10.0)? (YES):(NO))
+#define AdapationLabelFont(n) (IOS_VERSION_10_OR_LATER?((n-1)*([[UIScreen mainScreen]bounds].size.width/375.0f)):((n)*([[UIScreen mainScreen]bounds].size.width/375.0f)))
+#define AdapationLabelHeight(n) (IOS_VERSION_10_OR_LATER?((n-1)*([[UIScreen mainScreen]bounds].size.width/375.0f)):((n)*([[UIScreen mainScreen]bounds].size.width/375.0f)))
+
 
 #define nav_item_space -5
 

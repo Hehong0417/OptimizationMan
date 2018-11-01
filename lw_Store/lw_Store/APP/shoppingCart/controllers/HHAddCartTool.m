@@ -16,10 +16,10 @@
     if (self = [super initWithFrame:frame]) {
         
         [self addSubview:self.cartIconBg];
-        [self.cartIconBg addSubview:self.homeIconImgV];
+        [self addSubview:self.collectBtn];
         [self.cartIconBg addSubview:self.cartIconImgV];
 
-        UIView *line = [UIView lh_viewWithFrame:CGRectMake(self.cartIconImgV.mj_x, 0, 1, self.homeIconImgV.mj_h) backColor:RGB(220, 220, 220)];
+        UIView *line = [UIView lh_viewWithFrame:CGRectMake(self.cartIconImgV.mj_x, 0, 1, self.collectBtn.mj_h) backColor:RGB(220, 220, 220)];
         [self.cartIconBg addSubview:line];
         
         //购物车
@@ -29,7 +29,6 @@
             shop_vc.cartType = HHcartType_goodDetail;
             [weakSelf.nav pushVC:shop_vc];
         }];
-        self.buyBtn.hidden=YES;
         [self addSubview:self.buyBtn];
 
         [self addSubview:self.addCartBtn];
@@ -61,16 +60,16 @@
     }
     return _cartIconBg;
 }
-//首页图标
-- (UIImageView *)homeIconImgV {
+//收藏图标
+- (UIButton *)collectBtn {
     
-    if (!_homeIconImgV) {
+    if (!_collectBtn) {
         
-        _homeIconImgV = [UIImageView lh_imageViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/3/2, 50) image:[UIImage imageNamed:@"tab_icon_home_default"]];
-        _homeIconImgV.contentMode = UIViewContentModeCenter;
-        _homeIconImgV.userInteractionEnabled = YES;
+        _collectBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/3/2, 50) target:self action:@selector(collectAction:) image:[UIImage imageNamed:@"collect_01"] title:@"" titleColor:kWhiteColor font:FONT(15)];
+        [_collectBtn setImage:[UIImage imageNamed:@"collect_02"] forState:UIControlStateSelected];
+        [_collectBtn setBackgroundColor:kWhiteColor];
     }
-    return _homeIconImgV;
+    return _collectBtn;
     
 }
 //购物车图标
@@ -101,15 +100,55 @@
     if (!_buyBtn) {
         
         _buyBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH/3*2, 0, SCREEN_WIDTH/3, 50) target:self action:@selector(buyCartBtnAction:) image:nil title:@"活动" titleColor:kWhiteColor font:FONT(15)];
-        [_buyBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 75, 5, 10)];
-        [_buyBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 40)];
         [_buyBtn setImage:[UIImage imageNamed:@"triangle2"] forState:UIControlStateSelected];
         [_buyBtn setImage:[UIImage imageNamed:@"triangle1"] forState:UIControlStateNormal];
+        [_buyBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 75, 5, 10)];
+        [_buyBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 40)];
         [_buyBtn setBackgroundColor:kDarkGrayColor];
 
     }
     return _buyBtn;
     
 }
-
+- (void)collectAction:(UIButton *)button{
+    
+    if (button.selected == YES) {
+        //取消收藏
+        [[[HHHomeAPI postDeleteProductCollectionWithpids:self.product_id] netWorkClient] postRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    button.selected = NO;
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showSuccessWithStatus:api.Msg];
+                    
+                }else{
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+            }
+        }];
+    }else{
+        //添加收藏
+        [[[HHHomeAPI postAddProductCollectionWithpids:self.product_id] netWorkClient] postRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    
+                    button.selected = YES;
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showSuccessWithStatus:api.Msg];
+                    
+                }else{
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+            }
+        }];
+    }
+    
+}
 @end

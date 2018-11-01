@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ggd-lv-dmB">
-                        <rect key="frame" x="16" y="10" width="90" height="90"/>
+                        <rect key="frame" x="16" y="12" width="85.5" height="85.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="ggd-lv-dmB" secondAttribute="height" multiplier="1:1" id="gZC-99-TFZ"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6R-Cf-edC">
-                        <rect key="frame" x="114" y="10" width="245" height="27"/>
+                        <rect key="frame" x="115" y="9" width="244" height="27"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="27" id="zZ2-nb-6BF"/>
                         </constraints>
@@ -55,8 +54,8 @@
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8Z-8t-JFl">
-                        <rect key="frame" x="114" y="45" width="141" height="27"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8Z-8t-JFl">
+                        <rect key="frame" x="115" y="44" width="141" height="27"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="27" id="3JZ-i9-ss6"/>
@@ -66,32 +65,46 @@
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzj-ez-H7g">
+                        <rect key="frame" x="303" y="44" width="56" height="21"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="3zu-ea-RaC"/>
+                            <constraint firstAttribute="height" constant="21" id="bFY-AW-dbp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="R8Z-8t-JFl" firstAttribute="top" secondItem="a6R-Cf-edC" secondAttribute="bottom" constant="8" id="1ub-EB-FIo"/>
                     <constraint firstItem="ggd-lv-dmB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="6k4-4b-X32"/>
-                    <constraint firstItem="a6R-Cf-edC" firstAttribute="top" secondItem="ggd-lv-dmB" secondAttribute="top" id="JQZ-9p-kjt"/>
+                    <constraint firstItem="ggd-lv-dmB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="AOx-ie-yKB"/>
+                    <constraint firstItem="a6R-Cf-edC" firstAttribute="top" secondItem="ggd-lv-dmB" secondAttribute="top" constant="-3" id="JQZ-9p-kjt"/>
                     <constraint firstAttribute="bottom" secondItem="9Qg-IG-NDh" secondAttribute="bottom" constant="4.5" id="MwR-se-hJn"/>
-                    <constraint firstItem="ggd-lv-dmB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="VmI-Gs-1eI"/>
-                    <constraint firstItem="a6R-Cf-edC" firstAttribute="leading" secondItem="ggd-lv-dmB" secondAttribute="trailing" constant="8" id="XGd-rO-N4t"/>
+                    <constraint firstItem="a6R-Cf-edC" firstAttribute="leading" secondItem="ggd-lv-dmB" secondAttribute="trailing" constant="13.5" id="XGd-rO-N4t"/>
+                    <constraint firstItem="Jzj-ez-H7g" firstAttribute="trailing" secondItem="9Qg-IG-NDh" secondAttribute="trailing" id="Zwi-ar-UB3"/>
+                    <constraint firstItem="Jzj-ez-H7g" firstAttribute="top" secondItem="R8Z-8t-JFl" secondAttribute="top" id="hid-ZT-XB0"/>
                     <constraint firstItem="R8Z-8t-JFl" firstAttribute="leading" secondItem="a6R-Cf-edC" secondAttribute="leading" id="jLg-h3-3Pp"/>
                     <constraint firstItem="2sR-JS-2Gj" firstAttribute="trailing" secondItem="a6R-Cf-edC" secondAttribute="trailing" id="lj5-0C-Q2j"/>
                     <constraint firstAttribute="trailing" secondItem="a6R-Cf-edC" secondAttribute="trailing" constant="16" id="lqe-YG-nbm"/>
                     <constraint firstItem="ggd-lv-dmB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rgm-uy-HWq"/>
                     <constraint firstItem="9Qg-IG-NDh" firstAttribute="top" secondItem="2sR-JS-2Gj" secondAttribute="bottom" id="sJj-6A-1JZ"/>
                     <constraint firstItem="9Qg-IG-NDh" firstAttribute="trailing" secondItem="2sR-JS-2Gj" secondAttribute="trailing" id="xhi-d2-KmV"/>
-                    <constraint firstAttribute="bottom" secondItem="ggd-lv-dmB" secondAttribute="bottom" constant="9.5" id="y9w-BE-WUy"/>
+                    <constraint firstAttribute="bottom" secondItem="ggd-lv-dmB" secondAttribute="bottom" constant="12" id="y9w-BE-WUy"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="StandardLab" destination="Jzj-ez-H7g" id="3f6-Vy-lZi"/>
                 <outlet property="iconImageV" destination="ggd-lv-dmB" id="rsF-7Q-dzZ"/>
                 <outlet property="namelabel" destination="a6R-Cf-edC" id="xol-TH-HVE"/>
                 <outlet property="priceLabel" destination="2sR-JS-2Gj" id="e8e-Y3-TgP"/>
                 <outlet property="quantityLabel" destination="9Qg-IG-NDh" id="paD-pN-2jZ"/>
                 <outlet property="sku_nameLabel" destination="R8Z-8t-JFl" id="hGR-OS-ah8"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="54"/>
+            <point key="canvasLocation" x="32.799999999999997" y="53.973013493253376"/>
         </tableViewCell>
     </objects>
 </document>

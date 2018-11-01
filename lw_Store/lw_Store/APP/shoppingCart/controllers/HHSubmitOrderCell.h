@@ -10,6 +10,7 @@
 
 @interface HHSubmitOrderCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *StandardLab;
 @property (nonatomic, strong) HHproductsModel *productsModel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageV;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;

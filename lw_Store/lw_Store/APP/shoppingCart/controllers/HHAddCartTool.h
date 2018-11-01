@@ -15,8 +15,8 @@
 //购物车图标
 @property (nonatomic, strong)   UIImageView *cartIconImgV;
 
-//首页tub
-@property (nonatomic, strong)   UIImageView *homeIconImgV;
+//收藏tub
+@property (nonatomic, strong)   UIButton *collectBtn;
 
 //加入购物车按钮
 @property (nonatomic, strong)   UIButton *addCartBtn;
@@ -28,5 +28,7 @@
 @property (nonatomic, copy)   idBlock  buyBlock;
 
 @property (nonatomic, strong)   UINavigationController *nav;
+
+@property (nonatomic, strong)   NSString *product_id;
 
 @end

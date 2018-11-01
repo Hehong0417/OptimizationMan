@@ -106,6 +106,8 @@ typedef enum {
 @property (nonatomic, strong) NSArray *localizationImageNamesGroup;
 
 
+/** 是否显示播放按钮 */
+@property (nonatomic, assign) BOOL isShowPlay;
 
 
 

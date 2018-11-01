@@ -14,8 +14,10 @@
 
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, strong)   HHMineModel *model;
+@property (nonatomic, strong)   NSMutableArray *datas;
 @property (nonatomic, strong)   UILabel *detail1;
 @property (nonatomic, strong)   UILabel *detail2;
+@property (nonatomic, strong)   UILabel *message_label;
 
 
 @end
@@ -53,23 +55,57 @@
     
     self.detail1 = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(title1.frame)+10, 15, SCREEN_WIDTH - CGRectGetMaxX(title1.frame)-20, 25) text:@"" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
     [headView addSubview:self.detail1];
-    self.detail1 = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(title2.frame)+10, CGRectGetMaxY(self.detail1.frame)+10, SCREEN_WIDTH - CGRectGetMaxX(title2.frame)-20, 25) text:@"" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
-    [headView addSubview:self.detail1];
+    self.detail2 = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(title2.frame)+10, CGRectGetMaxY(self.detail1.frame)+10, SCREEN_WIDTH - CGRectGetMaxX(title2.frame)-20, 25) text:@"" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+    [headView addSubview:self.detail2];
     self.tableView.tableHeaderView = headView;
+    
+    self.message_label = [UILabel lh_labelWithFrame:CGRectMake(50, 0, SCREEN_WIDTH-100, 100) text:@"" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:KVCBackGroundColor];
+    self.message_label.numberOfLines = 4;
+    self.message_label.centerY = self.view.centerY-50;
+    self.message_label.centerX = self.view.centerX;
+
+    self.message_label.hidden = YES;
+    [self.view addSubview:self.message_label];
     
     [self getDatas];
     
 }
+- (NSMutableArray *)datas{
+    
+    if (!_datas) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
+}
 - (void)getDatas{
     
-    [[[HHMineAPI GetOrderExpressWithRefundId:self.refundId] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    if ([self.type isEqual:@1]) {
+        //查看物流
+        [self GetOrderLogistics];
         
+    }else{
+        //退货物流
+        [self GetRefundIdOrderExpress];
+    }
+    
+}
+//查看物流
+- (void)GetOrderLogistics{
+    [[[HHMineAPI GetOrderLogisticsWithOrderId:self.orderid] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
                 
                 self.model = [HHMineModel mj_objectWithKeyValues:api.Data];
-                    self.detail1.text = self.model.express_name;
-                    self.detail1.text = self.model.express_order;
+                self.detail1.text = self.model.express_company;
+                self.detail2.text = self.model.order_number;
+                self.datas = [HHExpress_message_list mj_objectArrayWithKeyValuesArray:self.model.express[@"data"]];
+                NSString *message = self.model.express[@"message"];
+                if (![message isEqualToString:@"ok"]) {
+                    self.message_label.hidden = NO;
+                    self.message_label.text = message;
+                }else{
+                    self.message_label.hidden = YES;
+                }
                 [self.tableView reloadData];
                 
             }else{
@@ -78,9 +114,38 @@
         }else{
             [SVProgressHUD showInfoWithStatus:api.Msg];
         }
-
+        
     }];
     
+}
+//退货物流
+- (void)GetRefundIdOrderExpress{
+    [[[HHMineAPI GetOrderExpressWithRefundId:self.refundId] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        
+        if (!error) {
+            if (api.State == 1) {
+                
+                self.model = [HHMineModel mj_objectWithKeyValues:api.Data];
+                self.detail1.text = self.model.express_company;
+                self.detail2.text = self.model.order_number;
+                self.datas = [HHExpress_message_list mj_objectArrayWithKeyValuesArray:self.model.express[@"data"]];
+                NSString *message = self.model.express[@"message"];
+                if (![message isEqualToString:@"ok"]) {
+                    self.message_label.hidden = NO;
+                    self.message_label.text = message;
+                }else{
+                    self.message_label.hidden = YES;
+                }
+                [self.tableView reloadData];
+                
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            [SVProgressHUD showInfoWithStatus:api.Msg];
+        }
+        
+    }];
     
 }
 - (void)addAddressAction{
@@ -96,11 +161,11 @@
     
     if (indexPath.row == 0) {
         HHLogisticsCell1 *cell = [tableView dequeueReusableCellWithIdentifier:@"HHLogisticsCell1"];
-        cell.model =  self.model.express_message_list[indexPath.row];
+        cell.model =  self.datas[indexPath.row];
         gridCell = cell;
     }else{
         HHLogisticsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHLogisticsCell"];
-        cell.model =  self.model.express_message_list[indexPath.row];
+        cell.model =  self.datas[indexPath.row];
         gridCell = cell;
     }
     return gridCell;
@@ -112,7 +177,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.model.express_message_list.count;
+    return self.datas.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

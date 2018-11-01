@@ -101,12 +101,22 @@
     return api;
     
 }
-//获取订单的物流信息
+//获取订单的退货物流信息
 + (instancetype)GetOrderExpressWithRefundId:(NSString *)refundId{
     HHMineAPI *api = [self new];
     api.subUrl = API_GetReturnLogistics;
     if (refundId) {
         [api.parameters setObject:refundId forKey:@"refundId"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+}
+//获取订单的物流信息
++ (instancetype)GetOrderLogisticsWithOrderId:(NSString *)orderId{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetOrderLogistics;
+    if (orderId) {
+        [api.parameters setObject:orderId forKey:@"orderId"];
     }
     api.parametersAddToken = NO;
     return api;
@@ -490,7 +500,7 @@
 
 
 //创建订单
-+ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count mode:(NSNumber *)mode gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message{
++ (instancetype)postOrder_CreateWithAddrId:(NSString *)addr_id skuId:(NSString *)skuId count:(NSString *)count  mode:(NSNumber *)mode cartIds:(NSString *)cartIds gbId:(NSString *)gbId couponId:(NSString *)couponId integralTempIds:(NSString *)integralTempIds message:(NSString *)message{
     HHMineAPI *api = [self new];
     api.subUrl = API_Order_Create;
     if (addr_id) {
@@ -504,6 +514,9 @@
     }
     if (mode) {
         [api.parameters setObject:mode forKey:@"mode"];
+    }
+    if (cartIds) {
+        [api.parameters setObject:cartIds forKey:@"cartIds"];
     }
     if (couponId) {
         [api.parameters setObject:couponId forKey:@"couponId"];

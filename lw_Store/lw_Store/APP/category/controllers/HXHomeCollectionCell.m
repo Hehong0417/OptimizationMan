@@ -7,6 +7,7 @@
 //
 
 #import "HXHomeCollectionCell.h"
+#import "HHHomeAPI.h"
 
 @implementation HXHomeCollectionCell
 
@@ -15,7 +16,8 @@
     // Initialization code
     
     [self.goodImageV lh_setCornerRadius:0 borderWidth:0 borderColor:nil];
-    
+    [self.collectButton setImage:[UIImage imageNamed:@"tip_03"] forState:UIControlStateNormal];
+    [self.collectButton setImage:[UIImage imageNamed:@"tip_02"] forState:UIControlStateSelected];
 }
 - (void)setProductsModel:(HHhomeProductsModel *)productsModel{
     _productsModel = productsModel;
@@ -52,5 +54,73 @@
     self.product_s_intergralLabel.attributedText = [self.product_s_intergralLabel lh_addtrikethroughStyleAtContent:[NSString stringWithFormat:@"¥%@",guess_you_likeModel.market_price] rangeStr:[NSString stringWithFormat:@"¥%@",guess_you_likeModel.market_price] color:KA0LabelColor];
     
 }
+
+- (void)setCollectModel:(HHCategoryModel *)collectModel{
+    
+    _collectModel = collectModel;
+    
+    self.product_nameLabel.text = collectModel.product_name;
+    [self.goodImageV sd_setImageWithURL:[NSURL URLWithString:collectModel.product_image] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
+    self.product_min_priceLabel.text = [NSString stringWithFormat:@"¥%.2f",collectModel.product_cost_price?collectModel.product_cost_price.doubleValue:0.00];
+    
+    self.product_s_intergralLabel.attributedText = [self.product_s_intergralLabel lh_addtrikethroughStyleAtContent:[NSString stringWithFormat:@"¥%@",collectModel.product_market_price?collectModel.product_market_price:@"0"] rangeStr:[NSString stringWithFormat:@"¥%@",collectModel.product_market_price?collectModel.product_market_price:@"0"] color:KA0LabelColor];
+    self.collectButton.selected = YES;
+    
+}
+- (IBAction)collectbuttonAction:(UIButton *)sender {
+    
+    if (sender.selected == YES) {
+        //取消收藏
+        NSString *pids =nil;
+         pids = self.collectModel.product_id;
+        
+        [[[HHHomeAPI postDeleteProductCollectionWithpids:pids] netWorkClient] postRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    sender.selected = NO;
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showSuccessWithStatus:api.Msg];
+                    if (self.delegate&&[self.delegate respondsToSelector:@selector(collectHandleComplete)]&&self.collectModel.product_id) {
+                        [self.delegate collectHandleComplete];
+                    }
+                }else{
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+            }
+        }];
+    }else{
+        
+        //添加收藏
+        NSString *pids =nil;
+        pids = self.collectModel.product_id;
+
+        [[[HHHomeAPI postAddProductCollectionWithpids:pids] netWorkClient] postRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
+            if (!error) {
+                if (api.State == 1) {
+                    
+                    sender.selected = YES;
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    [SVProgressHUD showSuccessWithStatus:api.Msg];
+                    if (self.delegate&&[self.delegate respondsToSelector:@selector(collectHandleComplete)]&&self.collectModel.product_id) {
+                        [self.delegate collectHandleComplete];
+                    }
+                    
+                }else{
+                    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+                    
+                    [SVProgressHUD showInfoWithStatus:api.Msg];
+                }
+            }else{
+                [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+            }
+        }];
+    }
+    
+    
+}
+
 
 @end

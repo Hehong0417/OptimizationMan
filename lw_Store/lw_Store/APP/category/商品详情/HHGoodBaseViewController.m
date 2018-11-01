@@ -29,12 +29,15 @@
 #import "HHdiscountPackageVC.h"
 #import "HHGuess_you_likeTabCell.h"
 #import "HHEvaluationListVC.h"
+#import <AVKit/AVKit.h>   //包含类 AVPlayerViewController
+#import <AVFoundation/AVFoundation.h>  //包含类 AVPlayer
 
 @interface HHGoodBaseViewController ()<UITableViewDelegate,UITableViewDataSource,WKNavigationDelegate,SDCycleScrollViewDelegate,HHCartVCProtocol>
 {
     UIView *_tableHeader;
     UILabel *_title_label;
     CZCountDownView *countDown;
+    AVPlayerViewController *aVPlayerViewController;
 }
 @property (strong, nonatomic) UIScrollView *scrollerView;
 @property (strong, nonatomic) UITableView *tableView;
@@ -73,12 +76,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 
 @implementation HHGoodBaseViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-    self.addCartTool.hidden = NO;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -94,11 +91,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     
     [self setUpInit];
     
-    //获取数据
-    [self getDatas];
-    
     //加入购物车、立即购买
     [self addCartOrBuyAction];
+    
+    self.tableView.hidden = YES;
+    self.addCartTool.hidden = YES;
+    
+    //获取数据
+    [self getDatas];
     
     //接收到通知
     [self acceptanceNote];
@@ -248,20 +248,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 [self.tableView reloadData];
             }
         }];
-        if ([buttonTag isEqualToString:@"0"]) { //加入购物车
-
-            if ([button_title isEqualToString:@"加入购物车"]) {
-
-           [weakSelf setUpWithAddSuccessWithselect_IdArray:select_IdArray quantity:num pid:pid];
-                NSLog(@" 加入购物车");
-
-            }else{
-                NSLog(@"参加拼团");
-
+          //加入购物车
+            if ([button_title isEqualToString:@"加入购物车"]&&[buttonTag isEqualToString:@"0"]) {
+                NSLog(@"加入购物车");
+               [weakSelf setUpWithAddSuccessWithselect_IdArray:select_IdArray quantity:num pid:pid];
+            }else if (([button_title isEqualToString:@"立即购买"]||[button_title isEqualToString:@"参加拼团"]||[button_title isEqualToString:@"参加降价团"]||[button_title isEqualToString:@"砍价"]||[button_title isEqualToString:@"送礼"])&&[buttonTag isEqualToString:@"0"]) {
+                NSLog(@"立即购买、活动");
                 [weakSelf instanceBuyActionWithselect_IdArray:select_IdArray quantity:num pid:pid];
             }
-        }
-
     }];
     
 }
@@ -271,42 +265,37 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 #pragma mark -加载数据
 
 - (void)getDatas{
-
-    UIView *hudView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) backColor:kWhiteColor];
-    [self.tableView addSubview:hudView];
-    
-    
-    HHNotWlanView *notAlanView = [[HHNotWlanView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-    [hudView addSubview:notAlanView];
-    notAlanView.hidden = YES;
-    
-    self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleGray)];
-    self.activityIndicator.frame= CGRectMake(0, 0, 30, 30);
-     self.activityIndicator.center = self.tableView.center;
-    self.activityIndicator.color = KACLabelColor;
-    self.activityIndicator.hidesWhenStopped = YES;
-    [hudView addSubview:self.activityIndicator];
-    [self.activityIndicator startAnimating];
-    self.addCartTool.userInteractionEnabled = NO;
     
     //商品详情
-    [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:nil finishedBlock:^(HHHomeAPI *api, NSError *error) {
+    [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHHomeAPI *api, NSError *error) {
+        self.tableView.hidden = NO;
+        self.addCartTool.hidden = NO;
         if (!error) {
             if (api.State == 1) {
                 
                 self.gooodDetailModel = nil;
                 self.gooodDetailModel = [HHgooodDetailModel mj_objectWithKeyValues:api.Data];
                 self.cycleScrollView.imageURLStringsGroup = self.gooodDetailModel.ImageUrls;
+                
+                if (self.gooodDetailModel.VideoUrl.length>0) {
+                    self.cycleScrollView.isShowPlay = YES;
+                }else{
+                    self.cycleScrollView.isShowPlay = NO;
+                }
+                
                 self.discribeArr =  self.gooodDetailModel.AttributeValueList.mutableCopy;
+                self.addCartTool.product_id = self.gooodDetailModel.Id;
+                if ([self.gooodDetailModel.IsCollection isEqual:@1]) {
+                    self.addCartTool.collectBtn.selected  = YES;
+                }else{
+                    self.addCartTool.collectBtn.selected = NO;
+                }
+                
+                self.addCartTool.userInteractionEnabled = YES;
+                [self tableView:self.tableView viewForHeaderInSection:1];
                 
                 [self.tableView reloadData];
-                
-                [self.activityIndicator stopAnimating];
-                [hudView removeFromSuperview];
-                self.addCartTool.userInteractionEnabled = YES;
 
-                [self.activityIndicator removeFromSuperview];
-                [self tableView:self.tableView viewForHeaderInSection:1];
                 
                 [self setUpGoodsWKWebView];
                 
@@ -337,9 +326,15 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 if (self.alert_Arr.count >0) {
                     self.addCartTool.buyBtn.hidden = NO;
                     self.addCartTool.addCartBtn.mj_w = ScreenW/3;
+                    [self.addCartTool.buyBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 75, 5, 10)];
+                    [self.addCartTool.buyBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 10, 5, 40)];
                 }else{
-                    self.addCartTool.buyBtn.hidden = YES;
-                    self.addCartTool.addCartBtn.mj_w = ScreenW/3*2;
+                    self.addCartTool.buyBtn.hidden = NO;
+                    [self.addCartTool.buyBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+                    [self.addCartTool.buyBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0,0)];
+                    [self.addCartTool.buyBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                    [self.addCartTool.buyBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
+                    self.addCartTool.addCartBtn.mj_w = ScreenW/3;
                 }
                 // 秒杀
                 HHActivityModel *SecKill_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.SecKill];
@@ -367,10 +362,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         }else{
             [self.activityIndicator stopAnimating];
             if ([error.localizedDescription isEqualToString:@"似乎已断开与互联网的连接。"]||[error.localizedDescription  containsString:@"请求超时"]||[error.localizedDescription isEqualToString:@"The Internet connection appears to be offline."]) {
-                notAlanView.hidden = NO;
             }else{
-                notAlanView.hidden = YES;
-                [hudView removeFromSuperview];
                 [SVProgressHUD showInfoWithStatus:error.localizedDescription];
             }
         }
@@ -416,94 +408,20 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     //加入购物车
     
     self.addCartTool.addCartBlock = ^{
-        
-            DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
-            dcNewFeaVc.product_sku_value_arr = weakSelf.gooodDetailModel.SKUValues;
-            dcNewFeaVc.lastNum = lastNum_;
-            dcNewFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
-            dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
-            dcNewFeaVc.product_sku_arr = weakSelf.gooodDetailModel.SKUList;
-            dcNewFeaVc.button_Title = @"加入购物车";
-            dcNewFeaVc.product_price = weakSelf.gooodDetailModel.BuyPrice;
-            dcNewFeaVc.product_id = weakSelf.gooodDetailModel.Id;
-        
-            dcNewFeaVc.product_stock = weakSelf.gooodDetailModel.Stock;
-            if (self.gooodDetailModel.ImageUrls.count>0) {
-                dcNewFeaVc.goodImageView = weakSelf.gooodDetailModel.ImageUrls[0];
-            }
-            CGFloat  distance;
-            if (weakSelf.gooodDetailModel.SKUValues.count == 0) {
-                distance = ScreenH/2.3;
-            }else if (weakSelf.gooodDetailModel.SKUValues.count == 1){
-                distance = ScreenH/1.75;
-            }else{
-                distance = ScreenH*2/3;
-            }
-            dcNewFeaVc.nowScreenH = distance;
-            [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
+        weakSelf.Mode = @1;
+        [weakSelf showFeatureSelectionWithActModel:nil isCart:YES Mode:@1];
     };
     //立即购买
     self.addCartTool.buyBlock = ^(UIButton *btn) {
         
-        MLMenuView *menuView = [[MLMenuView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3*2, SCREEN_HEIGHT-Status_HEIGHT-49-weakSelf.alert_Arr.count*50, SCREEN_WIDTH/3, weakSelf.alert_Arr.count*50) WithmodelsArr:weakSelf.alert_Arr WithMenuViewOffsetTop:Status_HEIGHT WithTriangleOffsetLeft:80 button:btn];
-        
-            menuView.isHasTriangle = NO;
+        if (self.alert_Arr.count>0) {
             
-            menuView.didSelectBlock = ^(NSInteger index, HHActivityModel *model) {
-                
-                //属性选择
-                DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
-                dcNewFeaVc.product_sku_value_arr = weakSelf.gooodDetailModel.SKUValues;
-                dcNewFeaVc.lastNum = lastNum_;
-                dcNewFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
-                dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
-                dcNewFeaVc.product_sku_arr = weakSelf.gooodDetailModel.SKUList;
-                dcNewFeaVc.product_id = weakSelf.gooodDetailModel.Id;
-                
-                weakSelf.Mode = model.Mode;
-                if ([model.Mode isEqual:@2]) {
-                    dcNewFeaVc.button_Title = @"参加拼团";
-                }else if ([model.Mode isEqual:@8]){
-                    dcNewFeaVc.button_Title = @"送礼";
-                }else if ([model.Mode isEqual:@32]){
-                    dcNewFeaVc.button_Title = @"参加降价团";
-                }else if ([model.Mode isEqual:@4096]){
-                    dcNewFeaVc.button_Title = @"砍价";
-                }else{
-                    dcNewFeaVc.button_Title = @"立即购买";
-                }
-                dcNewFeaVc.product_price = weakSelf.gooodDetailModel.BuyPrice;
-                dcNewFeaVc.product_stock = weakSelf.gooodDetailModel.Stock;
-                
-                CGFloat  distance;
-                if (weakSelf.gooodDetailModel.SKUValues.count == 0) {
-                    distance = ScreenH/2.3;
-                }else if (weakSelf.gooodDetailModel.SKUValues.count == 1){
-                    distance = ScreenH/1.75;
-                }else{
-                    distance = ScreenH*2/3;
-                }
-                dcNewFeaVc.nowScreenH = distance;
-                
-                if (self.gooodDetailModel.ImageUrls.count>0) {
-                    dcNewFeaVc.goodImageView = weakSelf.gooodDetailModel.ImageUrls[0];
-                }
-                
-                [weakSelf setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
-            };
-            [menuView showMenuEnterAnimation:MLEnterAnimationStyleNone];
-             
+            [weakSelf showMenuViewWithButton:btn];
+        }else{
+            [weakSelf showFeatureSelectionWithActModel:nil isCart:NO Mode:@1];
+        }
     };
-    
-    //***跳转首页****
-    self.addCartTool.homeIconImgV.userInteractionEnabled = YES;
-    [self.addCartTool.homeIconImgV setTapActionWithBlock:^{
-        
-        [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.dcObj];
 
-        kKeyWindow.rootViewController = [HJTabBarController new];
-    }];
-    
     //****跳转购物车****
     self.addCartTool.cartIconImgV.userInteractionEnabled = YES;
     
@@ -517,7 +435,67 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         [weakSelf.navigationController pushVC:vc];
     }];
 }
+#pragma mark --  活动选择
 
+- (void)showMenuViewWithButton:(UIButton *)button{
+    
+    MLMenuView *menuView = [[MLMenuView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3*2, SCREEN_HEIGHT-Status_HEIGHT-49-self.alert_Arr.count*50, SCREEN_WIDTH/3, self.alert_Arr.count*50) WithmodelsArr:self.alert_Arr WithMenuViewOffsetTop:Status_HEIGHT WithTriangleOffsetLeft:80 button:button];
+    menuView.isHasTriangle = NO;
+    WEAK_SELF();
+    menuView.didSelectBlock = ^(NSInteger index, HHActivityModel *model) {
+        
+        [weakSelf showFeatureSelectionWithActModel:model isCart:NO Mode:model.Mode];
+    };
+    [menuView showMenuEnterAnimation:MLEnterAnimationStyleNone];
+    
+}
+#pragma mark --  属性选择
+
+- (void)showFeatureSelectionWithActModel:(HHActivityModel *)act_m isCart:(BOOL)isCart Mode:(NSNumber *)mode{
+    
+    //属性选择
+    DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
+    dcNewFeaVc.product_sku_value_arr = self.gooodDetailModel.SKUValues;
+    dcNewFeaVc.lastNum = lastNum_;
+    dcNewFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
+    dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
+    dcNewFeaVc.product_sku_arr = self.gooodDetailModel.SKUList;
+    dcNewFeaVc.product_id = self.gooodDetailModel.Id;
+    
+    self.Mode = mode;
+    if ([self.Mode isEqual:@2]) {
+        dcNewFeaVc.button_Title = @"参加拼团";
+    }else if ([self.Mode isEqual:@8]){
+        dcNewFeaVc.button_Title = @"送礼";
+    }else if ([self.Mode isEqual:@32]){
+        dcNewFeaVc.button_Title = @"参加降价团";
+    }else if ([self.Mode isEqual:@4096]){
+        dcNewFeaVc.button_Title = @"砍价";
+    }else if([self.Mode isEqual:@1]&&(isCart==YES)){
+        dcNewFeaVc.button_Title = @"加入购物车";
+    }else{
+        
+        dcNewFeaVc.button_Title = @"立即购买";
+    }
+    dcNewFeaVc.product_price = self.gooodDetailModel.BuyPrice;
+    dcNewFeaVc.product_stock = self.gooodDetailModel.Stock;
+    
+    CGFloat  distance;
+    if (self.gooodDetailModel.SKUValues.count == 0) {
+        distance = ScreenH/2.3;
+    }else if (self.gooodDetailModel.SKUValues.count == 1){
+        distance = ScreenH/1.75;
+    }else{
+        distance = ScreenH*2/3;
+    }
+    dcNewFeaVc.nowScreenH = distance;
+    
+    if (self.gooodDetailModel.ImageUrls.count>0) {
+        dcNewFeaVc.goodImageView = self.gooodDetailModel.ImageUrls[0];
+    }
+    
+    [self setUpAlterViewControllerWith:dcNewFeaVc WithDistance:distance WithDirection:XWDrawerAnimatorDirectionBottom WithParallaxEnable:NO WithFlipEnable:NO];
+}
 #pragma mark - HHCartVCProtocol
 
 - (void)cartVCBackActionHandle{
@@ -571,7 +549,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     NSLog(@"select_Id:%@",sku_id_Str);
 
     if (sku_id_Str.length>0) {
-        //立即购买
 //      是否存在收货地址
         [self isExitAddressWithsku_id_Str:sku_id_Str quantity:quantity];
     }
@@ -632,6 +609,8 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.estimatedRowHeight = 0;
+        
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = KVCBackGroundColor;
         _tableView.tableFooterView = self.tableFooter;
@@ -741,9 +720,11 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         //商品信息
         HHGoodSpecificationsCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodSpecificationsCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, -ScreenW, 0, 0);
-        HHattributeValueModel *model = self.discribeArr[indexPath.row];
-        cell.leftTitleLabel.text = [NSString stringWithFormat:@"【%@】",model.ValueName];
-        cell.discribeLabel.text = model.ValueStr;
+        if (indexPath.row < self.discribeArr.count) {
+            HHattributeValueModel *model = self.discribeArr[indexPath.row];
+            cell.leftTitleLabel.text = [NSString stringWithFormat:@"【%@】",model.ValueName];
+            cell.discribeLabel.text = model.ValueStr;
+        }
         gridcell = cell;
     }else if (indexPath.section == 3){
         //用户评价
@@ -782,7 +763,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if (section == 1) {
         return 1;
     }else if (section == 2) {
-     return self.discribeArr.count;
+     return self.discribeArr.count+1;
     }else if (section == 3) {
         return self.gooodDetailModel.EvaluateCount.integerValue>0?1:0;
     }else if (section == 4){
@@ -800,13 +781,16 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if (indexPath.section == 1) {
         return 90;
     }else if (indexPath.section == 2) {
+        if(indexPath.row == self.discribeArr.count){
+            return 10;
+        }
        return 30;
     }else if (indexPath.section == 3) {
         return 30;
     }else if (indexPath.section == 4) {
         return 130;
     }else if (indexPath.section == 5) {
-        return 220+45;
+        return 230+45;
     }
     return 0.001;
 }
@@ -839,6 +823,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     return 3;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
@@ -850,6 +835,25 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         }
     }
     return 0.001;
+    
+}
+#pragma mark - SDCycleScrollViewDelegate
+
+/** 点击图片回调 */
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
+    
+//    if (self.gooodDetailModel.VideoUrl.length>0) {
+        if (index == 0) {
+            aVPlayerViewController = [[AVPlayerViewController alloc]init];
+            if (self.gooodDetailModel.VideoUrl.length) {
+                aVPlayerViewController.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:self.gooodDetailModel.VideoUrl]];
+            }else{
+                aVPlayerViewController.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:@"http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4"]];
+            }
+            [aVPlayerViewController.player play];
+            [self presentViewController:aVPlayerViewController animated:YES completion:nil];
+        }
+//    }
     
 }
 #pragma mark - 转场动画弹出控制器

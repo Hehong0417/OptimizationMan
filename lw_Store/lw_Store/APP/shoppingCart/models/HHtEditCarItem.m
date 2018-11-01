@@ -47,13 +47,13 @@
         __block  CGFloat totalPrice = 0;
         
         [goodsList enumerateObjectsUsingBlock:^(HHproductsModel  *productsModel, NSUInteger idx, BOOL * _Nonnull stop) {
-            CGFloat price_total = productsModel.total.floatValue;
+            
+            CGFloat price_total = productsModel.price.floatValue;
             totalPrice +=price_total;
         }];
         editCarItem.total_Price = totalPrice;
         return  editCarItem;
     }else {
-        
         HHtEditCarItem *editCarItem = [HHtEditCarItem new];
         editCarItem.total_Price = 0;
         return editCarItem;

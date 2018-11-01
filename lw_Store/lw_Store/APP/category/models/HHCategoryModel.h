@@ -28,6 +28,13 @@
 @property(nonatomic,strong) NSString *product_s_intergral;
 @property(nonatomic,strong) NSString *product_type;
 
+@property(nonatomic,strong) NSString *product_cost_price;
+@property(nonatomic,strong) NSString *product_id;
+@property(nonatomic,strong) NSString *product_image;
+@property(nonatomic,strong) NSString *product_market_price;
+@property(nonatomic,strong) NSString *product_name;
+
+
 @end
 
 @interface HHsub_categoryModel : BaseModel

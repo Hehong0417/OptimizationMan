@@ -123,7 +123,7 @@
 - (void)onResp:(BaseResp *)resp {
     
     if ([resp isKindOfClass:[PayResp class]]){
-        PayResp*response = (PayResp*)resp;
+        PayResp *response = (PayResp*)resp;
         
         switch(response.errCode){
             case WXSuccess:{
@@ -139,6 +139,14 @@
                 break;
         }
     }
+//    if ([resp isKindOfClass:[WXLaunchMiniProgramResp class]])
+//    {
+//        WXLaunchMiniProgramResp *response = (WXLaunchMiniProgramResp*)resp;
+//
+//        NSString *string = response.extMsg;
+//        NSLog(@"extMsg--%@",string);
+//
+//    }
 }
 
 @end

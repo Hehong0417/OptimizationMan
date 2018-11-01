@@ -11,6 +11,9 @@
 #import "HHOrderDetailCellOne.h"
 #import "HHOrderDetailHead.h"
 #import "HHOrderDetailTableHead.h"
+#import "HHMyOrderItem.h"
+#import "HHOrderItemModel.h"
+
 
 @interface HHOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -21,6 +24,8 @@
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, strong)   HHCartModel *model;
 @property (nonatomic, strong)   NSMutableArray *datas;
+@property (nonatomic, strong)   UILabel *orderIdLabel;
+@property (nonatomic, strong)   UILabel *createdateLabel;
 
 @end
 
@@ -72,7 +77,7 @@
                     self.model = [HHCartModel mj_objectWithKeyValues:api.Data];
                     orderIdLabel.text = [NSString stringWithFormat:@"订单编号：%@",self.model.orderid];
                     createdateLabel.text = [NSString stringWithFormat:@"下单时间：%@",self.model.orderDate];
-                subhead.order_status_label.text = self.model.statusName;
+                    subhead.order_status_label.text = self.model.statusName;
                   [self.model.prodcuts enumerateObjectsUsingBlock:^(HHproductsModel *  product_model, NSUInteger idx, BOOL * _Nonnull stop) {
                     [product_model.skuid  enumerateObjectsUsingBlock:^(HHskuidModel *  sku_model, NSUInteger idx, BOOL * _Nonnull stop) {
                         
@@ -82,6 +87,10 @@
                         model.price = sku_model.Price;
                         model.quantity = sku_model.Quantity;
                         model.sku_name = sku_model.Value;
+                        model.OrderItemStatus = sku_model.OrderItemStatus;
+                        model.RefundId = sku_model.RefundId;
+                        model.item_id = sku_model.OrdetItemId;
+
                         [self.datas addObject:model];
                         
                     }];
@@ -157,6 +166,10 @@
         
         HHSubmitOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHSubmitOrderCell"];
         cell.productsModel =  self.datas[indexPath.row];
+        [self setStandardLabWith:self.datas[indexPath.row] cell:cell];
+        [cell.StandardLab setTapActionWithBlock:^{
+            [self pushVCWith:self.datas[indexPath.row]];
+        }];
         gridCell = cell;
         
     }else{
@@ -192,6 +205,17 @@
     gridCell.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
     return gridCell;
 }
+//设置退款退货按钮状态
+-(void)setStandardLabWith:(HHproductsModel *)productModel cell:(HHSubmitOrderCell *)cell{
+    cell.StandardLab.hidden = NO;
+    [HHMyOrderItem shippingLogisticsStateWithStatus_code:productModel.OrderItemStatus.integerValue submitCell:cell];
+}
+//跳转对应控制器
+-(void)pushVCWith:(HHproductsModel *)productModel{
+    WEAK_SELF();
+    [HHMyOrderItem orderDetailpushVCWithStatus_code:productModel.OrderItemStatus.integerValue navC:weakSelf.navigationController VC:weakSelf product_m:productModel order_id:self.model.orderid];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 3;

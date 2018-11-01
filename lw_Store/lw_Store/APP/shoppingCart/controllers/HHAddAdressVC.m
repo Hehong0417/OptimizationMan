@@ -143,7 +143,7 @@
                       }else if(self.addressType == HHAddress_settlementType_cart){
                           //提交订单页面
                           HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-                          vc.pids = self.pids;
+                          vc.cartIds_str = self.cartIds_str;
                           if ([self.sendGift isEqual:@1]) {
                               vc.enter_type = HHaddress_type_Spell_group;
                               vc.mode = @8;
@@ -160,7 +160,7 @@
                           vc.enter_type = HHaddress_type_add_productDetail;
                           vc.mode = self.mode;
                           vc.ids_Str = self.ids_Str;
-                          vc.pids = self.pids;
+                          vc.cartIds_str = self.cartIds_str;
                           [self.navigationController pushVC:vc];
                       }
                       
@@ -216,17 +216,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HHTextfieldcell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleLabel"];
-    
+  
     if (!cell) {
         cell = [[HHTextfieldcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleLabel"];
     }
     cell.inputTextField.tag = indexPath.row+10000;
     if (indexPath.row == 0) {
-        cell.titleLabel.attributedText =  [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor];
+        [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
         cell.inputTextField.text = self.username;
         cell.inputTextField.delegate = self;
     }else{
-        cell.titleLabel.attributedText =  [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor];
+         [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
         if (indexPath.row == 1){
             cell.inputTextField.delegate = self;
             cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;

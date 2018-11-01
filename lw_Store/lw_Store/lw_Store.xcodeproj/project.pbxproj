@@ -111,6 +111,7 @@
 		CE37949320A9913700A3CDC9 /* HHMessageWeb.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37949220A9913700A3CDC9 /* HHMessageWeb.m */; };
 		CE3C14212109B07700A2FC42 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */; };
 		CE3E59B120F8A2330010BA90 /* HHGoodBaseSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */; };
+		CE450DF92186E78D007EA2D3 /* HHMyCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */; };
 		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
 		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
 		CE472616212D1EA8002BD2A5 /* DCDetailOverFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE472600212D1EA7002BD2A5 /* DCDetailOverFooterView.m */; };
@@ -145,6 +146,7 @@
 		CE52D45C2099ADA900C7BAF6 /* photo_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE52D4592099ADA800C7BAF6 /* photo_delete@2x.png */; };
 		CE52D45E2099ADA900C7BAF6 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE52D45B2099ADA800C7BAF6 /* CollectionViewCell.m */; };
 		CE5467EA20DCFA3C009B5C1D /* HHExtraBonusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5467E920DCFA3C009B5C1D /* HHExtraBonusVC.m */; };
+		CE596FF8218ACF36007FFFDF /* HHSelectChannelAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE596FF7218ACF36007FFFDF /* HHSelectChannelAlertView.m */; };
 		CE599A6F2181729500928641 /* HHPayWayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE599A6E2181729500928641 /* HHPayWayCell.m */; };
 		CE599A782181C30E00928641 /* HHLogisticsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE599A732181C30C00928641 /* HHLogisticsVC.m */; };
 		CE599A792181C30E00928641 /* HHLogisticsCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE599A742181C30C00928641 /* HHLogisticsCell1.xib */; };
@@ -548,6 +550,8 @@
 		CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		CE3E59AF20F8A2330010BA90 /* HHGoodBaseSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHGoodBaseSubVC.h; sourceTree = "<group>"; };
 		CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGoodBaseSubVC.m; sourceTree = "<group>"; };
+		CE450DF72186E78C007EA2D3 /* HHMyCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHMyCollectionVC.h; sourceTree = "<group>"; };
+		CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHMyCollectionVC.m; sourceTree = "<group>"; };
 		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
 		CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHWXModel.m; sourceTree = "<group>"; };
 		CE45FBA220BFFB88008D62E6 /* HHOrderItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHOrderItemModel.h; sourceTree = "<group>"; };
@@ -615,6 +619,8 @@
 		CE52D45B2099ADA800C7BAF6 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		CE5467E820DCFA3C009B5C1D /* HHExtraBonusVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHExtraBonusVC.h; sourceTree = "<group>"; };
 		CE5467E920DCFA3C009B5C1D /* HHExtraBonusVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHExtraBonusVC.m; sourceTree = "<group>"; };
+		CE596FF6218ACF36007FFFDF /* HHSelectChannelAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSelectChannelAlertView.h; sourceTree = "<group>"; };
+		CE596FF7218ACF36007FFFDF /* HHSelectChannelAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSelectChannelAlertView.m; sourceTree = "<group>"; };
 		CE599A6D2181729500928641 /* HHPayWayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPayWayCell.h; sourceTree = "<group>"; };
 		CE599A6E2181729500928641 /* HHPayWayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHPayWayCell.m; sourceTree = "<group>"; };
 		CE599A702181C30A00928641 /* HHLogisticsCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHLogisticsCell1.h; sourceTree = "<group>"; };
@@ -1242,6 +1248,15 @@
 			path = selectPhotosCell;
 			sourceTree = "<group>";
 		};
+		CE596FF5218ACF36007FFFDF /* SelectChannelAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				CE596FF6218ACF36007FFFDF /* HHSelectChannelAlertView.h */,
+				CE596FF7218ACF36007FFFDF /* HHSelectChannelAlertView.m */,
+			);
+			path = SelectChannelAlertView;
+			sourceTree = "<group>";
+		};
 		CE759A5920BD02BB00C76818 /* UserLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1396,6 +1411,7 @@
 				CE999BAC208DE33B00B9307D /* TabBarController */,
 				CE3C141E2109B07700A2FC42 /* CatchedHelper */,
 				CE29A2382182FE3F00767FDC /* AlipaySDK */,
+				CE596FF5218ACF36007FFFDF /* SelectChannelAlertView */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2194,6 +2210,8 @@
 				CEC135B420C7EDFB00C38D75 /* HHMySendGiftWebVC.m */,
 				CE5467E820DCFA3C009B5C1D /* HHExtraBonusVC.h */,
 				CE5467E920DCFA3C009B5C1D /* HHExtraBonusVC.m */,
+				CE450DF72186E78C007EA2D3 /* HHMyCollectionVC.h */,
+				CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -2740,6 +2758,7 @@
 				CE999BC3208DE33B00B9307D /* UIViewController+LH.m in Sources */,
 				CE0C1CDE20C66D94001F59F9 /* HHActivityWebVC.m in Sources */,
 				CE999BE2208DE33B00B9307D /* UIStoryboard+Addition.m in Sources */,
+				CE596FF8218ACF36007FFFDF /* HHSelectChannelAlertView.m in Sources */,
 				CE74AD1620BBDAFA00246896 /* HHSetVC.m in Sources */,
 				CEE2A0F3209333D400843DBD /* XWCoolAnimator+XWLines.m in Sources */,
 				CE999BD6208DE33B00B9307D /* CATextLayer+LH.m in Sources */,
@@ -2901,6 +2920,7 @@
 				CE29A2132182F3C600767FDC /* HHAlipayModel.m in Sources */,
 				CE219372208EE853005351B4 /* HHShippingAddressVC.m in Sources */,
 				CE2193A5208F0E9B005351B4 /* LwPersonalCenter.m in Sources */,
+				CE450DF92186E78D007EA2D3 /* HHMyCollectionVC.m in Sources */,
 				CE999BDE208DE33B00B9307D /* UIImage+Extension.m in Sources */,
 				CEE2A0FF209333D400843DBD /* DCFeatureSelectionViewController.m in Sources */,
 				CEE2A0E7209333D400843DBD /* XWFilterAnimator+XWPageCurl.m in Sources */,

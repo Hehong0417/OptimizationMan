@@ -88,7 +88,12 @@ typedef enum : NSUInteger {
 //2.3月成交记录
 #define API_GetFinishLog  API_SUB_URL(@"ProductApi/ApiProduct/GetFinishLog")
 
-
+//3.7商品收藏
+#define API_AddProductCollection API_SUB_URL3(@"AddProductCollection")
+//3.8取消商品收藏
+#define API_DeleteProductCollection API_SUB_URL3(@"DeleteProductCollection")
+//3.10获取个人商品收藏
+#define API_GetProductCollection API_SUB_URL3(@"GetProductCollection")
 
 /**
  *  商品分类
@@ -175,6 +180,8 @@ typedef enum : NSUInteger {
 #define API_GetOrderExpress API_SUB_URL(@"CustomerApi/Order/GetOrderExpress")
 //4.2获取退货的物流信息
 #define API_GetReturnLogistics API_SUB_URL2(@"Order/GetReturnLogistics")
+//4.2获取物流信息
+#define API_GetOrderLogistics API_SUB_URL2(@"Order/GetOrderLogistics")
 //4.3获取所有的快递公司
 #define API_GetExpressCompany API_SUB_URL(@"Client/GetExpress")
 //4.33获取提现信息

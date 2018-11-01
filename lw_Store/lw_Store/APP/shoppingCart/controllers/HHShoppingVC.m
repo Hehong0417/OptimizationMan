@@ -24,7 +24,6 @@
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, assign)   NSInteger page;
 @property (nonatomic, strong)   NSMutableArray *datas;
-@property (nonatomic, strong)   NSMutableArray *pids_arr;
 @property (nonatomic, strong)   HHCartFootView *settleAccountView;
 @property (nonatomic, strong)   HHCartModel *model;
 @property (nonatomic, strong)   NSString *money_total;
@@ -41,12 +40,7 @@
     }
     return _datas;
 }
-- (NSMutableArray *)pids_arr{
-    if (!_pids_arr) {
-        _pids_arr = [NSMutableArray array];
-    }
-    return _pids_arr;
-}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -207,8 +201,6 @@
                     self.settleAccountView.sendGift_widthConstant.constant = 0;
                 }
                 
-                self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%.2f",self.model.total?self.model.total.floatValue:0.00];
-
                 [self getShopCartListFinsih:self.model];
 
             }else{
@@ -220,7 +212,6 @@
         }
 
     }];
-    
 }
 - (void)getShopCartListFinsih:(HHCartModel *)data {
     NSArray *arr = [data.products mutableCopy];
@@ -246,20 +237,12 @@
     }
     self.settleAccountView.selectBtn.selected = NO;
     
-    //pids
-    [self.pids_arr removeAllObjects];
-    [arr enumerateObjectsUsingBlock:^(HHproductsModel *productsModel, NSUInteger idx, BOOL *stop) {
-        [self.pids_arr addObject:productsModel.pid];
-        
-    }];
-    
     //全选左边点击数据源
-//    self.selectItems = [NSMutableArray array];
-//    [self.datas enumerateObjectsUsingBlock:^(HHproductsModel *productsModel, NSUInteger idx, BOOL *stop) {
-//        [self.selectItems addObject:@1];
-//    }];
+    self.selectItems = [NSMutableArray array];
+    [self.datas enumerateObjectsUsingBlock:^(HHproductsModel *productsModel, NSUInteger idx, BOOL *stop) {
+        [self.selectItems addObject:@0];
+    }];
     //新增
-    //
     [self.tableView reloadData];
 }
 - (void)addTipHeadView{
@@ -291,26 +274,32 @@
     [self.view addSubview:settleView];
     
     //全选
-//    WEAK_SELF();
-//    self.settleAccountView.allChooseBlock = ^(NSNumber *allSelected) {
-//        [weakSelf caculateSettleGoodsListBaseLeftSelectArrIsAllSelected:allSelected.boolValue];
-//    };
-//
+    WEAK_SELF();
+    self.settleAccountView.allChooseBlock = ^(NSNumber *allSelected) {
+        [weakSelf caculateSettleGoodsListBaseLeftSelectArrIsAllSelected:allSelected.boolValue];
+    };
+
     //送礼
     self.settleAccountView.sendGift_label.userInteractionEnabled = YES;
     [self.settleAccountView.sendGift_label setTapActionWithBlock:^{
        
-        [self isExitAddressWithSendGift:@1];
+        if ([self.selectItems containsObject:@1]) {
+            [self isExitAddressWithSendGift:@1];
+        }else{
+            [SVProgressHUD showInfoWithStatus:@"您还没有选择宝贝哦～"];
+        }
 
     }];
     
     //提交订单
     [self.settleAccountView.settleBtn setTapActionWithBlock:^{
 
-        [self isExitAddressWithSendGift:@0];
-        
+        if ([self.selectItems containsObject:@1]) {
+            [self isExitAddressWithSendGift:@0];
+        }else{
+            [SVProgressHUD showInfoWithStatus:@"您还没有选择宝贝哦～"];
+        }
     }];
-    
 }
 //是否存在收货地址
 - (void)isExitAddressWithSendGift:(NSNumber *)sendGiftBtnSelected{
@@ -319,10 +308,12 @@
         
         if (!error) {
             if (api.State == 1) {
+                NSArray *cartIds = [self getNewSelect_cartids];
+                NSString *cartIds_str = [cartIds componentsJoinedByString:@","];
+                
                 if ([api.Data isEqual:@1]) {
-
                     HHSubmitOrdersVC *vc = [HHSubmitOrdersVC new];
-                    vc.pids = [self.pids_arr componentsJoinedByString:@","];
+                    vc.cartIds_str = cartIds_str;
                     
                     if ([self.model.sendGift isEqual:@1]) {
                         if ([sendGiftBtnSelected isEqual:@1]) {
@@ -330,28 +321,28 @@
                             vc.sendGift = self.model.sendGift;
                             vc.mode = @8;
                         }else{
-                            vc.mode = nil;
+                            vc.mode = @1;
                             vc.enter_type = HHaddress_type_add_cart;
                         }
                     }else{
-                        vc.mode = nil;
+                        vc.mode = @1;
                         vc.enter_type = HHaddress_type_add_cart;
                     }
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
-                    vc.pids = [self.pids_arr componentsJoinedByString:@","];
                     vc.addressType = HHAddress_settlementType_cart;
+                    vc.cartIds_str = cartIds_str;
                     if ([self.model.sendGift isEqual:@1]) {
                         if ([sendGiftBtnSelected isEqual:@1]) {
                           vc.mode = @8;
                           vc.sendGift = self.model.sendGift;
                         }else{
-                          vc.mode = nil;
+                          vc.mode = @1;
 
                         }
                     }else{
-                          vc.mode = nil;
+                          vc.mode = @1;
                     }
                     vc.titleStr = @"新增收货地址";
                     [self.navigationController pushVC:vc];
@@ -445,11 +436,11 @@
             if (api.State == 1) {
                 [self.datas removeAllObjects];
                 self.model  =  [HHCartModel mj_objectWithKeyValues:api.Data];
-//                self.datas = [self.model.products mutableCopy];
-//                HHtEditCarItem *editCarItem  = [HHtEditCarItem shopCartGoodsList:self.datas selectionArr:self.selectItems];
-//                self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%.2f",editCarItem.total_Price?editCarItem.total_Price:0.00];
-//                self.settleAccountView.selectBtn.selected = editCarItem.settleAllSelect;
-                self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%@",self.model.total?self.model.total:@"0.00"];
+                self.datas = [self.model.products mutableCopy];
+                HHtEditCarItem *editCarItem  = [HHtEditCarItem shopCartGoodsList:self.datas selectionArr:self.selectItems];
+                self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%.2f",editCarItem.total_Price?editCarItem.total_Price:0.00];
+                self.settleAccountView.selectBtn.selected = editCarItem.settleAllSelect;
+//                self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%@",self.model.total?self.model.total:@"0.00"];
 
                 [self.tableView reloadData];
             }
@@ -478,7 +469,20 @@
     
     [self.tableView reloadData];
 }
-
+//cartid数组
+- (NSMutableArray *)getNewSelect_cartids{
+    
+    NSMutableArray *cartIds_arr = [NSMutableArray array];
+    
+    [self.datas enumerateObjectsUsingBlock:^(HHproductsModel *productsModel, NSUInteger idx1, BOOL * _Nonnull stop) {
+        [self.selectItems enumerateObjectsUsingBlock:^(NSNumber *obj, NSUInteger idx2, BOOL * _Nonnull stop) {
+            if ([obj isEqual:@1] && (idx1 == idx2)) {
+                [cartIds_arr addObject:productsModel.cartid];
+            }
+        }];
+    }];
+    return cartIds_arr;
+}
 #pragma mark --- tableView delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -495,16 +499,16 @@
     }else{
         cell.minusBtn.enabled = YES;
     }
-//    cell.indexPath = indexPath;
-//    cell.leftSelected = ((NSNumber *)self.selectItems[indexPath.row]).boolValue;
-//    WEAK_SELF();
-//    cell.ChooseBtnSelectAction = ^(NSIndexPath *indexPath, BOOL chooseBtnSelected) {
-//        [weakSelf.selectItems replaceObjectAtIndex:indexPath.row withObject:@(chooseBtnSelected)];
-//
-//        HHtEditCarItem *editCarItem  = [HHtEditCarItem shopCartGoodsList:weakSelf.datas selectionArr:weakSelf.selectItems];
-//        self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%.2f",editCarItem.total_Price?editCarItem.total_Price:0.00];
-//        self.settleAccountView.selectBtn.selected = editCarItem.settleAllSelect;
-//    };
+    cell.indexPath = indexPath;
+    cell.leftSelected = ((NSNumber *)self.selectItems[indexPath.section]).boolValue;
+    WEAK_SELF();
+    cell.ChooseBtnSelectAction = ^(NSIndexPath *indexPath, BOOL chooseBtnSelected) {
+        [weakSelf.selectItems replaceObjectAtIndex:indexPath.section withObject:@(chooseBtnSelected)];
+
+        HHtEditCarItem *editCarItem  = [HHtEditCarItem shopCartGoodsList:weakSelf.datas selectionArr:weakSelf.selectItems];
+        self.settleAccountView.money_totalLabel.text =  [NSString stringWithFormat:@"共计¥%.2f",editCarItem.total_Price?editCarItem.total_Price:0.00];
+        self.settleAccountView.selectBtn.selected = editCarItem.settleAllSelect;
+    };
     return cell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -554,7 +558,6 @@
             if (!error) {
                 if (api.State == 1) {
                     [self.datas removeAllObjects];
-                    [self.pids_arr removeAllObjects];
                     [self deleteGetData];
                 }else{
                     [SVProgressHUD showInfoWithStatus:api.Msg];

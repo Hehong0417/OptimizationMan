@@ -24,7 +24,10 @@ typedef enum : NSUInteger {
 @property(nonatomic,strong) NSString *count;
 @property(nonatomic,strong) NSNumber *sendGift;
 @property(nonatomic,strong) NSString *gbId;
-//商品id
+//购物车id
+@property(nonatomic,strong) NSString *cartIds_str;
+
+//商品id-->支付成功猜你喜欢接口需要使用到
 @property(nonatomic,strong) NSString *pids;
 
 @end

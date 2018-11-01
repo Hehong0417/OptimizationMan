@@ -52,6 +52,8 @@ NSString * const ID = @"SDCycleScrollViewCell";
 
 @property (nonatomic, strong) UIImageView *backgroundImageView; // 当imageURLs为空时的背景图
 
+@property (nonatomic, assign) BOOL isShowVideoButton;
+
 @end
 
 @implementation SDCycleScrollView
@@ -333,7 +335,13 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }];
     self.imagePathsGroup = [temp copy];
 }
-
+- (void)setIsShowPlay:(BOOL)isShowPlay{
+    _isShowPlay = isShowPlay;
+    
+    self.isShowVideoButton =  isShowPlay;
+    
+    [self.mainView reloadData];
+}
 - (void)setLocalizationImageNamesGroup:(NSArray *)localizationImageNamesGroup
 {
     _localizationImageNamesGroup = localizationImageNamesGroup;
@@ -361,6 +369,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
         }
     }
 }
+
 
 #pragma mark - actions
 
@@ -569,6 +578,18 @@ NSString * const ID = @"SDCycleScrollViewCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SDCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+    
+    if (self.isShowVideoButton == YES ) {
+        cell.playButton_imageV.hidden = NO;
+        NSInteger index =  [self pageControlIndexWithCurrentCellIndex:indexPath.item];
+        if (index == 0) {
+            cell.playButton_imageV.hidden = NO;
+        }else{
+            cell.playButton_imageV.hidden = YES;
+        }
+    }else{
+        cell.playButton_imageV.hidden = YES;
+    }
     
     long itemIndex = [self pageControlIndexWithCurrentCellIndex:indexPath.item];
     

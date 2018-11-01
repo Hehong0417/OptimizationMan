@@ -64,10 +64,13 @@
      //跳转小程序
         
         WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
-        launchMiniProgramReq.userName = @"优选君TM";  //拉起的小程序的username
+        launchMiniProgramReq.userName = @"gh_48856d410d9e";  //拉起的小程序的username
 //        launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeTest; //拉起小程序的类型
-        [WXApi sendReq:launchMiniProgramReq];
+        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
+        
+      BOOL sucess =  [WXApi sendReq:launchMiniProgramReq];
+        
+      NSLog(@"sucess--%d",sucess);
         
     }else{
     
@@ -101,4 +104,5 @@
     
     }
 }
+
 @end

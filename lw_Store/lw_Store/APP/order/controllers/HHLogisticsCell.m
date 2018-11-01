@@ -17,10 +17,10 @@
 - (void)setModel:(HHExpress_message_list *)model{
     _model = model;
     
-    self.yearLabel.text = model.express_date?model.express_date:@"";
-    self.timeLabel.text = model.express_time?model.express_time:@"";
-    self.express_messageLabe.text = model.express_message?model.express_message:@"";
-
+    NSArray *times = [model.time componentsSeparatedByString:@" "];
+    self.yearLabel.text = times[0]?times[0]:@"";
+    self.timeLabel.text = times[1]?times[1]:@"";
+    self.express_messageLabe.text = model.context?model.context:@"";
 }
 
 @end

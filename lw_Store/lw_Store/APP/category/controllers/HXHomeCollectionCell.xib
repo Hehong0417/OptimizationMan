@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="E6S-kZ-hQw"/>
                             <constraint firstAttribute="height" constant="24" id="w0z-zu-YvQ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -51,15 +51,30 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="8p6-Uy-Mrl"/>
                             <constraint firstAttribute="height" constant="24" id="XHP-ok-zbQ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eo3-jy-BRZ">
+                        <rect key="frame" x="121" y="0.0" width="49" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49" id="g0f-wy-q87"/>
+                            <constraint firstAttribute="height" constant="31" id="k8w-mh-Eng"/>
+                        </constraints>
+                        <state key="normal" image="tip_03">
+                            <color key="titleColor" red="0.99215686270000003" green="0.2901960784" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="collectbuttonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="qxT-6R-QHa"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="dkC-Ru-ecP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4zX-jh-HKy"/>
+                <constraint firstAttribute="trailing" secondItem="eo3-jy-BRZ" secondAttribute="trailing" id="7bx-b5-1XI"/>
+                <constraint firstItem="eo3-jy-BRZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Dl8-g4-zNv"/>
                 <constraint firstItem="IG9-GQ-VDY" firstAttribute="top" secondItem="04k-dS-PNf" secondAttribute="bottom" constant="1" id="DpX-XG-kEE"/>
                 <constraint firstItem="dkC-Ru-ecP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GGh-64-gv1"/>
                 <constraint firstItem="IG9-GQ-VDY" firstAttribute="leading" secondItem="04k-dS-PNf" secondAttribute="leading" id="Ib7-kF-hsF"/>
@@ -72,6 +87,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <connections>
+                <outlet property="collectButton" destination="eo3-jy-BRZ" id="ceV-lg-IqN"/>
                 <outlet property="goodImageV" destination="dkC-Ru-ecP" id="ThK-j0-X4z"/>
                 <outlet property="product_min_priceLabel" destination="IG9-GQ-VDY" id="9oP-Fh-OxB"/>
                 <outlet property="product_nameLabel" destination="04k-dS-PNf" id="9ur-Yb-PhB"/>
@@ -79,4 +95,7 @@
             </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="tip_03" width="19" height="16"/>
+    </resources>
 </document>

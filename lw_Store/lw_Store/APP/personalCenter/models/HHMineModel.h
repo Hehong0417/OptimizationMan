@@ -81,6 +81,9 @@
 @property(nonatomic,strong) NSString *express_order;
 @property(nonatomic,strong) NSArray *express_message_list;
 @property(nonatomic,strong) NSString *express_abb;
+@property(nonatomic,strong) NSString *express_company;
+@property(nonatomic,strong) NSString *order_number;
+@property(nonatomic,strong) NSDictionary *express;
 
 
 //收款银行卡列表
@@ -120,5 +123,9 @@
 @property(nonatomic,strong) NSString *express_date;
 @property(nonatomic,strong) NSString *express_time;
 @property(nonatomic,strong) NSString *express_message;
+
+@property(nonatomic,strong) NSString *context;
+@property(nonatomic,strong) NSString *location;
+@property(nonatomic,strong) NSString *time;
 
 @end

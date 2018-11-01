@@ -70,7 +70,7 @@
 
     HHOrderIdItem *OrderIdItem = [HHOrderIdItem sharedOrderIdItem];
     OrderIdItem.order_id = nil;
-    OrderIdItem.pids = self.pids;
+    OrderIdItem.pids = self.cartIds_str;
     [OrderIdItem write];
     
     self.page = 1;
@@ -187,7 +187,7 @@
 //获取数据
 - (void)getDatas{
     
-    [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue gbId:self.gbId] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
+    [[[HHCartAPI GetConfirmOrderWithids:self.address_id mode:self.mode skuId:self.ids_Str quantity:self.count.numberValue gbId:self.gbId cardIds:self.cartIds_str] netWorkClient] getRequestInView:self.view finishedBlock:^(HHCartAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
                 
@@ -364,7 +364,7 @@
         if (integralTempIds_arr.count>0) {
          integralTempIds_str = [integralTempIds_arr mj_JSONString];
         }
-    [[[HHMineAPI postOrder_CreateWithAddrId:self.address_id skuId:self.ids_Str count:self.count mode:self.mode gbId:self.gbId couponId:coupon_id integralTempIds:integralTempIds_str message:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    [[[HHMineAPI postOrder_CreateWithAddrId:self.address_id skuId:self.ids_Str count:self.count mode:self.mode cartIds:self.cartIds_str gbId:self.gbId couponId:coupon_id integralTempIds:integralTempIds_str message:nil]netWorkClient]postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         self.submitOrderTool.ImmediatePayLabel.userInteractionEnabled  = YES;
         self.submitOrderTool.closePay.userInteractionEnabled = YES;
         if (!error) {

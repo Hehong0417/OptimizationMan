@@ -116,12 +116,12 @@
         [btn lh_setBackgroundColor:KA0LabelColor forState:UIControlStateNormal];
         btn.enabled = NO;
         
-        [[[HHMineAPI postSubReturnGoodsExpressWithorderid:self.orderid exp_code:self.choose_code exp_order:courierNum] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        [[[HHMineAPI postSubReturnGoodsExpressWithorderid:self.product_item_refund_id exp_code:self.choose_code exp_order:courierNum] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
             [btn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
             btn.enabled = YES;
 
             if (!error) {
-                if (api.State == 0) {
+                if (api.State == 1) {
                     [SVProgressHUD setMinimumDismissTimeInterval:1.0];
                     [SVProgressHUD showSuccessWithStatus:@"提交成功"];
                     if (self.return_numb_block) {
