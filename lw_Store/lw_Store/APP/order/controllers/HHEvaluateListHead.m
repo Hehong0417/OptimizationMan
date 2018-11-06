@@ -74,7 +74,7 @@
     
     _evaluateStatictis_m = evaluateStatictis_m;
     
-    _goodEvaluateProportion_label.text = evaluateStatictis_m.goodEvaluateProportion.integerValue>0?[NSString stringWithFormat:@"%@%%好评",evaluateStatictis_m.goodEvaluateProportion]:@"";
+    _goodEvaluateProportion_label.text = evaluateStatictis_m.goodEvaluateProportion.integerValue>0?[NSString stringWithFormat:@"%.2f%%好评",evaluateStatictis_m.goodEvaluateProportion.doubleValue]:@"";
     UIButton *btn1 = [self viewWithTag:10000];
     [btn1 setTitle:[NSString stringWithFormat:@"全部(%@)",evaluateStatictis_m.totalCount] forState:UIControlStateNormal];
     UIButton *btn2 = [self viewWithTag:10001];

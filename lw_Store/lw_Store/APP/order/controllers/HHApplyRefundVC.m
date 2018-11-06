@@ -21,11 +21,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"申请退款";
+    self.title = self.nav_title;
     self.tableView.backgroundColor = KVCBackGroundColor;
    
     
-    self.price_label.text = [NSString stringWithFormat:@"¥%.2f",self.price.floatValue*self.count.integerValue];
+    self.price_label.text = [NSString stringWithFormat:@"¥%.2 f",self.price.floatValue*self.count.integerValue];
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) backColor:kClearColor];
     

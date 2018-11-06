@@ -22,6 +22,7 @@
 #import "HHCouponItem.h"
 #import "HHOrderIdItem.h"
 #import "HHPayWayCell.h"
+#import "HHOrderDetailVC.h"
 
 @interface HHSubmitOrdersVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,HHShippingAddressVCProtocol,payTypeDelegate>
 {
@@ -329,6 +330,9 @@
         }
     }else if (self.enter_type == HHaddress_type_package){
         //优惠套餐
+        [self createOrder];
+    }else if (self.enter_type == HHaddress_type_add_productDetail){
+        //商品详情
         [self createOrder];
     }
 }
@@ -806,19 +810,20 @@
         
     }else {
         //购物车
-        HHPaySucessVC *vc = [HHPaySucessVC new];
-        vc.pids = OrderIdItem.pids;
+        HHOrderDetailVC *vc = [HHOrderDetailVC new];
+        vc.orderid = self.order_id;
         [self.navigationController pushVC:vc];
+
     }
 }
 
 - (void)wxPayFailcount {
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-        [SVProgressHUD showErrorWithStatus:@"支付失败～"];
-
-    });
+    //购物车
+    HHOrderDetailVC *vc = [HHOrderDetailVC new];
+    vc.orderid = self.order_id;
+    [self.navigationController pushVC:vc];
+    
 }
 
 - (id)copyWithZone:(NSZone *)zone

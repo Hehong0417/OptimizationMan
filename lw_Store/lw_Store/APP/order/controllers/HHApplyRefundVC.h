@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSString *item_id;
 @property (nonatomic, strong) NSString *order_id;
 @property (strong, nonatomic)  NSString *title_str;
+@property (strong, nonatomic)  NSString *nav_title;
 
 @property(nonatomic,weak) id<ApplyRefundDelegate> delegate;
 

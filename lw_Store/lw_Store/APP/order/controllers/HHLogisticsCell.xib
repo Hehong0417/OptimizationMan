@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,15 +40,15 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bg2-TJ-4du">
-                        <rect key="frame" x="169" y="31" width="190" height="32"/>
+                        <rect key="frame" x="169" y="19.5" width="190" height="65"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="LQj-Fs-Wk2"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="e8w-IF-1vb"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_xiangshangjiantou_default" translatesAutoresizingMaskIntoConstraints="NO" id="5tY-Ka-8BQ">
-                        <rect key="frame" x="141" y="38" width="20" height="20"/>
+                        <rect key="frame" x="141" y="37.5" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="Ine-nG-y4p"/>
                             <constraint firstAttribute="width" constant="20" id="RjV-9u-pka"/>
@@ -57,14 +56,14 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ifL-zH-TKp">
-                        <rect key="frame" x="151" y="11" width="1" height="25"/>
+                        <rect key="frame" x="150.5" y="11" width="1" height="24.5"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="hf4-5a-oVN"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4iU-Yz-Ipv">
-                        <rect key="frame" x="151" y="60" width="1" height="26"/>
+                        <rect key="frame" x="150.5" y="59.5" width="1" height="26.5"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="1" id="0uR-57-Erh"/>
@@ -85,7 +84,7 @@
                     <constraint firstItem="ifL-zH-TKp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="WCk-uJ-LRA"/>
                     <constraint firstItem="5tY-Ka-8BQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XST-3T-oBg"/>
                     <constraint firstItem="5tY-Ka-8BQ" firstAttribute="top" secondItem="ifL-zH-TKp" secondAttribute="bottom" constant="2" id="aY9-5A-jmz"/>
-                    <constraint firstItem="Bg2-TJ-4du" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kbh-RL-58z"/>
+                    <constraint firstItem="Bg2-TJ-4du" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="4.75" id="kbh-RL-58z"/>
                     <constraint firstItem="Bg2-TJ-4du" firstAttribute="leading" secondItem="5tY-Ka-8BQ" secondAttribute="trailing" constant="8" id="pSm-nA-RlI"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Bg2-TJ-4du" secondAttribute="trailing" id="yoh-ka-YSV"/>
                 </constraints>
@@ -96,7 +95,7 @@
                 <outlet property="timeLabel" destination="ZDC-eh-JUJ" id="1SD-9r-Kn7"/>
                 <outlet property="yearLabel" destination="9lb-b2-PdO" id="ULc-Cg-K1I"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="54.5"/>
+            <point key="canvasLocation" x="32.799999999999997" y="54.422788605697157"/>
         </tableViewCell>
     </objects>
     <resources>

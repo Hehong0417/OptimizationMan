@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    [self setupAutoHeightWithBottomView:self.express_messageLabe bottomMargin:10];
 }
 - (void)setModel:(HHExpress_message_list *)model{
     _model = model;

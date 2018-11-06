@@ -11,4 +11,6 @@
 @interface HHEvaluationSuccessVC : UIViewController
 @property(nonatomic,strong)   NSString *title_str;
 @property(nonatomic,strong)   NSString *pid;
+@property(nonatomic,strong)   NSString *product_id;
+
 @end

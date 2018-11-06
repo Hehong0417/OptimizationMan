@@ -68,6 +68,9 @@
     indexLabel.clipsToBounds = YES;
     if (self.imageCount > 1) {
         indexLabel.text = [NSString stringWithFormat:@"1/%ld", (long)self.imageCount];
+        indexLabel.hidden = NO;
+    }else{
+        indexLabel.hidden = YES;
     }
     _indexLabel = indexLabel;
     [self addSubview:indexLabel];
@@ -358,6 +361,7 @@
     
     
     if (!_willDisappear) {
+        
         _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     }
     [self setupImageOfImageViewForIndex:index];

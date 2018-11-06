@@ -206,7 +206,7 @@
         }else{
             headerView.title_lab.hidden = NO;
         }
-        headerView.pid = self.pid;
+        headerView.pid = self.product_id;
         headerView.backgroundColor = KVCBackGroundColor;
         reusableview = headerView;
     }

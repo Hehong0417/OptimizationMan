@@ -103,6 +103,7 @@
 @property(nonatomic,strong) NSString *item_status;
 @property(nonatomic,strong) NSString *OrderItemStatus;
 @property(nonatomic,strong) NSString *RefundId;
+@property(nonatomic,strong) NSString *product_id;
 
 @property(nonatomic,strong) NSArray <HHproducts_item_Model*>*product_item;
 
@@ -147,6 +148,7 @@
 @property(nonatomic,strong) NSString *icon;
 @property(nonatomic,strong) NSString *prodcut_name;
 @property(nonatomic,strong) NSString *product_item_refund_id;
+@property(nonatomic,strong) NSString *product_id;
 
 @end
 

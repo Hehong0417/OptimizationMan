@@ -28,6 +28,9 @@
  */
 - (UIImage *)lh_scaleToSize:(CGSize)size;
 
+//等比例压缩
++ (UIImage *)imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size;
+
 /**
  *  通过颜色返回图片
  *

@@ -116,12 +116,10 @@
         [navC pushVC:fill_vc];
     }else if(status_code == 14){
 //        查看退货物流
-        
         HHLogisticsVC *log_vc = [HHLogisticsVC new];
         log_vc.refundId = product_m.product_item_refund_id;
 //        log_vc.express_order = product_m.return_goods_express_order;
 //        log_vc.express_name = product_m.return_goods_express_name;
-
         log_vc.type = @2;
         [navC pushVC:log_vc];
     }else if(status_code == 2){
@@ -134,6 +132,7 @@
         refunVc.count = product_m.product_item_quantity;
         refunVc.price = product_m.product_item_price;
         refunVc.title_str = product_m.prodcut_name;
+        refunVc.nav_title = @"申请退款";
         [navC pushVC:refunVc];
 
     }else if(status_code == 3){
@@ -146,6 +145,7 @@
         refunVc.count = product_m.product_item_quantity;
         refunVc.price = product_m.product_item_price;
         refunVc.title_str = product_m.prodcut_name;
+        refunVc.nav_title = @"申请退货";
         [navC pushVC:refunVc];
         
     }else{
@@ -191,6 +191,7 @@
         refunVc.count = product_m.quantity;
         refunVc.price = product_m.price;
         refunVc.title_str = product_m.pname;
+        refunVc.nav_title = @"申请退款";
         [navC pushVC:refunVc];
         
     }else if(status_code == 3){
@@ -203,6 +204,7 @@
         refunVc.count = product_m.quantity;
         refunVc.price = product_m.price;
         refunVc.title_str = product_m.pname;
+        refunVc.nav_title = @"申请退货";
         [navC pushVC:refunVc];
         
     }else{

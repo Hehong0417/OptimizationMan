@@ -45,7 +45,7 @@
     [self setUpTableHead];
 
     [self getDatas];
-//    [self setupDatas];
+//  [self setupDatas];
     
 }
 #pragma mark - 加载数据
@@ -62,7 +62,7 @@
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
         }else{
-            [SVProgressHUD showInfoWithStatus:api.Msg];
+            [SVProgressHUD showInfoWithStatus:error.localizedDescription];
         }
         
     }];

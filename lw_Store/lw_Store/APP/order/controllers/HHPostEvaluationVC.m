@@ -150,14 +150,16 @@
                     vc.title_str = @"评价成功";
                     HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
                     vc.pid = model.product_item_id;
+                    vc.product_id = model.product_id;
+                
                     [self.navigationController pushVC:vc];
             }else{
                 NSLog(@"Msg:%@",api.Msg);
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
         }else{
-            NSLog(@"error:%@",api.Msg);
-            [SVProgressHUD showInfoWithStatus:api.Msg];
+            NSLog(@"error:%@",error.localizedDescription);
+            [SVProgressHUD showInfoWithStatus:error.localizedDescription];
         }
     }];
 }

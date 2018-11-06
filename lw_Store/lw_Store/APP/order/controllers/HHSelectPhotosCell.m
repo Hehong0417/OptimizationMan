@@ -34,7 +34,7 @@ typedef   void (^completeHandle)();
         
         //textView
         self.textView = [[YYTextView alloc] initWithFrame:CGRectMake(10, 10, ScreenW-20, WidthScaleSize_H(150))];
-        self.textView.placeholderText = @"点击输入你对宝贝的看法，宝贝们满足您的期待嘛？说说你的使用心得，分享给想买它们的人吧～";
+        self.textView.placeholderText = @"点击输入您对宝贝的看法，宝贝们满足您的期待嘛？说说您的使用心得，分享给想买他们的人吧～";
         self.textView.placeholderFont = FONT(14);
         self.textView.delegate = self;
         self.textView.font = FONT(14);
@@ -93,8 +93,8 @@ typedef   void (^completeHandle)();
 - (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     
     NSString * toBeString = [textView.text stringByReplacingCharactersInRange:range withString:text];
-    if (toBeString.length > 11 && range.length!=1){
-        textView.text = [toBeString substringToIndex:11];
+    if (toBeString.length > 300 && range.length!=1){
+        textView.text = [toBeString substringToIndex:300];
         return NO;
     }
     return YES;
@@ -182,7 +182,8 @@ typedef   void (^completeHandle)();
     
     NSMutableArray *photo_datas = [NSMutableArray array];
     [photos enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+        UIImage *compressImage = [UIImage imageCompressForSize:image targetSize:CGSizeMake(ScreenW/2, ScreenW/2)];
+        NSData *imageData = UIImageJPEGRepresentation(compressImage, 0.65);
         [photo_datas addObject:imageData];
     }];
     
@@ -203,7 +204,7 @@ typedef   void (^completeHandle)();
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
         }else{
-            [SVProgressHUD showInfoWithStatus:api.Msg];
+            [SVProgressHUD showInfoWithStatus:error.localizedDescription];
         }
     }];
     

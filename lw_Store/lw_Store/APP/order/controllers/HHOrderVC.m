@@ -260,6 +260,7 @@
                 products_item_m.product_item_status = obj.product_item_status;
                 products_item_m.product_item_sku_name = obj.product_item_sku_name;
                 products_item_m.product_item_refund_id = obj.product_item_refund_id;
+                products_item_m.product_id = productsM.product_id;
 
                 [orderItem_m.items addObject:products_item_m];
                 [orderItem_m.pids addObject:obj.product_item_id];
@@ -404,10 +405,9 @@
 
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = 50;
-//            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
-//            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
+            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
+            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
             //twoBtn
             [self setBtnAttrWithBtn:twoBtn Title:@"去评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"6"]){
@@ -647,7 +647,6 @@
         HHOrderItemModel *itemModel = self.items_arr[section];
         vc.orderItem_m = itemModel;
         vc.orderId = model.order_id;
-        
         [self.navigationController pushVC:vc];
     }
 }

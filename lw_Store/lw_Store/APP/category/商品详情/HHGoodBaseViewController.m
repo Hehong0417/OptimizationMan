@@ -568,6 +568,9 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                     vc.pids = self.Id;
                     vc.count = quantity;
                     vc.mode = self.Mode;
+                    if ([self.Mode isEqual:@1]) {
+                    vc.enter_type = HHaddress_type_add_productDetail;
+                    }
                     [self.navigationController pushVC:vc];
                 }else{
                     HHAddAdressVC *vc = [HHAddAdressVC new];
@@ -782,7 +785,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         return 90;
     }else if (indexPath.section == 2) {
         if(indexPath.row == self.discribeArr.count){
-            return 10;
+          return  self.discribeArr.count>0?10:0.001;
         }
        return 30;
     }else if (indexPath.section == 3) {
