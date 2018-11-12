@@ -25,7 +25,7 @@
 
 @interface HHOrderVC ()<UIScrollViewDelegate,SGSegmentedControlDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,ApplyRefundDelegate>
 
-@property(nonatomic,strong)   SGSegmentedControl  *SG;
+@property (nonatomic,strong)    SGSegmentedControl  *SG;
 @property (nonatomic, strong)   NSArray *title_arr;
 @property (nonatomic, strong)   UITableView *tableView;
 @property (nonatomic, assign)   NSInteger page;
@@ -34,13 +34,12 @@
 @property (nonatomic, assign)   NSInteger sg_selectIndex;
 @property (nonatomic, assign)   BOOL isFooterRefresh;
 @property (nonatomic, assign)   BOOL isHeaderRefresh;
-@property(nonatomic,assign)   BOOL  isLoading;
-@property(nonatomic,assign)   BOOL  isWlan;
-@property(nonatomic,strong) HHSelectChannelAlertView *alertView;
+@property (nonatomic, assign)   BOOL  isLoading;
+@property (nonatomic, assign)   BOOL  isWlan;
+@property (nonatomic, strong)   HHSelectChannelAlertView *alertView;
 
 @end
 @implementation HHOrderVC
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,7 +61,7 @@
     
     //tableView
     CGFloat tableHeight;
-    tableHeight = SCREEN_HEIGHT - Status_HEIGHT-44 - 44 - 10;
+    tableHeight = SCREEN_HEIGHT - Status_HEIGHT- 44 - 44 - 10;
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,44+5, SCREEN_WIDTH,tableHeight) style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = KVCBackGroundColor;
     self.tableView.delegate = self;

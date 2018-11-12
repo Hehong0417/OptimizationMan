@@ -1808,8 +1808,8 @@
 			children = (
 				CE999B97208DE33B00B9307D /* HJUser.h */,
 				CE999B95208DE33B00B9307D /* HJUser.m */,
-				CE999B96208DE33B00B9307D /* BaseModel.m */,
 				CE999B98208DE33B00B9307D /* BaseModel.h */,
+				CE999B96208DE33B00B9307D /* BaseModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
