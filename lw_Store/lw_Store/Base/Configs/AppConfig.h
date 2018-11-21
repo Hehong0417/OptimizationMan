@@ -26,15 +26,15 @@
 #define APP_Deep_purple_Color RGB(36, 27, 57)
 
 
-#define KVCBackGroundColor RGB(238, 238, 238)
-#define KTitleLabelColor [UIColor colorWithHexString:@"#9e9e9e"]
-#define K7ELabelColor [UIColor colorWithHexString:@"#7E7E7E"]
-#define KFCLabelColor [UIColor colorWithHexString:@"#FC5F00"]
-#define KA0LabelColor [UIColor colorWithHexString:@"#A0A0A0"]
-#define KACLabelColor [UIColor colorWithHexString:@"#ACACAC"]
-#define KLightTitleColor [UIColor colorWithHexString:@"#5f5f5f"]
-#define TitleGrayColor [UIColor colorWithHexString:@"#333333"]
-#define KDCLabelColor  [UIColor colorWithHexString:@"#DCDCDE"]
+#define KVCBackGroundColor RGB(248, 248, 248)
+#define KTitleLabelColor [UIColor colorWithHexString:@"#9e9e9e"] //158
+#define K7ELabelColor [UIColor colorWithHexString:@"#7E7E7E"] //126
+#define KFCLabelColor [UIColor colorWithHexString:@"#FC5F00"] //252 95 0
+#define KA0LabelColor [UIColor colorWithHexString:@"#A0A0A0"] //160
+#define KACLabelColor [UIColor colorWithHexString:@"#ACACAC"] //172
+#define KLightTitleColor [UIColor colorWithHexString:@"#5f5f5f"]//95
+#define TitleGrayColor [UIColor colorWithHexString:@"#333333"] //51
+#define KDCLabelColor  [UIColor colorWithHexString:@"#DCDCDE"]//220
 
 
 #define KPartingLineColor RGB(228, 227, 239)
@@ -55,8 +55,6 @@
 #define FontGrayColor RGB(102, 102, 102)
 
 #define FontBlackColor RGB(51, 51, 51)
-#define MotoButtonColor RGB(249, 102, 24)
-
 //用户信息
 #define USER_CURRENT_ADDRESS @"user_current_address"
 #define uDefault_CURRENT_ADDRESS [uDefault objectForKey:USER_CURRENT_ADDRESS]

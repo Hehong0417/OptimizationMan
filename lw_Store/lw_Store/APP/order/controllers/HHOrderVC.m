@@ -144,7 +144,8 @@
             [self getDatasWithIndex:@(self.sg_selectIndex)];
         }
     }];
-    refreshfooter.stateLabel.textColor = KTitleLabelColor;
+    refreshfooter.stateLabel.textColor = KACLabelColor;
+    refreshfooter.stateLabel.font = FONT(14);
     self.tableView.mj_footer = refreshfooter;
 }
 #pragma mark - DZNEmptyDataSetDelegate
@@ -653,18 +654,17 @@
     
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
     UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40) backColor:kWhiteColor];
-    UILabel *textLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, 60, 40) text:model.status_name textColor:kRedColor font:[UIFont boldSystemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+    UILabel *textLabel = [UILabel lh_labelWithFrame:CGRectMake(15, 0, 60, 40) text:model.status_name textColor:kRedColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
     [headView addSubview:textLabel];
-    UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+5, 0,1, 40) backColor:KVCBackGroundColor];
-    [headView addSubview:downLine];
-
+//    UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+5, 0,1, 40) backColor:KVCBackGroundColor];
+//    [headView addSubview:downLine];
     CGSize order_date_size = [model.order_date lh_sizeWithFont:[UIFont systemFontOfSize:14]  constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
-    UILabel *orderLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+20, 0,order_date_size.width+1, 40) text:model.order_date textColor:kBlackColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
+    UILabel *orderLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(textLabel.frame)+20, 0,order_date_size.width+1, 40) text:model.order_date textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
     orderLabel.centerY = headView.centerY;
     [headView addSubview:orderLabel];
     if (![model.order_mode isEqual:@1]) {
-      CGSize mode_size = [model.order_mode_name lh_sizeWithFont:[UIFont systemFontOfSize:14]  constrainedToSize:CGSizeMake(MAXFLOAT, 20)];
-        UILabel *activityLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(orderLabel.frame)+5, 0,mode_size.width+10, 20) text:model.order_mode_name textColor:kWhiteColor font:[UIFont systemFontOfSize:14] textAlignment:NSTextAlignmentCenter backgroundColor:[UIColor colorWithHexString:@"#F7BC4B"]];
+      CGSize mode_size = [model.order_mode_name lh_sizeWithFont:FONT(13)  constrainedToSize:CGSizeMake(MAXFLOAT, 18)];
+        UILabel *activityLabel = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(orderLabel.frame)+5, 0,mode_size.width+10, 18) text:model.order_mode_name textColor:kWhiteColor font:FONT(13) textAlignment:NSTextAlignmentCenter backgroundColor:[UIColor colorWithHexString:@"#F7BC4B"]];
         activityLabel.centerY = headView.centerY;
         [headView addSubview:activityLabel];
     }

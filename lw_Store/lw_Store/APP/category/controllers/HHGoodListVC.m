@@ -163,8 +163,9 @@
         self.isFooterRefresh = YES;
         [self getDatas];
     }];
+    refreshfooter.stateLabel.textColor = KACLabelColor;
     self.collectionView.mj_footer = refreshfooter;
-    
+
 }
 /**
  *  加载数据完成
@@ -330,7 +331,7 @@
     
     HXHomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXHomeCollectionCell" forIndexPath:indexPath];
     cell.goodsModel = [HHCategoryModel mj_objectWithKeyValues:self.datas[indexPath.row]];
-    
+    cell.collectButton.hidden = YES;
     return cell;
     
 }

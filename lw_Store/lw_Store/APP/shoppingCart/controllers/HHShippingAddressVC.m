@@ -121,6 +121,7 @@
         
         [self getDatas];
     }];
+    refreshfooter.stateLabel.textColor = KACLabelColor;
     self.tableView.mj_footer = refreshfooter;
     
 }

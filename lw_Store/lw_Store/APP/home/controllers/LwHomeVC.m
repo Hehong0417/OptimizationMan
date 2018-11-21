@@ -24,17 +24,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     // js配置
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
 //    [userContentController addScriptMessageHandler:self name:@"closeMe"];
-
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
      config.userContentController = userContentController;

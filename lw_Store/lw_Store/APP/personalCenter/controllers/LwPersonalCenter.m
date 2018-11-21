@@ -46,11 +46,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    WEAK_SELF();
     _obj = [[NSNotificationCenter defaultCenter] addObserverForName:KPersonCter_Refresh_Notification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-      
       [self getDatas];
-      [[NSNotificationCenter defaultCenter]removeObserver:_obj];
+      [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.obj];
       
     }];
 }
@@ -65,15 +64,15 @@
     // Do any additional setup after loading the view.
     
     self.tableV.tableHeaderView = self.mineHeadView;
-    
+    self.tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
     [rightBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, -15)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    
     [self getDatas];
     
     [self addHeadRefresh];
 }
+
 #pragma mark - 刷新控件
 - (void)addHeadRefresh{
     
@@ -166,12 +165,16 @@
         [cell setCellWithUsableComm:self.usableComm fanscount:self.fanscount saletotal:[NSString stringWithFormat:@"%.2f",self.saletotal.floatValue]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.nav = self.navigationController;
+        UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0,WidthScaleSize_H(70)-1, ScreenW, 1) backColor:KVCBackGroundColor];
+        [cell.contentView addSubview:h_line];
         gridCell = cell;
-        
+
     }else{
     
         UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0,WidthScaleSize_H(50)-1, ScreenW, 1) backColor:KVCBackGroundColor];
+        [cell.contentView addSubview:h_line];
         gridCell = cell;
     }
     return gridCell;
@@ -262,18 +265,19 @@
     if (section == 0) {
 //        UIView *head_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
 //        NSString* text = @"两块钱,你买不了吃亏,两块钱,你买不了上当！";
-//
 //        LSPaoMaView* paomav = [[LSPaoMaView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) title:text];
 //        [head_view addSubview:paomav];
 //        return head_view;
         return nil;
     }else{
-        return nil;
+      UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
+      return v;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 40;
+//        return 40;
+        return WidthScaleSize_H(5);
     }else{
         return WidthScaleSize_H(5);
     }

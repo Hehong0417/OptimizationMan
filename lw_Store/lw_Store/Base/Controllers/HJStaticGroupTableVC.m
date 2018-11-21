@@ -100,7 +100,7 @@ static const CGFloat kNormalCellHeight = 44;
      */
       UITableViewCell  *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.selectionStyle = self.cellSelectionStyle;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+      cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // Configure the cell...
     HJGroupItem *group = self.groups[indexPath.section];
     HJSettingItem *item = group.items[indexPath.row];
@@ -108,6 +108,7 @@ static const CGFloat kNormalCellHeight = 44;
     cell.textLabel.textColor = self.titleLabelFontAttributes.fontColor;
     cell.textLabel.font = self.titleLabelFontAttributes.font;
     cell.textLabel.text = item.title;
+    
     //
     if (item.image.length>0) {
         

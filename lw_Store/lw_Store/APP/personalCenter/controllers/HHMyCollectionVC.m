@@ -167,6 +167,8 @@
         self.isFooterRefresh = YES;
         [self getDatas];
     }];
+    refreshfooter.stateLabel.textColor = KACLabelColor;
+
     self.collectionView.mj_footer = refreshfooter;
     
 }
@@ -236,7 +238,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    return CGSizeMake((SCREEN_WIDTH - 2)/2 , 240);
+    return CGSizeMake((SCREEN_WIDTH - 2)/2 , 230);
     
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
