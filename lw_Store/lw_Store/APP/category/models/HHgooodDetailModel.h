@@ -27,7 +27,11 @@
 @property(nonatomic,strong) NSDictionary *SecKill;
 @property(nonatomic,strong) NSDictionary *CutPrice;
 @property(nonatomic,strong) NSString *VideoUrl;
-
+@property(nonatomic,strong) NSNumber *IsNewProduct;
+@property(nonatomic,strong) NSNumber *IsRewardShow;
+@property(nonatomic,strong) NSString *BuyCheapMoney;
+@property(nonatomic,strong) NSString *CommissionTotal;
+@property(nonatomic,strong) NSString *ShareMakeMoney;
 @property(nonatomic,strong) NSNumber *IsCollection;
 
 @property(nonatomic,strong) NSString *EvaluateCount;

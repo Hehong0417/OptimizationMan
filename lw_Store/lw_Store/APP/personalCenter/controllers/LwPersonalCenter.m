@@ -24,11 +24,9 @@
 #import "HHExtraBonusVC.h"
 #import "LSPaoMaView.h"
 #import "HHMyCollectionVC.h"
+#import "HHCommissionTVC.h"
 
 @interface LwPersonalCenter ()
-{
-    UIButton *rightBtn;
-}
 @property(nonatomic,strong) HXMineHeadView *mineHeadView;
 @property(nonatomic,strong) HHMineModel  *mineModel;
 @property(nonatomic,strong) NSString  *usableComm;
@@ -39,6 +37,7 @@
 @property(nonatomic,strong) NSNumber *isJoinAgent;
 @property(nonatomic,strong) id obj;
 @property(nonatomic,strong) NSNumber *isExtraBonus;
+@property(nonatomic,strong) UIButton *rightBtn;
 
 @end
 
@@ -65,9 +64,9 @@
     
     self.tableV.tableHeaderView = self.mineHeadView;
     self.tableV.separatorStyle = UITableViewCellSeparatorStyleNone;
-    rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
-    [rightBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, -15)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:[UIImage imageNamed:@"no_message"]];
+    [self.rightBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, -15)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:self.rightBtn];
     [self getDatas];
     
     [self addHeadRefresh];
@@ -94,12 +93,12 @@
 - (void)getDatas{
     
     [[[HHMineAPI GetUserDetail] netWorkClient] getRequestInView:nil finishedBlock:^(HHMineAPI *api, NSError *error) {
+        
         if (self.tableV.mj_header.isRefreshing) {
             [self.tableV.mj_header endRefreshing];
         }
         if (!error) {
             if (api.State == 1) {
-                
                 self.mineModel = [HHMineModel mj_objectWithKeyValues:api.Data[@"user"]];
                 self.usableComm = api.Data[@"usableComm"];
                 self.fanscount = api.Data[@"fanscount"];
@@ -138,13 +137,21 @@
                 self.mineHeadView.titleLabel.text = self.mineModel.BuyTotal?[NSString stringWithFormat:@"累计:¥%.2f",self.mineModel.BuyTotal.floatValue]:@"0.00";
                 [self.mineHeadView.teacherImageIcon sd_setImageWithURL:[NSURL URLWithString:self.mineModel.UserImage] placeholderImage:nil];
                 [self.tableV reloadData];
-                
+                WEAK_SELF();
                 NSNumber  *hasUnReadyMessage = api.Data[@"hasUnReadyMessage"];
                 if ([hasUnReadyMessage isEqual:@1]) {
-                    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+                    [weakSelf.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
                 }else{
-                    [rightBtn setImage:[UIImage imageNamed:@"no_message"] forState:UIControlStateNormal];
+                    [weakSelf.rightBtn setImage:[UIImage imageNamed:@"no_message"] forState:UIControlStateNormal];
                 }
+                
+                self.mineHeadView.titleLabel.userInteractionEnabled = YES;
+                [self.mineHeadView.titleLabel setTapActionWithBlock:^{
+                    //分佣明细
+                    HHCommissionTVC *vc = [HHCommissionTVC new];
+                    [weakSelf.navigationController pushVC:vc];
+                }];
+                
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -219,7 +226,7 @@
              [self.navigationController pushVC:vc];
          }
     }else if (indexPath.section == 2&&indexPath.row==1){
-        if ([self.isAgent isEqual:@1]) {
+        if ([self.isAgent isEqual:@0]) {
         //我的积分
         HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
         [self.navigationController pushVC:vc];

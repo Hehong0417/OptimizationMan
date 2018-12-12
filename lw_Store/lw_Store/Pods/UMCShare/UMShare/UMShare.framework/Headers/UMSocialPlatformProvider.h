@@ -112,7 +112,7 @@
 -(void)umSocial_clearCacheData;
 
 /**
- *  获得从sso或者web端回调到本app的回调
+ *  获得从sso或者web端回调到本app的回调 
  *
  *  @param url 第三方sdk的打开本app的回调的url
  *

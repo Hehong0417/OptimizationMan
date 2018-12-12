@@ -111,6 +111,9 @@
 		CE37949320A9913700A3CDC9 /* HHMessageWeb.m in Sources */ = {isa = PBXBuildFile; fileRef = CE37949220A9913700A3CDC9 /* HHMessageWeb.m */; };
 		CE3C14212109B07700A2FC42 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */; };
 		CE3E59B120F8A2330010BA90 /* HHGoodBaseSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */; };
+		CE3E7B4F21C0C4DF008F1E68 /* HHSendIntegralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B4D21C0C4DE008F1E68 /* HHSendIntegralVC.m */; };
+		CE3E7B5221C0E101008F1E68 /* HHCommissionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B5121C0E101008F1E68 /* HHCommissionCell.m */; };
+		CE3E7B5521C0E4CF008F1E68 /* HHCommissionTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */; };
 		CE450DF92186E78D007EA2D3 /* HHMyCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */; };
 		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
 		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
@@ -550,6 +553,12 @@
 		CE3C14202109B07700A2FC42 /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		CE3E59AF20F8A2330010BA90 /* HHGoodBaseSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHGoodBaseSubVC.h; sourceTree = "<group>"; };
 		CE3E59B020F8A2330010BA90 /* HHGoodBaseSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGoodBaseSubVC.m; sourceTree = "<group>"; };
+		CE3E7B4D21C0C4DE008F1E68 /* HHSendIntegralVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSendIntegralVC.m; sourceTree = "<group>"; };
+		CE3E7B4E21C0C4DF008F1E68 /* HHSendIntegralVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSendIntegralVC.h; sourceTree = "<group>"; };
+		CE3E7B5021C0E101008F1E68 /* HHCommissionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHCommissionCell.h; sourceTree = "<group>"; };
+		CE3E7B5121C0E101008F1E68 /* HHCommissionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHCommissionCell.m; sourceTree = "<group>"; };
+		CE3E7B5321C0E4CF008F1E68 /* HHCommissionTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHCommissionTVC.h; sourceTree = "<group>"; };
+		CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHCommissionTVC.m; sourceTree = "<group>"; };
 		CE450DF72186E78C007EA2D3 /* HHMyCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHMyCollectionVC.h; sourceTree = "<group>"; };
 		CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHMyCollectionVC.m; sourceTree = "<group>"; };
 		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
@@ -2154,6 +2163,12 @@
 				CE37948120A9271500A3CDC9 /* HHMyIntegralListVC.m */,
 				CE37948320A927E600A3CDC9 /* HHMyIntegralCell.h */,
 				CE37948420A927E600A3CDC9 /* HHMyIntegralCell.m */,
+				CE3E7B5321C0E4CF008F1E68 /* HHCommissionTVC.h */,
+				CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */,
+				CE3E7B5021C0E101008F1E68 /* HHCommissionCell.h */,
+				CE3E7B5121C0E101008F1E68 /* HHCommissionCell.m */,
+				CE3E7B4E21C0C4DF008F1E68 /* HHSendIntegralVC.h */,
+				CE3E7B4D21C0C4DE008F1E68 /* HHSendIntegralVC.m */,
 				CE4B6FBD209C58E0005482B1 /* HHMessageVC.h */,
 				CE4B6FBE209C58E0005482B1 /* HHMessageVC.m */,
 				CE4B6FC0209C5B24005482B1 /* HHMessageCell.h */,
@@ -2860,6 +2875,7 @@
 				CE999C25208DEF0E00B9307D /* LwHomeVC.m in Sources */,
 				CE319D54209B0AF90009A15A /* HHEvaluationListCell.m in Sources */,
 				CE472617212D1EA8002BD2A5 /* DCFeatureItem.m in Sources */,
+				CE3E7B5521C0E4CF008F1E68 /* HHCommissionTVC.m in Sources */,
 				CE77729E20BCFCE100D8E1AC /* HJGroupItem.m in Sources */,
 				CEE2A0FC209333D400843DBD /* XWCircleSpreadAnimator.m in Sources */,
 				CE4D38A7212676790016FD01 /* HHPostOrderEvaluateItem.m in Sources */,
@@ -2885,6 +2901,7 @@
 				CEB5EF2520CE74F30049CBDD /* HHFamiliarityPayVC.m in Sources */,
 				CE999BD3208DE33B00B9307D /* NSNumber+LH.m in Sources */,
 				CE999BDC208DE33B00B9307D /* UIView+Utils.m in Sources */,
+				CE3E7B4F21C0C4DF008F1E68 /* HHSendIntegralVC.m in Sources */,
 				CE319D51209B03FA0009A15A /* HHBaseTableViewVC.m in Sources */,
 				CEE2A0C8209333D400843DBD /* DCSpeedy.m in Sources */,
 				CEE2A0202093244C00843DBD /* HHOrderVC.m in Sources */,
@@ -2958,6 +2975,7 @@
 				CE999BFE208DE33B00B9307D /* HXRecordVideoVC.m in Sources */,
 				CE8EED0F20FF257A008F5D3D /* HHPostEvaluateFooter.m in Sources */,
 				CE77729D20BCFCE100D8E1AC /* HJStoryBoardItem.m in Sources */,
+				CE3E7B5221C0E101008F1E68 /* HHCommissionCell.m in Sources */,
 				CE999A9C208DDDDA00B9307D /* AppDelegate.m in Sources */,
 				CEE2A0E5209333D400843DBD /* SDBrowserImageView.m in Sources */,
 				CEF54F2F20C5290C008A8D4E /* MLMenuView.m in Sources */,

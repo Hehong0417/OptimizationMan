@@ -8,11 +8,11 @@
 
 #import "HHSetVC.h"
 #import "HHAboutUsVC.h"
+#import "GFAddressPicker.h"
 
 @interface HHSetVC ()
-
+@property (nonatomic, strong)   GFAddressPicker *addressPick;
 @end
-
 @implementation HHSetVC
 
 - (void)viewDidLoad {
@@ -47,32 +47,32 @@
     
 }
 - (NSArray *)groupIcons{
-    return @[@[@""],@[@"",@""]];
+    return @[@[@""],@[@"",@""],@[@""]];
 
 }
 - (NSArray *)groupTitles{
 
-    return @[@[@"跳转小程序"],@[@"关于我们",@"清除缓存"]];
+    return @[@[@"会员所在地区"],@[@"关于我们",@"清除缓存"],@[@"小程序"]];
 }
 - (NSArray *)groupDetials{
     
-    return @[@[@""],@[@"",@""]];
+    return @[@[@""],@[@"",@""],@[@""]];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 0) {
-     //跳转小程序
+    if (indexPath.section == 0){
+        //选择地址
+        self.addressPick = [[GFAddressPicker alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        self.addressPick.font = [UIFont systemFontOfSize:WidthScaleSize_H(19)];
+        [self.addressPick showPickViewAnimation:YES];
+        WEAK_SELF();
+        self.addressPick.completeBlock = ^(NSString *result, NSString *district_id) {
+            
+            [weakSelf saveAddressWithDistrict_id:district_id result:result indexPath:indexPath];
+            
+        };
         
-        WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
-        launchMiniProgramReq.userName = @"gh_48856d410d9e";  //拉起的小程序的username
-//        launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
-        
-      BOOL sucess =  [WXApi sendReq:launchMiniProgramReq];
-        
-      NSLog(@"sucess--%d",sucess);
-        
-    }else{
+    }else if (indexPath.section == 1) {
     
     if (indexPath.row == 0) {
         
@@ -102,7 +102,38 @@
         
     }
     
-    }
+   }else if (indexPath.section == 2) {
+       //跳转小程序
+       
+       WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
+       launchMiniProgramReq.userName = @"gh_48856d410d9e";  //拉起的小程序的username
+       //        launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+       launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
+       
+       BOOL sucess =  [WXApi sendReq:launchMiniProgramReq];
+       
+       NSLog(@"sucess--%d",sucess);
+       
+   }
 }
-
+//保存地址
+- (void)saveAddressWithDistrict_id:(NSString *)district_id result:(NSString *)result indexPath:(NSIndexPath *)indexPath{
+    
+    HJSettingItem *item = [self settingItemInIndexPath:indexPath];
+    item.detailTitle = result;
+    
+    [[[HHMineAPI UpdateUserInfoOfCityWithRegionId:district_id] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+        if (!error) {
+            if (api.State == 1) {
+                [self.tableV reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            [SVProgressHUD showInfoWithStatus:error.localizedDescription];
+        }
+        
+    }];
+    
+}
 @end

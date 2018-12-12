@@ -63,6 +63,11 @@
 @property (nonatomic, assign) NSInteger SendType;
 @property (nonatomic, assign) NSInteger IsPub;
 
+//分销佣金
+@property (nonatomic, copy) NSString *OrderInfo_Id;
+@property (nonatomic, copy) NSString *CommTotal;
+@property (nonatomic, copy) NSString *TradeTime;
+
 //收货地址
 @property(nonatomic,strong) NSString *Recipient;
 @property(nonatomic,strong) NSString *Moble;

@@ -65,6 +65,9 @@
 //获取积分列表
 + (instancetype)GetIntegralListWithPage:(NSNumber *)page;
 
+//获取分佣明细
++ (instancetype)GetFansSaleWithPage:(NSNumber *)page;
+
 //获取消息列表
 + (instancetype)GetUserNoticeWithPage:(NSNumber *)page isRead:(NSNumber *)isRead;
 
@@ -134,5 +137,8 @@
 
 //提交退货快递物流单号
 + (instancetype)postSubReturnGoodsExpressWithorderid:(NSString *)orderid exp_code:(NSString *)exp_code exp_order:(NSString *)exp_order;
-
+//转送积分
++ (instancetype)postGiveAwayPointsWithgetUserId:(NSString *)getUserId points:(NSString *)points;
+//更新省市区信息
++ (instancetype)UpdateUserInfoOfCityWithRegionId:(NSString *)regionId;
 @end

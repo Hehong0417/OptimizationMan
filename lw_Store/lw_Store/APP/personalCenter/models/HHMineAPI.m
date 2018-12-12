@@ -147,7 +147,18 @@
     api.parametersAddToken = NO;
     return api;
 }
+//获取分佣明细
++ (instancetype)GetFansSaleWithPage:(NSNumber *)page{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetFansSale;
+    if (page) {
+        [api.parameters setObject:page forKey:@"page"];
+    }
+    [api.parameters setObject:@"0" forKey:@"key"];
 
+    api.parametersAddToken = NO;
+    return api;
+}
 //获取消息列表
 + (instancetype)GetUserNoticeWithPage:(NSNumber *)page isRead:(NSNumber *)isRead{
     HHMineAPI *api = [self new];
@@ -586,6 +597,32 @@
     api.parametersAddToken = NO;
     return api;
     
+}
+//转送积分
++ (instancetype)postGiveAwayPointsWithgetUserId:(NSString *)getUserId points:(NSString *)points{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GiveAwayPoints;
+    if (getUserId) {
+        [api.parameters setObject:getUserId forKey:@"uid"];
+    }
+    if (points) {
+        [api.parameters setObject:points forKey:@"integral"];
+    }
+    api.parametersAddToken = NO;
+    return api;
     
+}
+//更新省市区信息
++ (instancetype)UpdateUserInfoOfCityWithRegionId:(NSString *)regionId{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_UpdateUserInfoOfCity;
+    if (regionId) {
+        [api.parameters setObject:regionId forKey:@"region_id"];
+    }
+    [api.parameters setObject:@"" forKey:@"address"];
+
+    api.parametersAddToken = NO;
+    return api;
 }
 @end

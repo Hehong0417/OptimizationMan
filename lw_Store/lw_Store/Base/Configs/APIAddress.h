@@ -140,6 +140,10 @@ typedef enum : NSUInteger {
 #define API_UploadManyImage API_SUB_URL(@"FileUpload/UploadManyImage")
 //4.52提交退货快递物流单号
 #define API_SubReturnGoodsExpress  API_SUB_URL2(@"Order/ReturnExpress")
+//1.11转送积分
+#define API_GiveAwayPoints  API_SUB_URL(@"UserInfo/TransferIntegral")
+//更新省市区信息
+#define API_UpdateUserInfoOfCity  API_SUB_URL(@"UserInfo/UpdateAddress")
 
 /**
  *  我的
@@ -190,6 +194,8 @@ typedef enum : NSUInteger {
 #define API_CommissionApply  API_SUB_URL(@"Commission/Apply")
 //4.34获取积分列表
 #define API_IntegralList API_SUB_URL(@"UserInfo/IntegralList")
+//4.34获取积分列表
+#define API_GetFansSale API_SUB_URL(@"Commission/GetFansSale")
 //4.34获取消息列表
 #define API_GetUserNotice API_SUB_URL(@"Notice/GetUserNotice")
 //4.35设置消息全部已读

@@ -34,11 +34,12 @@
 
 @interface HHGoodBaseViewController ()<UITableViewDelegate,UITableViewDataSource,WKNavigationDelegate,SDCycleScrollViewDelegate,HHCartVCProtocol>
 {
-    UIView *_tableHeader;
-    UILabel *_title_label;
-    CZCountDownView *countDown;
+    
     AVPlayerViewController *aVPlayerViewController;
 }
+@property (strong, nonatomic) UIView *tableHeader;
+@property (strong, nonatomic) CZCountDownView *countDown;
+@property (strong, nonatomic) UILabel *title_label;
 @property (strong, nonatomic) UIScrollView *scrollerView;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) WKWebView *webView;
@@ -82,7 +83,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     self.title = @"商品详情";
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     
     //网络监测
     [self setMonitor];
@@ -191,14 +191,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     _title_label.textColor = kWhiteColor;
     _title_label.textAlignment = NSTextAlignmentRight;
     _title_label.text = @"距离活动结束";
-    countDown = [CZCountDownView new];
-    countDown.frame = CGRectMake(CGRectGetMaxX(_title_label.frame),0, 200, 50);
-    countDown.backgroundImageName = @"";
-    countDown.timerStopBlock = ^{
+    _countDown = [CZCountDownView new];
+    _countDown.frame = CGRectMake(CGRectGetMaxX(_title_label.frame),0, 200, 50);
+    _countDown.backgroundImageName = @"";
+    _countDown.timerStopBlock = ^{
         NSLog(@"时间停止");
     };
     [bg_view addSubview:_title_label];
-    [bg_view addSubview:countDown];
+    [bg_view addSubview:_countDown];
     [self.countTimeView addSubview:bg_view];
     [_tableHeader addSubview:self.countTimeView];
     bg_view.centerX = self.countTimeView.centerX;
@@ -338,21 +338,22 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 }
                 // 秒杀
                 HHActivityModel *SecKill_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.SecKill];
+                WEAK_SELF();
                 if ([SecKill_m.IsSecKill isEqual:@1]) {
                     self.cycleScrollView.frame = CGRectMake(0, 50, ScreenW, ScreenW);
-                    _tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW+50);
+                    weakSelf.tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW+50);
                     if (SecKill_m.StartSecond.integerValue>0) {
-                        _titleLabel.text = @"距离活动开始";
-                        countDown.timestamp = SecKill_m.StartSecond.integerValue;
+                        weakSelf.titleLabel.text = @"距离活动开始";
+                        _countDown.timestamp = SecKill_m.StartSecond.integerValue;
                     }else{
-                        _titleLabel.text = @"距离活动结束";
-                        countDown.timestamp = SecKill_m.EndSecond.integerValue;
+                        weakSelf.titleLabel.text = @"距离活动结束";
+                        _countDown.timestamp = SecKill_m.EndSecond.integerValue;
                     }
                 }else{
                     self.cycleScrollView.frame = CGRectMake(0, 0, ScreenW, ScreenW);
-                    _tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW);
+                    weakSelf.tableHeader.frame = CGRectMake(0, 0, ScreenW, ScreenW);
                 }
-                _tableView.tableHeaderView = _tableHeader;
+                weakSelf.tableView.tableHeaderView = weakSelf.tableHeader;
 
             }else{
                 [self.activityIndicator stopAnimating];
@@ -474,14 +475,13 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if([self.Mode isEqual:@1]&&(isCart==YES)){
         dcNewFeaVc.button_Title = @"加入购物车";
     }else{
-        
         dcNewFeaVc.button_Title = @"立即购买";
     }
     dcNewFeaVc.product_price = self.gooodDetailModel.BuyPrice;
     dcNewFeaVc.product_stock = self.gooodDetailModel.Stock;
     
     CGFloat  distance;
-    if (self.gooodDetailModel.SKUValues.count == 0) {
+    if(self.gooodDetailModel.SKUValues.count == 0) {
         distance = ScreenH/2.3;
     }else if (self.gooodDetailModel.SKUValues.count == 1){
         distance = ScreenH/1.75;
@@ -780,7 +780,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        return 100;
+        return [self.tableView cellHeightForIndexPath:indexPath model:self.gooodDetailModel keyPath:@"gooodDetailModel" cellClass:[HHDetailGoodReferralCell class] contentViewWidth:[self cellContentViewWith]];
     }else if (indexPath.section == 1) {
         return 90;
     }else if (indexPath.section == 2) {

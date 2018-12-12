@@ -1,41 +1,33 @@
 //
-//  HHMyIntegralListVC.m
+//  HHCommissionTVC.m
 //  lw_Store
 //
-//  Created by User on 2018/5/14.
+//  Created by User on 2018/12/12.
 //  Copyright © 2018年 User. All rights reserved.
 //
 
-#import "HHMyIntegralListVC.h"
-#import "HHMyIntegralCell.h"
 #import "HHCommissionTVC.h"
-#import "HHSendIntegralVC.h"
+#import "HHCommissionCell.h"
 
-@interface HHMyIntegralListVC ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface HHCommissionTVC ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, assign)   NSInteger page;
 @property (nonatomic, strong)   NSMutableArray *datas;
 @end
 
-@implementation HHMyIntegralListVC
+@implementation HHCommissionTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"我的积分";
+    self.page = 1;
+    self.title = @"分佣明细";
+    [self.tableView registerClass:[HHCommissionCell class] forCellReuseIdentifier:@"HHCommissionCell"];
     
-    [self.tableView registerClass:[HHMyIntegralCell class] forCellReuseIdentifier:@"HHMyIntegralCell"];
-    self.page =1;
-
     [self addHeadRefresh];
     [self addFootRefresh];
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     self.tableView.backgroundColor = KVCBackGroundColor;
-
-    UIButton *rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:nil];
-    [rightBtn setTitle:@"赠送积分" forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = FONT(13);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     
     [self getDatas];
 }
@@ -45,25 +37,14 @@
     }
     return _datas;
 }
-- (void)setBtnAction{
-    
-    HHSendIntegralVC *vc = [HHSendIntegralVC new];
-    [self.datas removeAllObjects];
-    vc.completeBlock = ^{
-        
-        [self getDatas];
-    };
-    [self.navigationController pushVC:vc];
-}
 #pragma mark -加载数据
 - (void)getDatas{
     
-    [[[HHMineAPI GetIntegralListWithPage:@(self.page)] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
+    [[[HHMineAPI GetFansSaleWithPage:@(self.page)] netWorkClient] getRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
         if (!error) {
             if (api.State == 1) {
-                
-                [self loadDataFinish:api.Data];
-                
+                NSArray *arr = [HHMineModel mj_objectArrayWithKeyValuesArray:api.Data[@"List"]];
+                [self loadDataFinish:arr];
             }else{
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
@@ -93,9 +74,7 @@
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView{
     
     return 20;
-    
 }
-
 - (void)addHeadRefresh{
     
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -137,9 +116,7 @@
     }else{
         [self endRefreshing:NO];
     }
-    
 }
-
 /**
  *  结束刷新
  */
@@ -169,26 +146,22 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     return self.datas.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return 1;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HHMyIntegralCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHMyIntegralCell"];
-    
-    cell.model = [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.row]];
+    HHCommissionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHCommissionCell"];
+    cell.model = self.datas[indexPath.section];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return 80;
 }
-
 
 @end
