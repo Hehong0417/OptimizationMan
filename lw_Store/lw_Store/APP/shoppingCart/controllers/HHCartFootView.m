@@ -16,7 +16,8 @@
     
     [self.selectBtn setImage:[UIImage imageNamed:@"icon_sign_default"] forState:UIControlStateNormal];
     [self.selectBtn setImage:[UIImage imageNamed:@"icon_sign_selected"] forState:UIControlStateSelected];
-    
+    self.sendGift_label.backgroundColor = APP_COMMON_COLOR;
+    self.settleBtn.backgroundColor = APP_COMMON_COLOR;
 }
 
 - (IBAction)selectBtnAction:(UIButton *)sender {

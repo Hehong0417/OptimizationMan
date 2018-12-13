@@ -37,7 +37,7 @@
 - (UITextField *)inputTextField {
 
     if (!_inputTextField) {
-        _inputTextField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, SCREEN_WIDTH - CGRectGetMaxX(self.titleLabel.frame)-20, WidthScaleSize_H(40))];
+        _inputTextField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, SCREEN_WIDTH - CGRectGetMaxX(self.titleLabel.frame)-20, WidthScaleSize_H(50))];
         _inputTextField.font = FONT(15);
     }
     return _inputTextField;

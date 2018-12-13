@@ -99,6 +99,11 @@
         }
         if (!error) {
             if (api.State == 1) {
+                
+                HHUserInfo *userInfo = [HHUserInfo sharedUserInfo];
+                userInfo.userModel = [HHUserModel mj_objectWithKeyValues:api.Data[@"user"]];
+                userInfo.regioninfo = api.Data[@"regioninfo"];
+                [userInfo write];
                 self.mineModel = [HHMineModel mj_objectWithKeyValues:api.Data[@"user"]];
                 self.usableComm = api.Data[@"usableComm"];
                 self.fanscount = api.Data[@"fanscount"];
@@ -217,7 +222,7 @@
                   HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
                   [self.navigationController pushVC:vc];
               }else{
-                  //申请代理
+                //申请代理
                 HHApplyDelegateVC *vc = [HHApplyDelegateVC new];
                 [self.navigationController pushVC:vc];
               }
@@ -226,7 +231,7 @@
              [self.navigationController pushVC:vc];
          }
     }else if (indexPath.section == 2&&indexPath.row==1){
-        if ([self.isAgent isEqual:@0]) {
+        if ([self.isAgent isEqual:@1]) {
         //我的积分
         HHMyIntegralListVC *vc = [HHMyIntegralListVC new];
         [self.navigationController pushVC:vc];
@@ -429,7 +434,7 @@
 - (HXMineHeadView *)mineHeadView {
     
     if (!_mineHeadView) {
-        _mineHeadView = [[HXMineHeadView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthScaleSize_H(180)+WidthScaleSize_H(50))];
+        _mineHeadView = [[HXMineHeadView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthScaleSize_H(160)+WidthScaleSize_H(50))];
     }
     
     return _mineHeadView;

@@ -16,8 +16,9 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if ([super initWithFrame:frame]) {
-        
-        UIImageView *imagV = [UIImageView lh_imageViewWithFrame:self.bounds image:[UIImage imageNamed:@"img_bg_user"]];
+        //img_bg_user
+        UIImageView *imagV = [UIImageView lh_imageViewWithFrame:self.bounds image:[UIImage imageNamed:@""]];
+        imagV.backgroundColor = APP_COMMON_COLOR;
         [self addSubview:imagV];
         //登录后状态底视图
         self.loginContentView = [UIView lh_viewWithFrame:frame backColor:kClearColor];
@@ -46,7 +47,7 @@
 - (UILabel *)titleLabel {
     
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenW/2+1, 0, WidthScaleSize_W(160), WidthScaleSize_H(50))];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenW/2+1, 0, WidthScaleSize_W(160), self.bottomView.mj_h)];
         _titleLabel.textColor = kWhiteColor;
         _titleLabel.text = @"";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -71,7 +72,7 @@
 - (UILabel *)nameLabel {
     
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.teacherImageIcon.frame)+20, WidthScaleSize_W(200), WidthScaleSize_H(25))];
+        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.teacherImageIcon.frame)+10, WidthScaleSize_W(200), WidthScaleSize_H(25))];
         _nameLabel.textColor = kWhiteColor;
         _nameLabel.textAlignment = NSTextAlignmentCenter;
         _nameLabel.font = BoldFONT(16);
@@ -83,7 +84,7 @@
 - (UILabel *)IDLabel {
     
     if (!_IDLabel) {
-        _IDLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, WidthScaleSize_W(200), WidthScaleSize_H(50))];
+        _IDLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, WidthScaleSize_W(200), self.bottomView.mj_h)];
         _IDLabel.textColor = kWhiteColor;
         _IDLabel.textAlignment = NSTextAlignmentCenter;
         _IDLabel.font = BoldFONT(14);
@@ -95,8 +96,9 @@
 - (UIView *)bottomView {
     
     if (!_bottomView) {
-        _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mj_h-WidthScaleSize_H(50), SCREEN_WIDTH, WidthScaleSize_H(50))];
-        _bottomView.backgroundColor = kBlackColor;
+        _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mj_h-WidthScaleSize_H(40), SCREEN_WIDTH, WidthScaleSize_H(40))];
+        _bottomView.backgroundColor = APP_COMMON_COLOR;
+        ;
     }
     return _bottomView;
     

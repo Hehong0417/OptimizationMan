@@ -46,6 +46,7 @@
     //配置友盟
     [self UMSocialConfig];
     
+    
     NSLog(@"didFinishLaunchingWithOptions");
 
     return YES;

@@ -39,6 +39,7 @@
     self.delegate = self;
     self.tabBar.tintColor=APP_COMMON_COLOR;
     
+    [[UITabBar appearance] setTranslucent:NO];
 //    HXTabBar *tabBar = [[HXTabBar alloc] init];
 //    tabBar.customDelegate = self;
 //    /** KVC */
@@ -48,7 +49,6 @@
 
 - (void)addAllChildVcs
 {
-    
     for (int i=0; i < self.tabBarStoryBoardItems.count; i++) {
         
         UIViewController *childVC = [self viewControllerWithStoryBoardItem:self.tabBarStoryBoardItems[i]];
@@ -61,16 +61,6 @@
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
     
     self.Index = self.selectedIndex;
-
-//    if (self.selectedIndex == 3) {
-//
-//        //判断是否登录
-//        HHLoginVC *vc = [[HHLoginVC alloc] initWithNibName:@"HHLoginVC" bundle:nil];
-//        vc.tabBarVC = (HJTabBarController *)tabBarController;
-//        HJNavigationController *nav = [[HJNavigationController alloc] initWithRootViewController:vc];
-//        [self presentViewController:nav animated:YES completion:nil];
-//
-//    }
 
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
@@ -140,6 +130,7 @@
 {
     //设置底部tabbar的主题样式
     UITabBarItem *appearance = [UITabBarItem appearance];
+    
     [appearance setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:APP_COMMON_COLOR, NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
     //    UITabBar *appearance1 = [UITabBar appearance];
     //    UIImage *navImage = [UIImage imageWithColor:RGB(46, 40, 42)];

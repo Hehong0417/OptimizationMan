@@ -262,9 +262,9 @@
     self.settleAccountView.sendGift_widthConstant.constant = 0;
     CGFloat settleView_y;
     if (self.cartType == HHcartType_goodDetail) {
-        settleView_y = SCREEN_HEIGHT- 49-Status_HEIGHT -44;
+        settleView_y = SCREEN_HEIGHT- 49-Status_HEIGHT-NAVBAR_HEIGHT;
     }else{
-        settleView_y = SCREEN_HEIGHT-49-50-Status_HEIGHT-44;
+        settleView_y = SCREEN_HEIGHT-49-50-Status_HEIGHT-NAVBAR_HEIGHT;
     }
     UIView *settleView = [[UIView alloc] initWithFrame:CGRectMake(0, settleView_y, SCREEN_WIDTH, 50)];
     self.settleAccountView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);

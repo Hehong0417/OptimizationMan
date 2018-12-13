@@ -95,7 +95,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     [self addCartOrBuyAction];
     
     self.tableView.hidden = YES;
-    self.addCartTool.hidden = YES;
+//    self.addCartTool.hidden = YES;
     
     //获取数据
     [self getDatas];
@@ -269,7 +269,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     //商品详情
     [[[HHHomeAPI GetProductDetailWithId:self.Id] netWorkClient] getRequestInView:self.view finishedBlock:^(HHHomeAPI *api, NSError *error) {
         self.tableView.hidden = NO;
-        self.addCartTool.hidden = NO;
+//        self.addCartTool.hidden = NO;
         if (!error) {
             if (api.State == 1) {
                 
@@ -429,7 +429,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     [self.addCartTool.cartIconImgV setTapActionWithBlock:^{
 
       [[NSNotificationCenter defaultCenter]removeObserver:weakSelf.dcObj];
-        weakSelf.addCartTool.hidden = YES;
+//        weakSelf.addCartTool.hidden = YES;
         HHShoppingVC *vc = [HHShoppingVC new];
         vc.cartType = HHcartType_goodDetail;
         vc.delegate = weakSelf;

@@ -220,13 +220,14 @@
     if (!cell) {
         cell = [[HHTextfieldcell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleLabel"];
     }
+    NSMutableAttributedString *attrStr = [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
+    cell.titleLabel.attributedText = attrStr;
     cell.inputTextField.tag = indexPath.row+10000;
     if (indexPath.row == 0) {
-        [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
         cell.inputTextField.text = self.username;
         cell.inputTextField.delegate = self;
     }else{
-         [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
+//         [NSString lh_attriStrWithprotocolStr:@"*" content:self.title_arr[indexPath.row] protocolStrColor:kRedColor contentColor:kBlackColor commonFont:FONT(14)];
         if (indexPath.row == 1){
             cell.inputTextField.delegate = self;
             cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -268,7 +269,6 @@
             [weakSelf.tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
         };
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -293,8 +293,5 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     return 0.01;
-    
 }
-
-
 @end

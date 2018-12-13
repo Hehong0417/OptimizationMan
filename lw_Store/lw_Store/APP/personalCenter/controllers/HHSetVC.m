@@ -30,12 +30,14 @@
     
     self.tableV.tableFooterView = footView;
     
-    
     NSInteger size = [[SDImageCache sharedImageCache] getSize];
     CGFloat M = size/1024/1024;
     HJSettingItem *item = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
     item.detailTitle = [NSString stringWithFormat:@"%.2fM",M];
    
+    HHUserInfo *userInfo = [HHUserInfo sharedUserInfo];
+    HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    item1.detailTitle = userInfo.regioninfo;
 }
 //退出登录
 - (void)exitAction:(UIButton *)btn{

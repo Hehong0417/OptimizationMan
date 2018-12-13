@@ -105,6 +105,7 @@
 #import "HHWXModel.h"
 #import "HHPostOrderEvaluateItem.h"
 #import "HHAlipayModel.h"
+#import "HHUserInfo.h"
 
 
 #endif /* Lw_Store_pch */

@@ -3,8 +3,6 @@
 //【链接】LouisDM/IDCardPort （身份证扫描）
 //https://github.com/LouisDM/IDCardPort
 
-
-
 //导航栏标题字体大小
 #define JDNavigationFont [UIFont systemFontOfSize:20]
 #define FontBigSize [UIFont systemFontOfSize:16]
@@ -13,18 +11,16 @@
 //公用颜色
 #define JDCommonColor [UIColor colorWithRed:0.478 green:0.478 blue:0.478 alpha:1]
 
-
-#define APP_COMMON_COLOR  [UIColor blackColor]
-
+//#define APP_COMMON_COLOR  [UIColor blackColor]
+//#define APP_COMMON_COLOR  RGB(255, 63, 111)
+//#define APP_COMMON_COLOR  RGB(139, 71, 247)
+#define APP_COMMON_COLOR  RGB(196, 125, 114)
 
 #define APP_green_COLOR RGB(190, 225, 255)
-
 //紫
 #define APP_purple_Color RGB(47, 0, 159)
-
 //深紫
 #define APP_Deep_purple_Color RGB(36, 27, 57)
-
 
 #define KVCBackGroundColor RGB(248, 248, 248)
 #define KTitleLabelColor [UIColor colorWithHexString:@"#9e9e9e"] //158
@@ -35,7 +31,6 @@
 #define KLightTitleColor [UIColor colorWithHexString:@"#5f5f5f"]//95
 #define TitleGrayColor [UIColor colorWithHexString:@"#333333"] //51
 #define KDCLabelColor  [UIColor colorWithHexString:@"#DCDCDE"]//220
-
 
 #define KPartingLineColor RGB(228, 227, 239)
 

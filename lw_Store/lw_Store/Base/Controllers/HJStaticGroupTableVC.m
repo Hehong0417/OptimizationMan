@@ -23,7 +23,7 @@ static const CGFloat kNormalCellHeight = 44;
 - (void)loadView {
     
     self.view = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) backColor:KVCBackGroundColor];
-    self.tableV = [UITableView lh_tableViewWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT-49-20) tableViewStyle:UITableViewStyleGrouped delegate:self dataSourec:self];
+    self.tableV = [UITableView lh_tableViewWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT-49-NAVBAR_HEIGHT-Status_HEIGHT) tableViewStyle:UITableViewStyleGrouped delegate:self dataSourec:self];
     self.tableV.backgroundColor = kClearColor;
     self.tableV.estimatedSectionHeaderHeight = 0;
     self.tableV.estimatedSectionFooterHeight = 0;

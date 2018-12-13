@@ -78,7 +78,7 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     [self setUpData];
     
     //搜索条
-    UIView *search_head = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 50) backColor:kBlackColor];
+    UIView *search_head = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 50) backColor:APP_COMMON_COLOR];
     [self.view addSubview:search_head];
     searchView = [[SearchView alloc] initWithFrame:CGRectMake(0, 5, self.view.frame.size.width, 30)];
     searchView.textField.text = @"";

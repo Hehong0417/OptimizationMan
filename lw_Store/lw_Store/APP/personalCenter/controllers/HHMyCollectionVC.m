@@ -22,7 +22,7 @@
 @property(nonatomic,assign)   BOOL  isFooterRefresh;
 @property(nonatomic,strong)   NSURLSessionDataTask *task;
 @property(nonatomic,assign)   BOOL  isCategory;
-@property (nonatomic, assign)   NSInteger isLoaded;
+@property (nonatomic,assign)   NSInteger isLoaded;
 @end
 
 @implementation HHMyCollectionVC

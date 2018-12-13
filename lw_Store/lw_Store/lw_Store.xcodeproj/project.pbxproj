@@ -114,6 +114,7 @@
 		CE3E7B4F21C0C4DF008F1E68 /* HHSendIntegralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B4D21C0C4DE008F1E68 /* HHSendIntegralVC.m */; };
 		CE3E7B5221C0E101008F1E68 /* HHCommissionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B5121C0E101008F1E68 /* HHCommissionCell.m */; };
 		CE3E7B5521C0E4CF008F1E68 /* HHCommissionTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */; };
+		CE3E7B5821C119CF008F1E68 /* HHUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3E7B5721C119CF008F1E68 /* HHUserInfo.m */; };
 		CE450DF92186E78D007EA2D3 /* HHMyCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */; };
 		CE45FBA120BF9E60008D62E6 /* HHWXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA020BF9E5F008D62E6 /* HHWXModel.m */; };
 		CE45FBA420BFFB88008D62E6 /* HHOrderItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE45FBA320BFFB88008D62E6 /* HHOrderItemModel.m */; };
@@ -559,6 +560,8 @@
 		CE3E7B5121C0E101008F1E68 /* HHCommissionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHCommissionCell.m; sourceTree = "<group>"; };
 		CE3E7B5321C0E4CF008F1E68 /* HHCommissionTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHCommissionTVC.h; sourceTree = "<group>"; };
 		CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHCommissionTVC.m; sourceTree = "<group>"; };
+		CE3E7B5621C119CF008F1E68 /* HHUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHUserInfo.h; sourceTree = "<group>"; };
+		CE3E7B5721C119CF008F1E68 /* HHUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHUserInfo.m; sourceTree = "<group>"; };
 		CE450DF72186E78C007EA2D3 /* HHMyCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHMyCollectionVC.h; sourceTree = "<group>"; };
 		CE450DF82186E78D007EA2D3 /* HHMyCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHMyCollectionVC.m; sourceTree = "<group>"; };
 		CE45FB9F20BF9E5F008D62E6 /* HHWXModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHWXModel.h; sourceTree = "<group>"; };
@@ -1723,8 +1726,8 @@
 		CE999B6D208DE33B00B9307D /* NavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				CE999B6E208DE33B00B9307D /* HJNavigationController.m */,
 				CE999B6F208DE33B00B9307D /* HJNavigationController.h */,
+				CE999B6E208DE33B00B9307D /* HJNavigationController.m */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -2238,6 +2241,8 @@
 				CE219378208EE938005351B4 /* HHMineAPI.m */,
 				CE219377208EE938005351B4 /* HHMineModel.h */,
 				CE219375208EE938005351B4 /* HHMineModel.m */,
+				CE3E7B5621C119CF008F1E68 /* HHUserInfo.h */,
+				CE3E7B5721C119CF008F1E68 /* HHUserInfo.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -2908,6 +2913,7 @@
 				CEE2A0EC209333D400843DBD /* XWFilterAnimator+XWMask.m in Sources */,
 				CE999C0C208DE33B00B9307D /* HXTabBar.m in Sources */,
 				CE999BF0208DE33B00B9307D /* SGImageButton.m in Sources */,
+				CE3E7B5821C119CF008F1E68 /* HHUserInfo.m in Sources */,
 				CE999BC0208DE33B00B9307D /* UITextField+LH.m in Sources */,
 				CE999BEE208DE33B00B9307D /* UIView+SGExtension.m in Sources */,
 				CEF54F2A20C51D66008A8D4E /* HHActivityModel.m in Sources */,

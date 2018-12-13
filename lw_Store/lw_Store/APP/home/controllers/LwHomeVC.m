@@ -30,12 +30,12 @@
     
     // js配置
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
-//    [userContentController addScriptMessageHandler:self name:@"closeMe"];
+// [userContentController addScriptMessageHandler:self name:@"closeMe"];
     
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
      config.userContentController = userContentController;
 
-    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) configuration:config];
+    _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH-49-44) configuration:config];
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
 
