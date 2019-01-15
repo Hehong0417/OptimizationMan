@@ -68,14 +68,20 @@ typedef enum : NSUInteger {
 //1.4登录
 #define API_Login   API_SUB_URL(@"WeiXin/AppLogin")
 //1.4手机号登录
-#define API_IOSAuthenticationLogin   API_SUB_URL(@"WeiXin/IOSAuthenticationLogin")
+#define API_PhoneLogin   API_SUB_URL(@"WeiXin/PhoneLogin")
 //1.5获取图片验证码
 #define API_Image_GetCode API_SUB_URL2(@"Admin/Login/GetCode")
-//1.6发送短信验证码
+//1.6发送短信验证码(申请代理)
 #define API_Sms_SendCode API_SUB_URL1(@"Admin/Login/GetSmsCode")
+//1.7发送短信验证码（绑定）
+#define API_Band_Sms_SendCode API_SUB_URL(@"SMS/GetSmsCode")
+//1.8绑定手机号
+#define API_BindMobile API_SUB_URL(@"Login/BindMobile")
 //1.6忘记密码，重置密码
-#define API_ResetPassword API_SUB_URL(@"CustomerApi/User/ResetPassword")
-//1.7验证手机号
+#define API_ForgetPassWord API_SUB_URL(@"WeiXin/ForgetPassWord")
+//1.7修改密码
+#define API_ChangePassWord API_SUB_URL(@"Login/ChangePassWord")
+//1.8验证手机号
 #define API_VerifyMobile API_SUB_URL(@"UserInfo/VerifyMobile")
 
 /**
@@ -109,6 +115,7 @@ typedef enum : NSUInteger {
 
 /**
  *  购物车
+
  */
 //3.1获取购物车中商品
 #define API_GetProducts  API_SUB_URL2(@"ShopCart/Get")
@@ -230,6 +237,12 @@ typedef enum : NSUInteger {
 #define API_GetAgentList API_SUB_URL(@"UserInfo/GetAgentList")
 //4.48获取商品评价统计接口
 #define API_GetProductEvaluateStatictis API_SUB_URL2(@"Order/GetProductEvaluateStatictis")
+//4.49赠品列表
+#define API_GetUserGiveaway API_SUB_URL2(@"ActivityNew/GetUserGiveaway")
+//4.50获得支付有礼
+#define API_GetPaymentGift API_SUB_URL2(@"ActivityNew/GetPaymentGift")
+//4.51领取礼品
+#define API_ReceiveGift API_SUB_URL2(@"ActivityNew/ReceiveGift")
 //省
 #define API_GetProvinces API_SUB_URL1(@"Admin/Region/GetRegionList")
 //获取城市或地区

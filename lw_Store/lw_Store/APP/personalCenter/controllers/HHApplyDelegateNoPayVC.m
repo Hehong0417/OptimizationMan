@@ -111,6 +111,7 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
         [SVProgressHUD showErrorWithStatus:@"支付失败～"];
         
     });

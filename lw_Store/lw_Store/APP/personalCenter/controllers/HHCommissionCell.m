@@ -47,13 +47,13 @@
     
     self.integralLabel.sd_layout
     .leftSpaceToView(self.contentView, 15)
-    .topSpaceToView(self.contentView, 10)
+    .topSpaceToView(self.contentView, 15)
     .heightIs(25)
     .widthIs(width);
     
     self.integral_typeLabel.sd_layout
     .leftSpaceToView(self.integralLabel, 15)
-    .topSpaceToView(self.contentView, 10)
+    .topSpaceToView(self.contentView, 15)
     .heightIs(25)
     .widthIs(width);
     

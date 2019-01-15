@@ -103,7 +103,7 @@
     
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //地址栏
     [self addSubmitOrdersHead];
     
@@ -243,7 +243,7 @@
 - (void)addSubmitOrdersHead{
     
     SubmitOrdersHead = [[[NSBundle mainBundle] loadNibNamed:@"HHSubmitOrdersHead" owner:nil options:nil] lastObject];
-    SubmitOrdersHead.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+    SubmitOrdersHead.frame = CGRectMake(0, 8, SCREEN_WIDTH, 100);
     SubmitOrdersHead.userInteractionEnabled = YES;
     //收货地址
     WEAK_SELF();
@@ -255,7 +255,9 @@
         [weakSelf.navigationController pushVC:vc];
         
     }];
-    self.tableView.tableHeaderView = SubmitOrdersHead;
+    UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 108) backColor:KVCBackGroundColor];
+    [headView addSubview:SubmitOrdersHead];
+    self.tableView.tableHeaderView = headView;
     
 }
 - (void)addSubmitOrderTool{
@@ -490,6 +492,8 @@
         if (!cell1) {
             cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell1"];
         }
+        UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0, 43, ScreenW, 1) backColor:KVCBackGroundColor];
+        [cell1.contentView addSubview:h_line];
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
         cell1.textLabel.font = FONT(14);
         cell1.detailTextLabel.font = FONT(14);
@@ -502,9 +506,13 @@
       HHPayWayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHPayWayCell"];
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
       NSArray *arr = @[@"微信",@"支付宝"];
+      NSArray *iconArr = @[@"weixin",@"zhi"];
+        cell.iconView.image = [UIImage imageNamed:iconArr[indexPath.row]];
       cell.text_label.text = arr[indexPath.row];
       cell.detail_button.userInteractionEnabled = NO;
       cell.detail_button.selected = ((NSNumber *)self.payWaySelecItems[indexPath.row]).boolValue;
+      UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0, 43, ScreenW, 1) backColor:KVCBackGroundColor];
+      [cell.contentView addSubview:h_line];
      return cell;
 
     }else{
@@ -514,12 +522,16 @@
             HHproductsModel *model = order_model.products[indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.productsModel = model;
+            UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0, AdapationLabelHeight(100)-1, ScreenW, 1) backColor:KVCBackGroundColor];
+            [cell.contentView addSubview:h_line];
             return cell;
         }else{
             UITableViewCell *cell1 =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
             cell1.selectionStyle = UITableViewCellSelectionStyleNone;
             cell1.textLabel.font = FONT(14);
             cell1.detailTextLabel.font = FONT(14);
+            UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0, 43, ScreenW, 1) backColor:KVCBackGroundColor];
+            [cell1.contentView addSubview:h_line];
             cell1.textLabel.text = order_model.addtion_arr[indexPath.row-order_model.products.count];
             cell1.detailTextLabel.text = order_model.addtion_value_arr[indexPath.row-order_model.products.count];
             if (order_model.isCanUseIntegral.integerValue == 1&&indexPath.row == order_model.products.count+order_model.addtion_value_arr.count-1) {
@@ -626,7 +638,7 @@
     }else{
         HHordersModel *order_model = self.datas[indexPath.section];
       if (indexPath.row<order_model.products.count) {
-        return 95;
+          return AdapationLabelHeight(100);
       }else{
         return 44;
       }
@@ -681,7 +693,7 @@
         
         return nil;
     } else{
-        UILabel *orderNo = [UILabel lh_labelWithFrame:CGRectMake(15, 0, SCREEN_WIDTH-30, 35) text:[NSString stringWithFormat:@"订单%ld",section+1] textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:KVCBackGroundColor];
+        UILabel *orderNo = [UILabel lh_labelWithFrame:CGRectMake(15, 0, SCREEN_WIDTH-30, 35) text:[NSString stringWithFormat:@"订单%ld",section+1] textColor:kBlackColor font:FONT(13) textAlignment:NSTextAlignmentLeft backgroundColor:kClearColor];
         [sectionHead addSubview:orderNo];
     }
     return sectionHead;
@@ -810,10 +822,13 @@
         
     }else {
         //购物车
-        HHOrderDetailVC *vc = [HHOrderDetailVC new];
-        vc.orderid = self.order_id;
+//        HHOrderDetailVC *vc = [HHOrderDetailVC new];
+//        vc.orderid = self.order_id;
+//        [self.navigationController pushVC:vc];
+        HHPaySucessVC *vc =[HHPaySucessVC new];
+        vc.pids = self.pids;
+        vc.oid = self.order_id;
         [self.navigationController pushVC:vc];
-
     }
 }
 

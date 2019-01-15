@@ -21,4 +21,11 @@
 //猜你喜欢
 + (instancetype)GetAlliancesProductsWithpids:(NSString *)pids;
 
+//获得支付有礼
++ (instancetype)GetPaymentGiftWithoid:(NSString *)oid;
+
+#pragma mark - post
+//领取礼品
++ (instancetype)PostReceiveGiftWithgift_id:(NSString *)gift_id;
+
 @end

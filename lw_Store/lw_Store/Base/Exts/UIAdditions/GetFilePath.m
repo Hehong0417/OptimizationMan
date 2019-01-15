@@ -14,7 +14,7 @@
 
 +(NSString *)getSavePathWithFileSuffix:(NSString *)suffix{
 
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [paths objectAtIndex:0];
     NSDate *date = [NSDate date];
     //获取当前时间

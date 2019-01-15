@@ -186,6 +186,7 @@
     id model = [HHExpress_message_list mj_objectWithKeyValues:self.datas[indexPath.row]];
 
     if(indexPath.row == 0){
+
        return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[HHLogisticsCell1 class] contentViewWidth:[self cellContentViewWith]];
     }else{
        return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[HHLogisticsCell class] contentViewWidth:[self cellContentViewWith]];

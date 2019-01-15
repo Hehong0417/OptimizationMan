@@ -59,7 +59,7 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    return CGSizeMake((SCREEN_WIDTH - 5*15 )/4, WidthScaleSize_H(35));
+    return CGSizeMake((SCREEN_WIDTH - 5*15 )/4, AdapationLabelHeight(35));
 }
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
@@ -73,7 +73,7 @@
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     
-    return UIEdgeInsetsMake(WidthScaleSize_H(15), WidthScaleSize_W(15), WidthScaleSize_H(0), WidthScaleSize_W(15));
+    return UIEdgeInsetsMake(AdapationLabelHeight(15), AdapationLabelHeight(15), AdapationLabelHeight(0), AdapationLabelHeight(15));
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

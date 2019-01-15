@@ -37,5 +37,6 @@ singleton_h(User)
 @property(nonatomic,strong) NSString *shop_userid;
 
 @property(nonatomic,strong) NSString *pids;
+@property(nonatomic,strong) NSString *oid;
 
 @end

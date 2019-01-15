@@ -47,10 +47,10 @@
     .widthIs(150);
     
     self.detail_button.sd_layout
-    .rightSpaceToView(self.contentView, 20)
+    .rightSpaceToView(self.contentView, 15)
     .topSpaceToView(self.contentView, 10)
     .bottomSpaceToView(self.contentView, 10)
-    .widthIs(60)
+    .widthIs(35)
     .heightIs(30);
     
     

@@ -51,7 +51,7 @@
 //手机号登录
 + (instancetype)postIOSAuthenticationLoginWithphone:(NSString *)phone psw:(NSString *)psw{
     HHUserLoginAPI *api = [self new];
-    api.subUrl = API_IOSAuthenticationLogin;
+    api.subUrl = API_PhoneLogin;
     api.parametersAddToken = NO;
     if (phone) {
         [api.parameters setObject:phone forKey:@"phone"];

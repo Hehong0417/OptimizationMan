@@ -9,6 +9,7 @@
 #import "HHSetVC.h"
 #import "HHAboutUsVC.h"
 #import "GFAddressPicker.h"
+#import "HHModifyPassWordVC.h"
 
 @interface HHSetVC ()
 @property (nonatomic, strong)   GFAddressPicker *addressPick;
@@ -23,7 +24,7 @@
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) backColor:kClearColor];
     
     UIButton *finishBtn = [UIButton lh_buttonWithFrame:CGRectMake(30, 50, SCREEN_WIDTH - 60, 45) target:self action:@selector(exitAction:) backgroundImage:nil title:@"退出登录"  titleColor:kWhiteColor font:FONT(14)];
-    finishBtn.backgroundColor = kBlackColor;
+    finishBtn.backgroundColor = APP_BUTTON_COMMON_COLOR;
     [finishBtn lh_setRadii:5 borderWidth:0 borderColor:nil];
     
     [footView addSubview:finishBtn];
@@ -32,12 +33,15 @@
     
     NSInteger size = [[SDImageCache sharedImageCache] getSize];
     CGFloat M = size/1024/1024;
-    HJSettingItem *item = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    HJSettingItem *item = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
     item.detailTitle = [NSString stringWithFormat:@"%.2fM",M];
    
     HHUserInfo *userInfo = [HHUserInfo sharedUserInfo];
     HJSettingItem *item1 = [self settingItemInIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     item1.detailTitle = userInfo.regioninfo;
+    
+    self.tableV.separatorColor = LineLightColor;
+
 }
 //退出登录
 - (void)exitAction:(UIButton *)btn{
@@ -49,39 +53,44 @@
     
 }
 - (NSArray *)groupIcons{
-    return @[@[@""],@[@"",@""],@[@""]];
+    return @[@[@""],@[@""],@[@"",@""],@[@""]];
 
 }
 - (NSArray *)groupTitles{
 
-    return @[@[@"会员所在地区"],@[@"关于我们",@"清除缓存"],@[@"小程序"]];
+    return @[@[@"会员所在地区"],@[@"修改密码"],@[@"关于我们",@"清除缓存"],@[@"小程序"]];
 }
 - (NSArray *)groupDetials{
     
-    return @[@[@""],@[@"",@""],@[@""]];
+    return @[@[@""],@[@""],@[@"",@""],@[@""]];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0){
         //选择地址
         self.addressPick = [[GFAddressPicker alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        self.addressPick.font = [UIFont systemFontOfSize:WidthScaleSize_H(19)];
+        self.addressPick.font = [UIFont systemFontOfSize:AdapationLabelHeight(19)];
         [self.addressPick showPickViewAnimation:YES];
         WEAK_SELF();
         self.addressPick.completeBlock = ^(NSString *result, NSString *district_id) {
-            
             [weakSelf saveAddressWithDistrict_id:district_id result:result indexPath:indexPath];
-            
         };
         
     }else if (indexPath.section == 1) {
-    
-    if (indexPath.row == 0) {
+        
+        if (indexPath.row == 0) {
+            HHModifyPassWordVC *vc = [HHModifyPassWordVC new];
+            [self.navigationController pushVC:vc];
+            
+        }
+    }else if (indexPath.section == 2) {
+        
+        if (indexPath.row == 0) {
         
         HHAboutUsVC *vc = [HHAboutUsVC new];
         [self.navigationController pushVC:vc];
-        
-    }else{
+            
+         }else{
         
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"确定清除缓存吗？" preferredStyle:UIAlertControllerStyleAlert];
         
@@ -91,7 +100,7 @@
             [[SDImageCache sharedImageCache] clearMemory];
             [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
             item.detailTitle = [NSString stringWithFormat:@"0.00M"];
-            [self.tableV reloadRow:1 inSection:1 withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableV reloadRow:1 inSection:2 withRowAnimation:UITableViewRowAnimationNone];
         }];
         UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
@@ -101,19 +110,17 @@
         [alertC addAction:action1];
         [alertC addAction:action2];
         [self presentViewController:alertC animated:YES completion:nil];
-        
-    }
-    
-   }else if (indexPath.section == 2) {
+       }
+   }else if (indexPath.section == 3) {
        //跳转小程序
        
        WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
        launchMiniProgramReq.userName = @"gh_48856d410d9e";  //拉起的小程序的username
        //        launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
-       
+
        BOOL sucess =  [WXApi sendReq:launchMiniProgramReq];
-       
+
        NSLog(@"sucess--%d",sucess);
        
    }

@@ -27,7 +27,6 @@
 //    }
 //    return oldValue;
 //}
-
 #pragma mark - <BaseModelReadWriteProtocol>
 
 MJCodingImplementation

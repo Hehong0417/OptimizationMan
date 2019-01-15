@@ -64,7 +64,8 @@
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     
-    
+    self.tableView.separatorColor = LineLightColor;
+
 }
 
 - (NSMutableArray *)datas{

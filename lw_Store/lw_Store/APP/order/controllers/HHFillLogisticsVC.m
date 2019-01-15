@@ -62,7 +62,7 @@
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 180) backColor:kWhiteColor];
     UIButton *saveBtn = [UIButton lh_buttonWithFrame:CGRectMake(30, 40, SCREEN_WIDTH-60, 45) target:self action:@selector(saveBtnAction:) image:nil];
-    [saveBtn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
+    [saveBtn lh_setBackgroundColor:APP_BUTTON_COMMON_COLOR forState:UIControlStateNormal];
     [saveBtn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     [saveBtn setTitle:@"提交" forState:UIControlStateNormal];
     [saveBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
@@ -117,7 +117,7 @@
         btn.enabled = NO;
         
         [[[HHMineAPI postSubReturnGoodsExpressWithorderid:self.product_item_refund_id exp_code:self.choose_code exp_order:courierNum] netWorkClient] postRequestInView:self.view finishedBlock:^(HHMineAPI *api, NSError *error) {
-            [btn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
+            [btn lh_setBackgroundColor:APP_BUTTON_COMMON_COLOR forState:UIControlStateNormal];
             btn.enabled = YES;
 
             if (!error) {
@@ -217,7 +217,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return WidthScaleSize_H(50);
+    return AdapationLabelHeight(50);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

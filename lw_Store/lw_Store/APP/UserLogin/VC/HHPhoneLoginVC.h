@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *login_btn;
 @property (weak, nonatomic) IBOutlet UITextField *pwd;
 @property (weak, nonatomic) IBOutlet UIView *reView_bgView;
+@property (weak, nonatomic) IBOutlet UILabel *forgetPassword;
 
 @end

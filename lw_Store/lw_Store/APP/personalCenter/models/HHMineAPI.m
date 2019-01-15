@@ -209,6 +209,22 @@
     return api;
     
 }
+//赠品列表
++ (instancetype)GetUserGiveawayWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetUserGiveaway;
+    if (page) {
+        [api.parameters setObject:page forKey:@"page"];
+    }
+    if (pageSize) {
+        [api.parameters setObject:pageSize forKey:@"pagesize"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
+
 #pragma mark - post
 
 //修改登录密码
@@ -469,6 +485,72 @@
     }
         [api.parameters setObject:@"0" forKey:@"smsCodeType"];
     
+    api.parametersAddToken = NO;
+    return api;
+}
+// 发送短信验证码(绑定)
++ (instancetype)postSms_SendCodeWithmobile:(NSString *)mobile{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_Band_Sms_SendCode;
+    if (mobile) {
+        [api.parameters setObject:mobile forKey:@"mobile"];
+    }
+    [api.parameters setObject:@"0" forKey:@"smsCodeType"];
+    [api.parameters setObject:Cid forKey:@"cid"];
+
+    api.parametersAddToken = NO;
+    return api;
+}
+// 绑定手机号
++ (instancetype)postBindMobile:(NSString *)mobile smsCode:(NSString *)smsCode Password:(NSString *)Password{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_BindMobile;
+    if (mobile) {
+        [api.parameters setObject:mobile forKey:@"mobile"];
+    }
+    if (smsCode) {
+        [api.parameters setObject:smsCode forKey:@"smsCode"];
+    }
+    if (Password) {
+        [api.parameters setObject:Password forKey:@"Password"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+}
+// 忘记密码
++ (instancetype)postForgetPassWordWithmobile:(NSString *)mobile newPassWord:(NSString *)newPassWord smsCode:(NSString *)smsCode{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_ForgetPassWord;
+    if (mobile) {
+        [api.parameters setObject:mobile forKey:@"mobile"];
+    }
+    if (newPassWord) {
+        [api.parameters setObject:newPassWord forKey:@"newPassWord"];
+    }
+    if (smsCode) {
+        [api.parameters setObject:smsCode forKey:@"smsCode"];
+    }
+        [api.parameters setObject:Cid forKey:@"cid"];
+    api.parametersAddToken = NO;
+    return api;
+}
+// 修改密码
++ (instancetype)postChangePassWordWitholdPassWord:(NSString *)oldPassWord  newPassWord:(NSString *)newPassWord commitPassWord:(NSString *)commitPassWord{
+    
+    HHMineAPI *api = [self new];
+    api.subUrl = API_ChangePassWord;
+    if (oldPassWord) {
+        [api.parameters setObject:oldPassWord forKey:@"oldPassWord"];
+    }
+    if (newPassWord) {
+        [api.parameters setObject:newPassWord forKey:@"newPassWord"];
+    }
+    if (commitPassWord) {
+        [api.parameters setObject:commitPassWord forKey:@"commitPassWord"];
+    }
     api.parametersAddToken = NO;
     return api;
 }

@@ -4,7 +4,6 @@
 //
 //  Created by User on 2018/4/23.
 //  Copyright © 2018年 User. All rights reserved.
-//
 
 #import "LwHomeVC.h"
 #import <WebKit/WebKit.h>
@@ -27,7 +26,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // js配置
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
 // [userContentController addScriptMessageHandler:self name:@"closeMe"];
@@ -46,7 +45,6 @@
     [self loadData];
 
     [self addHeadRefresh];
-    
 }
 - (void)loadData{
 //
@@ -66,7 +64,6 @@
 - (void)addHeadRefresh{
     
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
         [self loadData];
     }];
     refreshHeader.lastUpdatedTimeLabel.hidden = YES;

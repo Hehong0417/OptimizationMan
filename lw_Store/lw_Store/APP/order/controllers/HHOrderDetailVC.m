@@ -128,12 +128,12 @@
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, ScreenH - 50-Status_HEIGHT-44, SCREEN_WIDTH, 50) backColor:kWhiteColor];
     
-    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-140, 10, 60, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(16) backgroundColor:kWhiteColor];
-    [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
+    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-140, 10, 60, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_BUTTON_COMMON_COLOR font:FONT(16) backgroundColor:kWhiteColor];
+    [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:oneBtn];
     
-    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-70, 10, 60, 30) target:self action:@selector(twoAction:) title:@"去支付" titleColor:kWhiteColor font:FONT(16) backgroundColor:APP_COMMON_COLOR];
-    [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
+    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-70, 10, 60, 30) target:self action:@selector(twoAction:) title:@"去支付" titleColor:kWhiteColor font:FONT(16) backgroundColor:APP_BUTTON_COMMON_COLOR];
+    [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:twoBtn];
     
     UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1) backColor:KVCBackGroundColor];
@@ -237,7 +237,7 @@
     if (indexPath.section == 0) {
         return 80;
     }else  if(indexPath.section == 1){
-        return 110;
+        return AdapationLabelHeight(110);
     }else{
         return 50;
     }

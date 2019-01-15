@@ -64,6 +64,7 @@
 #define IOS_VERSION_10_OR_LATER (([[[UIDevice currentDevice]systemVersion]floatValue]>=10.0)? (YES):(NO))
 #define AdapationLabelFont(n) (IOS_VERSION_10_OR_LATER?((n-1)*([[UIScreen mainScreen]bounds].size.width/375.0f)):((n)*([[UIScreen mainScreen]bounds].size.width/375.0f)))
 #define AdapationLabelHeight(n) (IOS_VERSION_10_OR_LATER?((n-1)*([[UIScreen mainScreen]bounds].size.width/375.0f)):((n)*([[UIScreen mainScreen]bounds].size.width/375.0f)))
+#define SafeAreaBottomHeight (ScreenH == 812.0 ? 34.0 : 0.0)
 
 
 #define nav_item_space -5
@@ -85,8 +86,7 @@
 //UI heights
 #define Status_HEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
 #define NAVBAR_HEIGHT 44.0
-#define STATUS_NAV_HEIGHT Status_HEIGHT+NAVBAR_HEIGHT
- 
+
 
 // -------------------- Debug Function --------------------------
 #ifdef DEBUG
@@ -124,9 +124,4 @@
 //是否为iOS8及以上系统
 #define iOS8 ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
 
-//日至输出
-#ifdef DEBUG
-#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#else
-#   define DLog(...)
-#endif
+

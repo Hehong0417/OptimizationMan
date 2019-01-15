@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,22 +40,22 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGh-7h-0qX">
-                        <rect key="frame" x="166" y="19" width="190" height="32"/>
+                        <rect key="frame" x="166" y="19" width="190" height="62"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="HcD-kY-W7q"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="iEs-VX-Mft"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4j7-Om-s9R">
-                        <rect key="frame" x="148" y="48" width="1" height="28"/>
+                        <rect key="frame" x="148" y="49" width="1" height="27"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="Oz8-nt-4BO"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_address_default" translatesAutoresizingMaskIntoConstraints="NO" id="cX3-aa-Z5h">
-                        <rect key="frame" x="139" y="19" width="19" height="21"/>
+                        <rect key="frame" x="139" y="19" width="19" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="19" id="Fo7-9Y-jxT"/>
                         </constraints>
@@ -84,7 +83,7 @@
                 <outlet property="timeLabel" destination="0hJ-0N-qfK" id="Nta-5q-1O2"/>
                 <outlet property="yearLabel" destination="kXw-Hh-Ohb" id="zMp-Gg-anH"/>
             </connections>
-            <point key="canvasLocation" x="111" y="64"/>
+            <point key="canvasLocation" x="109.59999999999999" y="63.418290854572717"/>
         </tableViewCell>
     </objects>
     <resources>

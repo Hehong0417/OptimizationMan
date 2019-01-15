@@ -36,7 +36,7 @@
     
     self.integral_typeLabel.sd_layout
     .leftSpaceToView(self.contentView, 10)
-    .topSpaceToView(self.contentView, 10)
+    .topSpaceToView(self.contentView, 15)
     .heightIs(25)
     .widthIs(200);
     

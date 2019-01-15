@@ -15,7 +15,6 @@
 
 @property(nonatomic,strong) NSArray *inputArr;
 
-
 @property(nonatomic,strong) NSArray *placeHolderArr;
 
 @property(nonatomic,strong)LHVerifyCodeButton *verifyCodeBtn;
@@ -43,13 +42,12 @@
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150) backColor:kClearColor];
     UIButton *finishBtn = [UIButton lh_buttonWithFrame:CGRectMake(30, 50, SCREEN_WIDTH - 60, 45) target:self action:@selector(registerAction) backgroundImage:nil title:@"注册" titleColor:kWhiteColor font:FONT(17)];
-    finishBtn.backgroundColor = APP_COMMON_COLOR;
+    finishBtn.backgroundColor = APP_BUTTON_COMMON_COLOR;
     [finishBtn lh_setRadii:5 borderWidth:0 borderColor:nil];
 
     [footView addSubview:finishBtn];
     
     self.tableView.tableFooterView = footView;
-    
     
 }
 
@@ -70,17 +68,17 @@
         cell.inputTextField.delegate = self;
     }
     if (indexPath.row == 1) {
-//        cell.inputTextField.text = @"13826424459";
+//      cell.inputTextField.text = @"13826424459";
         cell.inputTextField.secureTextEntry = NO;
         cell.inputTextField.delegate = self;
         cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;
     }else if (indexPath.row == 2){
         
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, WidthScaleSize_H(50))];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, AdapationLabelHeight(50))];
         
-        self.verifyCodeBtn = [[LHVerifyCodeButton alloc]initWithFrame:CGRectMake(0, 0, WidthScaleSize_W(100), WidthScaleSize_H(30))];
+        self.verifyCodeBtn = [[LHVerifyCodeButton alloc]initWithFrame:CGRectMake(0, 0, AdapationLabelHeight(100), AdapationLabelHeight(30))];
         [self.verifyCodeBtn addTarget:self action:@selector(sendVerifyCode) forControlEvents:UIControlEventTouchUpInside];
-        [self.verifyCodeBtn lh_setBackgroundColor:APP_COMMON_COLOR forState:UIControlStateNormal];
+        [self.verifyCodeBtn lh_setBackgroundColor:APP_BUTTON_COMMON_COLOR forState:UIControlStateNormal];
         [self.verifyCodeBtn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
         [self.verifyCodeBtn setTitle:@"点击发送验证码" forState:UIControlStateNormal];
         [self.verifyCodeBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
@@ -109,7 +107,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return WidthScaleSize_H(50);
+    return AdapationLabelHeight(50);
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -173,8 +171,6 @@
     HHTextfieldcell *cell1 = (HHTextfieldcell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     if (cell1.inputTextField.text.length == 0) {
         [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-        
-        
         [SVProgressHUD showInfoWithStatus:@"请先填写手机号"];
     }else{
         //判断是否为有效的手机号

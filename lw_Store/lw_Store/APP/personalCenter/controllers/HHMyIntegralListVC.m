@@ -31,7 +31,9 @@
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     self.tableView.backgroundColor = KVCBackGroundColor;
-
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
+    self.tableView.separatorColor = LineLightColor;
+    
     UIButton *rightBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, 60, 44) target:self action:@selector(setBtnAction) image:nil];
     [rightBtn setTitle:@"赠送积分" forState:UIControlStateNormal];
     rightBtn.titleLabel.font = FONT(13);
@@ -187,7 +189,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 80;
+    return 90;
 }
 
 

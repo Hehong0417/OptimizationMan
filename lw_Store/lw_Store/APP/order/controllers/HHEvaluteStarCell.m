@@ -14,25 +14,25 @@
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
         
         //描述相符
-        UILabel *left_discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(0, 0, WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"描述相符" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        UILabel *left_discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(0, 0, AdapationLabelHeight(80), AdapationLabelHeight(45)) text:@"描述相符" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self.contentView addSubview:left_discrib_lab];
         
         //CDPStarEvaluation星形评价
-        self.starEvaluation=[[CDPStarEvaluation alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left_discrib_lab.frame),0,ScreenW-WidthScaleSize_W(80),WidthScaleSize_H(45)) onTheView:self.contentView];
+        self.starEvaluation=[[CDPStarEvaluation alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left_discrib_lab.frame),0,ScreenW-AdapationLabelHeight(80),AdapationLabelHeight(45)) onTheView:self.contentView];
         self.starEvaluation.delegate=self;
         
-//        self.discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(left_discrib_lab.frame)+WidthScaleSize_W(160), 0, WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+//        self.discrib_lab = [UILabel lh_labelWithFrame:CGRectMake(CGRectGetMaxX(left_discrib_lab.frame)+AdapationLabelHeight(160), 0, AdapationLabelHeight(80), AdapationLabelHeight(45)) text:@"" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
 //        [self.contentView addSubview:self.discrib_lab];
         
         //物流服务
-        UILabel *left_logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(left_discrib_lab.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"物流服务" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        UILabel *left_logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(left_discrib_lab.frame), AdapationLabelHeight(80), AdapationLabelHeight(45)) text:@"物流服务" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self.contentView addSubview:left_logistics_lab];
         
-//        self.logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(self.discrib_lab.frame.origin.x, CGRectGetMaxY(self.discrib_lab.frame), WidthScaleSize_W(80), WidthScaleSize_H(45)) text:@"" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+//        self.logistics_lab = [UILabel lh_labelWithFrame:CGRectMake(self.discrib_lab.frame.origin.x, CGRectGetMaxY(self.discrib_lab.frame), AdapationLabelHeight(80), AdapationLabelHeight(45)) text:@"" textColor:kGrayColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
 //        [self.contentView addSubview:self.logistics_lab];
         
         //CDPStarEvaluation
-        self.starEvaluation2=[[CDPStarEvaluation alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left_logistics_lab.frame),CGRectGetMaxY(left_discrib_lab.frame),ScreenW-WidthScaleSize_W(80),WidthScaleSize_H(45)) onTheView:self.contentView];
+        self.starEvaluation2=[[CDPStarEvaluation alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left_logistics_lab.frame),CGRectGetMaxY(left_discrib_lab.frame),ScreenW-AdapationLabelHeight(80),AdapationLabelHeight(45)) onTheView:self.contentView];
         self.starEvaluation2.delegate= self;
     }
 

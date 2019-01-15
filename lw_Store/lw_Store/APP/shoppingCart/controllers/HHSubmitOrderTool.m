@@ -10,6 +10,12 @@
 
 @implementation HHSubmitOrderTool
 
-
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    self.closePay.backgroundColor = APP_BUTTON_COMMON_COLOR;
+    self.ImmediatePayLabel.backgroundColor = APP_BUTTON_COMMON_COLOR;
+    
+    
+}
 
 @end

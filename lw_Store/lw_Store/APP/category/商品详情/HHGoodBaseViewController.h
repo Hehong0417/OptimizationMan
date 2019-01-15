@@ -18,5 +18,6 @@
 /* 删除加入购物车和立即购买的通知 */
 @property (weak ,nonatomic) id deleteDcObj;
 
+@property (assign ,nonatomic) BOOL isCanReceive;
 
 @end

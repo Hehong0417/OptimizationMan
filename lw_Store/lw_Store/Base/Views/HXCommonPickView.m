@@ -33,15 +33,15 @@
         [self addSubview:shadow];
         
         
-        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, WidthScaleSize_H(260))];
+        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, AdapationLabelHeight(260))];
         contentView.backgroundColor = kWhiteColor;
         self.contentView = contentView;
         
-        UIView *finishView = [UIView lh_viewWithFrame:CGRectMake(-2, 0, SCREEN_WIDTH+4, WidthScaleSize_H(40)) backColor:kWhiteColor];
+        UIView *finishView = [UIView lh_viewWithFrame:CGRectMake(-2, 0, SCREEN_WIDTH+4, AdapationLabelHeight(40)) backColor:kWhiteColor];
         [contentView addSubview:finishView];
     
         [finishView lh_setCornerRadius:0 borderWidth:1 borderColor:LineLightColor];
-        UIButton *finishBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-60, 0, 60, WidthScaleSize_H(40)) target:self action:@selector(finished:) title:@"完成" titleColor:kBlackColor font:FONT(16) backgroundColor:kWhiteColor];
+        UIButton *finishBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-60, 0, 60, AdapationLabelHeight(40)) target:self action:@selector(finished:) title:@"完成" titleColor:kBlackColor font:FONT(16) backgroundColor:kWhiteColor];
         [finishView addSubview:finishBtn];
         
         [self addSubview:contentView];
@@ -91,7 +91,7 @@
             }else if (self.style == HXCommonPickViewStyleDate){
     
                 UIDatePicker *datePick = [[UIDatePicker alloc]init];
-                datePick.frame = CGRectMake(0, WidthScaleSize_H(40), self.frame.size.width, WidthScaleSize_H(220));
+                datePick.frame = CGRectMake(0, AdapationLabelHeight(40), self.frame.size.width, AdapationLabelHeight(220));
                 datePick.datePickerMode = UIDatePickerModeDate;
                 datePick.locale = [NSLocale localeWithLocaleIdentifier:@"zh_Hans_CN"];
                 if (minimumDate) {
@@ -117,7 +117,7 @@
 
 - (void)addPickViewInContentView{
 
-    UIPickerView *sexPick = [[UIPickerView alloc]initWithFrame:CGRectMake(0, WidthScaleSize_H(40), SCREEN_WIDTH, WidthScaleSize_H(220))];
+    UIPickerView *sexPick = [[UIPickerView alloc]initWithFrame:CGRectMake(0, AdapationLabelHeight(40), SCREEN_WIDTH, AdapationLabelHeight(220))];
     sexPick.dataSource = self;
     sexPick.delegate = self;
     sexPick.backgroundColor = kWhiteColor;
@@ -191,7 +191,7 @@
         
         [UIView animateWithDuration:0.3 animations:^{
             
-            self.contentView.lh_top = self.lh_bottom - WidthScaleSize_H(220);
+            self.contentView.lh_top = self.lh_bottom - AdapationLabelHeight(220);
             
         } completion:^(BOOL finished) {
             

@@ -185,7 +185,7 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-    return  CGSizeMake(ScreenW, WidthScaleSize_H(350));
+    return  CGSizeMake(ScreenW, AdapationLabelHeight(350));
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{

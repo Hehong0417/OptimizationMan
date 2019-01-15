@@ -13,6 +13,7 @@
 #import "SearchDetailViewController.h"
 #import "HHGoodBaseViewController.h"
 #import "LwCategoryVC.h"
+#import "HHPaySucessVC.h"
 
 @interface HHGoodListVC ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SGSegmentedControlDelegate,SearchViewDelegate,SearchDetailViewControllerDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 {
@@ -367,6 +368,7 @@
     HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
     vc.Id = goodsModel.Id;
     [self.navigationController pushVC:vc];
+
 }
 
 - (UICollectionView *)collectionView{

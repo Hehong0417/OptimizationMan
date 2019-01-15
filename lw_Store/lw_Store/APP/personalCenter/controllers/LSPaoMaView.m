@@ -107,7 +107,6 @@
     }
 }
 
-
 - (void)start{
     isStop = NO;
     UILabel* lbindex0 = labelArr[0];

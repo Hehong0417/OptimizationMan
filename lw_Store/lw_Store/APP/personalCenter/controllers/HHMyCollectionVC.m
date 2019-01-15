@@ -282,7 +282,7 @@
     
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowout = [[UICollectionViewFlowLayout alloc]init];
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_NAV_HEIGHT) collectionViewLayout:flowout];
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-Status_HEIGHT-NAVBAR_HEIGHT) collectionViewLayout:flowout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;

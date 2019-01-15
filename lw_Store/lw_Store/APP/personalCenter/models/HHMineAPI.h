@@ -80,12 +80,13 @@
 //获取商品评价统计接口
 + (instancetype)GetProductEvaluateStatictisWithpid:(NSString *)pid;
 
+//赠品列表
++ (instancetype)GetUserGiveawayWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize;
 
 #pragma mark - post
 
 //修改登录密码
 + (instancetype)ModifyLoginPasswordWithold_pwd:(NSString *)old_pwd new_pwd:(NSString *)new_pwd repeat_new_pwd:(NSString *)repeat_new_pwd;
-
 
 //删除收货地址
 + (instancetype)postDeleteAddressWithId:(NSString *)Id;
@@ -124,6 +125,15 @@
 + (instancetype)postVerifyMobile:(NSString *)mobile;
 //发送短信验证码
 + (instancetype)postSms_SendCode:(NSString *)mobile code:(NSString *)code;
+// 发送短信验证码(绑定)
++ (instancetype)postSms_SendCodeWithmobile:(NSString *)mobile;
+// 绑定手机号
++ (instancetype)postBindMobile:(NSString *)mobile smsCode:(NSString *)smsCode Password:(NSString *)Password;
+// 忘记密码
++ (instancetype)postForgetPassWordWithmobile:(NSString *)mobile newPassWord:(NSString *)newPassWord smsCode:(NSString *)smsCode;
+// 修改密码
++ (instancetype)postChangePassWordWitholdPassWord:(NSString *)oldPassWord  newPassWord:(NSString *)newPassWord commitPassWord:(NSString *)commitPassWord;
+
 //订单支付（微信）
 + (instancetype)postOrder_AppPayAddrId:(NSString *)addrId orderId:(NSString *)orderId money:(NSString *)money;
 //订单支付(支付宝)

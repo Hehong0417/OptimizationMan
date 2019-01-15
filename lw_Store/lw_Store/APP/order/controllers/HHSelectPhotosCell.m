@@ -33,7 +33,7 @@ typedef   void (^completeHandle)();
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
         
         //textView
-        self.textView = [[YYTextView alloc] initWithFrame:CGRectMake(10, 10, ScreenW-20, WidthScaleSize_H(150))];
+        self.textView = [[YYTextView alloc] initWithFrame:CGRectMake(10, 10, ScreenW-20, AdapationLabelHeight(150))];
         self.textView.placeholderText = @"点击输入您对宝贝的看法，宝贝们满足您的期待嘛？说说您的使用心得，分享给想买他们的人吧～";
         self.textView.placeholderFont = FONT(14);
         self.textView.delegate = self;
@@ -68,7 +68,7 @@ typedef   void (^completeHandle)();
         UICollectionViewFlowLayout *flowLayOut = [[UICollectionViewFlowLayout alloc] init];
         flowLayOut.itemSize = CGSizeMake((Kwidth - 50)/ 4, (Kwidth - 50)/ 4);
         flowLayOut.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, WidthScaleSize_H(150), Kwidth, WidthScaleSize_H(100)) collectionViewLayout:flowLayOut];
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, AdapationLabelHeight(150), Kwidth, AdapationLabelHeight(100)) collectionViewLayout:flowLayOut];
         
         _collectionView.backgroundColor = [UIColor whiteColor];
         

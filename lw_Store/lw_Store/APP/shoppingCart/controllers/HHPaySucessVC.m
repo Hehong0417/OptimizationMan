@@ -20,6 +20,8 @@
 @property(nonatomic,assign)   NSInteger pageSize;
 @property(nonatomic,strong)   NSMutableArray *datas;
 @property(nonatomic,assign)   BOOL  orderPrice;
+@property(nonatomic,assign)   BOOL  isExistActivity;
+@property(nonatomic,strong)   HHCategoryModel *giftModel;
 
 @end
 
@@ -37,6 +39,8 @@
     self.page = 1;
     self.pageSize = 15;
     
+    self.isExistActivity = YES;
+    
     //头部
     //collectionView
     self.collectionView.backgroundColor = kWhiteColor;
@@ -48,6 +52,9 @@
     
     //获取数据
     [self getGuess_you_likeData];
+    
+    //j获取支付有礼
+    [self getPaymentGift];
     
     //抓取返回按钮
     UIButton *backBtn = (UIButton *)self.navigationItem.leftBarButtonItem.customView;
@@ -101,15 +108,32 @@
     
 }
 
+- (void)getPaymentGift{
+    
+    [[[HHCategoryAPI GetPaymentGiftWithoid:self.oid] netWorkClient] getRequestInView:nil finishedBlock:^(HHCategoryAPI *api, NSError *error) {
+        if (!error) {
+            if (api.State == 1) {
+            self.giftModel = [HHCategoryModel mj_objectWithKeyValues:api.Data];
+            [self.collectionView reloadData];
+
+            }else{
+                [SVProgressHUD showInfoWithStatus:api.Msg];
+            }
+        }else{
+            
+        }
+    }];
+    
+}
+
 #pragma  mark - collectionView Delegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     HXHomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXHomeCollectionCell" forIndexPath:indexPath];
         cell.guess_you_likeModel =  [HHGuess_you_likeModel mj_objectWithKeyValues:self.datas[indexPath.row]];
-    
+        cell.collectButton.hidden = YES;
     return cell;
-    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -130,8 +154,10 @@
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-
-    return  CGSizeMake(ScreenW, WidthScaleSize_H(350));
+    if ([self.giftModel.is_exist isEqual:@1]) {
+        return  CGSizeMake(ScreenW, AdapationLabelHeight(450));
+    }
+    return  CGSizeMake(ScreenW, AdapationLabelHeight(350));
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
 
@@ -146,12 +172,14 @@
         headerView.backgroundColor = KVCBackGroundColor;
         headerView.isPay = 1;
         headerView.nav = self.navigationController;
+        headerView.giftModel = self.giftModel;
         if (self.datas.count == 0) {
-            headerView.title_lab.hidden = YES;
+            headerView.title_lab.text = @"";
         }else{
-            headerView.title_lab.hidden = NO;
+            headerView.title_lab.text = @"——  猜你喜欢  ——";
         }
         reusableview = headerView;
+        
     }
     return reusableview;
 }

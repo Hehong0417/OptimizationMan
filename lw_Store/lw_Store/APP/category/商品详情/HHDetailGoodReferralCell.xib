@@ -32,7 +32,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥ 0.01" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nnw-4y-EUE">
                         <rect key="frame" x="16" y="37" width="70" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="S8l-Nc-GDH"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="S8l-Nc-GDH"/>
                             <constraint firstAttribute="height" constant="21" id="xbT-rI-22T"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>

@@ -47,7 +47,7 @@
 - (UILabel *)titleLabel {
     
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenW/2+1, 0, WidthScaleSize_W(160), self.bottomView.mj_h)];
+        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenW/2+1, 0, AdapationLabelHeight(160), self.bottomView.mj_h)];
         _titleLabel.textColor = kWhiteColor;
         _titleLabel.text = @"";
         _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -61,7 +61,7 @@
 - (UIImageView *)teacherImageIcon {
     
     if (!_teacherImageIcon) {
-        _teacherImageIcon = [[UIImageView alloc]initWithFrame:CGRectMake(WidthScaleSize_W(20), WidthScaleSize_H(20), WidthScaleSize_W(100), WidthScaleSize_W(100))];
+        _teacherImageIcon = [[UIImageView alloc]initWithFrame:CGRectMake(AdapationLabelHeight(20), AdapationLabelHeight(20), AdapationLabelHeight(100), AdapationLabelHeight(100))];
         _teacherImageIcon.backgroundColor = KVCBackGroundColor;
         [_teacherImageIcon lh_setRoundImageViewWithBorderWidth:0 borderColor:nil];
     }
@@ -72,7 +72,7 @@
 - (UILabel *)nameLabel {
     
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.teacherImageIcon.frame)+10, WidthScaleSize_W(200), WidthScaleSize_H(25))];
+        _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.teacherImageIcon.frame)+10, AdapationLabelHeight(200), AdapationLabelHeight(25))];
         _nameLabel.textColor = kWhiteColor;
         _nameLabel.textAlignment = NSTextAlignmentCenter;
         _nameLabel.font = BoldFONT(16);
@@ -84,7 +84,7 @@
 - (UILabel *)IDLabel {
     
     if (!_IDLabel) {
-        _IDLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, WidthScaleSize_W(200), self.bottomView.mj_h)];
+        _IDLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, AdapationLabelHeight(200), self.bottomView.mj_h)];
         _IDLabel.textColor = kWhiteColor;
         _IDLabel.textAlignment = NSTextAlignmentCenter;
         _IDLabel.font = BoldFONT(14);
@@ -96,7 +96,7 @@
 - (UIView *)bottomView {
     
     if (!_bottomView) {
-        _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mj_h-WidthScaleSize_H(40), SCREEN_WIDTH, WidthScaleSize_H(40))];
+        _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mj_h-AdapationLabelHeight(40), SCREEN_WIDTH, AdapationLabelHeight(40))];
         _bottomView.backgroundColor = APP_COMMON_COLOR;
         ;
     }

@@ -23,8 +23,8 @@
     req.sign                = model.paySign;
     BOOL success =  [WXApi sendReq:req];
     //日志输出
-    NSLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\n sign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
-    NSLog(@"success--%d",success);
+    DLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\n sign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
+    DLog(@"success--%d",success);
     
 }
 @end

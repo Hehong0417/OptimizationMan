@@ -15,6 +15,9 @@
 //#define APP_COMMON_COLOR  RGB(255, 63, 111)
 //#define APP_COMMON_COLOR  RGB(139, 71, 247)
 #define APP_COMMON_COLOR  RGB(196, 125, 114)
+#define APP_BUTTON_COMMON_COLOR  RGB(196, 125, 114)
+
+
 
 #define APP_green_COLOR RGB(190, 225, 255)
 //紫
@@ -22,7 +25,8 @@
 //深紫
 #define APP_Deep_purple_Color RGB(36, 27, 57)
 
-#define KVCBackGroundColor RGB(248, 248, 248)
+#define KVCBackGroundColor RGB(242, 242, 242)
+
 #define KTitleLabelColor [UIColor colorWithHexString:@"#9e9e9e"] //158
 #define K7ELabelColor [UIColor colorWithHexString:@"#7E7E7E"] //126
 #define KFCLabelColor [UIColor colorWithHexString:@"#FC5F00"] //252 95 0
@@ -60,10 +64,6 @@
 #define API_RETURN_BUSY    @(-1)
 #define API_RETURN_EXPIRE  @(40000)
 
-//
-#define CAR_TYPE_LIST_FILE_PATH ([[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"carTypeList.dat"])
-
-#define CAR_LENGTH_LIST_FILE_PATH ([[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]stringByAppendingPathComponent:@"carLengthList.dat"])
 
 //storyboard名称
 

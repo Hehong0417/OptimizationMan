@@ -16,32 +16,50 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     
     if(self = [super initWithFrame:frame]){
-        //300
-        UIImageView *success_imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(0, WidthScaleSize_H(50), 150, 80) image:[UIImage imageNamed:@"icon_paysuccess_default"]];
+    
+        UIImageView *success_imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(0, AdapationLabelHeight(50), 150, AdapationLabelHeight(80)) image:[UIImage imageNamed:@"icon_paysuccess_default"]];
         success_imageV.contentMode = UIViewContentModeCenter;
         success_imageV.centerX = self.centerX;
         [self addSubview:success_imageV];
-        self.success_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(success_imageV.frame), 150, 30) text:@"评价成功" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
+        self.success_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(success_imageV.frame), 150, AdapationLabelHeight(30)) text:@"评价成功" textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
         self.success_lab.centerX = self.centerX;
 
         [self addSubview:self.success_lab];
-        
-        
+      
         //按钮
         for(NSInteger i =0;i<2;i++){
-            CGFloat btn_W = (ScreenW - 2*WidthScaleSize_W(40) - WidthScaleSize_W(35))/2;
-            UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(WidthScaleSize_W(40)+(btn_W+WidthScaleSize_W(35))*i, WidthScaleSize_H(350)-2*WidthScaleSize_W(40)-WidthScaleSize_H(50), btn_W, WidthScaleSize_H(35)) target:self action:@selector(evaluateAction:) title:self.btn_titles[i] titleColor:kWhiteColor font:FONT(14) backgroundColor:kBlackColor];
+            CGFloat btn_W = (ScreenW - 2*AdapationLabelHeight(40) - AdapationLabelHeight(35))/2;
+            UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(AdapationLabelHeight(40)+(btn_W+AdapationLabelHeight(35))*i, CGRectGetMaxY(self.success_lab.frame)+WidthScaleSize_H(40), btn_W, AdapationLabelHeight(35)) target:self action:@selector(evaluateAction:) title:self.btn_titles[i] titleColor:kWhiteColor font:FONT(14) backgroundColor:kBlackColor];
             [btn lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
             btn.tag = i+1000;
             [self addSubview:btn];
         }
+        //活动
+        self.actView = [[HHActivityView alloc] initWithFrame:CGRectMake(0, frame.size.height- AdapationLabelHeight(140)-AdapationLabelHeight(10) -AdapationLabelHeight(50), ScreenW, AdapationLabelHeight(150))];
+        [self addSubview:self.actView];
+        
         //猜你喜欢
-        self.title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, WidthScaleSize_H(350)-WidthScaleSize_H(50), ScreenW, WidthScaleSize_H(50)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        self.title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(self.actView.frame)+AdapationLabelHeight(10), ScreenW, AdapationLabelHeight(40)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self addSubview:self.title_lab];
-
+     
     }
     return self;
 }
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+    if(!self.giftModel.is_exist.boolValue){
+        self.actView.frame = CGRectMake(0, 0, 0, 0);
+        self.actView.hidden = YES;
+    }else{
+        self.actView.gift_Model = self.giftModel;
+    }
+}
+- (void)setGiftModel:(HHCategoryModel *)giftModel{
+    
+    _giftModel = giftModel;
+}
+
 - (void)setIsPay:(BOOL)isPay{
     _isPay = isPay;
     

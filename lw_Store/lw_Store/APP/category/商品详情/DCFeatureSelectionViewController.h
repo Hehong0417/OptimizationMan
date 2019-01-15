@@ -22,7 +22,10 @@
 @property (strong , nonatomic)NSMutableArray *lastSele_IdArray;
 
 /* 上一次选择的数量 */
-@property (assign , nonatomic)NSString *lastNum;
+@property (assign , nonatomic)NSInteger lastNum;
+
+/* 起卖数 */
+@property (assign , nonatomic)NSInteger MinBuyCount;
 
 /* 价格 */
 @property (assign , nonatomic)NSString *product_price;

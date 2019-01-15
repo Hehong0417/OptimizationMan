@@ -66,7 +66,7 @@ static NSString *const DCGoodsSortCellID = @"HHClassCategoryCell";
     user.category_selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [user write];
     //title
-    UILabel *qestionTitle = [[UILabel alloc]initWithFrame:CGRectMake(WidthScaleSize_W(15), 0, SCREEN_WIDTH - WidthScaleSize_W(15), WidthScaleSize_H(50))];
+    UILabel *qestionTitle = [[UILabel alloc]initWithFrame:CGRectMake(AdapationLabelHeight(15), 0, SCREEN_WIDTH - AdapationLabelHeight(15), AdapationLabelHeight(50))];
     qestionTitle.text = @"分类";
     qestionTitle.textAlignment = NSTextAlignmentCenter;
     qestionTitle.font = FONT(20);

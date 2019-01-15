@@ -62,4 +62,34 @@
     
     return api;
 }
+
+//获得支付有礼
++ (instancetype)GetPaymentGiftWithoid:(NSString *)oid{
+    
+    HHCategoryAPI *api = [self new];
+    api.subUrl = API_GetPaymentGift;
+    if (oid) {
+        [api.parameters setObject:oid forKey:@"oid"];
+    }
+    
+    api.parametersAddToken = NO;
+    
+    return api;
+}
+
+#pragma mark - post
+
+//领取礼品
++ (instancetype)PostReceiveGiftWithgift_id:(NSString *)gift_id{
+    
+    HHCategoryAPI *api = [self new];
+    api.subUrl = API_ReceiveGift;
+    if (gift_id) {
+        [api.parameters setObject:gift_id forKey:@"gift_id"];
+    }
+    api.parametersAddToken = NO;
+    
+    return api;
+    
+}
 @end

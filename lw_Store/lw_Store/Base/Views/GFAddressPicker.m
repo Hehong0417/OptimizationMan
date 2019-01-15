@@ -184,10 +184,10 @@
     CGFloat height = self.frame.size.height;
     CGFloat width = self.frame.size.width;
     
-    UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, height - WidthScaleSize_H(244), width, WidthScaleSize_H(244))];
+    UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, height - AdapationLabelHeight(244), width, AdapationLabelHeight(244))];
     contentView.backgroundColor = [UIColor whiteColor];
     self.contentView = contentView;
-    UIView *selectView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, WidthScaleSize_H(44))];
+    UIView *selectView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, AdapationLabelHeight(44))];
     selectView.backgroundColor = kWhiteColor;
     [contentView addSubview:selectView];
     [self addSubview:contentView];
@@ -197,7 +197,7 @@
     UIButton *ensureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [ensureBtn setTitle:@"完成" forState:0];
     [ensureBtn setTitleColor:APP_COMMON_COLOR forState:0];
-    ensureBtn.frame = CGRectMake(width - 60, 0, 60, WidthScaleSize_H(44));
+    ensureBtn.frame = CGRectMake(width - 60, 0, 60, AdapationLabelHeight(44));
     [ensureBtn addTarget:self action:@selector(dateEnsureAction) forControlEvents:UIControlEventTouchUpInside];
     ensureBtn.titleLabel.font = FONT(16);
     [selectView addSubview:ensureBtn];
@@ -205,12 +205,12 @@
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelBtn setTitle:@"取消" forState:0];
     [cancelBtn setTitleColor:APP_COMMON_COLOR forState:0];
-    cancelBtn.frame = CGRectMake(0, 0, 60, WidthScaleSize_H(44));
+    cancelBtn.frame = CGRectMake(0, 0, 60, AdapationLabelHeight(44));
     [cancelBtn addTarget:self action:@selector(dateCancleAction) forControlEvents:UIControlEventTouchUpInside];
     cancelBtn.titleLabel.font = FONT(16);
     [selectView addSubview:cancelBtn];
     
-    self.pickView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, WidthScaleSize_H(44), SCREEN_WIDTH,  WidthScaleSize_H(200))];
+    self.pickView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, AdapationLabelHeight(44), SCREEN_WIDTH,  AdapationLabelHeight(200))];
     self.pickView.delegate   = self;
     self.pickView.dataSource = self;
     self.pickView.backgroundColor = kWhiteColor;
@@ -226,7 +226,7 @@
         
         [UIView animateWithDuration:0.3 animations:^{
             
-            self.contentView.lh_top = self.lh_bottom - WidthScaleSize_H(244);
+            self.contentView.lh_top = self.lh_bottom - AdapationLabelHeight(244);
             
         } completion:^(BOOL finished) {
             
@@ -288,7 +288,7 @@
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         [pickerLabel setBackgroundColor:[UIColor whiteColor]];
         pickerLabel.textColor = kBlackColor;
-        [pickerLabel setFont:self.font?:[UIFont boldSystemFontOfSize:WidthScaleSize_H(20)]];
+        [pickerLabel setFont:self.font?:[UIFont boldSystemFontOfSize:AdapationLabelHeight(20)]];
     }
     pickerLabel.text = [self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;

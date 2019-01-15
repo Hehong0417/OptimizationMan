@@ -24,11 +24,12 @@
     [self.tableView registerClass:[HHCommissionCell class] forCellReuseIdentifier:@"HHCommissionCell"];
     
     [self addHeadRefresh];
-    [self addFootRefresh];
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     self.tableView.backgroundColor = KVCBackGroundColor;
     
+    self.tableView.separatorColor = LineLightColor;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
     [self getDatas];
 }
 - (NSMutableArray *)datas{
@@ -157,11 +158,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HHCommissionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HHCommissionCell"];
     cell.model = self.datas[indexPath.section];
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 80;
+    return 90;
 }
 
 @end

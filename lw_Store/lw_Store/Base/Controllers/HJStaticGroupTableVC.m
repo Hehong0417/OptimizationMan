@@ -158,14 +158,14 @@ static const CGFloat kNormalCellHeight = 44;
     //头像cell
     if ([indexPath isEqual:self.headImageCellIndexPath]) {
         
-        CGFloat imageViewSizeW = self.imageViewSizeW?self.imageViewSizeW:WidthScaleSize_W(60);
-        CGFloat imageViewSizeH = self.imageViewSizeH?self.imageViewSizeH:WidthScaleSize_W(60);
+        CGFloat imageViewSizeW = self.imageViewSizeW?self.imageViewSizeW:AdapationLabelHeight(60);
+        CGFloat imageViewSizeH = self.imageViewSizeH?self.imageViewSizeH:AdapationLabelHeight(60);
         
         CGFloat imageViewX = SCREEN_WIDTH-imageViewSizeW - 35;
 
         if (self.headImageInLeft) {
             
-            imageViewX = WidthScaleSize_W(105);
+            imageViewX = AdapationLabelHeight(105);
         }
         CGFloat height = [self tableView:tableView heightForRowAtIndexPath:self.headImageCellIndexPath];
         
@@ -173,7 +173,7 @@ static const CGFloat kNormalCellHeight = 44;
         if (self.setRoundImage) {
             [headImageView lh_setRoundImageViewWithBorderWidth:0 borderColor:nil];
         }
-        NSLog(@"*******%.2f",height);
+        DLog(@"*******%.2f",height);
         [headImageView setBackgroundColor:[UIColor lightGrayColor]];
 //        [headImageView setRoundImageViewWithBorderWidth:0];
         self.cellHeadImageView = headImageView;
@@ -188,7 +188,7 @@ static const CGFloat kNormalCellHeight = 44;
             
             if ([indicatorIndexPath isEqual:indexPath]) {
                 
-                UITextField *textFiled = [UITextField lh_textFieldWithFrame:CGRectMake(114, 0, SCREEN_WIDTH-44, WidthScaleSize_H(44)) placeholder:self.textFieldPlaceholders[indexPath.row - 1] font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+                UITextField *textFiled = [UITextField lh_textFieldWithFrame:CGRectMake(114, 0, SCREEN_WIDTH-44, AdapationLabelHeight(44)) placeholder:self.textFieldPlaceholders[indexPath.row - 1] font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
                 textFiled.delegate = self;
                 textFiled.tag = indexPath.row;
                 if (indexPath.row == 2) {

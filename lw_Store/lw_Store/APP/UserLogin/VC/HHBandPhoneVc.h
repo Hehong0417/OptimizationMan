@@ -10,5 +10,5 @@
 
 @interface HHBandPhoneVc : UIViewController
 @property (nonatomic, strong)   NSString *titleStr;
-
+@property (nonatomic, strong)   NSString *token;
 @end

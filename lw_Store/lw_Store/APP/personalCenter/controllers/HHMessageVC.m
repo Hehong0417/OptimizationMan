@@ -173,11 +173,11 @@
 }
 - (void)setupHeadView{
     
-    UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(40)) backColor:KVCBackGroundColor];
+    UIView *headView = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, AdapationLabelHeight(40)) backColor:KVCBackGroundColor];
     NSArray *titles = @[@"  只显示未读消息",@"  全部已读"];
     for (NSInteger i =0; i<2; i++) {
         
-        UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(i*ScreenW/2, 0, ScreenW/2, WidthScaleSize_H(40)) target:self action:@selector(selectBtnAction:) image:[UIImage imageNamed:@"icon_checkbox_default"] title:titles[i] titleColor:kGrayColor  font:FONT(13)];
+        UIButton *btn = [UIButton lh_buttonWithFrame:CGRectMake(i*ScreenW/2, 0, ScreenW/2, AdapationLabelHeight(40)) target:self action:@selector(selectBtnAction:) image:[UIImage imageNamed:@"icon_checkbox_default"] title:titles[i] titleColor:kGrayColor  font:FONT(13)];
         btn.tag = i;
         [btn setImage:[UIImage imageNamed:@"icon_checkbox_selected"] forState:UIControlStateSelected];
         [headView addSubview:btn];

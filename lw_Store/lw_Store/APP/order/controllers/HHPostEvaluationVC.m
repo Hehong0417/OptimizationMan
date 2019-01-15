@@ -76,7 +76,7 @@
     [self.view addSubview:self.tableView];
     
     //footerView
-    HHPostEvaluateFooter *footer =   [[HHPostEvaluateFooter alloc] initWithFrame:CGRectMake(0, 60, ScreenW,75+ WidthScaleSize_H(100)+80)];
+    HHPostEvaluateFooter *footer =   [[HHPostEvaluateFooter alloc] initWithFrame:CGRectMake(0, 60, ScreenW,75+ AdapationLabelHeight(100)+80)];
     footer.backgroundColor = kWhiteColor;
     footer.delegate = self;
     self.tableView.tableFooterView = footer;
@@ -104,7 +104,7 @@
     
     HHproducts_item_Model *model = [self.orderItem_m.items firstObject];
     //headView
-    HHPostEvaluateSectionHead *section_head = [[HHPostEvaluateSectionHead alloc] initWithFrame:CGRectMake(0, 0, ScreenW, WidthScaleSize_H(85))];
+    HHPostEvaluateSectionHead *section_head = [[HHPostEvaluateSectionHead alloc] initWithFrame:CGRectMake(0, 0, ScreenW, AdapationLabelHeight(85))];
     section_head.section = section;
     [section_head.product_imageV sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:[UIImage imageNamed:KPlaceImageName]];
 
@@ -121,7 +121,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-        return WidthScaleSize_H(260);
+        return AdapationLabelHeight(260);
    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -130,7 +130,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return WidthScaleSize_H(85);
+    return AdapationLabelHeight(85);
 }
 #pragma mark - HHPostEvaluateFooterDelegate
 

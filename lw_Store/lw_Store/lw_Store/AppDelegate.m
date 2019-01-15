@@ -8,11 +8,11 @@
 
 #import "AppDelegate.h"
 #import "UncaughtExceptionHandler.h"
+#import "ViewController.h"
 
 #define USHARE_DEMO_APPKEY  @"5a5f10bfa40fa34719000128"
 #define Wechat_AppKey  @"wx33876b8653ae654a"
 #define Wechat_appSecret  @"202317c588688ebc058099ab101603fa"
-
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -35,6 +35,7 @@
     
     HJUser *user = [HJUser sharedUser];
     if (user.token) {
+//      self.window.rootViewController = [[ViewController alloc] init];
         self.window.rootViewController = [[HJTabBarController alloc] init];
     }else{
         self.window.rootViewController = [[HJNavigationController alloc] initWithRootViewController:[[HHWXLoginVC alloc] init]];
@@ -46,9 +47,8 @@
     //配置友盟
     [self UMSocialConfig];
     
-    
     NSLog(@"didFinishLaunchingWithOptions");
-
+    
     return YES;
 }
 - (void)IQKeyboardManagerConfig {
@@ -76,12 +76,10 @@
     
     [WXApi registerApp:Wechat_AppKey];
 
-    
     /* 设置友盟appkey */
     [UMConfigure initWithAppkey:USHARE_DEMO_APPKEY channel:@"App Store"];
 
     [self configUSharePlatforms];
-    
     
 }
 - (void)configUSharePlatforms
@@ -118,8 +116,6 @@
     }
     return result;
 }
-
-
 //微信支付回调
 - (void)onResp:(BaseResp *)resp {
     
@@ -149,5 +145,16 @@
 //
 //    }
 }
-
+- (void)applicationWillResignActive:(UIApplication *)application{
+    NSLog(@"WillResignActive");
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    NSLog(@"DidBecomeActive");
+}
+- (void)applicationDidEnterBackground:(UIApplication *)application{
+    NSLog(@"DidEnterBackground");
+}
+- (void)applicationWillEnterForeground:(UIApplication *)application{
+    NSLog(@"WillEnterForeground");
+}
 @end

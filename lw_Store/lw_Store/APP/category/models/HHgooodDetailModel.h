@@ -33,6 +33,7 @@
 @property(nonatomic,strong) NSString *CommissionTotal;
 @property(nonatomic,strong) NSString *ShareMakeMoney;
 @property(nonatomic,strong) NSNumber *IsCollection;
+@property(nonatomic,strong) NSString *MinBuyCount;
 
 @property(nonatomic,strong) NSString *EvaluateCount;
 

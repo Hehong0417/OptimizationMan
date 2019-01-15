@@ -262,6 +262,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 - (void)deleteObj{
     [[NSNotificationCenter defaultCenter]removeObserver:self.dcObj];
 }
+
 #pragma mark -加载数据
 
 - (void)getDatas{
@@ -282,7 +283,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 }else{
                     self.cycleScrollView.isShowPlay = NO;
                 }
-                
                 self.discribeArr =  self.gooodDetailModel.AttributeValueList.mutableCopy;
                 self.addCartTool.product_id = self.gooodDetailModel.Id;
                 if ([self.gooodDetailModel.IsCollection isEqual:@1]) {
@@ -290,7 +290,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                 }else{
                     self.addCartTool.collectBtn.selected = NO;
                 }
-                
                 self.addCartTool.userInteractionEnabled = YES;
                 [self tableView:self.tableView viewForHeaderInSection:1];
                 
@@ -403,7 +402,16 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 //加入购物车、立即购买
 - (void)addCartOrBuyAction{
     
-    [self.view addSubview:self.addCartTool];
+    if(self.isCanReceive){
+        UIView *view = [UIView lh_viewWithFrame:CGRectMake(0, ScreenH-45-SafeAreaBottomHeight-NAVBAR_HEIGHT-Status_HEIGHT, ScreenW, 45)  backColor:APP_BUTTON_COMMON_COLOR];
+
+        UIButton *receiveBtn = [UIButton lh_buttonWithFrame:CGRectMake(0, 0, ScreenW, 45) target:self action:@selector(receiveBtnAction:) title:@"领 取" titleColor:kWhiteColor font:FONT(15) backgroundColor:APP_BUTTON_COMMON_COLOR];
+        [view addSubview:receiveBtn];
+        [self.view addSubview:view];
+
+    }else{
+       [self.view addSubview:self.addCartTool];
+    }
     
     WEAK_SELF();
     //加入购物车
@@ -436,6 +444,11 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         [weakSelf.navigationController pushVC:vc];
     }];
 }
+- (void)receiveBtnAction:(UIButton *)btn{
+    
+    [self showFeatureSelectionWithActModel:nil isCart:NO Mode:@1];
+
+}
 #pragma mark --  活动选择
 
 - (void)showMenuViewWithButton:(UIButton *)button{
@@ -457,7 +470,8 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     //属性选择
     DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
     dcNewFeaVc.product_sku_value_arr = self.gooodDetailModel.SKUValues;
-    dcNewFeaVc.lastNum = lastNum_;
+    dcNewFeaVc.lastNum = lastNum_.intValue;
+    dcNewFeaVc.MinBuyCount = self.gooodDetailModel.MinBuyCount.intValue;
     dcNewFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
     dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
     dcNewFeaVc.product_sku_arr = self.gooodDetailModel.SKUList;
@@ -536,6 +550,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     
 }
 #pragma mark - 立即购买
+
 - (void)instanceBuyActionWithselect_IdArray:(NSArray *)select_IdArray quantity:(NSString *)quantity pid:(NSString *)pid{
     
     NSString *select_Id = [select_IdArray componentsJoinedByString:@"_"];
@@ -554,6 +569,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }
 }
 #pragma mark - 是否存在收货地址
+
 - (void)isExitAddressWithsku_id_Str:(NSString *)sku_id_Str quantity:(NSString *)quantity{
     
     [[[HHCartAPI IsExistOrderAddress] netWorkClient] getRequestInView:nil finishedBlock:^(HHCartAPI *api, NSError *error) {
@@ -701,7 +717,6 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         } completion:^(BOOL finished) {
             [weakSelf.webView.scrollView.mj_header endRefreshing];
         }];
-        
     }];
 }
 #pragma mark --- tableView delegate
@@ -733,7 +748,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         //用户评价
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.font = FONT(13);
+        cell.textLabel.font = FONT(14);
         cell.textLabel.text = [NSString stringWithFormat:@"用户评价(%@)",self.gooodDetailModel.EvaluateCount];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -789,7 +804,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         }
        return 30;
     }else if (indexPath.section == 3) {
-        return 30;
+        return 35;
     }else if (indexPath.section == 4) {
         return 130;
     }else if (indexPath.section == 5) {
@@ -824,7 +839,17 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
+    if (section == 2) {
+        if (self.discribeArr.count>0) {
+            return 3;
+        }else{
+            return 0.001;
+        }
+    }else if (section == 3) {
+        return self.gooodDetailModel.EvaluateCount.integerValue>0?3:0.001;
+    }else if (section == 4){
+        return self.gooodDetailModel.Packages.count>0?3:0.001;
+    }
     return 3;
     
 }

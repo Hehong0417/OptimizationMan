@@ -23,4 +23,7 @@ typedef enum : NSUInteger {
 
 @property(nonatomic,strong) NSString *pids;
 
+@property(nonatomic,strong) NSString *oid;
+
+
 @end

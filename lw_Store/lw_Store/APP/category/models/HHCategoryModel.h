@@ -34,6 +34,13 @@
 @property(nonatomic,strong) NSString *product_market_price;
 @property(nonatomic,strong) NSString *product_name;
 
+@property(nonatomic,strong) NSNumber *is_exist;
+@property(nonatomic,strong) NSString *gift_id;
+@property(nonatomic,strong) NSString *name;
+@property(nonatomic,strong) NSString *content;
+@property(nonatomic,strong) NSString *value;
+@property(nonatomic,strong) NSString *icon;
+@property(nonatomic,strong) NSNumber *is_need_share;
 
 @end
 

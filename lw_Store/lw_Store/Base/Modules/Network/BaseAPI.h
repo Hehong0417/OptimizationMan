@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) NSString *Msg;
 
+@property (nonatomic, strong) NSString *Expires;
+
 //@property (nonatomic, strong) NSString *msg;
 
 @property (nonatomic, strong) NSMutableDictionary *parameters;

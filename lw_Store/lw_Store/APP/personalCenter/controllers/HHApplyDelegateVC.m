@@ -48,7 +48,7 @@
     [self.codeImage_tf lh_setCornerRadius:5 borderWidth:1 borderColor:KA0LabelColor];
 
  
-    self.constant.constant = (SCREEN_WIDTH - 4*15 )*4/15+WidthScaleSize_H(15);
+    self.constant.constant = (SCREEN_WIDTH - 4*15 )*4/15+AdapationLabelHeight(15);
     
     [self getDatas];
     
@@ -171,7 +171,7 @@
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     
-    return UIEdgeInsetsMake(WidthScaleSize_H(15), WidthScaleSize_W(15), WidthScaleSize_H(0), WidthScaleSize_W(15));
+    return UIEdgeInsetsMake(AdapationLabelHeight(15), AdapationLabelHeight(15), AdapationLabelHeight(0), AdapationLabelHeight(15));
     
 }
 
@@ -274,6 +274,7 @@
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
         [SVProgressHUD showErrorWithStatus:@"支付失败～"];
         
     });

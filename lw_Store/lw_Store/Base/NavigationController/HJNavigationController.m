@@ -81,7 +81,6 @@
 //    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 64);
 //    UIView *navView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
 //    [navView.layer addSublayer:gradientLayer];
-//    
 //   UIImage *navImage = [navView lh_toImage];
     
     UIColor *navColor = APP_COMMON_COLOR;

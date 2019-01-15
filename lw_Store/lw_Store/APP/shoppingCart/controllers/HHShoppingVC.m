@@ -74,11 +74,9 @@
     if (self.cartType == HHcartType_goodDetail) {
         tableHeight = SCREEN_HEIGHT-Status_HEIGHT-44 - 50;
         backBtn.hidden = NO;
-        
     }else{
         tableHeight = SCREEN_HEIGHT - Status_HEIGHT-44 - 50 - 49;
         backBtn.hidden = YES;
-
     }
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH,tableHeight) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -89,9 +87,9 @@
     self.tableView.estimatedSectionFooterHeight = 0;
     self.tableView.backgroundColor = KVCBackGroundColor;
     [self.view addSubview:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HHCartCell" bundle:nil] forCellReuseIdentifier:@"HHCartCell"];
-    
     
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
@@ -522,7 +520,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 110;
+    return AdapationLabelHeight(110);
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 

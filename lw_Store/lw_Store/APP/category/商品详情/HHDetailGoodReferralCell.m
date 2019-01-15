@@ -57,6 +57,7 @@
 //        self.rewardShow_label.hidden = YES;
 //        self.rewardShow_label.text = @"";
 //    }
-    self.shareReward_label.text = [NSString stringWithFormat:@"分享总奖励：%@",gooodDetailModel.CommissionTotal];
+    self.shareReward_label.text = (gooodDetailModel.CommissionTotal.intValue==0)?@"":[NSString stringWithFormat:@"分享总奖励：%@%%",gooodDetailModel.CommissionTotal];
 }
 @end
+

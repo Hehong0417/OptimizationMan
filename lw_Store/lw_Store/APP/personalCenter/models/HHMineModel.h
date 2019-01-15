@@ -121,6 +121,18 @@
 @property(nonatomic,strong) NSString *hasImageCount;
 @property(nonatomic,strong) NSString *goodEvaluateProportion;
 
+//赠品列表
+@property(nonatomic,strong) NSString *product_name;
+@property(nonatomic,strong) NSString *pid;
+@property(nonatomic,strong) NSString *order_id;
+@property(nonatomic,strong) NSString *expire;
+@property(nonatomic,strong) NSString *receive_date;
+@property(nonatomic,strong) NSString *create_date;
+@property(nonatomic,strong) NSString *status;
+@property(nonatomic,strong) NSString *status_name;
+@property(nonatomic,strong) NSString *prize_id;
+@property(nonatomic,strong) NSString *product_icon;
+
 @end
 
 @interface HHExpress_message_list : BaseModel

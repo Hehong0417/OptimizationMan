@@ -362,12 +362,12 @@
     
     UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-30, 10, 80, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
     oneBtn.tag = section+100;
-    [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
+    [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:oneBtn];
 
-    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 30) target:self action:@selector(twoAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_COMMON_COLOR];
+    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 30) target:self action:@selector(twoAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_BUTTON_COMMON_COLOR];
     twoBtn.tag = section+1000;
-    [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_COMMON_COLOR];
+    [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:twoBtn];
     
     //分割线Y坐标
@@ -379,7 +379,7 @@
             //待付款
             down_y = 50;
             //oneBtn
-            [self setBtnAttrWithBtn:oneBtn Title:@"取消订单" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:oneBtn Title:@"取消订单" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
             //twoBtn
             NSString *twoBtn_title = @"去支付";
             if ([model.order_mode isEqual:@16]) {
@@ -387,7 +387,7 @@
             }else{
                 twoBtn_title = @"去支付";
             }
-            [self setBtnAttrWithBtn:twoBtn Title:twoBtn_title CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_COMMON_COLOR];
+            [self setBtnAttrWithBtn:twoBtn Title:twoBtn_title CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_BUTTON_COMMON_COLOR];
         }else if([status isEqualToString:@"2"]){
             //待发货
              down_y = 0;
@@ -395,9 +395,9 @@
         }else if([status isEqualToString:@"3"]){
             //待收货
             down_y = 50;
-            [self setBtnAttrWithBtn:oneBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:oneBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
             [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:NO];
-            [self setBtnAttrWithBtn:twoBtn Title:@"确认收货" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"确认收货" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"4"]){
             //订单关闭
             down_y = 0;
@@ -409,7 +409,7 @@
             BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
             [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
             //twoBtn
-            [self setBtnAttrWithBtn:twoBtn Title:@"去评价" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"去评价" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
         }else if([status isEqualToString:@"6"]){
             // 申请退款
             down_y = 0;
@@ -581,6 +581,7 @@
                             HHWXModel *model = [HHWXModel mj_objectWithKeyValues:api.Data];
                             HJUser *user = [HJUser sharedUser];
                             user.pids = pid;
+                            user.oid = orderid;
                             [user write];
                             [HHWXModel payReqWithModel:model];
                         }else{
@@ -599,6 +600,7 @@
                     if (api.State == 1) {
                         HJUser *user = [HJUser sharedUser];
                         user.pids = pid;
+                        user.oid = orderid;
                         [user write];
                         HHAlipayModel *model = [HHAlipayModel mj_objectWithKeyValues:api.Data];
                         if (model.sign) {
@@ -721,6 +723,7 @@
     HJUser *user = [HJUser sharedUser];
     HHPaySucessVC *vc = [HHPaySucessVC new];
     vc.pids = user.pids;
+    vc.oid = user.oid;
     [self.navigationController pushVC:vc];
     
 }
@@ -729,6 +732,7 @@
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
         [SVProgressHUD showErrorWithStatus:@"支付失败～"];
         
     });

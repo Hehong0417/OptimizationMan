@@ -257,7 +257,7 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     for (NSInteger i = 0; i < titles.count; i++) {
         UIButton *buttton = [UIButton buttonWithType:UIButtonTypeCustom];
         [buttton setTitle:titles[i] forState:0];
-        buttton.backgroundColor = (i == 0) ? APP_Deep_purple_Color : APP_Deep_purple_Color;
+        buttton.backgroundColor = (i == 0) ? APP_BUTTON_COMMON_COLOR : APP_BUTTON_COMMON_COLOR;
         CGFloat buttonX = buttonW * i;
         buttton.tag = i;
         buttton.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
@@ -279,11 +279,11 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
     
     self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(ScreenW-115-DCMargin, numLabel.mj_y, 115, numLabel.mj_h)];
     self.numberButton.shakeAnimation = YES;
-    self.numberButton.minValue = 1;
+    self.numberButton.minValue = (self.MinBuyCount ==0)?1:self.MinBuyCount;
     self.numberButton.inputFieldFont = 18;
     self.numberButton.increaseTitle = @"";
     self.numberButton.decreaseTitle = @"";
-    num_ = (_lastNum == 0) ?  1 : [_lastNum integerValue];
+    num_ = (_lastNum == 0) ? ((self.MinBuyCount ==0)?1:self.MinBuyCount):_lastNum;
     self.numberButton.currentNumber = num_;
     self.numberButton.delegate = self;
     
@@ -291,7 +291,6 @@ static NSString *const DCFeatureChoseTopCellID = @"DCFeatureChoseTopCell";
         
     self.numberButton.maxValue = stock;
     self.numberButton.resultBlock = ^(NSInteger num ,BOOL increaseStatus){
-        
         num_ = num;
     };
     [numView addSubview:self.numberButton];

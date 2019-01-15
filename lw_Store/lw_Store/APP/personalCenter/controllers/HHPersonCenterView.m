@@ -14,7 +14,7 @@
     
     HHPersonCenterView *view = [[HHPersonCenterView alloc]initWithFrame:frame];
     
-    XYQButton  *top_btn_part = [XYQButton ButtonWithFrame:CGRectMake(0, 10, frame.size.width, frame.size.height/2-10) imgaeName:btn_imageName titleName:btn_titleName contentType:LeftImageRightTitle buttonFontAttributes:[FontAttributes fontAttributesWithFontColor:KLightTitleColor fontsize:WidthScaleSize_H(11)] tapAction:nil];
+    XYQButton  *top_btn_part = [XYQButton ButtonWithFrame:CGRectMake(0, 10, frame.size.width, frame.size.height/2-10) imgaeName:btn_imageName titleName:btn_titleName contentType:LeftImageRightTitle buttonFontAttributes:[FontAttributes fontAttributesWithFontColor:KLightTitleColor fontsize:AdapationLabelHeight(11)] tapAction:nil];
     top_btn_part.userInteractionEnabled = NO;
     [view addSubview:top_btn_part];
     

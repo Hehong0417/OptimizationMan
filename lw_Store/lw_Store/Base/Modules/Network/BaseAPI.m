@@ -172,7 +172,7 @@
     [self.HUD hide:YES afterDelay:delay];
     
 #ifdef kNCLoaclResponse
-    NSLog(@"加载本地数据文件 -----  __%@__   -----", self.class);
+    DLog(@"加载本地数据文件 -----  __%@__   -----", self.class);
 #endif
 }
 

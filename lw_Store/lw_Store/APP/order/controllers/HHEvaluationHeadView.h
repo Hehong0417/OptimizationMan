@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHActivityView.h"
 
 @interface HHEvaluationHeadView : UICollectionReusableView
 
@@ -21,5 +22,9 @@
 @property(nonatomic,strong)   UILabel *title_lab;
 
 @property(nonatomic,strong)   NSString *pid;
+
+@property(nonatomic,strong)   HHActivityView *actView;
+
+@property(nonatomic,strong)   HHCategoryModel *giftModel;
 
 @end
