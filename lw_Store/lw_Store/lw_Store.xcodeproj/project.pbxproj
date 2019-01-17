@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CE0835E520B3C0F2004C3781 /* HHApplyDelegateNoPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0835E420B3C0F2004C3781 /* HHApplyDelegateNoPayVC.m */; };
 		CE0835E820B407D3004C3781 /* HHUrlModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0835E720B407D3004C3781 /* HHUrlModel.m */; };
+		CE0BD1D321F076B90070C96D /* HHSpellGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0BD1D221F076B80070C96D /* HHSpellGroupCell.m */; };
 		CE0C12B920901F2500195A81 /* LwPersonCenterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C12B720901F2500195A81 /* LwPersonCenterCell.m */; };
 		CE0C12BD209020F700195A81 /* HHPersonCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C12BC209020F700195A81 /* HHPersonCenterView.m */; };
 		CE0C1CDE20C66D94001F59F9 /* HHActivityWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C1CDD20C66D94001F59F9 /* HHActivityWebVC.m */; };
@@ -392,6 +393,8 @@
 		CE0835E420B3C0F2004C3781 /* HHApplyDelegateNoPayVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHApplyDelegateNoPayVC.m; sourceTree = "<group>"; };
 		CE0835E620B407D3004C3781 /* HHUrlModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHUrlModel.h; sourceTree = "<group>"; };
 		CE0835E720B407D3004C3781 /* HHUrlModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHUrlModel.m; sourceTree = "<group>"; };
+		CE0BD1D121F076B80070C96D /* HHSpellGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSpellGroupCell.h; sourceTree = "<group>"; };
+		CE0BD1D221F076B80070C96D /* HHSpellGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSpellGroupCell.m; sourceTree = "<group>"; };
 		CE0C12B620901F2500195A81 /* LwPersonCenterCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LwPersonCenterCell.h; sourceTree = "<group>"; };
 		CE0C12B720901F2500195A81 /* LwPersonCenterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LwPersonCenterCell.m; sourceTree = "<group>"; };
 		CE0C12BB209020F700195A81 /* HHPersonCenterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPersonCenterView.h; sourceTree = "<group>"; };
@@ -2318,6 +2321,8 @@
 				CE26815D20941F490065D3A5 /* HHShopIntroCell.h */,
 				CE26815E20941F490065D3A5 /* HHShopIntroCell.m */,
 				CE26815F20941F490065D3A5 /* HHShopIntroCell.xib */,
+				CE0BD1D121F076B80070C96D /* HHSpellGroupCell.h */,
+				CE0BD1D221F076B80070C96D /* HHSpellGroupCell.m */,
 				CEE2A0C3209333D400843DBD /* HHGoodSpecificationsCell.h */,
 				CEE2A055209333D300843DBD /* HHGoodSpecificationsCell.m */,
 				CEE2A056209333D300843DBD /* HHGoodSpecificationsCell.xib */,
@@ -3056,6 +3061,7 @@
 				CE3E7B5221C0E101008F1E68 /* HHCommissionCell.m in Sources */,
 				CE999A9C208DDDDA00B9307D /* AppDelegate.m in Sources */,
 				CEE2A0E5209333D400843DBD /* SDBrowserImageView.m in Sources */,
+				CE0BD1D321F076B90070C96D /* HHSpellGroupCell.m in Sources */,
 				CEF54F2F20C5290C008A8D4E /* MLMenuView.m in Sources */,
 				CE85266320DA0B280088156E /* HHdiscountPackageFooter.m in Sources */,
 				CE999BFB208DE33B00B9307D /* BaseAPI.m in Sources */,

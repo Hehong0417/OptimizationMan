@@ -85,7 +85,7 @@
     HHCategoryAPI *api = [self new];
     api.subUrl = API_ReceiveGift;
     if (gift_id) {
-        [api.parameters setObject:gift_id forKey:@"gift_id"];
+        [api.parameters setObject:gift_id forKey:@""];
     }
     api.parametersAddToken = NO;
     

@@ -103,12 +103,8 @@
             
             if (api.State == 1) {
 
-                if (self.isFooterRefresh) {
-                    [self loadDataFinish:api.Data];
-                }else{
-                   [self.datas removeAllObjects];
-                    [self loadDataFinish:api.Data];
-                }
+            [self loadDataFinish:api.Data];
+                
             }else{
                 
                 [SVProgressHUD showInfoWithStatus:api.Msg];
@@ -184,7 +180,6 @@
     }
     
 }
-
 /**
  *  结束刷新
  */

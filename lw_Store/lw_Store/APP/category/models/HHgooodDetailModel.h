@@ -23,6 +23,7 @@
 @property(nonatomic,strong) NSString *StrFreightModey;
 @property(nonatomic,strong) NSDictionary *GroupBuy;
 @property(nonatomic,strong) NSDictionary *CutGroupBuy;
+@property(nonatomic,strong) NSDictionary *GroupBuyActivity;
 @property(nonatomic,strong) NSDictionary *SendGift;
 @property(nonatomic,strong) NSDictionary *SecKill;
 @property(nonatomic,strong) NSDictionary *CutPrice;

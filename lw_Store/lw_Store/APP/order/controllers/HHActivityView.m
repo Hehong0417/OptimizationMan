@@ -26,15 +26,18 @@
     self.titleLabel = [UILabel lh_labelWithFrame:CGRectMake(0, AdapationLabelHeight(10),ScreenW, AdapationLabelHeight(30)) text:@"本次支付获得" textColor:KTitleLabelColor font:FONT(13) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
     [self addSubview:self.titleLabel];
     
-    self.contentImageView = [UIView lh_viewWithFrame:CGRectMake(35, CGRectGetMaxY(self.titleLabel.frame)+AdapationLabelHeight(8), ScreenW-70, frame.size.height-2*AdapationLabelHeight(10)-CGRectGetMaxY(self.titleLabel.frame)) backColor:RGB(255, 125, 152)];
+    self.contentImageView = [UIView lh_viewWithFrame:CGRectMake(35, CGRectGetMaxY(self.titleLabel.frame)+AdapationLabelHeight(8), ScreenW-70, frame.size.height-2*AdapationLabelHeight(10)-CGRectGetMaxY(self.titleLabel.frame)) backColor:kWhiteColor];
     [self.contentImageView lh_setCornerRadius:5 borderWidth:0 borderColor:nil];
     [self addSubview:self.contentImageView];
-
-    self.namelabel = [UILabel lh_labelWithFrame:CGRectMake(30, 0, self.contentImageView.mj_w-60, self.contentImageView.mj_h*2/3) text:nil textColor:kWhiteColor font:BoldFONT(30) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
-    [self addSubview:self.namelabel];
+    UIImageView *imageV = [UIImageView lh_imageViewWithFrame:self.contentImageView.bounds image:[UIImage imageNamed:@"giftBgImg"]];
+    [self.contentImageView addSubview:imageV];
     
-    self.ReceiveButton = [UIButton lh_buttonWithFrame:CGRectMake(self.contentImageView.mj_w-180, self.contentImageView.mj_h*2/3+8, 120, self.contentImageView.mj_h/3-16) target:self action:@selector(ReceiveButtonAction:) title:@"立即领取" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_BUTTON_COMMON_COLOR];
-    [self addSubview:self.namelabel];
+    self.namelabel = [UILabel lh_labelWithFrame:CGRectMake(30, 0, self.contentImageView.mj_w-60, self.contentImageView.mj_h*2/3-10) text:nil textColor:kWhiteColor font:BoldFONT(30) textAlignment:NSTextAlignmentCenter backgroundColor:kClearColor];
+    [self.contentImageView  addSubview:self.namelabel];
+    
+    self.ReceiveButton = [UIButton lh_buttonWithFrame:CGRectMake(self.contentImageView.mj_w/2-60, CGRectGetMaxY(self.namelabel.frame), 120, self.contentImageView.mj_h/3-10) target:self action:@selector(ReceiveButtonAction:) title:@"立即领取" titleColor:RGB(255, 125, 152) font:FONT(14) backgroundColor:kWhiteColor];
+    [self.ReceiveButton lh_setCornerRadius:3 borderWidth:0 borderColor:nil];
+    [self.contentImageView  addSubview:self.ReceiveButton];
     
 }
 - (void)setGift_Model:(HHCategoryModel *)gift_Model{

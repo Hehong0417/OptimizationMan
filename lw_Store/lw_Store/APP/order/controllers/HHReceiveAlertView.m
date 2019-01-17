@@ -12,9 +12,10 @@
 
 - (UIView *)alertViewContentView {
     
-    UIImageView *imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(60, 0, ScreenW-120, 200) image:[UIImage imageNamed:@""]];
+    UIImageView *imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(60, 0, ScreenW-120, 220) image:[UIImage imageNamed:@"receiveSucess"]];
     imageV.center = CGPointMake(ScreenW/2, ScreenH/2);
-    imageV.backgroundColor = kWhiteColor;
+    imageV.contentMode = UIViewContentModeCenter;
+    imageV.backgroundColor = kClearColor;
     
     return imageV;
 }

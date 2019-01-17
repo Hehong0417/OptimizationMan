@@ -31,6 +31,8 @@
 #import "HHEvaluationListVC.h"
 #import <AVKit/AVKit.h>   //包含类 AVPlayerViewController
 #import <AVFoundation/AVFoundation.h>  //包含类 AVPlayer
+#import "HHSpellGroupCell.h"
+#import "HHActivityWebVC.h"
 
 @interface HHGoodBaseViewController ()<UITableViewDelegate,UITableViewDataSource,WKNavigationDelegate,SDCycleScrollViewDelegate,HHCartVCProtocol>
 {
@@ -59,6 +61,7 @@
 @property (nonatomic, strong) NSMutableArray *guess_you_like_arr;
 @property (nonatomic, strong) NSNumber *Mode;
 @property (nonatomic, strong) UIView *countTimeView;
+@property (nonatomic, strong)  NSMutableArray *JoinActivity_arr;
 
 @end
 
@@ -73,6 +76,7 @@ static NSString *HHGoodSpecificationsCellID = @"HHGoodSpecificationsCell";//商�
 static NSString *HHEvaluationListCellID = @"HHEvaluationListCell";
 static NSString *HHdiscountPackageViewTabCellID = @"HHdiscountPackageViewTabCell";
 static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你喜欢
+static NSString *HHSpellGroupCellID = @"HHSpellGroupCell";
 
 
 @implementation HHGoodBaseViewController
@@ -168,6 +172,12 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         _guess_you_like_arr = [NSMutableArray array];
     }
     return _guess_you_like_arr;
+}
+- (NSMutableArray *)JoinActivity_arr{
+    if (!_JoinActivity_arr) {
+        _JoinActivity_arr = [NSMutableArray array];
+    }
+    return _JoinActivity_arr;
 }
 #pragma mark - initialize
 
@@ -301,6 +311,13 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 
                 //拼团
                HHActivityModel *GroupBy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuy];
+               
+                //正在拼团列表
+               HHJoinActivityModel *act_m = [HHJoinActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuyActivity];
+                if ([act_m.is_exist isEqual:@1]) {
+                    self.JoinActivity_arr = @[act_m].mutableCopy;
+                    [self.tableView reloadData];
+                }
                 //降价团
                 HHActivityModel *CutGroupBuy_m = [HHActivityModel mj_objectWithKeyValues:self.gooodDetailModel.CutGroupBuy];
                 //送礼
@@ -446,7 +463,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 }
 - (void)receiveBtnAction:(UIButton *)btn{
     
-    [self showFeatureSelectionWithActModel:nil isCart:NO Mode:@1];
+    [self showFeatureSelectionWithActModel:nil isCart:NO Mode:@8192];
 
 }
 #pragma mark --  活动选择
@@ -471,7 +488,11 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     DCFeatureSelectionViewController *dcNewFeaVc = [DCFeatureSelectionViewController new];
     dcNewFeaVc.product_sku_value_arr = self.gooodDetailModel.SKUValues;
     dcNewFeaVc.lastNum = lastNum_.intValue;
-    dcNewFeaVc.MinBuyCount = self.gooodDetailModel.MinBuyCount.intValue;
+    if (self.isCanReceive) {
+        dcNewFeaVc.MinBuyCount = 1;
+    }else{
+        dcNewFeaVc.MinBuyCount = self.gooodDetailModel.MinBuyCount.intValue;
+    }
     dcNewFeaVc.lastSeleArray = [NSMutableArray arrayWithArray:lastSeleArray_];
     dcNewFeaVc.lastSele_IdArray = [NSMutableArray arrayWithArray:lastSele_IdArray_];
     dcNewFeaVc.product_sku_arr = self.gooodDetailModel.SKUList;
@@ -584,6 +605,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                     vc.pids = self.Id;
                     vc.count = quantity;
                     vc.mode = self.Mode;
+                    vc.gbId = self.gbId;
                     if ([self.Mode isEqual:@1]) {
                     vc.enter_type = HHaddress_type_add_productDetail;
                     }
@@ -595,6 +617,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
                     vc.mode = self.Mode;
                     vc.ids_Str = sku_id_Str;
                     vc.pids = self.Id;
+                    vc.gbId = self.gbId;
                     [self.navigationController pushVC:vc];
                 }
             }else{
@@ -639,6 +662,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         [_tableView registerNib:[UINib nibWithNibName:HHGoodSpecificationsCellID bundle:nil] forCellReuseIdentifier:HHGoodSpecificationsCellID];
         [_tableView registerClass:[HHdiscountPackageViewTabCell class] forCellReuseIdentifier:HHdiscountPackageViewTabCellID];
         [_tableView registerClass:[HHGuess_you_likeTabCell class] forCellReuseIdentifier:HHGuess_you_likeTabCellID];
+        [_tableView registerClass:[HHSpellGroupCell class] forCellReuseIdentifier:HHSpellGroupCellID];
 
 
         [self.scrollerView addSubview:_tableView];
@@ -734,7 +758,27 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         HHShopIntroCell *cell = [tableView dequeueReusableCellWithIdentifier:HHShopIntroCellID];
         // cell.gooodDetailModel = self.gooodDetailModel;
         gridcell = cell;
-    }else if (indexPath.section == 2){
+    }else if(indexPath.section == 2){
+        //拼团
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UIView *h_line = [UIView lh_viewWithFrame:CGRectMake(0, 0, ScreenW, 8) backColor:KVCBackGroundColor];
+            [cell.contentView addSubview:h_line];
+            HHJoinActivityModel *GroupBy_m = [HHJoinActivityModel mj_objectWithKeyValues:self.gooodDetailModel.GroupBuyActivity];
+            UILabel *text_lab = [UILabel lh_labelWithFrame:CGRectMake(20, 8, 200, 42) text:[NSString stringWithFormat:@"%@人在拼团，可直接参与",GroupBy_m.remain_count] textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentLeft backgroundColor:kWhiteColor];
+            [cell.contentView addSubview:text_lab];
+            gridcell = cell;
+            
+        }else{
+            HHSpellGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:HHSpellGroupCellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.spellGroup_button  addTarget:self action:@selector(spellGroup_buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+            cell.model = self.JoinActivity_arr[indexPath.row-1];
+            gridcell = cell;
+        }
+        
+    } else if (indexPath.section == 3){
         //商品信息
         HHGoodSpecificationsCell *cell = [tableView dequeueReusableCellWithIdentifier:HHGoodSpecificationsCellID];
         cell.separatorInset = UIEdgeInsetsMake(0, -ScreenW, 0, 0);
@@ -744,7 +788,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
             cell.discribeLabel.text = model.ValueStr;
         }
         gridcell = cell;
-    }else if (indexPath.section == 3){
+    }else if (indexPath.section == 4){
         //用户评价
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -753,14 +797,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
-    }else if (indexPath.section == 4){
+    }else if (indexPath.section == 5){
             //优惠套餐
             HHdiscountPackageViewTabCell *cell = [tableView dequeueReusableCellWithIdentifier:HHdiscountPackageViewTabCellID];
              cell.packages_model = self.gooodDetailModel.Packages[indexPath.row];
              cell.indexPath = indexPath;
              cell.nav = self.navigationController;
              gridcell = cell;
-    }else if (indexPath.section == 5){
+    }else if (indexPath.section == 6){
         //猜你喜欢
        HHGuess_you_likeTabCell  *cell = [tableView dequeueReusableCellWithIdentifier:HHGuess_you_likeTabCellID];
         cell.guess_you_like_arr =  self.guess_you_like_arr;
@@ -773,7 +817,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-  return  6;
+  return  7;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
@@ -781,12 +825,14 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if (section == 1) {
         return 1;
     }else if (section == 2) {
-     return self.discribeArr.count+1;
+        return self.JoinActivity_arr.count>0?self.JoinActivity_arr.count+1:0;
     }else if (section == 3) {
+     return self.discribeArr.count+1;
+    }else if (section == 4) {
         return self.gooodDetailModel.EvaluateCount.integerValue>0?1:0;
-    }else if (section == 4){
-     return self.gooodDetailModel.Packages.count;
     }else if (section == 5){
+     return self.gooodDetailModel.Packages.count;
+    }else if (section == 6){
         return self.guess_you_like_arr.count>0?1:0;
     }
     return 0;
@@ -799,22 +845,27 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     }else if (indexPath.section == 1) {
         return 90;
     }else if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            return 50;
+        }
+        return 65;
+    }else if (indexPath.section == 3) {
         if(indexPath.row == self.discribeArr.count){
           return  self.discribeArr.count>0?10:0.001;
         }
        return 30;
-    }else if (indexPath.section == 3) {
-        return 35;
     }else if (indexPath.section == 4) {
-        return 130;
+        return 35;
     }else if (indexPath.section == 5) {
+        return 130;
+    }else if (indexPath.section == 6) {
         return 230+45;
     }
     return 0.001;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (section == 2) {
+    if (section == 3) {
         if (self.discribeArr.count>0) {
             UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenW, 30)];
             headView.backgroundColor = kWhiteColor;
@@ -830,7 +881,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (self.gooodDetailModel.EvaluateCount.integerValue>0&&indexPath.section==3) {
+    if (self.gooodDetailModel.EvaluateCount.integerValue>0&&indexPath.section==4) {
         //用户评价
         HHEvaluationListVC *vc = [HHEvaluationListVC new];
         vc.pid = self.gooodDetailModel.Id;
@@ -839,15 +890,15 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 2) {
+    if (section == 3) {
         if (self.discribeArr.count>0) {
             return 3;
         }else{
             return 0.001;
         }
-    }else if (section == 3) {
+    }else if (section == 4) {
         return self.gooodDetailModel.EvaluateCount.integerValue>0?3:0.001;
-    }else if (section == 4){
+    }else if (section == 5){
         return self.gooodDetailModel.Packages.count>0?3:0.001;
     }
     return 3;
@@ -855,7 +906,7 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if (section == 2) {
+    if (section == 3) {
         if (self.discribeArr.count>0) {
           return 30;
         }else{
@@ -863,6 +914,19 @@ static NSString *HHGuess_you_likeTabCellID = @"HHGuess_you_likeTabCell";//猜你
         }
     }
     return 0.001;
+    
+}
+//去拼团
+- (void)spellGroup_buttonAction:(UIButton *)button{
+    
+    HHSpellGroupCell *cell = (HHSpellGroupCell *)[[button superview] superview];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    HHActivityWebVC *vc = [HHActivityWebVC new];
+    HHJoinActivityModel  *model = self.JoinActivity_arr[indexPath.row-1];
+    vc.gbId = model.Id;
+    
+    [self.navigationController pushVC:vc];
     
 }
 #pragma mark - SDCycleScrollViewDelegate

@@ -20,4 +20,6 @@
 
 @property (assign ,nonatomic) BOOL isCanReceive;
 
+@property(nonatomic,strong) NSString *gbId;
+
 @end

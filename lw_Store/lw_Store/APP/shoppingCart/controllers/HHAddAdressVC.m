@@ -152,6 +152,7 @@
                               vc.enter_type = HHaddress_type_add_cart;
                               vc.mode = nil;
                           }
+                          vc.gbId = self.gbId;
                           vc.sendGift = self.sendGift;
                           [self.navigationController pushVC:vc];
                           
@@ -162,6 +163,7 @@
                           vc.mode = self.mode;
                           vc.ids_Str = self.ids_Str;
                           vc.cartIds_str = self.cartIds_str;
+                          vc.gbId = self.gbId;
                           [self.navigationController pushVC:vc];
                       }
                       

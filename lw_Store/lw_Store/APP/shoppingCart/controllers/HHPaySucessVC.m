@@ -87,7 +87,6 @@
     
 }
 #pragma mark - DZNEmptyDataSetDelegate
-
 //猜你喜欢
 - (void)getGuess_you_likeData{
     
@@ -114,6 +113,7 @@
         if (!error) {
             if (api.State == 1) {
             self.giftModel = [HHCategoryModel mj_objectWithKeyValues:api.Data];
+                
             [self.collectionView reloadData];
 
             }else{

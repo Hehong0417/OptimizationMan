@@ -10,4 +10,18 @@
 
 @implementation HHActivityModel
 
++(NSDictionary *)mj_objectClassInArray{
+    
+    return @{@"JoinActivity": [HHJoinActivityModel class]};
+}
 @end
+
+@implementation HHJoinActivityModel
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    
+    return @{@"Id":@"id"};
+}
+
+@end
+

@@ -41,4 +41,6 @@ typedef enum : NSUInteger {
 //商品id-->支付成功猜你喜欢接口需要使用到
 @property(nonatomic,strong) NSString *pids;
 
+@property(nonatomic,strong) NSString *gbId;
+
 @end

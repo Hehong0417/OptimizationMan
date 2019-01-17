@@ -4,7 +4,7 @@
 //
 //  Created by User on 2019/1/8.
 //  Copyright © 2019年 User. All rights reserved.
-//
+
 
 #import "HHGiftTVC.h"
 #import "HHGiftCell.h"
@@ -177,8 +177,12 @@
 }
 - (void)receiveBtnAction:(UIButton *)button{
     
+    HHGiftCell *cell = (HHGiftCell *)button.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    HHMineModel  *model = [HHMineModel mj_objectWithKeyValues:self.datas[indexPath.row]];
     HHGoodBaseViewController *vc = [HHGoodBaseViewController new];
-    vc.Id = @"10243873";
+    vc.Id = model.pid;
+    vc.gbId = model.prize_id;
     vc.isCanReceive = YES;
     [self.navigationController pushVC:vc];
 }

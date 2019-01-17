@@ -17,6 +17,8 @@
     
     if(self = [super initWithFrame:frame]){
     
+        self.frame = frame;
+        
         UIImageView *success_imageV = [UIImageView lh_imageViewWithFrame:CGRectMake(0, AdapationLabelHeight(50), 150, AdapationLabelHeight(80)) image:[UIImage imageNamed:@"icon_paysuccess_default"]];
         success_imageV.contentMode = UIViewContentModeCenter;
         success_imageV.centerX = self.centerX;
@@ -39,7 +41,7 @@
         [self addSubview:self.actView];
         
         //猜你喜欢
-        self.title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, CGRectGetMaxY(self.actView.frame)+AdapationLabelHeight(10), ScreenW, AdapationLabelHeight(40)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
+        self.title_lab = [UILabel lh_labelWithFrame:CGRectMake(0, frame.size.height - AdapationLabelHeight(50), ScreenW, AdapationLabelHeight(40)) text:@"——  猜你喜欢  ——"  textColor:kBlackColor font:FONT(14) textAlignment:NSTextAlignmentCenter backgroundColor:kWhiteColor];
         [self addSubview:self.title_lab];
      
     }
@@ -48,16 +50,21 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    if(!self.giftModel.is_exist.boolValue){
+    if([self.giftModel.is_exist isEqual:@1]){
+        
+        self.actView.gift_Model = self.giftModel;
+        self.actView.frame = CGRectMake(0, self.frame.size.height- AdapationLabelHeight(140)-AdapationLabelHeight(10) -AdapationLabelHeight(50), ScreenW, AdapationLabelHeight(150));
+        self.title_lab.mj_y = self.frame.size.height - AdapationLabelHeight(50);
+        self.actView.hidden = NO;
+        
+    }else{
         self.actView.frame = CGRectMake(0, 0, 0, 0);
         self.actView.hidden = YES;
-    }else{
-        self.actView.gift_Model = self.giftModel;
     }
 }
 - (void)setGiftModel:(HHCategoryModel *)giftModel{
-    
     _giftModel = giftModel;
+    
 }
 
 - (void)setIsPay:(BOOL)isPay{

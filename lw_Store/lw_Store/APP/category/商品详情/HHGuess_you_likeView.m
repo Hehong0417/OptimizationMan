@@ -56,6 +56,7 @@
     HXHomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXHomeCollectionCell" forIndexPath:indexPath];
     HHGuess_you_likeModel *model =  [HHGuess_you_likeModel mj_objectWithKeyValues:self.guess_you_like_arrs[indexPath.row]];
     cell.guess_you_likeModel = model;
+    cell.collectButton.hidden = YES;
     return cell;
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
