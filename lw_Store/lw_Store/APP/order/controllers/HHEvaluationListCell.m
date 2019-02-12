@@ -116,7 +116,7 @@ CGFloat maxContentLabelHeight = 0; // 根据具体font而定
     _propertyLabel.sd_layout
     .leftSpaceToView(_timeLabel, margin)
     .centerYEqualToView(_timeLabel)
-    .widthIs(100)
+    .widthIs(200)
     .heightIs(20);
     
     _contentLabel.sd_layout

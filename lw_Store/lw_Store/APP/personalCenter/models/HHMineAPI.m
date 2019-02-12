@@ -209,6 +209,21 @@
     return api;
     
 }
+
+//获取个人评价
++ (instancetype)GetUserEvaluateWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize{
+    HHMineAPI *api = [self new];
+    api.subUrl = API_GetUserEvaluate;
+    if (page) {
+        [api.parameters setObject:page forKey:@"page"];
+    }
+    if (pageSize) {
+        [api.parameters setObject:pageSize forKey:@"pageSize"];
+    }
+    api.parametersAddToken = NO;
+    return api;
+    
+}
 //赠品列表
 + (instancetype)GetUserGiveawayWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize{
     

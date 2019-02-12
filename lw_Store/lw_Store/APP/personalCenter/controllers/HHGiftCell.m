@@ -24,12 +24,24 @@
     if (prizeModel.status.integerValue == 0) {
         self.receiveDate.text = @"";
         self.dateTimeLabel.text = [NSString stringWithFormat:@"过期时间：%@",prizeModel.expire];
+        [self.receiveBtn setTitle:@"领取" forState:UIControlStateNormal];
+        [self.receiveBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+        [self.receiveBtn setBackgroundColor:APP_COMMON_COLOR];
     }else if (prizeModel.status.integerValue == 1) {
         self.receiveDate.text = [NSString stringWithFormat:@"领取时间：%@",prizeModel.receive_date];
         self.dateTimeLabel.text = [NSString stringWithFormat:@"订单号：%@",prizeModel.order_id];
+        [self.receiveBtn setTitle:@"已领取" forState:UIControlStateNormal];
+        [self.receiveBtn setTitleColor:KTitleLabelColor forState:UIControlStateNormal];
+        self.receiveBtn.userInteractionEnabled = NO;
+        [self.receiveBtn setBackgroundColor:kWhiteColor];
+
     }else if (prizeModel.status.integerValue == 2) {
         self.receiveDate.text = @"";
         self.dateTimeLabel.text = [NSString stringWithFormat:@"截止时间：%@",prizeModel.expire];
+        [self.receiveBtn setTitle:@"已失效" forState:UIControlStateNormal];
+        [self.receiveBtn setTitleColor:KTitleLabelColor forState:UIControlStateNormal];
+        self.receiveBtn.userInteractionEnabled = NO;
+        [self.receiveBtn setBackgroundColor:kWhiteColor];
     }
 }
 

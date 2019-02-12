@@ -80,6 +80,9 @@
 //获取商品评价统计接口
 + (instancetype)GetProductEvaluateStatictisWithpid:(NSString *)pid;
 
+//获取个人评价
++ (instancetype)GetUserEvaluateWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize;
+
 //赠品列表
 + (instancetype)GetUserGiveawayWithpage:(NSNumber *)page pageSize:(NSNumber *)pageSize;
 

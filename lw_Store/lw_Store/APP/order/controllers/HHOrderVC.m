@@ -360,15 +360,22 @@
     
     UIView *footView = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 55) backColor:kWhiteColor];
     
-    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-30, 10, 80, 30) target:self action:@selector(oneAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
-    oneBtn.tag = section+100;
+    UIButton *oneBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 30) target:self action:@selector(oneAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_BUTTON_COMMON_COLOR];
+    oneBtn.tag = section+1000;
     [oneBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:oneBtn];
-
-    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 30) target:self action:@selector(twoAction:) title:@"去评价" titleColor:kWhiteColor font:FONT(14) backgroundColor:APP_BUTTON_COMMON_COLOR];
-    twoBtn.tag = section+1000;
+    
+    UIButton *twoBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-160-30,   10, 80, 30) target:self action:@selector(twoAction:) title:@"取消" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
+    twoBtn.tag = section+100;
     [twoBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
     [footView addSubview:twoBtn];
+
+    //最左边按钮
+    UIButton *threeBtn = [UIButton lh_buttonWithFrame:CGRectMake(SCREEN_WIDTH-240-40, 10, 80, 30) target:self action:@selector(threeAction:) title:@"订单详情" titleColor:APP_COMMON_COLOR font:FONT(14) backgroundColor:kWhiteColor];
+    threeBtn.tag = section+1001;
+    [threeBtn lh_setCornerRadius:5 borderWidth:1 borderColor:APP_BUTTON_COMMON_COLOR];
+    [footView addSubview:threeBtn];
+    threeBtn.hidden = YES;
     
     //分割线Y坐标
     CGFloat down_y = 50;
@@ -379,57 +386,70 @@
             //待付款
             down_y = 50;
             //oneBtn
-            [self setBtnAttrWithBtn:oneBtn Title:@"取消订单" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"取消订单" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
             //twoBtn
-            NSString *twoBtn_title = @"去支付";
+            NSString *oneBtn_title = @"去付款";
             if ([model.order_mode isEqual:@16]) {
-                twoBtn_title = @"亲密付";
+                oneBtn_title = @"亲密付";
             }else{
-                twoBtn_title = @"去支付";
+                oneBtn_title = @"去付款";
             }
-            [self setBtnAttrWithBtn:twoBtn Title:twoBtn_title CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_BUTTON_COMMON_COLOR];
+            [self setBtnAttrWithBtn:oneBtn Title:oneBtn_title CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:kWhiteColor backgroundColor:APP_BUTTON_COMMON_COLOR];
+            //threeBtn
+            [self setBtnAttrWithBtn:threeBtn Title:@"订单详情" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_COMMON_COLOR backgroundColor:kWhiteColor];
+            threeBtn.hidden = NO;
         }else if([status isEqualToString:@"2"]){
             //待发货
-             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:YES];
+            down_y = 50;
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
+            [self setBtnAttrWithBtn:oneBtn Title:@"订单详情" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+
         }else if([status isEqualToString:@"3"]){
             //待收货
             down_y = 50;
-            [self setBtnAttrWithBtn:oneBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:twoBtn Title:@"查看物流" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
             [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:NO];
-            [self setBtnAttrWithBtn:twoBtn Title:@"确认收货" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            [self setBtnAttrWithBtn:oneBtn Title:@"确认收货" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            threeBtn.hidden = NO;
+
         }else if([status isEqualToString:@"4"]){
             //订单关闭
-            down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:YES];
-
+            down_y = 50;
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
+            [self setBtnAttrWithBtn:oneBtn Title:@"订单详情" CornerRadius:5 borderColor:APP_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            
         }else if([status isEqualToString:@"5"]){
             // @"交易成功";
-            down_y = [model.order_can_evaluate isEqual:@1]?50:0;
-            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?NO:YES;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:twoBtnState];
+            down_y = 50;
+            BOOL twoBtnState =  [model.order_can_evaluate isEqual:@1]?YES:NO;
+            
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:twoBtnState];
+            
+            //oneBtn
+            [self setBtnAttrWithBtn:oneBtn Title:twoBtnState?@"订单详情":@"去评价" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
             //twoBtn
-            [self setBtnAttrWithBtn:twoBtn Title:@"去评价" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+             [self setBtnAttrWithBtn:twoBtn Title:twoBtnState?@"":@"订单详情" CornerRadius:5 borderColor:APP_BUTTON_COMMON_COLOR titleColor:APP_BUTTON_COMMON_COLOR backgroundColor:kWhiteColor];
+            
         }else if([status isEqualToString:@"6"]){
             // 申请退款
             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
         }else if([status isEqualToString:@"7"]){
             // 申请退货
             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
         }else if([status isEqualToString:@"8"]){
             // 申请换货
             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
         }else if([status isEqualToString:@"9"]){
             // 已退款
             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
         }else if([status isEqualToString:@"10"]){
             // 已退货
             down_y = 0;
-            [self setOneBtn:oneBtn WithOneBtnState:YES twoBtn:twoBtn twoBtnState:NO];
+            [self setOneBtn:oneBtn WithOneBtnState:NO twoBtn:twoBtn twoBtnState:YES];
         }
     }
     UIView *downLine = [UIView lh_viewWithFrame:CGRectMake(0, down_y, SCREEN_WIDTH, 5) backColor:KVCBackGroundColor];
@@ -455,6 +475,7 @@
 - (void)setOneBtn:(UIButton *)oneBtn WithOneBtnState:(BOOL)oneBtnSate twoBtn:(UIButton *)twoBtn twoBtnState:(BOOL)twoBtnState{
     oneBtn.hidden = oneBtnSate;
     twoBtn.hidden = twoBtnState;
+
 }
 //设置退款退货按钮状态
 -(void)setStandardLabWith:(HHproducts_item_Model *)productModel cell:(HJOrderCell *)cell{
@@ -476,7 +497,7 @@
     [btn setBackgroundColor:backgroundColor];
 }
 
-- (void)oneAction:(UIButton *)btn{
+- (void)twoAction:(UIButton *)btn{
     NSInteger section = btn.tag - 100;
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
     NSString *status = model.status;
@@ -498,7 +519,12 @@
 
     }else if([status isEqualToString:@"5"]){
         //交易成功-->删除订单
-
+        BOOL State =  [model.order_can_evaluate isEqual:@1]?YES:NO;
+        if (State) {
+            HHOrderDetailVC *vc = [HHOrderDetailVC new];
+            vc.orderid = model.order_id;
+            [self.navigationController pushVC:vc];
+        }
     }
 }
 //处理订单
@@ -620,7 +646,7 @@
     };
 
 }
-- (void)twoAction:(UIButton *)btn{
+- (void)oneAction:(UIButton *)btn{
     
     NSInteger section = btn.tag - 1000;
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
@@ -638,20 +664,42 @@
             NSString *pid_str = [orders_m.pids componentsJoinedByString:@","];
            [self payOrderWithorderid:model.order_id btn:btn pid:pid_str];
         }
+    }if([status isEqualToString:@"2"]){
+        HHOrderDetailVC *vc = [HHOrderDetailVC new];
+        vc.orderid = model.order_id;
+        [self.navigationController pushVC:vc];
+        
     }else if([status isEqualToString:@"3"]){
 //        //待收货--->确认收货
         [self handleOrderWithorderid:model.order_id status:HHhandle_type_Confirm btn:btn title:@"确认收货？"];
         
     }else if([status isEqualToString:@"5"]){
         //交易成功-->追加评价
-        HHPostEvaluationVC *vc = [HHPostEvaluationVC new];
-        HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
-        HHOrderItemModel *itemModel = self.items_arr[section];
-        vc.orderItem_m = itemModel;
-        vc.orderId = model.order_id;
-        [self.navigationController pushVC:vc];
+        BOOL State =  [model.order_can_evaluate isEqual:@1]?YES:NO;
+        if (State) {
+            HHPostEvaluationVC *vc = [HHPostEvaluationVC new];
+            HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
+            HHOrderItemModel *itemModel = self.items_arr[section];
+            vc.orderItem_m = itemModel;
+            vc.orderId = model.order_id;
+            [self.navigationController pushVC:vc];
+        }else{
+            HHOrderDetailVC *vc = [HHOrderDetailVC new];
+            vc.orderid = model.order_id;
+            [self.navigationController pushVC:vc];
+        }
     }
 }
+- (void)threeAction:(UIButton *)btn{
+    
+    NSInteger section = btn.tag - 1001;
+    HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];
+    HHOrderDetailVC *vc = [HHOrderDetailVC new];
+    vc.orderid = model.order_id;
+    [self.navigationController pushVC:vc];
+    
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     HHCartModel *model = [HHCartModel mj_objectWithKeyValues:self.datas[section]];

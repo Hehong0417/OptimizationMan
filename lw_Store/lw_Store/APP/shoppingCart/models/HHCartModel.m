@@ -23,16 +23,16 @@
         self.footHeight = 55;
     }else if (status_code == 2){
 //        @"待发货"
-        self.footHeight = 5;
+        self.footHeight = 55;
     }else if (status_code == 3){
 //        @"待收货
         self.footHeight = 55;
     }else if (status_code == 4){
         //  @"订单关闭
-        self.footHeight = 5;
+        self.footHeight = 55;
     }else if (status_code == 5){
         //   @"交易完成
-        self.footHeight =  [self.order_can_evaluate isEqual:@1]?55:5;
+        self.footHeight = 55;
     }else if (status_code == 6){
         //        @"申请退款
         self.footHeight = 5;

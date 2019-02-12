@@ -173,6 +173,8 @@
 		CE65CA4221E44DB300108BB1 /* HHGiftTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE65CA4121E44DB300108BB1 /* HHGiftTVC.m */; };
 		CE65CA4621E44E4700108BB1 /* HHGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE65CA4421E44E4700108BB1 /* HHGiftCell.m */; };
 		CE65CA4721E44E4700108BB1 /* HHGiftCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE65CA4521E44E4700108BB1 /* HHGiftCell.xib */; };
+		CE6E6A0D2212642D00262C9B /* HHMyEvaluationListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E6A0C2212642D00262C9B /* HHMyEvaluationListVC.m */; };
+		CE6E6A1022126C1000262C9B /* HHMyEvaluationGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E6A0F22126C1000262C9B /* HHMyEvaluationGoodsCell.m */; };
 		CE74AD1620BBDAFA00246896 /* HHSetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74AD1520BBDAFA00246896 /* HHSetVC.m */; };
 		CE759A6D20BD02BB00C76818 /* HHWXLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE759A5D20BD02BB00C76818 /* HHWXLoginVC.m */; };
 		CE759A6E20BD02BB00C76818 /* HHRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE759A5F20BD02BB00C76818 /* HHRegisterVC.m */; };
@@ -682,6 +684,10 @@
 		CE65CA4321E44E4700108BB1 /* HHGiftCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHGiftCell.h; sourceTree = "<group>"; };
 		CE65CA4421E44E4700108BB1 /* HHGiftCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHGiftCell.m; sourceTree = "<group>"; };
 		CE65CA4521E44E4700108BB1 /* HHGiftCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHGiftCell.xib; sourceTree = "<group>"; };
+		CE6E6A0B2212642D00262C9B /* HHMyEvaluationListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMyEvaluationListVC.h; sourceTree = "<group>"; };
+		CE6E6A0C2212642D00262C9B /* HHMyEvaluationListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMyEvaluationListVC.m; sourceTree = "<group>"; };
+		CE6E6A0E22126C1000262C9B /* HHMyEvaluationGoodsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHMyEvaluationGoodsCell.h; sourceTree = "<group>"; };
+		CE6E6A0F22126C1000262C9B /* HHMyEvaluationGoodsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHMyEvaluationGoodsCell.m; sourceTree = "<group>"; };
 		CE74AD1420BBDAFA00246896 /* HHSetVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetVC.h; sourceTree = "<group>"; };
 		CE74AD1520BBDAFA00246896 /* HHSetVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetVC.m; sourceTree = "<group>"; };
 		CE759A5B20BD02BB00C76818 /* HHBandPhoneVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHBandPhoneVc.h; sourceTree = "<group>"; };
@@ -2216,6 +2222,10 @@
 				CE37948120A9271500A3CDC9 /* HHMyIntegralListVC.m */,
 				CE37948320A927E600A3CDC9 /* HHMyIntegralCell.h */,
 				CE37948420A927E600A3CDC9 /* HHMyIntegralCell.m */,
+				CE6E6A0B2212642D00262C9B /* HHMyEvaluationListVC.h */,
+				CE6E6A0C2212642D00262C9B /* HHMyEvaluationListVC.m */,
+				CE6E6A0E22126C1000262C9B /* HHMyEvaluationGoodsCell.h */,
+				CE6E6A0F22126C1000262C9B /* HHMyEvaluationGoodsCell.m */,
 				CE3E7B5321C0E4CF008F1E68 /* HHCommissionTVC.h */,
 				CE3E7B5421C0E4CF008F1E68 /* HHCommissionTVC.m */,
 				CE3E7B5021C0E101008F1E68 /* HHCommissionCell.h */,
@@ -2890,6 +2900,7 @@
 				CE599A782181C30E00928641 /* HHLogisticsVC.m in Sources */,
 				CE37948F20A98A6300A3CDC9 /* HHMyCodeVC.m in Sources */,
 				CE999C07208DE33B00B9307D /* HXTabControl.m in Sources */,
+				CE6E6A0D2212642D00262C9B /* HHMyEvaluationListVC.m in Sources */,
 				CEE2A0FB209333D400843DBD /* XWTransitionAnimator.m in Sources */,
 				CE999BDD208DE33B00B9307D /* UIView+Create.m in Sources */,
 				CE219371208EE853005351B4 /* HHAddAdressVC.m in Sources */,
@@ -3090,6 +3101,7 @@
 				CE21911D208EDA0A005351B4 /* LwCategoryVC.m in Sources */,
 				CE2193A2208F048C005351B4 /* HHHomeAPI.m in Sources */,
 				CE219119208EDA0A005351B4 /* HHGoodListVC.m in Sources */,
+				CE6E6A1022126C1000262C9B /* HHMyEvaluationGoodsCell.m in Sources */,
 				CE472616212D1EA8002BD2A5 /* DCDetailOverFooterView.m in Sources */,
 				CEE2A0F0209333D400843DBD /* XWFilterAnimator+XWBoxBlur.m in Sources */,
 				CEE2A0EF209333D400843DBD /* XWFilterTransitionView.m in Sources */,
