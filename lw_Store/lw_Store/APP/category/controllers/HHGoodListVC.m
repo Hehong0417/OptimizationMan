@@ -102,11 +102,13 @@
         if (!error) {
             
             if (api.State == 1) {
-
-            [self loadDataFinish:api.Data];
-                
+                if(self.isFooterRefresh == YES){
+                    [self.datas removeAllObjects];
+                  [self loadDataFinish:api.Data];
+                }else{
+                    [self loadDataFinish:api.Data];
+                }
             }else{
-                
                 [SVProgressHUD showInfoWithStatus:api.Msg];
             }
             
@@ -172,13 +174,10 @@
     [self.datas addObjectsFromArray:arr];
 
     if (arr.count < self.pageSize) {
-        
         [self endRefreshing:YES];
-        
     }else{
         [self endRefreshing:NO];
     }
-    
 }
 /**
  *  结束刷新

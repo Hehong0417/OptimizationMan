@@ -30,7 +30,7 @@
 - (void)loadView {
     
     self.view = [UIView lh_viewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) backColor:KVCBackGroundColor];
-    self.tabView = [UITableView lh_tableViewWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT-49-NAVBAR_HEIGHT-Status_HEIGHT) tableViewStyle:UITableViewStyleGrouped delegate:self dataSourec:self];
+    self.tabView = [UITableView lh_tableViewWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT-NAVBAR_HEIGHT-Status_HEIGHT) tableViewStyle:UITableViewStyleGrouped delegate:self dataSourec:self];
     self.tabView.backgroundColor = kClearColor;
     self.tabView.estimatedSectionHeaderHeight = 0;
     self.tabView.estimatedSectionFooterHeight = 0;
